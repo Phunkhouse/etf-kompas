@@ -1,7 +1,7 @@
 # 0004. Data model, source registry and seed set
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context

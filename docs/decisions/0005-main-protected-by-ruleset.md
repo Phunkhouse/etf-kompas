@@ -1,7 +1,7 @@
 # 0005. `main` protected by a ruleset with required CI checks
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context
