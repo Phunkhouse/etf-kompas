@@ -12,7 +12,7 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - PR 1: Vitest (unit and components projects), Playwright (mobile first), `src/server` lint rule, GitHub Actions CI with actions pinned to commit SHAs resolved via the GitHub API.
 - PR 2: Zod data schema, framework-free `validateData`, 26 tests written first and approved before implementation, seed data for 8 ETFs and 5 brokers (all `TODO_VERIFY`), `data:validate` and `data:validate:draft`.
 - Small fix PR: deprecated Sass `map-get` replaced with `map.get`.
-- This PR: decision notes 0001 to 0005 and this log.
+- Decision notes 0001 to 0005 and this log (merged), then notes 0006 to 0014 for the remaining SPEC §22 seed topics (drafted from SPEC rationale, status `accepted` after David read them).
 
 **Mistakes and corrections**
 
