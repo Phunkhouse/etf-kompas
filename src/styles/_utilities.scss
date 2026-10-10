@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use 'sass:math';
 
 $breakpoints: (
@@ -12,7 +13,7 @@ $breakpoints: (
 
 // Mobile-first: styles apply from the given breakpoint upwards.
 @mixin from($name) {
-  @media (min-width: map-get($breakpoints, $name)) {
+  @media (min-width: map.get($breakpoints, $name)) {
     @content;
   }
 }
