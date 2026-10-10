@@ -1,6 +1,7 @@
 .pill {
   display: inline-block;
   padding: var(--space-1) var(--space-3);
+  border: var(--border-width-strong) solid transparent;
   border-radius: var(--radius-pill);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
@@ -14,6 +15,8 @@
 }
 
 .positive {
+  // The border keeps the pill visible on the highlighted table row, which has almost the same green.
+  border-color: var(--color-yes-fg);
   background: var(--color-yes-bg);
   color: var(--color-yes-fg);
 }

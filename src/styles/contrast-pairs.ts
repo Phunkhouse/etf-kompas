@@ -30,6 +30,12 @@ export const contrastPairs: ContrastPair[] = [
   },
   { fg: 'no-fg', bg: 'no-bg', min: 4.5, use: 'pill: not buyable, unverified' },
   { fg: 'yes-fg', bg: 'yes-bg', min: 4.5, use: 'pill: buyable' },
+  {
+    fg: 'yes-fg',
+    bg: 'highlight',
+    min: 3,
+    use: 'positive pill border on highlighted row',
+  },
   { fg: 'yes-fg', bg: 'paper', min: 4.5, use: 'check icon, saved text' },
   { fg: 'ink', bg: 'highlight', min: 4.5, use: 'highlighted table row' },
   { fg: 'ink', bg: 'row-hover', min: 4.5, use: 'table row on hover' },
