@@ -76,3 +76,26 @@ test('styleguide does not scroll sideways on a phone', async ({ page }) => {
   )
   expect(overflow).toBeLessThanOrEqual(0)
 })
+
+test('buttons and chips are reachable by keyboard and show a focus ring', async ({
+  page,
+}) => {
+  await page.goto('/styleguide')
+  const chip = page.getByRole('button', { name: '5' }).first()
+  const primary = page.getByRole('button', { name: 'Primary' }).first()
+
+  await primary.focus()
+  await page.keyboard.press('Tab')
+  await expect(page.locator(':focus')).toHaveText('Secondary')
+
+  await chip.focus()
+  await page.keyboard.press('Tab')
+  await expect(page.locator(':focus')).toHaveText('10')
+
+  // The focus ring is visible and 3 px wide (keyboard focus only)
+  await page.keyboard.press('Tab')
+  const outline = await page
+    .locator(':focus')
+    .evaluate((el) => getComputedStyle(el).outlineWidth)
+  expect(outline).toBe('3px')
+})

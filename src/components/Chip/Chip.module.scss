@@ -1,0 +1,42 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--touch-target-lg);
+  min-height: var(--touch-target);
+  padding: 0 var(--space-4);
+  border: var(--border-width-strong) solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-ink);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast),
+    color var(--duration-fast);
+
+  &:hover:not(.selected) {
+    background: var(--color-row-hover);
+  }
+}
+
+.selected {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+:global([data-tone='dark']) .chip {
+  border-color: var(--color-paper);
+  color: var(--color-paper);
+
+  &:hover:not(.selected) {
+    background: var(--color-inverse-border);
+  }
+}
+
+:global([data-tone='dark']) .selected {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
