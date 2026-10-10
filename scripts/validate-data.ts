@@ -1,5 +1,5 @@
-import { loadData } from '../src/server/data/load'
-import { validateData } from '../src/server/data/validate'
+import { loadData } from '@/server/data/load'
+import { validateData } from '@/server/data/validate'
 
 async function main() {
   const mode = process.argv.includes('--draft') ? 'draft' : 'strict'
