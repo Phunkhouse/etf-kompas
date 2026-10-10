@@ -1,0 +1,818 @@
+[
+  {
+    "id": "voo",
+    "ticker": "VOO",
+    "region": "us-listed",
+    "indexGroup": "sp500",
+    "name": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "indexName": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "isin": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "domicile": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "replication": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "distribution": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "ter": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "fundSizeEur": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "dividendYieldPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "withholdingRate": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return5yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return10yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    }
+  },
+  {
+    "id": "vti",
+    "ticker": "VTI",
+    "region": "us-listed",
+    "indexGroup": "us-total-market",
+    "name": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "indexName": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "isin": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "domicile": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "replication": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "distribution": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "ter": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "fundSizeEur": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "dividendYieldPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "withholdingRate": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return5yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return10yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    }
+  },
+  {
+    "id": "qqq",
+    "ticker": "QQQ",
+    "region": "us-listed",
+    "indexGroup": "nasdaq100",
+    "name": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "indexName": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "isin": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "domicile": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "replication": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "distribution": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "ter": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "fundSizeEur": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "dividendYieldPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "withholdingRate": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return5yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return10yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    }
+  },
+  {
+    "id": "schd",
+    "ticker": "SCHD",
+    "region": "us-listed",
+    "indexGroup": "us-dividend",
+    "name": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "indexName": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "isin": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "domicile": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "replication": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "distribution": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "ter": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "fundSizeEur": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "dividendYieldPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "withholdingRate": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return5yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return10yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    }
+  },
+  {
+    "id": "cspx",
+    "ticker": "CSPX",
+    "region": "ucits",
+    "indexGroup": "sp500",
+    "name": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "indexName": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "isin": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "domicile": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "replication": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "distribution": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "ter": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "fundSizeEur": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "dividendYieldPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "withholdingRate": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return5yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return10yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    }
+  },
+  {
+    "id": "vuaa",
+    "ticker": "VUAA",
+    "region": "ucits",
+    "indexGroup": "sp500",
+    "name": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "indexName": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "isin": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "domicile": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "replication": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "distribution": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "ter": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "fundSizeEur": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "dividendYieldPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "withholdingRate": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return5yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return10yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    }
+  },
+  {
+    "id": "vwce",
+    "ticker": "VWCE",
+    "region": "ucits",
+    "indexGroup": "all-world",
+    "name": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "indexName": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "isin": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "domicile": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "replication": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "distribution": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "ter": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "fundSizeEur": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "dividendYieldPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "withholdingRate": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return5yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return10yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    }
+  },
+  {
+    "id": "cndx",
+    "ticker": "CNDX",
+    "region": "ucits",
+    "indexGroup": "nasdaq100",
+    "name": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "indexName": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "isin": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "domicile": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "replication": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "distribution": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "ter": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "fundSizeEur": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "dividendYieldPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "withholdingRate": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return5yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "return10yPct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    }
+  }
+]
