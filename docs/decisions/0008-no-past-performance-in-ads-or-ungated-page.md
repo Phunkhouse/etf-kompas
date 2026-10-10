@@ -1,7 +1,7 @@
 # 0008. No past-performance figures in ads or the ungated page
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context

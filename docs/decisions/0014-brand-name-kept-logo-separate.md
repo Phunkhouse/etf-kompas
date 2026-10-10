@@ -1,7 +1,7 @@
 # 0014. Brand name kept, logo made separately
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context

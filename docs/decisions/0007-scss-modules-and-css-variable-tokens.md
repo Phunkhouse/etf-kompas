@@ -1,7 +1,7 @@
 # 0007. SCSS Modules and design tokens as CSS variables
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context

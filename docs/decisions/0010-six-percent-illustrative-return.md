@@ -1,7 +1,7 @@
 # 0010. 6 % illustrative return, identical for every ETF
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context

@@ -1,7 +1,7 @@
 # 0006. NYSE ETFs vs UCITS: how the page frames them
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context

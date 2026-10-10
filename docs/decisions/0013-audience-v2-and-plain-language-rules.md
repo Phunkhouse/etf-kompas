@@ -1,7 +1,7 @@
 # 0013. Audience v2 and plain-language rules
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context

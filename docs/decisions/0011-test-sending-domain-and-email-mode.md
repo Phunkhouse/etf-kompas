@@ -1,7 +1,7 @@
 # 0011. Test sending domain and `EMAIL_MODE`
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context
