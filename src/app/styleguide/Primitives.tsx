@@ -6,6 +6,7 @@ import { Section } from '@/components/Section'
 import { Table, TableLabel } from '@/components/Table'
 import { Tag } from '@/components/Tag'
 import { Wordmark } from '@/components/Wordmark'
+import { CalculatorDemo, FormDemos } from './Demos'
 import styles from './Primitives.module.scss'
 
 const columns = [
@@ -120,6 +121,9 @@ export function Primitives() {
 
           <Tag as="h3">Table</Tag>
           <Table caption="Cena a dostupnost" columns={columns} rows={rows} />
+
+          <FormDemos />
+          <CalculatorDemo />
         </div>
       </section>
 
@@ -130,6 +134,7 @@ export function Primitives() {
         <div className={styles.stack}>
           <Wordmark tone="dark" />
           <Controls />
+          <CalculatorDemo />
         </div>
       </Section>
     </>

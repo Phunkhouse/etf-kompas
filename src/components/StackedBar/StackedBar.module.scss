@@ -1,0 +1,69 @@
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.bar {
+  display: block;
+  width: 100%;
+  height: var(--space-4);
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.track {
+  fill: var(--color-border);
+}
+
+.remaining {
+  fill: var(--color-ink);
+  background: var(--color-ink);
+}
+
+.cost {
+  fill: var(--color-cost-strong);
+  background: var(--color-cost-strong);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+  font-size: var(--font-size-sm);
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swatch {
+  display: inline-block;
+  width: var(--space-3);
+  height: var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--font-weight-bold);
+}
+
+:global([data-tone='dark']) {
+  .track {
+    fill: var(--color-inverse-border);
+  }
+
+  .remaining {
+    fill: var(--color-paper);
+    background: var(--color-paper);
+  }
+
+  .cost {
+    fill: var(--color-cost);
+    background: var(--color-cost);
+  }
+}

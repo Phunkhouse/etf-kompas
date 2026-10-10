@@ -1,0 +1,36 @@
+.number {
+  display: block;
+  color: var(--color-cost-strong);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--line-height-none);
+  letter-spacing: var(--tracking-display);
+  white-space: nowrap;
+}
+
+.lg {
+  font-size: var(--font-size-display-sm);
+}
+
+.md {
+  font-size: var(--font-size-2xl);
+}
+
+@media (min-width: 768px) {
+  .lg {
+    font-size: var(--font-size-display);
+  }
+}
+
+:global([data-tone='dark']) .number {
+  color: var(--color-cost);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
