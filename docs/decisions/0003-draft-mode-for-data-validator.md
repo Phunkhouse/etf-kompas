@@ -1,7 +1,7 @@
 # 0003. Draft mode for the data validator
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context

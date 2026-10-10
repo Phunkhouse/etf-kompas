@@ -1,7 +1,7 @@
 # 0001. pnpm and the starter-guide baseline
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context
@@ -20,7 +20,7 @@ Use pnpm only (Node 24), the guide's lint, format, test and CI setup, and these 
 
 ## Alternatives considered
 
-Reason for the baseline: SPEC §12a ("adopted from the starter guide"). No alternative package manager or toolchain was recorded. Question for David: was npm or yarn ever considered, and why not?
+Reason for the baseline: SPEC §12a ("adopted from the starter guide"). No alternative package manager or toolchain was recorded.
 
 ## Consequences
 

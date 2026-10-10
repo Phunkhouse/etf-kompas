@@ -1,7 +1,7 @@
 # 0002. Single-locale copy module instead of next-intl
 
 Date: 2026-10-10
-Status: proposed
+Status: accepted
 Phase: 1
 
 ## Context
