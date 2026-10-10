@@ -3,9 +3,11 @@ body {
   color: var(--color-ink);
   background: var(--color-paper);
   font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 2px;
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
 }

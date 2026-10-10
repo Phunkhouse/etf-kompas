@@ -13,10 +13,11 @@
     "test:e2e": "playwright test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm lint && pnpm typecheck && pnpm test",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm contrast:check",
     "prepare": "husky",
     "data:validate": "tsx scripts/validate-data.ts",
-    "data:validate:draft": "tsx scripts/validate-data.ts --draft"
+    "data:validate:draft": "tsx scripts/validate-data.ts --draft",
+    "contrast:check": "tsx scripts/check-contrast.ts"
   },
   "dependencies": {
     "next": "16.4.0",
