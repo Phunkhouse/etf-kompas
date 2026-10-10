@@ -99,3 +99,36 @@ test('buttons and chips are reachable by keyboard and show a focus ring', async 
     .evaluate((el) => getComputedStyle(el).outlineWidth)
   expect(outline).toBe('3px')
 })
+
+test('slider works with the keyboard and updates the result', async ({
+  page,
+}) => {
+  await page.goto('/styleguide')
+  const slider = page
+    .getByRole('slider', { name: 'Kolik měsíčně uložíte' })
+    .first()
+
+  await slider.focus()
+  const before = await slider.inputValue()
+  await page.keyboard.press('ArrowRight')
+  expect(Number(await slider.inputValue())).toBe(Number(before) + 500)
+  await expect(slider).toHaveAttribute('aria-valuetext', /Kč$/)
+
+  await page.keyboard.press('End')
+  expect(await slider.inputValue()).toBe('20000')
+  await page.keyboard.press('Home')
+  expect(await slider.inputValue()).toBe('500')
+
+  // The cost number follows (8 % of 500 Kč x 120 months = 4 800 Kč)
+  await expect(page.getByRole('status').first()).toHaveText(/4\s800\sKč/)
+})
+
+test('field announces an error and links it to the input', async ({ page }) => {
+  await page.goto('/styleguide')
+  const invalid = page.getByRole('textbox', { name: 'Váš e-mail' }).nth(2)
+  await expect(invalid).toHaveAttribute('aria-invalid', 'true')
+  // Next also has a route announcer with role=alert, so pick ours by its text.
+  await expect(
+    page.getByRole('alert').filter({ hasText: 'jmeno@domena.cz' }),
+  ).toBeVisible()
+})
