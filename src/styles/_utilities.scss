@@ -1,0 +1,18 @@
+@use 'sass:math';
+
+$breakpoints: (
+  'sm': 480px,
+  'md': 768px,
+  'lg': 1024px,
+);
+
+@function rem($px) {
+  @return math.div($px, 16px) * 1rem;
+}
+
+// Mobile-first: styles apply from the given breakpoint upwards.
+@mixin from($name) {
+  @media (min-width: map-get($breakpoints, $name)) {
+    @content;
+  }
+}

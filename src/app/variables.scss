@@ -1,0 +1,21 @@
+// Placeholder tokens (SPEC §8, §24). Final palette and type land in Phase 1b.
+:root {
+  --color-paper: #f7f3ea;
+  --color-ink: #16140f;
+  --color-muted: #5d584c;
+  --color-border: #d9d2c0;
+  --color-cost: #d1381b;
+  --color-saved: #1f5a3c;
+  --color-focus: #16140f;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  --touch-target-min: 3rem;
+  --font-body: system-ui, sans-serif;
+  --font-display: Georgia, serif;
+}

@@ -1,10 +1,13 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,
-};
+  sassOptions: { loadPaths: ['src'] },
+  // Needed to open the dev server from a real phone on the LAN (SPEC §12a).
+  // TODO: set to the developer machine's LAN IP.
+  allowedDevOrigins: [],
+}
 
-export default nextConfig;
+export default nextConfig

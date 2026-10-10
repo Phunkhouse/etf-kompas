@@ -1,0 +1,17 @@
+@use 'styles/utilities' as *;
+
+.main {
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: var(--space-6);
+
+  @include from('md') {
+    padding: var(--space-8);
+  }
+}
+
+.logo {
+  width: rem(240px);
+  height: auto;
+}
