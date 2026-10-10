@@ -2,7 +2,7 @@
 
 # Project
 
-Czech-language, mobile-first lead-gen landing page for ETF cost comparison. Source of truth: `docs/SPEC.md`. Phase overview: `docs/PHASES.md`. Tooling conventions: `docs/starter-guide.md` as adapted in SPEC §12a (where they disagree, the spec wins).
+Czech-language, mobile-first lead-gen landing page for ETF cost comparison. Source of truth: `docs/SPEC.md`. Phase overview: `docs/PHASES.md`. Design: `docs/design/DESIGN-GUIDE.md` (palette, type, components) and `docs/design/wireframe-b.md` (screens); read them before writing any UI or style. Tooling conventions: `docs/starter-guide.md` as adapted in SPEC §12a (where they disagree, the spec wins).
 
 # Rules
 

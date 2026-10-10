@@ -30,3 +30,16 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - `resolve.tsconfigPaths` is supported by the installed Vite 8.
 - Dropped from the guide: `next-intl` inline dependency in the Vitest config (next-intl is not used), React Hook Form.
 - `@types/node` raised from `^20` to `^24` because Vitest 5 requires it (peer dependency) and the project runs Node 24.
+
+## Phase 1b: design foundation
+
+**Prompt (summary):** "Plan Phase 1b", then: use the wireframe canvas as the design, build a documented palette and design guide from it, and prepare wireframe B as text from the link.
+
+**Produced**
+
+- `docs/design/DESIGN-GUIDE.md`, `docs/design/wireframe-b.md` and `docs/design/README.md`, written from the design canvas (all 12 boards). Palette, type, spacing, components and motion are the values the canvas uses. Contrast ratios were calculated, not estimated.
+
+**Mistakes and corrections**
+
+- The agent's first plan proposed choosing fonts and a palette itself. The canvas already defined both (IBM Plex Sans and Mono, a warm neutral palette with two accents), so the plan was changed to extract them.
+- Flagged while reading the canvas, not yet decided: the wireframe has no initial-amount input although SPEC §4 and §21 do, and its hero table animation (about 3 s) conflicts with the SPEC rule that only the result count-up animates (see `docs/design/wireframe-b.md`, open points).
