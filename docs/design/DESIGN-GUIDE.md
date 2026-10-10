@@ -111,14 +111,14 @@ Primitives from SPEC §24, as drawn in the wireframe.
 
 ## 5. Motion
 
-SPEC §24 allows only the result count-up (under 300 ms) and says nothing else animates. The wireframe adds one deliberate animation, the hero table intro (board "Animace hero tabulky"):
+Besides the result count-up (under 300 ms), the wireframe has one deliberate animation, the hero table intro (board "Animace hero tabulky"). Kept by decision note 0016:
 
 - Card: fade and rise 24 px, 0.7 s, `cubic-bezier(.2,.8,.2,1)`.
 - Rows 1 to 3: fade and slide in from the left, 0.7 s, delays 0.4 s, 0.9 s and 1.4 s.
 - The cheapest row (row 3) gets a green highlight (`highlight`) at 2.2 s, 0.8 s long.
 - `prefers-reduced-motion: reduce` turns all of it off.
 
-See the open points in [wireframe-b.md](wireframe-b.md) about its effect on LCP and the SPEC rule.
+It must not hurt LCP (target below 2.0 s): this is measured in Phase 3 and the animation is cut or shortened if it fails.
 
 ## 6. Focus and accessibility
 

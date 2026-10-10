@@ -49,7 +49,7 @@ Logo and "ETF Kompas". Desktop nav: Jak počítáme, Odkud máme čísla, Čast�
 
 Image: [hero-a-mobile.png](images/hero-a-mobile.png).
 
-Dark screen for visitors from ad A (375x667): source line, logo, h1 "Kolik z vašich peněz sní poplatky fondu?", sub-line "Spočítejte to za 20 sekund. Zdarma, bez registrace.", then the calculator controls directly (monthly slider, horizon chips 5 / 10 / 20), button "Spočítat moje poplatky" and "Příklad výpočtu. Investování nese riziko ztráty." My reading, to confirm: `?v=a` renders this hero and `?v=b` the table hero above (SPEC §22).
+Dark screen for visitors from ad A (375x667): source line, logo, h1 "Kolik z vašich peněz sní poplatky fondu?", sub-line "Spočítejte to za 20 sekund. Zdarma, bez registrace.", then the calculator controls directly (monthly slider, horizon chips 5 / 10 / 20), button "Spočítat moje poplatky" and "Příklad výpočtu. Investování nese riziko ztráty." `?v=a` renders this hero and `?v=b` the table hero above (SPEC §22).
 
 ### 3. Calculator and gate
 
@@ -127,11 +127,14 @@ Ad creatives, not part of the app.
 - Ad A leads to hero a, ad B to hero b (my reading).
 - The 9:16 layouts keep text out of the top 110 px and bottom 150 px for the Stories UI.
 
-## Open points to decide
+## Decisions (David, 2026-10-10)
 
-1. **Calculator inputs.** SPEC §4 and §21 have `initial`, `monthly`, `years`. The wireframe has only monthly and horizon. Should an initial amount be added, or removed from the spec?
-2. **Hero animation vs SPEC.** SPEC §24 allows only a count-up under 300 ms. The hero table intro runs about 3 s. The table is also the likely LCP element, and its rows start at opacity 0, so LCP (target below 2.0 s) may be measured late. Proposal: keep the animation, but test LCP in Phase 3 and cut it if the target fails. This would need an amendment note.
-3. **Copy differences.** Wireframe labels differ from SPEC §25 (for example CTA "Spočítat, kolik ušetřím" vs "Spočítat moje poplatky", "Kolik měsíčně uložíte" vs "Investuji měsíčně"), and the hero headlines are not from the headline bank. They are reconciled with `copy:check` in Phase 3, you decide which wording wins.
-4. **Which hero is `?v=a`.** See 2b.
-5. **Not drawn:** FAQ answers, mobile menu, error and loading states, expired results link, StackedBar, cookie banner, the privacy page, the test-project notice.
-6. **Wireframe sample data.** Row labels such as "Evropská verze prvního fondu" assume the verified data matches (same index, UCITS). If verification changes it, the rows change.
+1. **Calculator inputs:** monthly amount and horizon only. The initial lump sum is dropped for now, and SPEC §4 and §21 are updated. Note 0015.
+2. **Hero animation:** kept. LCP is measured in Phase 3 and the animation is cut or shortened if the target (below 2.0 s) fails. SPEC §4 and §24 are updated. Note 0016.
+3. **Copy:** the wireframe copy is the working copy and wins over SPEC §25 where they differ. It is reviewed later, and `copy:check` rules still apply when Phase 3 builds it. Note 0017.
+4. **Hero variants:** `?v=a` is the calculator-first hero (board G5, ad A) and `?v=b` the table-first hero (ad B), as read in 2b. An unknown value falls back to `a`.
+
+## Open points
+
+1. **Not drawn:** FAQ answers, mobile menu, error and loading states, expired results link, StackedBar, cookie banner, the privacy page, the test-project notice.
+2. **Wireframe sample data.** Row labels such as "Evropská verze prvního fondu" assume the verified data matches (same index, UCITS). If verification changes it, the rows change.
