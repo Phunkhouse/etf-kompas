@@ -25,13 +25,14 @@ pnpm dev            # Next dev server on http://localhost:3000
 pnpm build          # production build
 pnpm start          # serve the production build
 
-pnpm check          # lint + typecheck + test (no format check). Run before finishing, together with pnpm format:check
+pnpm check          # lint + typecheck + test + contrast:check (no format check). Run before finishing, together with pnpm format:check
 pnpm format         # Prettier --write
 pnpm format:check   # Prettier --check (CI runs this)
 pnpm lint           # ESLint
 pnpm typecheck      # runs `next typegen` first (route types are generated and git-ignored)
 pnpm test           # Vitest: unit + component tests
 pnpm test:watch     # Vitest in watch mode
+pnpm contrast:check     # WCAG AA check of every colour pair in src/styles/contrast-pairs.ts (part of pnpm check)
 pnpm data:validate       # strict: fails on TODO_VERIFY, missing source, stale data (the deploy gate, Phase 6)
 pnpm data:validate:draft # same, but TODO_VERIFY is only a warning (CI today)
 pnpm test:e2e       # Playwright (mobile + desktop smoke). First run: pnpm exec playwright install chromium
@@ -45,7 +46,7 @@ pnpm test:e2e       # Playwright (mobile + desktop smoke). First run: pnpm exec 
 - pnpm only (Node 24). Never create `package-lock.json`. `next`, `react`, `react-dom` and `eslint-config-next` are pinned exactly.
 - Next.js App Router, TypeScript strict, `src/` directory, import alias `@/*` -> `src/*`.
 - ESLint flat config, Prettier (no semicolons, single quotes).
-- Styling: SCSS Modules, design tokens as CSS variables, spacing and type only from tokens. No Tailwind, no component library.
+- Styling: SCSS Modules, design tokens as CSS variables in `src/app/variables.scss` (colours are mirrored in `src/styles/colors.ts`: change both), spacing and type only from tokens. A new colour pair used in the UI goes into `src/styles/contrast-pairs.ts`. `/styleguide` shows every token. No Tailwind, no component library.
 - React Compiler is on: no `useMemo`/`useCallback`/`React.memo` without a measured reason.
 - Validation: Zod, shared between client and server. Money crossing the API boundary is an integer (whole Kč), never a float.
 

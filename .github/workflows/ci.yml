@@ -22,6 +22,7 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm data:validate:draft
+      - run: pnpm contrast:check
       - run: pnpm build
 
   e2e:

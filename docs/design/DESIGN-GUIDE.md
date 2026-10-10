@@ -65,7 +65,7 @@ Watch-outs:
 
 - **Sans:** IBM Plex Sans, weights 400, 500, 600, 700. Body, headings, buttons.
 - **Mono:** IBM Plex Mono, weight 500. Only for `tag` labels.
-- Both are loaded from Google Fonts in the wireframe. The app self-hosts them through `next/font` with the `latin` and `latin-ext` subsets (Czech needs `ě š č ř ž ý á í é ů ú ň ť ď`). Whether the files support tabular figures and all diacritics is verified in Phase 1b PR 1 before anything else.
+- Both are loaded from Google Fonts in the wireframe. The app self-hosts them through `next/font` with the `latin` and `latin-ext` subsets (Czech needs `ě š č ř ž ý á í é ů ú ň ť ď`). `pnpm test:e2e` checks that both fonts load and that every Czech diacritic has a glyph.
 - All Kč amounts use tabular figures (`font-variant-numeric: tabular-nums`, class `num`), with a non-breaking space before `Kč` and between digit groups (`12 480 Kč`, `0,07 %`).
 - Body 16 px, line-height 1.45. Headings: weight 700, tight tracking (`-0.015em` to `-0.04em`), line-height 1.04 to 1.15.
 - **Tag:** Plex Mono 500, 10 px on mobile and 11 px on desktop, uppercase, letter-spacing `.06em`, colour `muted`.
@@ -81,7 +81,23 @@ Watch-outs:
 | Caption, source line               | 12 to 13 px                     | 12 to 13 px |
 | Button                             | 17 px (small 15 px), weight 600 | same        |
 
-The wireframe uses about 20 different font sizes. Phase 1b PR 1 merges these into a smaller token scale; this table is the target for each role.
+The wireframe uses about 20 different font sizes. The code merges them into the token scale below (`--font-size-*` in `src/app/variables.scss`). Some elements end up 1 px larger or smaller than drawn, for example tags are 12 px where the wireframe has 10 to 11 px, which also helps legibility. Review them on `/styleguide`.
+
+| Token        | Size  | Replaces (wireframe)                  |
+| ------------ | ----- | ------------------------------------- |
+| `xs`         | 12 px | 10, 11, 12 (tags, captions, sources)  |
+| `sm`         | 14 px | 13, 14 (sub-labels, small body)       |
+| `base`       | 16 px | 15, 16 (body)                         |
+| `md`         | 18 px | 17, 18 (lead, buttons, card headings) |
+| `lg`         | 20 px | 20                                    |
+| `xl`         | 24 px | 22, 24, 26                            |
+| `2xl`        | 32 px | 28, 30, 32                            |
+| `3xl`        | 40 px | 40                                    |
+| `4xl`        | 58 px | 58 (h1 desktop)                       |
+| `display-sm` | 60 px | 52, 60 (result number, mobile)        |
+| `display`    | 80 px | 80 (result number, desktop)           |
+
+IBM Plex Sans digits are tabular by default (verified: `1` and `0` have the same width), so Kč amounts align even without `tabular-nums`. We still set it as a guard.
 
 ## 3. Spacing, radius, borders
 

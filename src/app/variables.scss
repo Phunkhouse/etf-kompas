@@ -1,21 +1,108 @@
-// Placeholder tokens (SPEC §8, §24). Final palette and type land in Phase 1b.
+// Design tokens (docs/design/DESIGN-GUIDE.md, SPEC §24).
+// Colour values are mirrored in src/styles/colors.ts; a test keeps both in sync.
+// Breakpoints live in src/styles/_utilities.scss (CSS variables cannot be used in media queries).
 :root {
-  --color-paper: #f7f3ea;
-  --color-ink: #16140f;
-  --color-muted: #5d584c;
-  --color-border: #d9d2c0;
-  --color-cost: #d1381b;
-  --color-saved: #1f5a3c;
-  --color-focus: #16140f;
+  // Colour
+  --color-paper: #f6f3ec;
+  --color-surface: #fffdf8;
+  --color-white: #ffffff;
+  --color-ink: #16150f;
+  --color-ink-soft: #3a372e;
+  --color-muted: #6b665a;
+  --color-border: #d4cebe;
+  --color-border-soft: #e6e1d4;
+  --color-inverse-soft: #d9d4c5;
+  --color-inverse-subtle: #b9b3a2;
+  --color-inverse-border: #4a473d;
+  --color-cost: #f2a18c;
+  --color-cost-strong: #c23a1b;
+  --color-no-bg: #f4d9d1;
+  --color-no-fg: #7a2410;
+  --color-yes-bg: #d6e8de;
+  --color-yes-fg: #154a33;
+  --color-highlight: #dceee3;
+  --color-row-hover: #f3eedf;
+  // Focus ring colour. Dark sections set it to paper.
+  --color-focus: var(--color-ink);
 
+  // Type
+  --font-body: var(--font-plex-sans), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-size-xs: 0.75rem; // 12 px: tags, captions, sources
+  --font-size-sm: 0.875rem; // 14 px: small body, table sub-labels
+  --font-size-base: 1rem; // 16 px: body
+  --font-size-md: 1.125rem; // 18 px: lead, card headings, buttons
+  --font-size-lg: 1.25rem; // 20 px
+  --font-size-xl: 1.5rem; // 24 px: section headings (mobile)
+  --font-size-2xl: 2rem; // 32 px: section headings (desktop), h1 (mobile)
+  --font-size-3xl: 2.5rem; // 40 px
+  --font-size-4xl: 3.625rem; // 58 px: h1 (desktop)
+  --font-size-display-sm: 3.75rem; // 60 px: result number (mobile)
+  --font-size-display: 5rem; // 80 px: result number (desktop)
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-none: 1;
+  --line-height-tight: 1.05;
+  --line-height-snug: 1.15;
+  --line-height-base: 1.45;
+  --tracking-display: -0.03em;
+  --tracking-tight: -0.025em;
+  --tracking-snug: -0.015em;
+  --tracking-tag: 0.06em;
+  --measure: 65ch; // comfortable line length for running text
+
+  // Spacing (4 px scale)
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
+  --space-7: 1.75rem;
   --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-14: 3.5rem;
+  --space-16: 4rem;
 
-  --touch-target-min: 3rem;
-  --font-body: system-ui, sans-serif;
-  --font-display: Georgia, serif;
+  // Layout
+  --container-max: 80rem;
+  --gutter: var(--space-4);
+
+  // Radius and borders
+  --radius-sm: 0.25rem; // 4 px
+  --radius-md: 0.375rem; // 6 px: buttons, fields
+  --radius-lg: 0.625rem; // 10 px: cards
+  --radius-pill: 999px;
+  --border-width: 1px;
+  --border-width-strong: 1.5px;
+  --border-width-heavy: 2px;
+  --focus-width: 3px;
+  --focus-offset: 2px;
+
+  // Touch targets
+  --touch-target-min: 2.75rem; // 44 px
+  --touch-target: 3rem; // 48 px: chips, sticky bar
+  --touch-target-lg: 3.5rem; // 56 px: primary button, email field
+
+  // Motion
+  --duration-fast: 0.2s; // hover, state changes
+  --duration-count: 0.3s; // result count-up (max, SPEC §4)
+  --duration-intro: 0.7s; // hero table intro
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  // Stacking
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-header: 20;
+  --z-overlay: 100;
+}
+
+// Wider screens get wider gutters (matches the 'md' breakpoint, 768 px).
+@media (min-width: 768px) {
+  :root {
+    --gutter: var(--space-14);
+  }
 }
