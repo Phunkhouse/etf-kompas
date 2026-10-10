@@ -98,14 +98,14 @@ Rejected: gate before calculator (kills conversion on cold traffic), exit-intent
 
 Chosen over portfolio builder or pure comparison table because it (a) produces a personalised number in Kč, (b) takes under 10 seconds, (c) the output naturally raises the next question ("what about the other 7?"), which the gate answers.
 
-**Inputs (3):** initial amount (slider plus numeric), monthly contribution (slider), horizon (5/10/20 yrs chips). ETF selector defaults to S&P 500 US-listed (VOO).
+**Inputs (2):** monthly contribution (slider), horizon (5/10/20 yrs chips). An initial lump sum is not asked for now (decision note 0015). ETF selector defaults to S&P 500 US-listed (VOO).
 **Assumption:** a fixed gross return (default 6 % nominal p.a., identical for every ETF so only costs differ; editable in the "Jak počítáme" disclosure). The page must say it is an illustration, not a forecast.
 **Outputs:** cumulative cost of TER, FX conversion, and dividend withholding, in Kč, plus the difference versus the cheapest alternative.
 
 Rules:
 - Pure function in `lib/calc.ts`, fully unit-tested (Vitest), formulas documented in `docs/METHODOLOGY.md`. The reviewer must be able to verify the maths by hand.
 - No claims such as "you will lose X". Wording: "orientační odhad nákladů".
-- Result animates for under 300 ms, not longer. Respect `prefers-reduced-motion`.
+- Result animates for under 300 ms, not longer. Respect `prefers-reduced-motion`. The one other animation is the hero table intro (decision note 0016).
 
 ---
 
@@ -454,12 +454,12 @@ Now: Sat 2026-10-10, evening. Hard deadline: Fri 2026-10-16. Stretch target: Pha
 
 Purpose: show the **cost drag** of holding a given ETF, in Kč, for the user's inputs. It is a cost illustration, not a return forecast.
 
-**Inputs:** `initial` (Kč, integer), `monthly` (Kč, integer), `years` in {5, 10, 20}, `etfId`, `grossReturn` (default 6 % p.a., same for all funds), optional `fxFeePct`.
+**Inputs:** `monthly` (Kč, integer; no initial lump sum for now, see decision note 0015), `years` in {5, 10, 20}, `etfId`, `grossReturn` (default 6 % p.a., same for all funds), optional `fxFeePct`.
 
 **Cost components, in scope**
 1. **TER:** annual, deducted from the fund's NAV. Modelled as a reduction of the annual return.
 2. **Dividend withholding drag:** `dividendYield x withholdingRate`, applied as a reduction of the annual return. `dividendYieldPct` and `withholdingRate` are sourced fields per fund (a withholding rate of 15 % is *expected* for treaty-eligible US dividends, **to be verified per fund and domicile**). For accumulating funds use the yield of the fund's distributing twin or the index, with the source stated.
-3. **FX conversion fee:** one-off percentage on every deposit (initial and each monthly). Default comes from sourced broker data; if no sourced value exists the component is off and the UI says so.
+3. **FX conversion fee:** one-off percentage on every deposit (each monthly deposit). Default comes from sourced broker data; if no sourced value exists the component is off and the UI says so.
 
 **Explicitly out of scope** (stated in the "Jak počítáme" disclosure): broker commissions, bid-ask spreads, Czech personal income tax on dividends or gains (gains may be exempt after the time test, **verify**), inflation, US estate-tax exposure (a risk, not a running cost; mentioned in the Kompas only).
 
@@ -477,7 +477,7 @@ Purpose: show the **cost drag** of holding a given ETF, in Kč, for the user's i
 
 **Required tests (Vitest)**
 - Zero costs (`TER=0, yield=0, fx=0`) gives cost 0.
-- Cost scales linearly with the scale of `initial` and `monthly` (double inputs, double cost).
+- Cost scales linearly with `monthly` (double the input, double the cost).
 - Cost is monotonic in years and in TER.
 - Zero deposits give cost 0; no NaN or negative values for any valid input range; inputs clamped at the boundary.
 - At least 3 **golden cases derived by hand by the reviewer** (not by the agent) and stored in `docs/METHODOLOGY.md` with the derivation.
@@ -564,7 +564,7 @@ Most ad clicks open in a webview where downloads, storage and some inputs behave
 
 **`/styleguide`:** an internal route, `noindex`, rendering the tokens and every primitive state. Kept deployed and linked from the README as evidence of craft. Storybook was considered and left out for now (extra tooling and build time for a one-day build); it can be added later as an optional extra.
 
-**Fixed rules from earlier decisions:** no stock photos, no icon sets, no emoji; result number count-up under 300 ms and respects `prefers-reduced-motion`; nothing else animates; AA contrast; spacing and type only from tokens; no component libraries; check on a real phone.
+**Fixed rules from earlier decisions:** no stock photos, no icon sets, no emoji; result number count-up under 300 ms and respects `prefers-reduced-motion`; nothing else animates except the hero table intro (decision note 0016); AA contrast; spacing and type only from tokens; no component libraries; check on a real phone.
 
 **Logo:** pending, created by David in a separate thread. Until then a text wordmark "ETF Kompas" in the display font. The slot is `src/components/Wordmark` with assets in `public/brand/`. Favicon and OG image (P1) wait for the logo. Agents must not design a logo.
 
