@@ -3,7 +3,7 @@
 Czech-language, mobile-first lead-gen landing page for ETF cost comparison.
 Source of truth: [docs/SPEC.md](docs/SPEC.md).
 
-> README stub. The full structure is defined in SPEC §16.
+> README stub. The full structure is defined in SPEC §16. Dev phases: [docs/PHASES.md](docs/PHASES.md).
 
 ## Stack
 
