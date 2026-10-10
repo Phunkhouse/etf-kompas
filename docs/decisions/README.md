@@ -1,6 +1,6 @@
 # Decision notes
 
-Short notes explaining why the project is built the way it is. Each milestone ends with at least one note (see "Definition of done" in `docs/spec.md`).
+Short notes explaining why the project is built the way it is. Each milestone ends with at least one note (see "Definition of done" in `docs/SPEC.md`).
 
 A note is for a decision that someone might reasonably ask about later: a tool choice, a data model shape, a trade-off. Typo fixes and routine code don't need one.
 
@@ -15,7 +15,7 @@ A note is for a decision that someone might reasonably ask about later: a tool c
 
 Date: YYYY-MM-DD
 Status: accepted | superseded by NNNN | deprecated
-Milestone: M0
+Phase: 1
 
 ## Context
 
