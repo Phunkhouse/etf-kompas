@@ -1,0 +1,25 @@
+import { defineConfig, devices } from '@playwright/test'
+
+export default defineConfig({
+  testDir: './e2e',
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 1 : 0,
+  reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
+  use: { baseURL: 'http://localhost:3000', trace: 'on-first-retry' },
+  projects: [
+    // Primary: our audience is mobile (SPEC §12a).
+    { name: 'mobile', use: { ...devices['Pixel 7'] } },
+    // One desktop smoke project: only tests tagged @smoke.
+    {
+      name: 'desktop-smoke',
+      grep: /@smoke/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+  ],
+  webServer: {
+    command: process.env.CI ? 'pnpm build && pnpm start' : 'pnpm dev',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI,
+    timeout: 120_000,
+  },
+})
