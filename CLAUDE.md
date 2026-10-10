@@ -12,7 +12,8 @@ Czech-language, mobile-first lead-gen landing page for ETF cost comparison. Sour
 - No dependency without a one-line reason in the PR.
 - Run `pnpm check && pnpm format:check` before finishing any change. Never use `--no-verify`.
 - One concern per branch/PR, Conventional Commit titles, never push to `main`.
-- After each phase, append to `docs/AI-LOG.md`: prompt used, what you produced, what you got wrong or had to fix.
+- Keep `docs/AI-LOG.md` current as you work, in the same PR as the change: add the prompt used, what you produced, and every mistake you made or David corrected (wrong assumption, failed CI, rewritten commit, wrong data). The README reports where the AI erred, and this cannot be reconstructed later. Do it when the mistake happens, not at the end of the phase.
+- Watch for decisions worth a note in `docs/decisions/`: a tool or dependency choice, a data-model shape, a deviation from the spec or starter guide, a trade-off, a workflow rule. When you see one, suggest a note (title and one-line reason) instead of silently deciding. Draft it only after David gives the reason (see the rule below).
 - Ask before changing the spec's decisions. Propose the change instead.
 - If the spec is silent or contradictory, make the smallest decision, draft a decision note in `docs/decisions/` (see its README), and tell me.
 - Decision notes record only reasons the author (David) actually gave. If a reason or the considered alternatives are missing, ask instead of inventing them. Verify every claim about the repo against the repo.
