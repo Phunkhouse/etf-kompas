@@ -1,0 +1,472 @@
+[
+  {
+    "id": "degiro",
+    "name": "DEGIRO",
+    "fxFeePct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "custodyFeePct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "czSupport": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "availability": {
+      "voo": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vti": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "qqq": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "schd": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "cspx": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vuaa": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vwce": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "cndx": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      }
+    }
+  },
+  {
+    "id": "fio",
+    "name": "Fio e-Broker",
+    "fxFeePct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "custodyFeePct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "czSupport": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "availability": {
+      "voo": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vti": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "qqq": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "schd": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "cspx": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vuaa": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vwce": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "cndx": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      }
+    }
+  },
+  {
+    "id": "ibkr",
+    "name": "Interactive Brokers",
+    "fxFeePct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "custodyFeePct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "czSupport": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "availability": {
+      "voo": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vti": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "qqq": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "schd": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "cspx": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vuaa": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vwce": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "cndx": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      }
+    }
+  },
+  {
+    "id": "trading212",
+    "name": "Trading 212",
+    "fxFeePct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "custodyFeePct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "czSupport": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "availability": {
+      "voo": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vti": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "qqq": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "schd": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "cspx": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vuaa": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vwce": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "cndx": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      }
+    }
+  },
+  {
+    "id": "xtb",
+    "name": "XTB",
+    "fxFeePct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "custodyFeePct": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "czSupport": {
+      "value": "TODO_VERIFY",
+      "sourceUrl": null,
+      "asOf": null,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "evidence": null
+    },
+    "availability": {
+      "voo": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vti": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "qqq": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "schd": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "cspx": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vuaa": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vwce": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "cndx": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      }
+    }
+  }
+]

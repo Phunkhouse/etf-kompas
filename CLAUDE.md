@@ -31,10 +31,12 @@ pnpm lint           # ESLint
 pnpm typecheck      # runs `next typegen` first (route types are generated and git-ignored)
 pnpm test           # Vitest: unit + component tests
 pnpm test:watch     # Vitest in watch mode
+pnpm data:validate       # strict: fails on TODO_VERIFY, missing source, stale data (the deploy gate, Phase 6)
+pnpm data:validate:draft # same, but TODO_VERIFY is only a warning (CI today)
 pnpm test:e2e       # Playwright (mobile + desktop smoke). First run: pnpm exec playwright install chromium
 ```
 
-- This list covers only scripts that exist today. Later phases add `data:validate` and `copy:check`: update this list when they land.
+- This list covers only scripts that exist today. Later phases add `copy:check`: update this list when they land.
 - Use only scripts that exist in `package.json`. Check it before inventing a command.
 
 # Stack and tooling
