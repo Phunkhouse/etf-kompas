@@ -22,7 +22,24 @@ The wireframe is a design canvas: [ETF Kompas – wireframes](https://claude.ai/
 | Reklama A and B (4:5, 9:16)      | `G1` to `G4`       |
 | První obrazovka po reklamě A     | `G5`               |
 
-Agents cannot always open the canvas, so the text spec and the design guide are the working references. If the canvas and these files disagree, tell David and fix the files after he decides.
+## Images
+
+Exports of every board, optimised (256-colour PNG, full pixel size; desktop boards are 2x, mobile boards 2x). Originals are in the canvas.
+
+| Screen                           | Image                                                                      |
+| -------------------------------- | -------------------------------------------------------------------------- |
+| Landing page, desktop            | [landing-desktop.png](images/landing-desktop.png)                          |
+| Landing page, mobile             | [landing-mobile.png](images/landing-mobile.png)                            |
+| Hero table animation             | [hero-table-animation.png](images/hero-table-animation.png)                |
+| After submit, desktop            | [success-desktop.png](images/success-desktop.png)                          |
+| After submit, mobile             | [success-mobile.png](images/success-mobile.png)                            |
+| Results page, desktop            | [results-desktop.png](images/results-desktop.png)                          |
+| Results page, mobile             | [results-mobile.png](images/results-mobile.png)                            |
+| First screen after ad A (hero a) | [hero-a-mobile.png](images/hero-a-mobile.png)                              |
+| Ad A, 4:5 and 9:16               | [ad-a-4x5.png](images/ad-a-4x5.png), [ad-a-9x16.png](images/ad-a-9x16.png) |
+| Ad B, 4:5 and 9:16               | [ad-b-4x5.png](images/ad-b-4x5.png), [ad-b-9x16.png](images/ad-b-9x16.png) |
+
+The text spec and the design guide are the working references for agents. If an image or the canvas disagrees with them, tell David and fix the files after he decides.
 
 ## Rules
 

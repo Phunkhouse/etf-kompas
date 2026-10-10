@@ -1,6 +1,6 @@
 # Wireframe B: text spec
 
-Written from the canvas [ETF Kompas – wireframes](https://claude.ai/artifact/8PaM6Y6wAcy6nZbQhtaDoi) (see [README.md](README.md)). Styles are in [DESIGN-GUIDE.md](DESIGN-GUIDE.md). All copy here is wireframe draft copy, in Czech as drawn. Final strings come from SPEC §25 in `src/content/copy.ts`.
+Written from the canvas [ETF Kompas – wireframes](https://claude.ai/artifact/8PaM6Y6wAcy6nZbQhtaDoi) and its exported images in [images/](images/) (index in [README.md](README.md)). Styles are in [DESIGN-GUIDE.md](DESIGN-GUIDE.md). All copy here is wireframe draft copy, in Czech as drawn. Final strings come from SPEC §25 in `src/content/copy.ts`.
 
 Numbers in the wireframe are placeholders: `0,0X %`, `X XXX Kč` and the pill `[ověřit]` stay until the data is verified (SPEC §18). Square brackets such as `[SPRÁVCE]` and `[Firma A]` are slots filled from config or verified data.
 
@@ -20,6 +20,8 @@ The order matches SPEC §7. Desktop is 1280 px wide with 56 px gutters. Mobile i
 | 7   | FAQ                             | four rows                                   | four rows                    |
 | 8   | Footer                          | risk line, controller, links                | same, two columns            |
 | 9   | Sticky CTA                      | bottom bar after first scroll               | none                         |
+
+Images: [landing-desktop.png](images/landing-desktop.png), [landing-mobile.png](images/landing-mobile.png).
 
 ### 0. Source bar
 
@@ -44,6 +46,8 @@ Logo and "ETF Kompas". Desktop nav: Jak počítáme, Odkud máme čísla, Čast�
 - Animation: see the table intro below.
 
 ### 2b. Hero (variant a, calculator first, board G5)
+
+Image: [hero-a-mobile.png](images/hero-a-mobile.png).
 
 Dark screen for visitors from ad A (375x667): source line, logo, h1 "Kolik z vašich peněz sní poplatky fondu?", sub-line "Spočítejte to za 20 sekund. Zdarma, bez registrace.", then the calculator controls directly (monthly slider, horizon chips 5 / 10 / 20), button "Spočítat moje poplatky" and "Příklad výpočtu. Investování nese riziko ztráty." My reading, to confirm: `?v=a` renders this hero and `?v=b` the table hero above (SPEC §22).
 
@@ -81,9 +85,13 @@ Appears after the first scroll: paper background, 1.5 px top border, a 48 px but
 
 ## Hero table intro (board T1)
 
+Image: [hero-table-animation.png](images/hero-table-animation.png).
+
 Table card fades in, then rows 1 to 3 slide in one after another, then the cheapest row is highlighted green. Timings are in [DESIGN-GUIDE.md](DESIGN-GUIDE.md) section 5. Reduced motion shows the final state. The board has a "Přehrát znovu" control for review only.
 
 ## After submit (boards E1 desktop, E2 mobile)
+
+Images: [success-desktop.png](images/success-desktop.png), [success-mobile.png](images/success-mobile.png).
 
 The success state replaces the gate in place, no redirect (SPEC §3.5).
 
@@ -96,6 +104,8 @@ The success state replaces the gate in place, no redirect (SPEC §3.5).
 
 ## Results page (boards F1 desktop, F2 mobile)
 
+Images: [results-desktop.png](images/results-desktop.png), [results-mobile.png](images/results-mobile.png).
+
 Top bar with source date "Stav 10. 2026 · u každého čísla je zdroj", logo and a PDF link. Then "Vaše srovnání" / "Srovnání 8 fondů" with "Ceny, sídlo fondu a to, kde je koupíte z Česka. Bez výnosů, jen to, co fond stojí." and the visitor's own result ("3 000 Kč měsíčně · 10 let", `X XXX Kč`). Desktop has a 220 px side navigation (Fondy, Daně, Kde koupit, Jak počítáme).
 
 1. **Fondy vedle sebe**, sorted from cheapest. Desktop table: Co koupíte, Roční poplatek, Fond sídlí, Koupíte z ČR?, Zdroj ("stránka fondu ↗"). Eight rows with a plain name and ticker; mobile shows three and "Zobrazit dalších 5 fondů".
@@ -107,6 +117,8 @@ Top bar with source date "Stav 10. 2026 · u každého čísla je zdroj", logo a
 - Footer with risk line, controller, "Zásady zpracování", "Odhlásit odběr".
 
 ## Ads (boards G1 to G4)
+
+Images: [ad-a-4x5.png](images/ad-a-4x5.png), [ad-a-9x16.png](images/ad-a-9x16.png), [ad-b-4x5.png](images/ad-b-4x5.png), [ad-b-9x16.png](images/ad-b-9x16.png).
 
 Ad creatives, not part of the app.
 
