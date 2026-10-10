@@ -17,4 +17,8 @@ pnpm install
 pnpm dev
 ```
 
+### Testing on a real phone
+
+Connect the phone to the same Wi-Fi, run `pnpm dev`, find the Mac's address (`ipconfig getifaddr en0`) and open `http://<that address>:3000/styleguide` on the phone. `next.config.ts` allows `192.168.*.*` origins in dev. If your network uses another range (for example `10.x`), add it to `allowedDevOrigins`.
+
 Before finishing any change: `pnpm check && pnpm format:check`.

@@ -5,9 +5,9 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   reactCompiler: true,
   sassOptions: { loadPaths: ['src'] },
-  // Needed to open the dev server from a real phone on the LAN (SPEC §12a).
-  // TODO: set to the developer machine's LAN IP.
-  allowedDevOrigins: [],
+  // Lets a phone on the home network open `pnpm dev` via the Mac's IP (dev only, SPEC §12a).
+  // Each `*` matches one label of the hostname, so this covers any 192.168.x.y address.
+  allowedDevOrigins: ['192.168.*.*'],
 }
 
 export default nextConfig
