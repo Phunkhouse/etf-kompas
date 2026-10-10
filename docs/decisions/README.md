@@ -14,7 +14,7 @@ A note is for a decision that someone might reasonably ask about later: a tool c
 # NNNN. Title
 
 Date: YYYY-MM-DD
-Status: accepted | superseded by NNNN | deprecated
+Status: proposed | accepted | superseded by NNNN | deprecated
 Phase: 1
 
 ## Context
@@ -39,6 +39,8 @@ What gets easier, what gets harder, what to revisit and when.
 Keep each note under one page.
 
 ## Writing notes
+
+- `proposed` means the agent drafted it from SPEC or from the conversation and David has not approved the reasons yet. David changes it to `accepted`.
 
 - Record only what was actually decided and why. Use the reasons given by the author.
 - List only alternatives that were really considered. If none were given, ask.
