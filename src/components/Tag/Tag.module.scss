@@ -1,0 +1,13 @@
+.tag {
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-none);
+  letter-spacing: var(--tracking-tag);
+  text-transform: uppercase;
+}
+
+:global([data-tone='dark']) .tag {
+  color: var(--color-inverse-subtle);
+}

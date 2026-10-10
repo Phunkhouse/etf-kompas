@@ -36,4 +36,36 @@ export const contrastPairs: ContrastPair[] = [
   { fg: 'ink', bg: 'white', min: 4.5, use: 'text in fields' },
   { fg: 'ink', bg: 'paper', min: 3, use: 'borders and focus ring on paper' },
   { fg: 'paper', bg: 'ink', min: 3, use: 'borders and focus ring on dark' },
+  { fg: 'paper', bg: 'ink-soft', min: 4.5, use: 'primary button on hover' },
+  {
+    fg: 'ink',
+    bg: 'inverse-soft',
+    min: 4.5,
+    use: 'primary button on hover, dark',
+  },
+  {
+    fg: 'paper',
+    bg: 'inverse-border',
+    min: 4.5,
+    use: 'outline button and chip on hover, dark',
+  },
+  { fg: 'ink-soft', bg: 'border-soft', min: 4.5, use: 'disabled button' },
+  {
+    fg: 'inverse-soft',
+    bg: 'inverse-border',
+    min: 4.5,
+    use: 'disabled button, dark',
+  },
+  {
+    fg: 'muted',
+    bg: 'highlight',
+    min: 4.5,
+    use: 'table detail on highlighted row',
+  },
+  {
+    fg: 'muted',
+    bg: 'row-hover',
+    min: 4.5,
+    use: 'table detail on hovered row',
+  },
 ]

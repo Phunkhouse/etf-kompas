@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { checkPairs } from '@/lib/contrast'
 import { colors } from '@/styles/colors'
 import { contrastPairs } from '@/styles/contrast-pairs'
+import { Primitives } from './Primitives'
 import styles from './page.module.scss'
 
 export const metadata: Metadata = {
@@ -232,6 +233,7 @@ export default function StyleguidePage() {
           <a href="#sg-colour">Link on dark</a>
         </div>
       </section>
+      <Primitives />
     </main>
   )
 }

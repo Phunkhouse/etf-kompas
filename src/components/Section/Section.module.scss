@@ -1,0 +1,22 @@
+@use 'styles/utilities' as *;
+
+.section {
+  padding-block: var(--space-7);
+
+  @include from('md') {
+    padding-block: var(--space-16);
+  }
+}
+
+.paper {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+// Dark sections also draw the focus ring in paper colour.
+.dark {
+  --color-focus: var(--color-paper);
+
+  background: var(--color-ink);
+  color: var(--color-paper);
+}

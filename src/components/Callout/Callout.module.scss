@@ -1,0 +1,31 @@
+.callout {
+  color: var(--color-ink-soft);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
+  max-width: var(--measure);
+}
+
+.info {
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--color-ink);
+}
+
+.risk {
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width-strong) solid var(--color-ink);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+:global([data-tone='dark']) .callout {
+  color: var(--color-inverse-soft);
+}
+
+:global([data-tone='dark']) .info {
+  border-left-color: var(--color-paper);
+}
+
+:global([data-tone='dark']) .risk {
+  border-color: var(--color-paper);
+  background: transparent;
+}

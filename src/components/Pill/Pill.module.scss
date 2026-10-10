@@ -1,0 +1,19 @@
+.pill {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-base);
+  white-space: nowrap;
+}
+
+.negative {
+  background: var(--color-no-bg);
+  color: var(--color-no-fg);
+}
+
+.positive {
+  background: var(--color-yes-bg);
+  color: var(--color-yes-fg);
+}
