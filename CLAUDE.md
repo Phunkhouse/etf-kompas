@@ -24,14 +24,17 @@ pnpm dev            # Next dev server on http://localhost:3000
 pnpm build          # production build
 pnpm start          # serve the production build
 
-pnpm check          # lint + typecheck (tests join in Phase 1). Run before finishing, together with pnpm format:check
+pnpm check          # lint + typecheck + test (no format check). Run before finishing, together with pnpm format:check
 pnpm format         # Prettier --write
 pnpm format:check   # Prettier --check (CI runs this)
 pnpm lint           # ESLint
 pnpm typecheck      # runs `next typegen` first (route types are generated and git-ignored)
+pnpm test           # Vitest: unit + component tests
+pnpm test:watch     # Vitest in watch mode
+pnpm test:e2e       # Playwright (mobile + desktop smoke). First run: pnpm exec playwright install chromium
 ```
 
-- This list covers only scripts that exist today. Later phases add `test`, `test:e2e`, `data:validate` and `copy:check`: update this list when they land.
+- This list covers only scripts that exist today. Later phases add `data:validate` and `copy:check`: update this list when they land.
 - Use only scripts that exist in `package.json`. Check it before inventing a command.
 
 # Stack and tooling

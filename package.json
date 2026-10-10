@@ -7,11 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "prepare": "husky",
     "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run --project unit --project components --passWithNoTests",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm lint && pnpm typecheck"
+    "check": "pnpm lint && pnpm typecheck && pnpm test",
+    "prepare": "husky"
   },
   "dependencies": {
     "next": "16.4.0",
@@ -20,17 +23,23 @@
     "sass": "^1.105.1"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@playwright/test": "^1.64.0",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^24.19.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.1.2",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
+    "jsdom": "^30.1.2",
     "lint-staged": "^17.6.0",
     "prettier": "^3.9.9",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^5.0.3"
   },
   "packageManager": "pnpm@12.9.1",
   "lint-staged": {
