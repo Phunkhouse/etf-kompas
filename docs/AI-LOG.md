@@ -73,3 +73,22 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 
 - David reviewed `/styleguide` and accepted it. Decision on the open wireframe issue: the positive pill gets a 1.5 px `yes-fg` border (option A) so it stays visible on the highlighted table row. Done in `fix/positive-pill-border`, with a new contrast pair for the border.
 - Tooling slip: my docs-update script stopped halfway because Prettier had reformatted a table row I was matching by exact text. The code change was already written, the docs were finished with a regex afterwards. Lesson: match formatted files with patterns, not exact strings.
+
+## Phase 2: calculator
+
+### PR A: methodology and test list
+
+**Prompt (summary):** "Phase 2", with a pasted plan (calculator in three PRs, five open questions). David answered the questions in chat: one FX fee for all funds, breakdown per fund, wireframe order, `src/server/calc.ts`, fund with its twin only.
+
+**Produced**
+
+- `docs/METHODOLOGY.md`: formulas step by step (closed-form month-end annuity), the proposed breakdown rule, clamping, gap rule and a golden-case input table with the results left for David.
+- `src/server/calc.test.ts`: the SPEC §21 test list plus extra cases as `it.todo` entries.
+- SPEC §4: `lib/calc.ts` changed to `src/server/calc.ts`, because David decided it.
+
+**Mistakes and corrections (caught by the agent while checking the plan against the repo)**
+
+- The first plan said "failing tests first" in PR A. Failing tests would turn CI red and the PR could not be merged. Changed to `it.todo`.
+- The first plan did not notice that with one `fxFeePct` for all funds the FX line in the twin gap is about 0, so the wireframe's FX line under a gap headline would mislead. Raised with David; the breakdown is now computed per fund.
+- The SPEC §21 test list contradicts itself: "zero deposits give cost 0" and "inputs clamped at the boundary" cannot both hold if the minimum is the slider's 500 Kč. Proposed: the function clamps to 0 to 20 000 and the slider enforces 500. Needs David's approval.
+- Still open: the golden-case results (David), the reason for the 0 to 12 % return cap (David), decision notes for the breakdown rule and the cap (after David gives the reasons).
