@@ -225,3 +225,20 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Two Prettier traps in my own edit scripts.** My string-replace edits twice missed because Prettier had reflowed the lines or because the file held a real non-breaking space where I had written an escape. Both showed up as an assertion failure, not as a silent miss.
 - **A test matcher normalised away the thing it tested.** `getByText('0,03 %')` with a non-breaking space did not match, because Testing Library normalises the DOM text. I compared `textContent` instead.
 - Limits: the fit is verified at 375 x 667 only, with an 11 px margin. The intro animation's effect on LCP is not measured yet (note 0016); that comes with the performance PR. Fio and IBKR are not verified, so two pills stay amber.
+
+### PR C2: the calculator band
+
+**Prompt (summary):** "start C2 now", then "approved, keep the single fee and implement the mapping". The calculator-inputs tests were written and approved before the implementation.
+
+**Produced**
+
+- `calculatorInputs` (8 tests, none changed to fit), `landingData` (one place for the dates, the hero rows and the calculator inputs, used by both pages), a shared `hasSource` check used by both the availability rule and the mapping, `CalculatorSection`, the "cheaper" note under the result, Playwright tests for the landing calculator, the METHODOLOGY paragraph on the conversion fee, decision note 0033.
+
+**Mistakes and corrections**
+
+- **My first e2e test failed because of my own regex.** The page says "méně~o" with a non-breaking space that `copy.ts` writes before the trailing "o", and I matched a normal space. The page was right; I used `\s` in the test.
+- **A spec number cannot be met, and I only found out by measuring.** SPEC §22 asks for at most 90 KB of JavaScript. A Playwright test (cold cache, compressed request sizes) gave 142.3 KB for the landing page, of which an empty page (the 404 page, no code of ours) is 132.5 KB. Our own code adds 9.8 KB. Turning off `partialPrefetching` changed nothing. I did not change the spec: the test of our share (at most 20 KB over an empty page) is on, and the absolute 90 KB test is `fixme` until David decides.
+- **I looked at the first measurement in the wrong unit.** A `curl` of every referenced script gave 180 KB, a different number from Playwright's 142.3 KB, because some referenced scripts are not loaded. The Playwright figure is the one that counts what the browser downloads.
+- **A screenshot tool failed**: the Browser pane was not displayed. I used Playwright's own screenshot to look at the band at 375 px and 1280 px instead.
+- Limits: the page was checked at 375 px and 1280 px only. The calculator uses one conversion fee for both funds, a known simplification (see above).
+- **The JavaScript budget was changed, by David's decision.** After the measurement above he asked to replace the 90 KB with a realistic number (our code at most 20 KB over an empty page, the route at most 150 KB), saying the 90 KB was never a real concern and he chose Next because he knows it. SPEC §12, SPEC §22, PHASES and the e2e test now say so, and note 0034 records it. The skipped test is now a real one. The older notes that mention 90 KB are left as written.

@@ -244,7 +244,7 @@ Tooling: Vercel Edge Config / cookie-based bucketing, or simply separate `?v=` U
 | PDF | Pre-built static PDF, generated at build from the same data JSON (`@react-pdf/renderer`) | so the PDF cannot drift from the page |
 | CI | GitHub Actions: format check, lint, typecheck, test, data validation, build, e2e; Lighthouse CI as P1 | Structure from the starter guide, see §12a |
 
-Suggestions you can veto: skip a UI kit and charting library entirely (payload and genericness); use `next/font` self-hosting for GDPR-safe fonts; keep JS small (target: route JS under 90 KB gzipped, LCP under 2.0 s on mid-range Android over Slow 4G).
+Suggestions you can veto: skip a UI kit and charting library entirely (payload and genericness); use `next/font` self-hosting for GDPR-safe fonts; keep JS small (target: our own code adds at most 20 KB gzipped over an empty Next page, the whole route stays under 150 KB gzipped, LCP under 2.0 s on mid-range Android over Slow 4G; the first target of 90 KB was dropped, decision note 0034).
 
 ---
 
@@ -509,7 +509,7 @@ A phase is done only when every line is true. **Every phase also ends with at le
 
 **Phase 3: page**
 - Hero fits 375x667 including the primary CTA with no scrolling (Playwright screenshot assertion at that viewport).
-- Lighthouse mobile (throttled, lab): performance >= 90, accessibility >= 95; LCP < 2.0 s, CLS < 0.05, route JS <= 90 KB gzipped.
+- Lighthouse mobile (throttled, lab): performance >= 90, accessibility >= 95; LCP < 2.0 s, CLS < 0.05; route JS: our code adds <= 20 KB gzipped over an empty Next page and the whole route is <= 150 KB gzipped (note 0034).
 - The form works **without JavaScript** (native POST to a server action) and shows the success state.
 - `?v=a` and `?v=b` render different heroes; an unknown value falls back to `a`.
 - The hero layout matches wireframe B in `docs/design/` (reviewed side by side at 375 px).

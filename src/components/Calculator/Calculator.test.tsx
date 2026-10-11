@@ -113,6 +113,38 @@ describe('Calculator', () => {
     expect(screen.getByText(/zaplatíte méně o/)).toBeTruthy()
   })
 
+  it('shows the cheaper note only while the featured fund is cheaper', () => {
+    const note = 'Z Česka ho ale zatím nekoupíte u všech firem.'
+    const { rerender } = render(
+      <Calculator featured={eu} alternative={us} cheaperNote={note} />,
+    )
+    expect(screen.getByText(note)).toBeTruthy()
+    rerender(<Calculator featured={us} alternative={eu} cheaperNote={note} />)
+    expect(screen.queryByText(note)).toBeNull()
+    rerender(
+      <Calculator
+        featured={us}
+        alternative={{ ...us, id: 'x' }}
+        cheaperNote={note}
+      />,
+    )
+    expect(screen.queryByText(note)).toBeNull()
+  })
+
+  it('can use an h2 heading with an id for the page section', () => {
+    render(
+      <Calculator
+        featured={us}
+        alternative={eu}
+        headingAs="h2"
+        headingId="calculator-heading"
+      />,
+    )
+    const heading = screen.getByRole('heading', { level: 2 })
+    expect(heading.id).toBe('calculator-heading')
+    expect(heading.textContent).toContain('Kolik to u vás dělá?')
+  })
+
   it('shows no difference for two equal funds', () => {
     render(<Calculator featured={us} alternative={{ ...us, id: 'x' }} />)
     expect(screen.getByText(/je rozdíl mezi oběma fondy/)).toBeTruthy()

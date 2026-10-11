@@ -1,3 +1,4 @@
+import { CalculatorSection } from '@/components/CalculatorSection'
 import { HeroB } from '@/components/HeroB'
 import { Section } from '@/components/Section'
 import { SiteFooter } from '@/components/SiteFooter'
@@ -6,6 +7,7 @@ import { SourceBar } from '@/components/SourceBar'
 import { copy } from '@/content/copy'
 import { nbsp } from '@/lib/typography'
 import type { HeroRow } from '@/server/availability'
+import type { LandingData } from '@/server/landing-data'
 import styles from './Landing.module.scss'
 
 export type Variant = 'a' | 'b'
@@ -16,11 +18,18 @@ type LandingProps = {
   dataAsOf: string | null
   // The rows of the hero b table; hero a does not use them.
   rows?: HeroRow[]
+  // The calculator band; left out when its numbers are not verified.
+  calculator?: LandingData['calculator']
 }
 
 // The landing page: frame plus the hero of the chosen variant. Hero a below is
 // a placeholder (headline only); the hero a PR replaces it.
-export function Landing({ variant, dataAsOf, rows = [] }: LandingProps) {
+export function Landing({
+  variant,
+  dataAsOf,
+  rows = [],
+  calculator = null,
+}: LandingProps) {
   return (
     <>
       <SourceBar dataAsOf={dataAsOf} />
@@ -35,6 +44,12 @@ export function Landing({ variant, dataAsOf, rows = [] }: LandingProps) {
             </h1>
           </Section>
         )}
+        {calculator ? (
+          <CalculatorSection
+            inputs={calculator.inputs}
+            featuredBuyability={calculator.featuredBuyability}
+          />
+        ) : null}
       </main>
       <SiteFooter />
     </>

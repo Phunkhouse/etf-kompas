@@ -108,6 +108,16 @@ export const copy = {
       withholding: 'daň, kterou stáhne USA',
     },
     fxOff: 'Převod korun na dolary zatím nepočítáme.',
+    // Under the result while the American fund is the cheaper one (wireframe
+    // revision 2, section 3). Chosen from the data, like the hero footnote.
+    cheaperNote: {
+      unverified: (verifiedNo: number, total: number) =>
+        `Je americký fond levnější, uvidíte „méně o“. Z Česka ho ale zatím nekoupíte u ${verifiedNo} z ${total} firem, u ostatních to ověřujeme.`,
+      unchecked:
+        'Je americký fond levnější, uvidíte „méně o“. U kterých firem ho z Česka koupíte, zatím ověřujeme.',
+      nowhere: (total: number) =>
+        `Je americký fond levnější, uvidíte „méně o“. Z Česka ho ale nekoupíte u žádné z ${total} firem.`,
+    },
     assumption: (returnText: string) =>
       `Počítáme s výnosem ${returnText} ročně u obou fondů. Je to příklad, ne slib.`,
   },
