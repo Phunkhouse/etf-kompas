@@ -4,6 +4,35 @@
 // at the very end of a string gets its non-breaking space written in here.
 
 export const copy = {
+  // Page frame: source bar, header, footer (wireframe B, sections 0, 1 and 8).
+  shell: {
+    sourceBar: (date: string) =>
+      `Čísla z oficiálních stránek fondů · aktualizováno ${date}`,
+    sourceBarNoDate: 'Čísla z oficiálních stránek fondů',
+    riskShort: 'Investování nese riziko ztráty.',
+    nav: {
+      label: 'Hlavní nabídka',
+      method: 'Jak počítáme',
+      sources: 'Odkud máme čísla',
+      faq: 'Časté dotazy',
+    },
+    cta: 'Poslat mi srovnání',
+    footer: {
+      risk: 'Investování nese riziko ztráty. Minulé výnosy nezaručují budoucí. Obsah je obecná informace, ne investiční ani daňové poradenství.',
+      controller: (controller: string) => `Správce: ${controller}`,
+      privacy: 'Zásady zpracování',
+      cookies: 'Cookies',
+      // Draft for David's copy review (SPEC §17.15).
+      testNotice:
+        'Zkušební projekt vytvořený jako ukázka. Není to nabídka investiční služby.',
+    },
+  },
+  // Hero headlines: variant a is the calculator-first hero (ad A), b the
+  // table-first hero (ad B). The rest of each hero comes with the hero PR.
+  hero: {
+    a: { headline: 'Kolik z vašich peněz sní poplatky fondu?' },
+    b: { headline: 'Americký, nebo evropský fond? Co vás stojí víc?' },
+  },
   calculator: {
     heading: 'Kolik to u vás dělá?',
     monthlyLabel: 'Kolik měsíčně uložíte',
