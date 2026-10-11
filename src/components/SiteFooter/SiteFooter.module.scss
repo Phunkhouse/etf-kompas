@@ -1,0 +1,40 @@
+@use 'styles/utilities' as *;
+
+.footer {
+  background: var(--color-ink);
+  color: var(--color-inverse-soft);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
+}
+
+.inner {
+  display: grid;
+  gap: var(--space-4);
+  padding-block: var(--space-10);
+
+  @include from('md') {
+    padding-block: var(--space-14);
+  }
+}
+
+.inner p,
+.inner ul {
+  margin: 0;
+  max-width: var(--measure);
+}
+
+.risk {
+  color: var(--color-paper);
+}
+
+.small {
+  color: var(--color-inverse-subtle);
+  font-size: var(--font-size-xs);
+}
+
+.list {
+  display: flex;
+  gap: var(--space-6);
+  padding: 0;
+  list-style: none;
+}

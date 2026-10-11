@@ -1,0 +1,42 @@
+@use 'styles/utilities' as *;
+
+.header {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  min-height: var(--touch-target-lg);
+}
+
+// The links and the button are for wide screens (wireframe B, section 1).
+.nav {
+  display: none;
+
+  @include from('md') {
+    display: flex;
+    gap: var(--space-8);
+    margin-inline-start: auto;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      min-height: var(--touch-target-min);
+      color: var(--color-ink);
+    }
+  }
+}
+
+.cta {
+  display: none;
+
+  @include from('md') {
+    display: block;
+  }
+}

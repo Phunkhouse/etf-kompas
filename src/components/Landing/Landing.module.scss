@@ -1,0 +1,15 @@
+@use 'styles/utilities' as *;
+
+.headline {
+  max-width: 20ch;
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--tracking-display);
+
+  @include from('md') {
+    font-size: var(--font-size-4xl);
+    line-height: var(--line-height-tight);
+  }
+}

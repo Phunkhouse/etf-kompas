@@ -162,3 +162,23 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - Limits: a banned word behind a branch the sample call does not take is missed. Inflection is covered by stems, not a dictionary, so an unusual form could slip through.
 - **Typecheck failed on the first full `pnpm check`.** The script and the test both read `data.etfs` from `loadData()`, which returns `unknown` by design. I added `loadTickers()` to `src/server/data/load.ts` (Zod-parsed) and used it in both, so the ticker list has one reader.
 - **Decision notes for the two rule choices.** Note 0026 (index names allowed in rows with a `plainName`) uses the reason David had already written in the PR. Note 0027 (rule e) records no reason: David asked to leave it out, and the note says so instead of inventing one.
+
+### PR B: page shell and hero variants
+
+**Prompt (summary):** "Yes to all three, go ahead with PR B". David approved the variant mechanism (as my recommendation), left the mobile "Menu" chip out, agreed the source bar shows the oldest `asOf`, and agreed the policy links stay plain text for now.
+
+**Produced**
+
+- `src/config/site.ts` (placeholder controller), shell strings and hero headlines in `copy.ts`, components `SourceBar`, `SiteHeader`, `SiteFooter` and `Landing` with tests, routes `/` (hero a) and `/v/b` (hero b), the `beforeFiles` rewrite, `e2e/variants.spec.ts`, decision note 0028.
+- Helpers with tests: `formatMonthYear` (`6. 2026`) and `oldestAsOf` (the date for the source bar), plus `bundledData`.
+- The old logo-only page and `page.module.scss` are gone.
+
+**Mistakes and corrections**
+
+- **My first rewrite did nothing.** I used a plain `rewrites()` array. `/` is an existing page and pages are served before `afterFiles` rewrites, so `/?v=b` still showed hero a. I found it by running the production server, not by reading the docs again. Fixed with `beforeFiles`.
+- **My check script misread the output.** React puts `<!-- -->` between `HERO-` and `{variant}`, so my grep reported an empty hero for b and I briefly thought the rewrite was broken. It was the grep.
+- **`/v/[variant]` answered `/v/zzz` with a 200** in the prototype, so I used the fixed route `/v/b`.
+- **The first real build failed.** I read the data files with `fs` in the page. With Cache Components that counts as uncached data and blocks prerendering, and Turbopack also warned that the dynamic path pulls the project into the server bundle. I switched the page to statically imported JSON (`bundled.ts`) and removed the file-reading helper I had just added.
+- **Wireframe copy I did not use as drawn:** the source bar's second item, "a Finanční správy". Our tax source is the treaty text, not Finanční správa, so the statement would be untrue. The date comes from the data, not the wireframe's "10. 2026".
+- **New Czech copy to review:** the test-project notice is my draft.
+- Limits: the variant routes are verified on a local production server only (Phase 6 checks Vercel). The footer is not pinned to the bottom of short pages; that goes away with real content.

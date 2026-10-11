@@ -1,17 +1,9 @@
-import Image from 'next/image'
-import styles from './page.module.scss'
+import { Landing } from '@/components/Landing'
+import { bundledData } from '@/server/data/bundled'
+import { oldestAsOf } from '@/server/data/freshness'
 
+// Hero a, the default. `/?v=b` is rewritten to /v/b (next.config.ts), and any
+// other value of `v` falls through to this page (decision note 0028).
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <Image
-        className={styles.logo}
-        src="/brand/logo-600w.png"
-        alt="ETF Kompas"
-        width={600}
-        height={153}
-        priority
-      />
-    </main>
-  )
+  return <Landing variant="a" dataAsOf={oldestAsOf(bundledData)} />
 }
