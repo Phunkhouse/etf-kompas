@@ -4,11 +4,11 @@ Design source of truth for ETF Kompas (SPEC §24). Wireframe B is the layout dir
 
 ## Files
 
-| File                               | What it is                                                                                                        |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| [DESIGN-GUIDE.md](DESIGN-GUIDE.md) | Palette, type, spacing, radius, borders, motion, components, with contrast ratios. Read before writing any style. |
-| [wireframe-b.md](wireframe-b.md)   | Text spec of every screen in the wireframe: structure, copy, behaviour, open points.                              |
-| [wireframes/](wireframes/)         | Designer-style wireframes document, open `etf-kompas-wireframes.html`; sources and rebuild script included.       |
+| File                               | What it is                                                                                                                   |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| [DESIGN-GUIDE.md](DESIGN-GUIDE.md) | Palette, type, spacing, radius, borders, motion, components, with contrast ratios. Read before writing any style.            |
+| [wireframe-b.md](wireframe-b.md)   | Text spec of every screen in the wireframe: structure, copy, behaviour, open points.                                         |
+| [wireframes/](wireframes/)         | Wireframes document (rev. 2), open `etf-kompas-wireframes.html`; original and rev. 2 artboards and rebuild scripts included. |
 
 ## Visual source
 
@@ -25,7 +25,7 @@ The wireframe is a design canvas: [ETF Kompas – wireframes](https://claude.ai/
 
 ## Images
 
-Exports of every board, re-rendered from the updated [wireframes](wireframes/) (content height, 2x, 256-colour PNG). Originals are in the canvas.
+Exports of every board, re-exported from wireframes rev. 2 (content height, 2x, 256-colour PNG). The original canvas still shows revision 1.
 
 | Screen                           | Image                                                                      |
 | -------------------------------- | -------------------------------------------------------------------------- |

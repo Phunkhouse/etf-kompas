@@ -8,26 +8,27 @@ Every contrast ratio is calculated (WCAG 2.x relative luminance). AA needs 4.5:1
 
 ### Palette
 
-| Token (proposed)                    | Hex                            | Used for                                            |
-| ----------------------------------- | ------------------------------ | --------------------------------------------------- |
-| `--color-paper`                     | `#F6F3EC`                      | Page background, text on dark                       |
-| `--color-surface`                   | `#FFFDF8`                      | Cards                                               |
-| `--color-ink`                       | `#16150F`                      | Text, primary button, dark sections, strong borders |
-| `--color-ink-soft`                  | `#3A372E`                      | Secondary body text                                 |
-| `--color-muted`                     | `#6B665A`                      | Captions, tags, sources                             |
-| `--color-border`                    | `#D4CEBE`                      | Dividers, card borders                              |
-| `--color-border-soft`               | `#E6E1D4`                      | Fine row separators                                 |
-| `--color-white`                     | `#FFFFFF`                      | Input background, text on `cost-strong`             |
-| `--color-inverse-soft`              | `#D9D4C5`                      | Secondary text on ink                               |
-| `--color-inverse-subtle`            | `#B9B3A2`                      | Captions on ink                                     |
-| `--color-inverse-border`            | `#4A473D`                      | Dividers on ink                                     |
-| `--color-cost`                      | `#F2A18C`                      | The cost number on dark ("X XXX Kč")                |
-| `--color-cost-strong`               | `#C23A1B`                      | The cost number on paper (ads), badge background    |
-| `--color-no-bg` / `--color-no-fg`   | `#F4D9D1` / `#7A2410`          | Pill "not buyable" / "[ověřit]"                     |
-| `--color-yes-bg` / `--color-yes-fg` | `#D6E8DE` / `#154A33`          | Pill "buyable", check icon                          |
-| `--color-highlight`                 | `#DCEEE3`                      | Highlighted cheapest row, European side of ad B     |
-| `--color-row-hover`                 | `#F3EEDF`                      | Table row hover                                     |
-| `--color-focus`                     | `#16150F` (on dark: `#F6F3EC`) | Focus ring, see section 6                           |
+| Token (proposed)                    | Hex                            | Used for                                                      |
+| ----------------------------------- | ------------------------------ | ------------------------------------------------------------- |
+| `--color-paper`                     | `#F6F3EC`                      | Page background, text on dark                                 |
+| `--color-surface`                   | `#FFFDF8`                      | Cards                                                         |
+| `--color-ink`                       | `#16150F`                      | Text, primary button, dark sections, strong borders           |
+| `--color-ink-soft`                  | `#3A372E`                      | Secondary body text                                           |
+| `--color-muted`                     | `#6B665A`                      | Captions, tags, sources                                       |
+| `--color-border`                    | `#D4CEBE`                      | Dividers, card borders                                        |
+| `--color-border-soft`               | `#E6E1D4`                      | Fine row separators                                           |
+| `--color-white`                     | `#FFFFFF`                      | Input background, text on `cost-strong`                       |
+| `--color-inverse-soft`              | `#D9D4C5`                      | Secondary text on ink                                         |
+| `--color-inverse-subtle`            | `#B9B3A2`                      | Captions on ink                                               |
+| `--color-inverse-border`            | `#4A473D`                      | Dividers on ink                                               |
+| `--color-cost`                      | `#F2A18C`                      | The cost number on dark ("X XXX Kč")                          |
+| `--color-cost-strong`               | `#C23A1B`                      | The cost number on paper (ads), badge background              |
+| `--color-no-bg` / `--color-no-fg`   | `#F4D9D1` / `#7A2410`          | Pill "Ne" (not buyable, with a source per broker)             |
+| `--color-yes-bg` / `--color-yes-fg` | `#D6E8DE` / `#154A33`          | Pill "buyable", check icon                                    |
+| `--color-pill-ver-bg` / `-ink`      | `#F3E6BE` / `#6B4E00`          | Pill "[ověřit]" (unverified, amber)                           |
+| `--color-highlight`                 | `#DCEEE3`                      | Highlighted row "buyable from Czechia", European side of ad B |
+| `--color-row-hover`                 | `#F3EEDF`                      | Table row hover                                               |
+| `--color-focus`                     | `#16150F` (on dark: `#F6F3EC`) | Focus ring, see section 6                                     |
 
 Two accents, as in SPEC §8: red for "cost" (`cost`, `cost-strong`) and green for "saved/OK" (`yes-fg`, `highlight`). Everything else is warm neutral. No gradients.
 
@@ -53,6 +54,7 @@ The wireframe's striped placeholder (`#E6E1D4`/`#ECE8DC`, dashed `#B5AE9C`) only
 | yes-fg on yes-bg                             | 7.99  | AA, AAA              |
 | yes-fg on paper                              | 9.20  | AA, AAA              |
 | ink on highlight                             | 15.14 | AA, AAA              |
+| pill-ver-ink on pill-ver-bg                  | 6.22  | AA                   |
 | ink on row-hover                             | 15.77 | AA, AAA              |
 
 Watch-outs:
@@ -110,20 +112,20 @@ IBM Plex Sans digits are tabular by default (verified: `1` and `0` have the same
 
 Primitives from SPEC §24, as drawn in the wireframe.
 
-| Component         | Spec from the wireframe                                                                                                                                                                                                                                                                |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Button**        | Primary: `ink` background, `paper` text, 6 px radius, 56 px high, 17 px / 600. Small: 44 px, 15 px. Outline: transparent, 1.5 px `ink` border. On dark sections the primary is inverted (`paper` background). Full width on mobile.                                                    |
-| **Chip**          | Pill, 48 px high, min 56 to 64 px wide, 1.5 px `ink` border. Selected: filled `ink` with `paper` text. On dark: inverted. Used for the horizon (5 / 10 / 20 let).                                                                                                                      |
-| **Slider**        | Native `<input type="range">`, accent colour `paper` on dark, label left and tabular value right (`3 000 Kč`, 22 px / 700).                                                                                                                                                            |
-| **Field**         | Email, 56 px high, 1.5 px `ink` border, 6 px radius, white background, 17 px text. Label above in 500 weight. Optional checkbox row with a 20 to 22 px box.                                                                                                                            |
-| **Table**         | Header row in `tag` style over a 1.5 px `ink` line. Rows have a bold label, a 13 px `muted` sub-label (technical name, ticker), tabular numbers and a status pill. Responsive: three columns also on 375 px (label, fee, buyable). Results page adds "Fond sídlí" and "Zdroj" columns. |
-| **Pill**          | Radius 999 px, 14 px / 500. `no` and `yes` variants (colours above). Text `[ověřit]` while a value is unverified. The `yes` pill has a 1.5 px `yes-fg` border so it stays visible on the highlighted row (a change from the wireframe, decided by David).                              |
-| **Callout**       | `<strong>ETF</strong>` explainer: 3 px `ink` left rule, 14 to 15 px `ink-soft` text. The risk line is plain text in footer and under the table; a boxed variant is not drawn.                                                                                                          |
-| **NumberDisplay** | Large tabular Kč number in `cost` on dark, with a `tag` caption above and a breakdown (fee, currency conversion, tax) below in 13 to 14 px `inverse-soft`.                                                                                                                             |
-| **Card**          | `surface` background, 1 px `border`, 10 px radius, 14 to 28 px padding.                                                                                                                                                                                                                |
-| **Section**       | Alternating paper and `ink` bands. The calculator is the dark band. Section label is a `tag`.                                                                                                                                                                                          |
-| **Wordmark**      | Logo from `public/brand/` plus the text "ETF Kompas" in 17 to 20 px / 700. Replaces the striped placeholder square in the wireframe.                                                                                                                                                   |
-| **StackedBar**    | Not drawn in the wireframe. To be designed in Phase 1b from the cost / saved colours.                                                                                                                                                                                                  |
+| Component         | Spec from the wireframe                                                                                                                                                                                                                                                                                                                                                          |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Button**        | Primary: `ink` background, `paper` text, 6 px radius, 56 px high, 17 px / 600. Small: 44 px, 15 px. Outline: transparent, 1.5 px `ink` border. On dark sections the primary is inverted (`paper` background). Full width on mobile.                                                                                                                                              |
+| **Chip**          | Pill, 48 px high, min 56 to 64 px wide, 1.5 px `ink` border. Selected: filled `ink` with `paper` text. On dark: inverted. Used for the horizon (5 / 10 / 20 let).                                                                                                                                                                                                                |
+| **Slider**        | Native `<input type="range">`, accent colour `paper` on dark, label left and tabular value right (`3 000 Kč`, 22 px / 700).                                                                                                                                                                                                                                                      |
+| **Field**         | Email, 56 px high, 1.5 px `ink` border, 6 px radius, white background, 17 px text. Label above in 500 weight. Optional checkbox row with a 20 to 22 px box.                                                                                                                                                                                                                      |
+| **Table**         | Header row in `tag` style over a 1.5 px `ink` line. Rows have a bold label, a 13 px `muted` sub-label (technical name, ticker), tabular numbers and a status pill. Responsive: three columns also on 375 px (label, fee, buyable). Results page adds "Fond sídlí" and "Zdroj" columns.                                                                                           |
+| **Pill**          | Radius 999 px, 14 px / 500. `no`, `yes` and `ver` (unverified, amber) variants (colours above). A pill is always text: "Ano", "Ne" or `[ověřit]`, never colour alone. "Ne" is shown only with a source per broker; otherwise `[ověřit]`. The `yes` pill has a 1.5 px `yes-fg` border so it stays visible on the highlighted row (a change from the wireframe, decided by David). |
+| **Callout**       | `<strong>ETF</strong>` explainer: 3 px `ink` left rule, 14 to 15 px `ink-soft` text. The risk line is plain text in footer and under the table; a boxed variant is not drawn.                                                                                                                                                                                                    |
+| **NumberDisplay** | Large tabular Kč number in `cost` on dark, with a `tag` caption above and a breakdown (fee, currency conversion, tax) below in 13 to 14 px `inverse-soft`.                                                                                                                                                                                                                       |
+| **Card**          | `surface` background, 1 px `border`, 10 px radius, 14 to 28 px padding.                                                                                                                                                                                                                                                                                                          |
+| **Section**       | Alternating paper and `ink` bands. The calculator is the dark band. Section label is a `tag`.                                                                                                                                                                                                                                                                                    |
+| **Wordmark**      | Logo from `public/brand/` plus the text "ETF Kompas" in 17 to 20 px / 700. Replaces the striped placeholder square in the wireframe.                                                                                                                                                                                                                                             |
+| **StackedBar**    | Not drawn in the wireframe. To be designed in Phase 1b from the cost / saved colours.                                                                                                                                                                                                                                                                                            |
 
 ## 5. Motion
 
@@ -131,7 +133,7 @@ Besides the result count-up (under 300 ms), the wireframe has one deliberate ani
 
 - Card: fade and rise 24 px, 0.7 s, `cubic-bezier(.2,.8,.2,1)`.
 - Rows 1 to 3: fade and slide in from the left, 0.7 s, delays 0.4 s, 0.9 s and 1.4 s.
-- The cheapest row (row 3) gets a green highlight (`highlight`) at 2.2 s, 0.8 s long.
+- The highlighted row (row 3, "buyable from Czechia", not "cheapest") gets a green highlight (`highlight`) at 2.2 s, 0.8 s long.
 - `prefers-reduced-motion: reduce` turns all of it off.
 
 It must not hurt LCP (target below 2.0 s): this is measured in Phase 3 and the animation is cut or shortened if it fails.

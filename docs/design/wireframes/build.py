@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Builds etf-kompas-wireframes.html from the unpacked artboards, the handoff and the logo files.
-usage: build.py <artboard-dir> <logo-dir> <out.html>   e.g. python3 build.py artboards logo etf-kompas-wireframes.html"""
+usage: build.py <artboard-dir> <logo-dir> <out.html>   e.g. python3 build.py artboards-v2 logo etf-kompas-wireframes.html
+(artboards-v2 = artboards/ after apply_rev2.py)"""
 import re, sys, html, os
 
 ART, LOGO, OUT = sys.argv[1:4]
@@ -38,8 +39,8 @@ BOARDS = [
 ]
 BD = {b[0]: b for b in BOARDS}
 # rendered height = measured content height (declared canvas heights leave empty space below the footer)
-RH = {'Main': 2642, 'B-mobile': 3216, 'E1-success-desktop': 777, 'E2-success-mobile': 1014,
-      'F1-results-desktop': 1681, 'F2-results-mobile': 2563}
+RH = {'Main': 2685, 'B-mobile': 3290, 'E1-success-desktop': 777, 'E2-success-mobile': 1014,
+      'F1-results-desktop': 2665, 'F2-results-mobile': 2866}
 
 
 def board_doc(fid):
@@ -50,6 +51,7 @@ def board_doc(fid):
     s = s.replace('<x-dc>', '').replace('</x-dc>', '').replace('<helmet>', '').replace('</helmet>', '')
     s = s.replace('<style></style>', '')
     s = s.replace('sc-camel-view-box=', 'viewBox=')
+    s = s.replace('<sc-raw-', '<').replace('</sc-raw-', '</')
     s = s.replace('class="{{stageClass}}"', 'id="stage"')
     s = s.replace('sc-camel-on-click="{{replay}}"',
                   'onclick="var s=document.getElementById(\'stage\');s.classList.add(\'off\');setTimeout(function(){s.classList.remove(\'off\')},80)"')
@@ -92,20 +94,20 @@ E = html.escape
 
 # ───────────────────────── annotations (from handoff, copy kept verbatim) ─────────────────────────
 N_MAIN = [
-    ('Disclosure bar', 'Left: „Čísla z oficiálních stránek fondů a Finanční správy · aktualizováno 10. 2026“. Right: „Investování nese riziko ztráty.“ Ink band, 13px, padding 10px 56px.'),
+    ('Disclosure bar · rev. 2', 'One wording on desktop and phone: „Čísla ze stránek fondů a brokerů · ověřeno k 10. 2026“. Right: „Investování nese riziko ztráty.“ Ink band, 13px, padding 10px 56px.'),
     ('Header', 'Logo 126×32, links „Jak počítáme“, „Odkud máme čísla“, „Časté dotazy“ and a small button „Poslat mi srovnání“ that jumps to the gate.'),
-    ('Hero', 'Grid 0.85fr / 1.15fr, gap 64, padding 64px 56px. Left: H1 58/1.04, lead 20px, definition callout, button „Spočítat, kolik ušetřím“ plus link „nebo rovnou srovnání všech 8“.'),
-    ('Hero comparison card', 'Tag „Cena a dostupnost“, source line „zdroj: oficiální stránky fondů · 10. 2026“, three rows. Row 3 (European version) is the winner, highlighted <code>--win</code>. Animates once on load.'),
-    ('Calculator and gate', 'Ink band, anchor <code>#calc</code>, columns 1fr / 1fr / 1.1fr. Slider 500–20 000 Kč, chips 5 / 10 / 20 let, result 80px in <code>--result</code> with a three-line breakdown, then the e-mail gate (<code>#gate</code>).'),
+    ('Hero · rev. 2', 'Grid 0.85fr / 1.15fr, gap 64, padding 64px 56px. Left: H1 58/1.04 „Které ETF si z Česka opravdu koupíte a kolik vás stojí?“, lead 20px, definition callout, button „Spočítat, kolik zaplatím“ plus link „nebo rovnou kontrola brokerů“.'),
+    ('Hero comparison card · rev. 2', 'Real fees: VOO 0,03 %, QQQ 0,18 %, CSPX 0,07 %. The highlighted row (<code>--win</code>) means <b>buyable from Czechia</b>, not cheapest. VOO and QQQ show amber <code>[ověřit]</code> with „Ne u 3 z 5 brokerů“, because Fio and IBKR are unverified. Animates once on load.'),
+    ('Calculator and gate · rev. 2', 'Ink band, anchor <code>#calc</code>. Slider 500–20 000 Kč, chips 5 / 10 / 20 let, result 80px in <code>--result</code> with a three-line breakdown. New note: when the US fund is cheaper the headline reads „zaplatíte méně o“, and the page says it cannot be bought from CZ at every broker. Gate (<code>#gate</code>): „Chcete vidět, kde který fond koupíte?“ — funds and 5 brokers side by side.'),
     ('Cost cards', '„Za co platíte, aniž to vidíte“: three numbered cards, gap 24 — Roční poplatek fondu, Převod korun, Daň ze zisků.'),
-    ('E-mail preview', '„Co dostanete e-mailem“: two columns, gap 56. Right side holds two 300px placeholders „strana 1 – srovnání“ and „strana 4 – daně“.'),
+    ('E-mail preview · rev. 2', '„Co dostanete e-mailem“: H2 now „8 fondů, 5 brokerů a co z toho koupíte z Česka“. Right side holds two 300px placeholders „strana 1 – srovnání“ and „strana 4 – daně“.'),
     ('Trust items', '„Proč nám věřit“: Odkud máme čísla (<code>#z</code>), Jak počítáme (<code>#m</code>), Nic neprodáváme. 1.5px ink top rule.'),
     ('FAQ and footer', 'Four collapsed rows (<code>#f</code>); ink footer with cream logo 110×28, legal text capped at 44em and links „Zásady zpracování“, „Cookies“.'),
 ]
 N_B = [
-    ('Short disclosure bar', '11px: „Čísla z oficiálních stránek fondů · aktualizováno 10. 2026“.'),
+    ('Disclosure bar', '11px, same wording as desktop: „Čísla ze stránek fondů a brokerů · ověřeno k 10. 2026“.'),
     ('Header', 'Logo 102×26 and a „Menu“ chip. The menu panel is not designed.'),
-    ('Hero stack', 'H1 32px, lead, comparison card with shorter heads („Poplatek“, „Z ČR?“), full-width button, note „Jen cena a dostupnost, žádné výnosy.“ The winner row bleeds 8px past the text edge.'),
+    ('Hero stack · rev. 2', 'H1 32px with the new headline, lead, comparison card with real fees (0,03 / 0,18 / 0,07 %), amber „[ověřit]“ pills with „3 z 5: Ne“, highlighted row = „Ano“. Note: „Zvýrazněno = koupíte z ČR, ne nejlevnější.“'),
     ('Calculator band', 'Ink band, padding 28px 16px: H2, slider, chips, 1px divider, result at 60px with a 13px breakdown.'),
     ('E-mail gate', 'Its own light band after the calculator, <code>--card</code> panel with 1.5px ink border, padding 20, 22px checkbox.'),
     ('Numbered cards', 'Stacked, index to the left of the text, with the shorter phone copy.'),
@@ -134,33 +136,34 @@ N_F1 = [
     ('Header', 'Logo and the outline button „Stáhnout PDF · 6 stran“.'),
     ('Table of contents', 'Sticky at top 24px in a 220px column. Active item: 1.5px ink rule, weight 600. Anchors <code>#t1</code>–<code>#t4</code>.'),
     ('Result banner', 'Ink, radius 10, padding 20px 24px: „Váš výsledek · 3 000 Kč měsíčně · 10 let“ and <code>X XXX Kč</code> at 48px.'),
-    ('1 · Fondy vedle sebe', 'Eight funds, tag „řazeno od nejlevnějšího“. Columns: Co koupíte, Roční poplatek, Fond sídlí, Koupíte z ČR?, Zdroj („stránka fondu ↗“).'),
+    ('1 · Fondy vedle sebe · rev. 2', 'Eight funds, sorted „koupitelné z ČR nahoře · pak podle poplatku“ (fixes issue 6). The CSPX row is highlighted and says „Ano“; unverified rows carry amber <code>[ověřit]</code>. VOO 0,03 %, QQQ 0,18 %, CSPX 0,07 % are real.'),
+    ('Availability by broker · new', 'Matrix fund × broker (DEGIRO, Fio, IBKR, Trading 212, XTB), „ověřeno k 10. 2026“. „Ne“ only where there is a source for that broker; Fio and IBKR stay <code>[ověřit]</code>. This is the lead magnet\'s core.'),
     ('2 · Daně v Česku', 'Three placeholder cards (Prodej po letech, Dividendy ze zahraničí, Přiznání), each with a source line. Under them: „Obecná informace, ne daňové poradenství.“'),
-    ('3 · Kde fond koupit', 'Five rows <code>[Firma A]</code>–<code>[Firma E]</code>, tag „abecedně · bez provizí · stav 10. 2026“.'),
+    ('3 · Kde fond koupit · rev. 2', 'Five brokers by name, alphabetical: DEGIRO, Fio, IBKR, Trading 212, XTB. Fees and „Česky“ stay placeholders.'),
     ('4 · Jak počítáme', 'Method summary with link „Otevřít postup“ and a resend card: „Odkaz platí 30 dní. Zapomněli jste ho?“'),
 ]
 N_F2 = [
     ('Header', 'Logo and a text link „PDF“.'),
     ('Intro', 'H1 36px, lead 16px, result banner (number 44px), horizontally scrolling 44px outline chips: Fondy, Daně, Kde koupit, Jak počítáme.'),
-    ('Fund cards', 'Three shown (European 500, VOO, QQQ), button „Zobrazit dalších 5 fondů“. Key-value rows 14px, 12px source link.'),
+    ('Fund cards · rev. 2', 'Three shown (CSPX highlighted with „Ano“, VOO, QQQ with amber pills), then a broker availability card, then „Zobrazit dalších 5 fondů“.'),
     ('Taxes and brokers', 'Tax cards with the shorter placeholder „[Text se doplní z ověřeného zdroje.]“; two firm cards and „Zobrazit dalších 3 firmy“.'),
     ('Method and resend', 'Short method text, link „Otevřít postup“, resend card („Odkaz platí 30 dní.“).'),
 ]
 N_ADA = [
-    ('Idea', '„The unknown number“. Paper background, three groups spread top to bottom: logo, headline + number, call to action + legal line.'),
-    ('Type', 'Headline 44px (9:16: 36px), „? Kč“ 150px / 700 / −0.04em in <code>--alert</code> (9:16: 120px), caption in Plex Mono 12px, CTA 22px / 600.'),
+    ('Idea · rev. 2', '„The unknown number“, reframed. Headline „Které ETF si z Česka opravdu koupíte?“ and the unknown „? z 8“ (funds you can actually buy). Paper background, three groups: logo, headline + number, call to action + legal line.'),
+    ('Type', 'Headline 44px (9:16: 36px), „? z 8“ 150px / 700 / −0.04em in <code>--alert</code> (9:16: 120px), caption in Plex Mono 12px, CTA „Zjistěte to za 20 sekund. Zdarma.“ 22px / 600.'),
     ('Spacing', 'Padding 44px in 4:5; <code>110px 32px 150px</code> in 9:16 — 110px at the top and 150px at the bottom are left free for platform UI.'),
     ('Legal line', '„Investování nese riziko ztráty. Příklad výpočtu, ne slib výnosu.“ 11px (9:16: 10px).'),
 ]
 N_ADB = [
-    ('Idea', '„US versus Europe“. Two panels: ink „Americký fond“ and <code>--win</code> „Evropský fond“, a 64px „vs“ circle on the seam (9:16: 44px).'),
+    ('Idea · rev. 2', '„US versus Europe“. Panels now carry the real fees: „USA · VOO 0,03 %“ and „Evropa · CSPX 0,07 %“. H1 „Který koupíte z Česka?“; the cheaper one is not the one you can buy. Ink „Americký fond“ vs <code>--win</code> „Evropský fond“, 64px „vs“ circle (9:16: 44px).'),
     ('4:5 layout', 'Top: two equal panels, padding 44px 28px. Below: H1 „Co vás stojí víc?“ 40px, line 19px / 500, legal line max 230px, logo 94×24 at the right.'),
     ('9:16 layout', 'Three stacked bands: ink (padding 110px 32px 32px), paper band with 2px ink top and bottom borders, <code>--win</code> band (bottom padding 150px). Logo 86×22.'),
     ('Call to action', 'Ad B has none of its own; the ad platform\'s button has to carry it.'),
 ]
 N_G5 = [
-    ('Matches the ad', 'H1 „Kolik z vašich peněz sní poplatky fondu?“ 34/1.04 repeats the ad headline, followed by „Spočítejte to za 20 sekund. Zdarma, bez registrace.“'),
-    ('Calculator above the fold', 'Ink band fills the rest: slider, chips, inverted full-width button „Spočítat moje poplatky“ (<code>#result</code>) and note „Příklad výpočtu. Investování nese riziko ztráty.“'),
+    ('Matches the ad · rev. 2', 'H1 „Které ETF si z Česka opravdu koupíte?“ 34/1.04 repeats the ad headline, followed by „Zjistěte to za 20 sekund. Zdarma, bez registrace.“'),
+    ('Calculator above the fold', 'Ink band fills the rest: slider, chips, inverted full-width button „Ukázat, co koupím“ (<code>#result</code>) and note „Příklad výpočtu. Investování nese riziko ztráty.“'),
     ('Not designed', 'The state after pressing „Spočítat moje poplatky“.'),
 ]
 
@@ -180,6 +183,8 @@ SWATCHES = [
     ('--pill-no-ink', '#7A2410', 'Pill text: cannot buy'),
     ('--pill-yes-bg', '#D6E8DE', 'Pill: can buy; success badge'),
     ('--pill-yes-ink', '#154A33', 'Pill text: can buy'),
+    ('--pill-ver-bg', '#F3E6BE', 'Pill: not yet verified · rev. 2, new'),
+    ('--pill-ver-ink', '#6B4E00', 'Pill text: not yet verified · rev. 2, new'),
     ('--win', '#DCEEE3', 'Winner row; Europe panel in ad B'),
     ('--kv-line', '#E6E1D4', 'Key-value dividers in phone cards'),
     ('--row-hover', '#F3EEDF', 'Row hover (only in T1-radky)'),
@@ -215,7 +220,7 @@ INVENTORY = [
     ('E2-success-mobile', 'Po odeslání · mobil', '390 × 1300, fluid', 'Same on a phone', ''),
     ('F1-results-desktop', 'Srovnání · desktop', '1280 × 2300, fluid', 'Funds, taxes, where to buy, method', ''),
     ('F2-results-mobile', 'Srovnání · mobil', '390 × 2800, fluid', 'Same on a phone, tables turned into cards', ''),
-    ('G1-adA-4x5', 'Reklama A · 4:5', '540 × 675', 'Feed ad A: „? Kč“ headline number', ''),
+    ('G1-adA-4x5', 'Reklama A · 4:5', '540 × 675', 'Feed ad A: „? z 8“ headline number (rev. 2)', ''),
     ('G2-adA-9x16', 'Reklama A · 9:16', '405 × 720', 'Stories ad A', ''),
     ('G3-adB-4x5', 'Reklama B · 4:5', '540 × 675', 'Feed ad B: US fund versus European fund split', ''),
     ('G4-adB-9x16', 'Reklama B · 9:16', '405 × 720', 'Stories ad B', ''),
@@ -251,8 +256,8 @@ ISSUES = [
 ]
 
 PLACEHOLDERS = [
-    ('0,0X %, 0,XX %', 'Hero table, results table', 'Annual fee per fund, from the fund\'s own page, with the month it was read'),
-    ('[ověřit] in „Koupíte z ČR?“ pills', 'Hero table, results table', 'Whether a Czech retail investor can buy the fund; show as text („Ano“ / „Ne“), not only colour'),
+    ('0,0X %, 0,XX %', 'Results table, funds not yet verified', 'Annual fee per fund, from the fund\'s own page, with the month it was read. Now real: VOO 0,03 %, QQQ 0,18 %, CSPX 0,07 %'),
+    ('[ověřit] in „Koupíte z ČR?“ pills', 'Hero table, results table, broker matrix', 'Rule: „Ne“ only with a source per broker. DEGIRO, Trading 212, XTB verified for VOO and QQQ; Fio and IBKR still [ověřit]. Show as text, never only colour'),
     ('X XXX Kč', 'Calculator result, success and results banners', 'Output of the calculator function'),
     ('„10. 2026“', 'Disclosure bars, table captions', 'Generate from the data\'s own as-of date'),
     ('VOO, QQQ, VTI, SCHD', 'Fund sub-lines', 'Confirm each ticker; European funds have no names or ISINs yet'),
@@ -275,7 +280,7 @@ CONTRAST = [
 
 SETTLE = [
     'The calculator formula and the fund pair behind it.',
-    'The real European funds (names, ISINs) and the five brokers or apps.',
+    'The real European funds (names, ISINs) beyond CSPX, and broker fees. Verify Fio and IBKR; add a source per broker for every „Ano“ and „Ne“.',
     'One set of animation timings (Main or T1-radky).',
     'Whether tax and where-to-buy are separate pages or sections of the results page.',
     'Ad export sizes, and the call to action for ad B.',
@@ -313,8 +318,8 @@ p.append(f'''<!doctype html><html lang="cs"><head><meta charset="utf-8">
 <main>''')
 
 # cover
-p.append(f'''<section class="cover" id="cover"><div class="cover-top">{logo(188, 48, True)}<span class="tag on-dark">Design handoff · v1</span></div>
-<div class="cover-mid"><span class="tag on-dark">Wireframes · 12 artboards</span><h1>ETF Kompas<br>Wireframes</h1>
+p.append(f'''<section class="cover" id="cover"><div class="cover-top">{logo(188, 48, True)}<span class="tag on-dark">Design handoff · rev. 2</span></div>
+<div class="cover-mid"><span class="tag on-dark">Wireframes · 12 artboards · rev. 2</span><h1>ETF Kompas<br>Wireframes</h1>
 <p>Česká landing page, která vymění e-mail za srovnání 8 ETF. Celá cesta od reklamy po stránku se srovnáním: obrazovky na desktopu a telefonu, reklamy, design tokeny a komponenty.</p></div>
 <dl class="cover-meta"><div><dt>Datum</dt><dd>11. 10. 2026</dd></div><div><dt>Autor</dt><dd>David Krapka</dd></div><div><dt>Podklad</dt><dd>Canvas „ETF Kompas – wireframes“, 10. 10. 2026</dd></div><div><dt>Úroveň</dt><dd>Wireframe · všechna čísla jsou zástupná</dd></div></dl>
 <div class="cover-compass" aria-hidden="true">{favicon(520)}</div></section>''')
@@ -338,10 +343,16 @@ p.append('<section id="obsah" class="sec">' + section_head('01', 'Contents') + '
 flow = ['Ad A / Ad B', 'Landing page', 'Calculator → e-mail gate', 'Success screen', 'Comparison page']
 flow_sub = ['feed 4:5 · stories 9:16', 'desktop or mobile; ad A has its own first screen', 'one field, optional tips checkbox', 'keeps the result; opens comparison or 6-page PDF', '8 funds, Czech taxes, where to buy, method']
 p.append('<section id="prehled" class="sec">' + section_head('02', 'Overview', 'ETF Kompas trades an e-mail address for an 8-fund ETF comparison. The wireframes cover the whole path from ad to results page.')
-         + '<div class="claims"><div><span class="tag">Core claim</span><p>US-domiciled and European-domiciled funds that follow the same big companies differ in cost and in where a Czech investor can buy them. The page shows that difference in crowns for the visitor\'s own monthly amount.</p></div>'
+         + '<div class="claims"><div><span class="tag">Core claim · rev. 2</span><p>US-domiciled and European-domiciled funds that follow the same index differ in cost <em>and in what a Czech investor can actually buy</em>. The cheapest fund (VOO, 0,03 %) is not the one most Czech brokers offer. The page shows both, in crowns, for the visitor\'s own monthly amount.</p></div>'
          + '<div><span class="tag">Conversion goal</span><p>E-mail capture on the landing page, plus an optional checkbox for investing tips confirmed with a second click in an e-mail.</p></div>'
          + '<div><span class="tag">Tone</span><p>Plain Czech, no advice, no commissions, and every number carries a source and a month („10. 2026“).</p></div>'
          + '<div><span class="tag">Fidelity</span><p>Wireframes. Every figure is a placeholder (<code>0,0X %</code>, <code>X XXX Kč</code>, <code>[ověřit]</code>) and must be replaced with a verified, dated value before anything ships.</p></div></div>'
+         + '<div class="rev"><span class="tag">Revision 2 · 11. 10. 2026</span><h3>What changed and why</h3><p>The verified fees undercut the first story: VOO costs 0,03 %, QQQ 0,18 % and CSPX 0,07 %, so „the European twin is the cheapest row“ would be false. The page now promises <b>which ETF you can really buy from Czechia and what it costs</b>. Changes are marked „rev. 2“ in the annotations.</p><ul>'
+         '<li><b>Highlighted row</b> = buyable from Czechia, not cheapest. The fee sits beside it.</li>'
+         '<li><b>Calculator</b> still says „zaplatíte víc o“, and „méně o“ when the US fund is cheaper, with a note that it is not buyable at every broker.</li>'
+         '<li><b>Availability pills</b>: VOO and QQQ show <code>[ověřit]</code> (amber) because Fio and IBKR are unverified; „Ne“ appears only per broker with a source. Visible „ověřeno k 10. 2026“.</li>'
+         '<li><b>Hero and ads</b>: „Které ETF si z Česka opravdu koupíte a kolik vás stojí?“; ad A uses „? z 8“, ad B shows VOO 0,03 % against CSPX 0,07 %.</li>'
+         '<li><b>Lead magnet</b> = fund and broker availability and fee check (new fund × broker matrix on the results page).</li></ul></div>'
          + '<h3>User flow</h3><ol class="flow">' + ''.join(f'<li><b>{a}</b><span>{b}</span></li>' for a, b in zip(flow, flow_sub)) + '</ol>'
          + '<h3>Artboard inventory</h3><div class="tablewrap"><table class="inv"><thead><tr><th>Artboard</th><th>Title in the canvas</th><th>Size (px)</th><th>What it shows</th></tr></thead><tbody>'
          + ''.join(f'<tr><td><a href="#{a}"><code>{a}</code></a></td><td>{E(b)}</td><td>{c}</td><td>{d}{" <span class=\'badge\'>interactive</span>" if e else ""}</td></tr>' for a, b, c, d, e in INVENTORY)
@@ -379,15 +390,15 @@ p.append('<section id="success" class="sec">' + section_head('05', 'After submit
 p.append('<section id="srovnani" class="sec">' + section_head('06', 'Comparison page', '8 funds side by side, Czech taxes, where to buy and the calculation method. Tables turn into cards on phones.')
          + plate('F1-results-desktop', 'wide') + '<h3>Desktop · annotations</h3>' + notes(N_F1)
          + '<h3>The eight funds, in wireframe order</h3><div class="tablewrap"><table class="inv small"><thead><tr><th>#</th><th>Co koupíte</th><th>Poplatek</th><th>Fond sídlí</th><th>Koupíte z ČR?</th></tr></thead><tbody>'
-         + ''.join(f'<tr><td>{n}</td><td>{a}</td><td><code>{b}</code></td><td>{c}</td><td><span class="pl {"y" if d=="g" else "n"}">[ověřit]</span></td></tr>' for n, a, b, c, d in [
-             (1, 'Evropská verze: 500 největších amerických firem', '0,0X %', 'Evropa', 'g'),
-             (2, 'Evropská verze: celý svět', '0,XX %', 'Evropa', 'g'),
-             (3, 'Americký fond: 500 největších firem <em>(značka VOO)</em>', '0,0X %', 'USA', 'r'),
-             (4, 'Americký fond: celý americký trh <em>(značka VTI)</em>', '0,0X %', 'USA', 'r'),
-             (5, 'Americký fond: firmy s vysokými dividendami <em>(značka SCHD)</em>', '0,0X %', 'USA', 'r'),
-             (6, 'Americký fond: 100 technologických firem <em>(značka QQQ)</em>', '0,XX %', 'USA', 'r'),
-             (7, 'Evropská verze: 100 technologických firem', '0,XX %', 'Evropa', 'g'),
-             (8, 'Evropská verze: 500 největších firem, druhý poskytovatel', '0,0X %', 'Evropa', 'g')])
+         + ''.join(f'<tr><td>{n}</td><td>{a}</td><td><code>{b}</code></td><td>{c}</td><td><span class="pl {d}">{"Ano" if d=="g" else "[ověřit]"}</span></td></tr>' for n, a, b, c, d in [
+             (1, 'Evropská verze: 500 největších amerických firem <em>(značka CSPX)</em> — highlighted', '0,07 %', 'Evropa', 'g'),
+             (2, 'Evropská verze: celý svět', '0,XX %', 'Evropa', 'v'),
+             (3, 'Americký fond: 500 největších firem <em>(značka VOO)</em>', '0,03 %', 'USA', 'v'),
+             (4, 'Americký fond: celý americký trh <em>(značka VTI)</em>', '0,0X %', 'USA', 'v'),
+             (5, 'Americký fond: firmy s vysokými dividendami <em>(značka SCHD)</em>', '0,0X %', 'USA', 'v'),
+             (6, 'Americký fond: 100 technologických firem <em>(značka QQQ)</em>', '0,18 %', 'USA', 'v'),
+             (7, 'Evropská verze: 100 technologických firem', '0,XX %', 'Evropa', 'v'),
+             (8, 'Evropská verze: 500 největších firem, druhý poskytovatel', '0,0X %', 'Evropa', 'v')])
          + '</tbody></table></div>'
          + '<div class="dual"><div>' + plate('F2-results-mobile', 'phone') + '</div><div><h3>Phone · annotations</h3>' + notes(N_F2, 1) + '</div></div></section>')
 
@@ -435,15 +446,15 @@ comp.append(('Logo', 'Wordmark with a compass „o“. Outlined paths, no font n
              f'<div class="logos"><div class="lg light">{logo(188, 48)}<span>etf-kompas-logo.svg</span></div><div class="lg dark">{logo(188, 48, True)}<span>etf-kompas-logo-dark.svg</span></div><div class="lg light fav">{favicon(48)}<span>favicon.svg</span></div></div>'
              '<p class="fine">Sizes used: 126×32 desktop header · 110×28 footers · 102×26 phone header, ad A feed, G5 · 94×24 ad A stories, ad B feed · 86×22 ad B stories. Accessibility: <code>role="img"</code>, <code>aria-label="ETF Kompas"</code>, <code>&lt;title&gt;</code>.</p>'))
 comp.append(('Disclosure bar', 'Ink band at the very top. Desktop 13px, padding 10px 56px: source and date left, risk warning right. Phones 11px, padding 8px 16px, source line only.',
-             '<div class="disc"><span>Čísla z oficiálních stránek fondů a Finanční správy · aktualizováno 10. 2026</span><span>Investování nese riziko ztráty.</span></div>'))
+             '<div class="disc"><span>Čísla ze stránek fondů a brokerů · ověřeno k 10. 2026</span><span>Investování nese riziko ztráty.</span></div>'))
 comp.append(('Header', f'Padding 20px 56px, hairline underneath. Logo 126×32 (phone 102×26). Landing desktop: three 15px links, gap 32, small primary button. Phone: „Menu“ chip. Results: outline button.',
              f'<div class="hdr">{logo(126, 32)}<nav><a>Jak počítáme</a><a>Odkud máme čísla</a><a>Časté dotazy</a><span class="btn sm">Poslat mi srovnání</span></nav></div>'))
 comp.append(('Button', 'Primary (ink), small (44px), outline, inverted on ink. Full width on phones.',
              '<div class="row-s"><span class="btn">Spočítat, kolik ušetřím</span><span class="btn sm">Poslat mi srovnání</span><span class="btn o">Stáhnout PDF · 6 stran</span><span class="btn inv">Spočítat moje poplatky</span></div>'))
 comp.append(('Chip', 'The 5 / 10 / 20 year selector. Selected chip is filled; on ink surfaces the colours swap.',
              '<div class="row-s"><span class="chip">5</span><span class="chip on">10</span><span class="chip">20</span><span class="dk"><span class="chip">5</span><span class="chip on">10</span><span class="chip">20</span></span></div>'))
-comp.append(('Pill', 'Green „yes“ or red „no“ availability marker. Left-aligned in its cell, never wraps. Should read „Ano“ / „Ne“, not only a colour.',
-             '<div class="row-s"><span class="pill no">[ověřit]</span><span class="pill yes">[ověřit]</span></div>'))
+comp.append(('Pill · rev. 2', 'Three states: green „Ano“, red „Ne“ (only with a source for that broker), amber <code>[ověřit]</code> (unverified, the default). Left-aligned in its cell, never wraps. Always text, not only colour.',
+             '<div class="row-s"><span class="pill yes">Ano</span><span class="pill no">Ne</span><span class="pill" style="background:#F3E6BE;color:#6B4E00">[ověřit]</span></div>'))
 comp.append(('Tag', 'Small uppercase Plex Mono label above sections and inside table heads. 11px (phone 10px).',
              '<div class="row-s"><span class="tag">Cena a dostupnost</span><span class="tag">řazeno od nejlevnějšího</span></div>'))
 comp.append(('Card, definition callout, trust item', 'Card: <code>--card</code>, 1px <code>--line</code>, radius 10. Callout: 3px ink left border, 12px padding. Trust item: 1.5px ink top rule.',
@@ -451,12 +462,12 @@ comp.append(('Card, definition callout, trust item', 'Card: <code>--card</code>,
 comp.append(('Hero comparison table', 'A card with source line on top, a three-column grid and a footnote. Phones use 1.5fr / .7fr / .9fr, gap 8, 14px text.',
              '<div class="card hct"><div class="hct-top"><span class="tag">Cena a dostupnost</span><span class="fine">zdroj: oficiální stránky fondů · 10. 2026</span></div>'
              '<div class="tr th"><span class="tag">Co koupíte</span><span class="tag">Roční poplatek</span><span class="tag">Koupíte z ČR?</span></div>'
-             '<div class="tr"><div><b>Americký fond na 500 největších firem</b><br><small>odborně S&amp;P 500, značka VOO</small></div><span>0,0X %</span><span class="pill no">[ověřit]</span></div>'
-             '<div class="tr win"><div><b>Evropská verze prvního fondu</b><br><small>stejných 500 firem, fond sídlí v Evropě</small></div><span>0,0X %</span><span class="pill yes">[ověřit]</span></div></div>'))
+             '<div class="tr"><div><b>Americký fond na 500 největších firem</b><br><small>odborně S&amp;P 500, značka VOO</small></div><span>0,03 %</span><span class="pill" style="background:#F3E6BE;color:#6B4E00">[ověřit]</span></div>'
+             '<div class="tr win"><div><b>Evropská verze prvního fondu</b><br><small>stejných 500 firem, značka CSPX, sídlí v Evropě</small></div><span>0,07 %</span><span class="pill yes">Ano</span></div></div>'))
 comp.append(('Range slider, result block', 'Native range, 500 to 20 000 in steps of 500, default 3 000. Value in 22px bold tabular numerals. Result block: tag, number in <code>--result</code>, optional three-line breakdown, footnote.',
              '<div class="dkbox"><div class="sl"><span>Kolik měsíčně uložíte</span><b>3 000 Kč</b></div><div class="track"><i></i></div><div class="res"><span class="tag on-dark">Za 10 let u amerického fondu zaplatíte víc o</span><div class="big">X XXX Kč</div><div class="bd"><span>roční poplatek fondu</span><span>X XXX Kč</span></div><div class="bd"><span>převod korun na dolary</span><span>X XXX Kč</span></div><div class="bd"><span>daň, kterou stáhne USA</span><span>X XXX Kč</span></div></div></div>'))
 comp.append(('E-mail gate', 'Title, one line of promise, label, e-mail input, primary button, privacy line, optional checkbox. Desktop: paper panel, ink-bordered input. Phones: <code>--card</code> panel with 1.5px ink border.',
-             '<div class="gate"><h4>Chcete porovnat všech 8 fondů?</h4><p>Ceny, daně a kde je koupit. Na jedné stránce, česky.</p><label>Váš e-mail</label><div class="inp">jmeno@domena.cz</div><span class="btn">Poslat mi srovnání</span><small>Pošleme vám srovnání. Správce: [SPRÁVCE]. Zásady zpracování osobních údajů.</small><div class="cb"><i></i>Chci občas dostat tip k investování (nepovinné)</div></div>'))
+             '<div class="gate"><h4>Chcete vidět, kde který fond koupíte?</h4><p>Fondy a 5 brokerů vedle sebe: kdo co nabízí a kolik stojí nákup. Česky, na jedné stránce.</p><label>Váš e-mail</label><div class="inp">jmeno@domena.cz</div><span class="btn">Poslat mi srovnání</span><small>Pošleme vám srovnání. Správce: [SPRÁVCE]. Zásady zpracování osobních údajů.</small><div class="cb"><i></i>Chci občas dostat tip k investování (nepovinné)</div></div>'))
 comp.append(('Numbered card, FAQ row', 'Numbered card: index, 20px title, 15px text (phones: index left). FAQ row: title and „+“, hairline underneath, list starts with a 1.5px ink rule.',
              '<div class="duo"><div class="card numc"><span>1</span><div><b>Roční poplatek fondu</b><br>Fond si každý rok vezme malé procento z vašich peněz.</div></div><div class="faq"><div>Můžu si americký fond koupit z Česka?<b>+</b></div><div>Je to zdarma?<b>+</b></div></div></div>'))
 comp.append(('Success badge, placeholder image', '44px circle in <code>--pill-yes-bg</code> with a 26px check, stroke 2.4. Placeholder: 135° stripes, dashed 1px border, radius 4.',
@@ -474,7 +485,7 @@ p.append('<section id="chovani" class="sec">' + section_head('11', 'Behaviour', 
          '<li>Monthly amount 500 to 20 000 Kč in steps of 500, default 3 000 Kč.</li><li>Period 5, 10 or 20 years, default 10.</li>'
          '<li>Output „Za {N} let u amerického fondu zaplatíte víc o“ and one amount in three parts: annual fund fee, conversion from crowns to dollars, tax withheld by the USA.</li>'
          '<li>Assumption 6 % return per year for both funds, „příklad, ne slib“.</li><li>Counted: fund fee, currency conversion, foreign withholding tax. Not counted: broker fees, inflation, Czech taxes.</li>'
-         '<li>Result carried to success and results screens as „3 000 Kč měsíčně · 10 let“.</li></ul></div>'
+         '<li>Result carried to success and results screens as „3 000 Kč měsíčně · 10 let“.</li><li><b>Rev. 2:</b> the headline flips to „zaplatíte méně o“ when the US fund is cheaper, and says it cannot be bought from CZ at every broker.</li><li><b>Rev. 2 rule:</b> a „Ne“ is shown only with a source for that broker; otherwise <code>[ověřit]</code>.</li></ul></div>'
          '<div class="col"><h3>Calculator · decide before building</h3><ul><li>The formula and the rounding.</li><li>Which fund pair drives the number.</li><li>Source and date of each input: fees, conversion cost, withholding rate, dividend yield.</li><li>Whether the result updates live while the slider moves.</li><li>What the headline says if the European fund is costlier. „Zaplatíte víc“ assumes the US fund is dearer.</li></ul>'
          '<h3>Recommended</h3><ul><li>One pure function with unit tests; every rate from a dated data file; reuse on the methodology page.</li><li><code>aria-live="polite"</code> on the result.</li><li><code>Intl.NumberFormat(\'cs-CZ\')</code>: space as thousands separator, decimal comma, non-breaking space before „Kč“ and „%“.</li></ul></div>'
          '<div class="col"><h3>E-mail flow · specified</h3><ol><li>Visitor enters an e-mail and may tick „Chci občas dostat tip k investování (nepovinné)“.</li><li>Success screen appears and keeps the calculator result.</li><li>An e-mail carries the link to the comparison page, valid 30 days, resendable from the results page. A 6-page PDF is also offered.</li><li>Tips need a second click in an e-mail; the comparison does not.</li><li>Every e-mail has an unsubscribe link; results footer has „Odhlásit odběr“.</li></ol>'
@@ -487,7 +498,7 @@ p.append('<section id="otevrene" class="sec">' + section_head('12', 'Open items'
          + '<h3>Referenced but not designed</h3><ul class="plain">' + ''.join(f'<li>{x}</li>' for x in NOT_DESIGNED) + '</ul>'
          + '<h3>Copy and placeholders</h3><p>No number in the wireframes is real. The build should refuse to show an unsourced number.</p><div class="tablewrap"><table class="inv small"><thead><tr><th>Placeholder</th><th>Where</th><th>What it needs</th></tr></thead><tbody>'
          + ''.join(f'<tr><td><code>{E(a)}</code></td><td>{b}</td><td>{c}</td></tr>' for a, b, c in PLACEHOLDERS) + '</tbody></table></div>'
-         + '<h3>Claims to substantiate before publishing</h3><ul class="plain"><li>„Oba sledují stejné velké firmy“ and „Stejné firmy. Jiná cena.“ hold only for matched pairs. The results table also lists a world fund, a dividend fund and a technology fund.</li><li>„Nedostáváme provize“ and „Nic neprodáváme“ must stay true for every link, including broker links.</li><li>„Zdarma“ and „bez registrace“ stay true only if the calculator result appears before any e-mail request.</li><li>„Čísla z oficiálních stránek fondů a Finanční správy“ means every figure really comes from those sources; the phone bar drops „a Finanční správy“.</li><li>The sentences about dollar conversion and tax withheld by the USA need a source per statement.</li></ul><p class="fine">The page covers investment products in the Czech Republic: have the final copy and the consent flow reviewed by someone qualified before launch.</p>'
+         + '<h3>Claims to substantiate before publishing</h3><ul class="plain"><li>„Stejné firmy, jiná cena i dostupnost“ (ad B) holds only for the matched pair VOO / CSPX. The results table also lists a world fund, a dividend fund and a technology fund.</li><li>The highlighted row must keep meaning „buyable from Czechia“: never describe it as „nejlevnější“. „Ano“ for CSPX at DEGIRO, Trading 212 and XTB needs a source per broker, like „Ne“ does.</li><li>„Nedostáváme provize“ and „Nic neprodáváme“ must stay true for every link, including broker links.</li><li>„Zdarma“ and „bez registrace“ stay true only if the calculator result appears before any e-mail request.</li><li>„Čísla z oficiálních stránek fondů a Finanční správy“ means every figure really comes from those sources; the phone bar drops „a Finanční správy“.</li><li>The sentences about dollar conversion and tax withheld by the USA need a source per statement.</li></ul><p class="fine">The page covers investment products in the Czech Republic: have the final copy and the consent flow reviewed by someone qualified before launch.</p>'
          + '<h3>Accessibility and known issues</h3><p>Already right, keep it: real <code>&lt;label for&gt;</code> on the e-mail field and slider, <code>aria-label</code> on the slider, <code>inputmode="email"</code>, <code>autocomplete="email"</code>; logo as SVG with <code>role="img"</code> and title; <code>prefers-reduced-motion</code> support; touch targets ≥ 44px; tabular numerals.</p>'
          '<div class="tablewrap"><table class="inv small"><thead><tr><th>#</th><th>Issue</th><th>Where</th><th>Fix</th></tr></thead><tbody>'
          + ''.join(f'<tr><td>{a}</td><td>{b}</td><td>{c}</td><td>{d}</td></tr>' for a, b, c, d in ISSUES) + '</tbody></table></div>'

@@ -14,6 +14,8 @@ export default defineConfig([
     'next-env.d.ts',
     'playwright-report/**',
     'test-results/**',
+    // Design-export tooling (Node scripts for the wireframe board), not app code.
+    'docs/design/wireframes/**',
   ]),
   // Keep business logic framework-free (SPEC §12a)
   {

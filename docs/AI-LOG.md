@@ -182,3 +182,18 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Wireframe copy I did not use as drawn:** the source bar's second item, "a Finanční správy". Our tax source is the treaty text, not Finanční správa, so the statement would be untrue. The date comes from the data, not the wireframe's "10. 2026".
 - **New Czech copy to review:** the test-project notice is my draft.
 - Limits: the variant routes are verified on a local production server only (Phase 6 checks Vercel). The footer is not pinned to the bottom of short pages; that goes away with real content.
+
+### Wireframes rev. 2 (docs only)
+
+**Prompt (summary):** David accepted the honest framing ("we are honest about our findings") and asked for a PR with updated docs and the `/design` screenshots.
+
+**Produced**
+
+- `docs/design/wireframes/`: rev. 2 artboards (`artboards-v2/`, generated from the originals by `apply_rev2.py`), rebuilt document, scripts; 12 re-exported PNGs; updates to `wireframe-b.md`, `DESIGN-GUIDE.md`, `design/README.md`; decision note 0029.
+
+**Mistakes and corrections**
+
+- **Revision 1 called a row "cheapest" that was not.** The fee check showed the US fund is cheaper, and it is not buyable from Czechia at three of five brokers.
+- **`dump_frames.py` wrote into the wrong folder.** The code it runs overwrites `OUT`, so frames landed in `dummy.html/`. I kept the output path in its own variable.
+- **The published `index.html` is not byte-identical to the local build.** The artifact service wraps the page, so I used the output of `build.py` and compared the artboards instead (identical).
+- Not changed: the app copy in `src/` still has the revision 1 wording.
