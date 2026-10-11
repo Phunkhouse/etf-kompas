@@ -25,7 +25,7 @@ pnpm dev            # Next dev server on http://localhost:3000
 pnpm build          # production build
 pnpm start          # serve the production build
 
-pnpm check          # lint + typecheck + test + contrast:check (no format check). Run before finishing, together with pnpm format:check
+pnpm check          # lint + typecheck + test + contrast:check + copy:check (no format check). Run before finishing, together with pnpm format:check
 pnpm format         # Prettier --write
 pnpm format:check   # Prettier --check (CI runs this)
 pnpm lint           # ESLint
@@ -33,12 +33,13 @@ pnpm typecheck      # runs `next typegen` first (route types are generated and g
 pnpm test           # Vitest: unit + component tests
 pnpm test:watch     # Vitest in watch mode
 pnpm contrast:check     # WCAG AA check of every colour pair in src/styles/contrast-pairs.ts (part of pnpm check)
+pnpm copy:check         # glossary and plain-language lint of src/content/copy.ts (SPEC §25, part of pnpm check)
 pnpm data:validate       # strict: fails on TODO_VERIFY, missing source, stale data (the deploy gate, Phase 6)
 pnpm data:validate:draft # same, but TODO_VERIFY is only a warning (CI today)
 pnpm test:e2e       # Playwright (mobile + desktop smoke). First run: pnpm exec playwright install chromium
 ```
 
-- This list covers only scripts that exist today. Later phases add `copy:check`: update this list when they land.
+- This list covers only scripts that exist today: update it when a phase adds one.
 - Use only scripts that exist in `package.json`. Check it before inventing a command.
 
 # Stack and tooling

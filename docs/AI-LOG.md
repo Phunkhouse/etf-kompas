@@ -143,3 +143,21 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Treaty:** the Czech-US treaty is a scan, so I read it with OCR (macOS Vision). The e-Sbírka page could not be read by my tools, so amendments to Article 10 are not checked.
 - **Weak spots I left in the data, to fix:** the VOO domicile cites `https://www.vanguard.com/prospectus`, the address printed in the prospectus, not the PDF's own URL. The VOO ISIN is derived from the CUSIP in the factsheet. The CSPX, CNDX and DEGIRO hashes are of copies my fetch tool saved, not David's own downloads. `verifiedBy` is "David" because he asked me to write it from his verification, and he still needs to read the diff.
 - **A test failed after the data change.** `src/server/data/validate.test.ts` checks the real data files on a fixed "today" of 2026-10-10, so my records dated 2026-10-11 counted as future dates. I found it when `pnpm check` ran, not before. The seed-data test now has its own fixed day (2026-10-11) and a title that says some values are still `TODO_VERIFY`. That is an edit to an existing validator test; David should look at it.
+
+### PR A: `copy:check`
+
+**Prompt (summary):** "Let's proceed" after the data PRs landed. David confirmed the six design choices, the `S&P 500` / `Nasdaq 100` exemption inside rows with a `plainName`, and the extra rule (e), and approved the test list.
+
+**Produced**
+
+- `src/lib/copy-check.ts`: `checkCopy(copy, { tickers })`, pure. Rules: glossary, "ETF" at most once, no abbreviation in a headline, tickers only in rows with a `plainName`, banned wording, `!` and emoji. Functions in `copy.ts` are called once with `"x"` for every parameter. Text under `legal` is skipped.
+- `src/lib/copy-check.test.ts`: 60 tests, written and approved before the implementation. `scripts/check-copy.ts` and `pnpm copy:check`, wired into `pnpm check`. CLAUDE.md command list updated.
+- The ticker list is read from `data/etfs.json` in the script, so there is no second list.
+
+**Mistakes and corrections**
+
+- The checker passed all 59 approved tests on the first run and still had a bug: the ticker patterns used the `g` flag and were reused with `test()`, which remembers `lastIndex`, so the same ticker in consecutive strings could be missed. Found by reading the code, not by a test. I wrote a failing test first (`flags the same ticker in several strings in a row`), then removed the flag. That makes 60 tests.
+- 15 of the 59 tests passed against the empty stub (the "should not flag" cases). They only become meaningful with the implementation, so a passing stub run was not evidence.
+- Deviation from my own test list: the script's exit code is not covered by a test. I checked it by hand with a deliberately bad heading (4 problems, exit 1), then restored the file.
+- Limits: a banned word behind a branch the sample call does not take is missed. Inflection is covered by stems, not a dictionary, so an unusual form could slip through.
+- **Typecheck failed on the first full `pnpm check`.** The script and the test both read `data.etfs` from `loadData()`, which returns `unknown` by design. I added `loadTickers()` to `src/server/data/load.ts` (Zod-parsed) and used it in both, so the ticker list has one reader.
