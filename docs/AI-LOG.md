@@ -92,3 +92,10 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - The first plan did not notice that with one `fxFeePct` for all funds the FX line in the twin gap is about 0, so the wireframe's FX line under a gap headline would mislead. Raised with David; the breakdown is now computed per fund.
 - The SPEC §21 test list contradicts itself: "zero deposits give cost 0" and "inputs clamped at the boundary" cannot both hold if the minimum is the slider's 500 Kč. Proposed: the function clamps to 0 to 20 000 and the slider enforces 500. Needs David's approval.
 - Golden cases G1 to G3 computed by David in a spreadsheet and added to METHODOLOGY §9. David approved the Proposed items (breakdown, clamping, 0 to 12 % cap with the agent's suggested reason, zero deposit accepted by the function). Decision notes 0019 and 0020 record them; the reasons in both were proposed by the agent and approved by David, and the notes say so.
+
+### PR B: calc.ts
+
+- Produced: `src/server/calc.ts` (`calcCost`, `calcComparison`) implemented against the tests David approved; the `it.todo` list became 30 real tests. All three golden cases pass, including the G3 rounding remainder.
+- Tests were written before the implementation and approved by David first, as CLAUDE.md requires. The implementation passed on the first run, so no test was changed to fit it; the only edit to the test file was removing an unused variable flagged by lint.
+- Decision made while writing the tests: the gap is the difference of the two displayed totals (David approved).
+- Agent slip: my first shell command to move the test file between branches used a wrong scratchpad path and half ran. The file was recovered from a copy in `$TMPDIR`; nothing was lost.
