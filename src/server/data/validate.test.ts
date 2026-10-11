@@ -300,11 +300,19 @@ describe('validateData', () => {
 })
 
 describe('seed data files', () => {
-  it('passes draft mode but not strict mode (everything is still TODO_VERIFY)', async () => {
+  // The real data files carry real dates, so they are checked on a fixed day:
+  // the day the Phase 3 values were verified.
+  const SEED_TODAY = '2026-10-11'
+
+  it('passes draft mode but not strict mode (some values are still TODO_VERIFY)', async () => {
     const { loadData } = await import('./load')
     const input = await loadData()
-    expect(validateData(input, { today: TODAY, mode: 'draft' }).ok).toBe(true)
-    expect(validateData(input, { today: TODAY, mode: 'strict' }).ok).toBe(false)
+    expect(validateData(input, { today: SEED_TODAY, mode: 'draft' }).ok).toBe(
+      true,
+    )
+    expect(validateData(input, { today: SEED_TODAY, mode: 'strict' }).ok).toBe(
+      false,
+    )
   })
 
   it('contains the 8 candidate ETFs from SPEC §5', async () => {
