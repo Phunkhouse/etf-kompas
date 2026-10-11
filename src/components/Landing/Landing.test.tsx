@@ -14,13 +14,15 @@ describe('Landing', () => {
     render(<Landing variant="a" dataAsOf={null} />)
     const headings = screen.getAllByRole('heading', { level: 1 })
     expect(headings).toHaveLength(1)
-    expect(headings[0].textContent).toContain('Kolik z vašich peněz')
+    expect(headings[0].textContent).toContain(
+      'Které fondy si z Česka opravdu koupíte?',
+    )
   })
 
   it('shows a different headline for variant b', () => {
     render(<Landing variant="b" dataAsOf={null} />)
     expect(screen.getByRole('heading', { level: 1 }).textContent).toContain(
-      'Americký, nebo evropský fond?',
+      'Které fondy si z Česka opravdu koupíte a kolik vás stojí?',
     )
   })
 })

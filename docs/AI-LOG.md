@@ -197,3 +197,14 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **`dump_frames.py` wrote into the wrong folder.** The code it runs overwrites `OUT`, so frames landed in `dummy.html/`. I kept the output path in its own variable.
 - **The published `index.html` is not byte-identical to the local build.** The artifact service wraps the page, so I used the output of `build.py` and compared the artboards instead (identical).
 - Not changed: the app copy in `src/` still has the revision 1 wording.
+
+### PR C0: copy.ts at wireframe revision 2
+
+**Prompt (summary):** "Use your wording for both, start C0", after I listed the two conflicts between the revision 2 wireframe copy and `copy:check` ("ETF" in headlines, "broker" on the banned list).
+
+**Produced:** the source bar line and both hero headlines in `copy.ts` at the revision 2 meaning, with "fondy" for "ETF" and "firem" for "brokerů"; tests and Playwright expectations updated; decision note 0030.
+
+**Mistakes and corrections**
+
+- **My proposed source-bar wording wrapped.** "Čísla ze stránek fondů a firem, kde je koupíte · ověřeno k 6. 2026" took two lines at 375 px, and each extra line costs 17 px of the 667 px the hero has to fit in. I measured it in the browser, tried four candidates, and used the shorter "Čísla ze stránek fondů a firem · ověřeno k …". It is not the wording I told David I would use, so I said so in the PR.
+- Found while searching for the old strings: `src/app/styleguide/page.tsx` still has "Kolik z vašich peněz sní poplatky" as demo text. I left it, because it is a style demo and `copy:check` does not read it.
