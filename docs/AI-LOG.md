@@ -108,3 +108,4 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - Limit: keyboard and ARIA attributes are tested, a real screen reader was not run. The status region announces only the number (from `NumberDisplay`), not the sentence above it.
 - `pnpm copy:check` does not exist yet (Phase 3); the new copy follows the glossary by hand (no TER, FX, UCITS in the strings).
 - Existing e2e test `styleguide.spec.ts` (slider and result) failed after the change because it asserted the old fake 8 % cost. Its result assertion was dropped; the new `calculator.spec.ts` covers the result changing. Found by running the full Playwright suite, not only the new spec.
+- Decision note 0021 (calculator runs in the browser on the shared pure function) drafted from the reasons David approved in the PR C plan. They were proposed by the agent, and the note says so. Bundle size is not measured yet; the note says that too.
