@@ -10,7 +10,12 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-8);
-  min-height: var(--touch-target-lg);
+  // 48 px on phones to leave room for the hero (note 0031), 56 px from md
+  min-height: var(--touch-target);
+
+  @include from('md') {
+    min-height: var(--touch-target-lg);
+  }
 }
 
 // The links and the button are for wide screens (wireframe B, section 1).

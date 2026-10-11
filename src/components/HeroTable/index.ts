@@ -1,0 +1,1 @@
+export { HeroTable } from './HeroTable'

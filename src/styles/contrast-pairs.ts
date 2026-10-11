@@ -28,8 +28,14 @@ export const contrastPairs: ContrastPair[] = [
     min: 3,
     use: 'cost number on paper (large)',
   },
-  { fg: 'no-fg', bg: 'no-bg', min: 4.5, use: 'pill: not buyable, unverified' },
+  { fg: 'no-fg', bg: 'no-bg', min: 4.5, use: 'pill: not buyable' },
   { fg: 'yes-fg', bg: 'yes-bg', min: 4.5, use: 'pill: buyable' },
+  {
+    fg: 'pill-ver-ink',
+    bg: 'pill-ver-bg',
+    min: 4.5,
+    use: 'pill: [ověřit], unverified',
+  },
   {
     fg: 'yes-fg',
     bg: 'highlight',

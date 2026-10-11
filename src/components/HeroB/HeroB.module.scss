@@ -1,0 +1,96 @@
+@use 'styles/utilities' as *;
+
+.hero {
+  padding-block: var(--space-6) var(--space-8);
+  background: var(--color-paper);
+  color: var(--color-ink);
+
+  @include from('md') {
+    padding-block: var(--space-12) var(--space-16);
+  }
+}
+
+// One column on a phone, in DOM order. Two columns on wide screens: text,
+// explanation and button on the left, table and footnote on the right.
+.grid {
+  display: grid;
+  gap: var(--space-4);
+
+  @include from('md') {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'intro table'
+      'callout table'
+      'cta footnote';
+    align-items: start;
+    column-gap: var(--space-14);
+    row-gap: var(--space-6);
+  }
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-3);
+
+  @include from('md') {
+    grid-area: intro;
+  }
+}
+
+.table {
+  @include from('md') {
+    grid-area: table;
+  }
+}
+
+.cta {
+  @include from('md') {
+    grid-area: cta;
+  }
+}
+
+.footnote {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+
+  @include from('md') {
+    grid-area: footnote;
+  }
+}
+
+.callout {
+  margin-top: var(--space-2);
+
+  @include from('md') {
+    grid-area: callout;
+    margin-top: 0;
+  }
+}
+
+.headline {
+  margin: 0;
+  // 28 px on phones so the button stays above the fold (note 0031)
+  font-size: var(--font-size-hero-phone);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--tracking-display);
+
+  @include from('md') {
+    font-size: var(--font-size-4xl);
+    line-height: var(--line-height-tight);
+  }
+}
+
+.lead {
+  // Hidden on phones to keep the button above the fold (note 0031)
+  display: none;
+  margin: 0;
+  color: var(--color-ink-soft);
+  font-size: var(--font-size-base);
+
+  @include from('md') {
+    display: block;
+    font-size: var(--font-size-lg);
+  }
+}

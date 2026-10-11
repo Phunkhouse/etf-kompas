@@ -93,7 +93,8 @@ The wireframe uses about 20 different font sizes. The code merges them into the 
 | `md`         | 18 px | 17, 18 (lead, buttons, card headings) |
 | `lg`         | 20 px | 20                                    |
 | `xl`         | 24 px | 22, 24, 26                            |
-| `2xl`        | 32 px | 28, 30, 32                            |
+| `hero-phone` | 28 px | 28 (hero h1 on phones, note 0031)     |
+| `2xl`        | 32 px | 30, 32                                |
 | `3xl`        | 40 px | 40                                    |
 | `4xl`        | 58 px | 58 (h1 desktop)                       |
 | `display-sm` | 60 px | 52, 60 (result number, mobile)        |
