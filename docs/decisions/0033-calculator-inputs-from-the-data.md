@@ -20,5 +20,5 @@ Not recorded.
 
 - With today's data VOO costs 986 Kč less than CSPX over ten years at 3 000 Kč a month, and the note says it cannot be bought at 3 of 5 firms.
 - The single conversion fee is kept on purpose, although DEGIRO's document says EUR to CZK transfers are free (METHODOLOGY, "Source of fxFeePct"). The question is parked for the pre-release audit of earlier decisions.
-- The 20 mapping tests were approved first, and none was changed to fit the code. They include a check that a fund fee below 0.01 (a fraction instead of a percent) fails.
+- The 8 mapping tests were approved first, and none was changed to fit the code. They include a check that a fund fee below 0.01 (a fraction instead of a percent) fails.
 - David approved the tests and said to keep the single fee on 2026-10-11, and gave no other reason.
