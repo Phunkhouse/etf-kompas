@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import styles from './Table.module.scss'
 
 export type TableColumn = {
@@ -22,11 +22,34 @@ type TableProps = {
   caption: string
   columns: TableColumn[]
   rows: TableRowData[]
+  // A bordered card on a surface background (the hero table)
+  card?: boolean
+  // The hero table intro (note 0016): the card fades in, the rows follow one by
+  // one, then the highlighted row turns green. Off for prefers-reduced-motion.
+  intro?: boolean
+  // Phone layout that saves height (note 0031): denser rows, and the visible
+  // caption is hidden below md (screen readers still read it).
+  compact?: boolean
 }
 
-export function Table({ caption, columns, rows }: TableProps) {
+export function Table({
+  caption,
+  columns,
+  rows,
+  card,
+  intro,
+  compact,
+}: TableProps) {
+  const wrapClass = [
+    styles.wrap,
+    card ? styles.card : '',
+    intro ? styles.intro : '',
+    compact ? styles.compact : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
   return (
-    <div className={styles.wrap}>
+    <div className={wrapClass}>
       <table className={styles.table}>
         <caption className={styles.caption}>{caption}</caption>
         <colgroup>
@@ -44,11 +67,12 @@ export function Table({ caption, columns, rows }: TableProps) {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row) => (
+          {rows.map((row, rowIndex) => (
             <tr
               key={row.id}
               className={`${styles.row} ${row.highlight ? styles.highlight : ''}`}
               data-highlight={row.highlight || undefined}
+              style={{ '--row-index': rowIndex } as CSSProperties}
             >
               {columns.map((column, index) =>
                 index === 0 ? (

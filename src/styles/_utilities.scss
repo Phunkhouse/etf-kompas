@@ -17,3 +17,18 @@ $breakpoints: (
     @content;
   }
 }
+
+// Hides an element visually below a breakpoint but keeps it for screen readers.
+@mixin visually-hidden-below($name) {
+  @media (max-width: map.get($breakpoints, $name) - 0.02px) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

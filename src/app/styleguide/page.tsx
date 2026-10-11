@@ -19,6 +19,7 @@ const fontSizes = [
   ['md', '18 px'],
   ['lg', '20 px'],
   ['xl', '24 px'],
+  ['hero-phone', '28 px'],
   ['2xl', '32 px'],
   ['3xl', '40 px'],
   ['4xl', '58 px'],

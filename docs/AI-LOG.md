@@ -208,3 +208,20 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 
 - **My proposed source-bar wording wrapped.** "Čísla ze stránek fondů a firem, kde je koupíte · ověřeno k 6. 2026" took two lines at 375 px, and each extra line costs 17 px of the 667 px the hero has to fit in. I measured it in the browser, tried four candidates, and used the shorter "Čísla ze stránek fondů a firem · ověřeno k …". It is not the wording I told David I would use, so I said so in the PR.
 - Found while searching for the old strings: `src/app/styleguide/page.tsx` still has "Kolik z vašich peněz sní poplatky" as demo text. I left it, because it is a style demo and `copy:check` does not read it.
+
+### PR C1: hero b (table, amber pill, animation, fit)
+
+**Prompt (summary):** "start C1 tests now", then "approved, implement the rule", then "Go with option 1, headline 28 px. We can iterate on it later" after I showed the measured options.
+
+**Produced**
+
+- `src/server/availability.ts`: `buyability` and `heroRows`, with 20 tests written and approved first. All passed on the first run and no test was changed.
+- The amber `unverified` Pill state with tokens, `Table` options `card`, `intro` and `compact`, `HeroTable`, `HeroB`, hero b copy, `e2e/hero-fit.spec.ts`, decision notes 0031 and 0032, the `--font-size-hero-phone` token.
+
+**Mistakes and corrections**
+
+- **The hero did not fit, and my plan had said it was "tight".** The first build put the button at 851 px on a 667 px screen. The `hero-fit` e2e test failed, and I did not weaken it. I measured candidate layouts live in the browser, gave David the numbers, and implemented the option he chose.
+- **The fit test passed while the page looked broken.** With the chosen layout the button was at 645 px, but a screenshot showed the "POPLATEK" header running into its neighbour and a pill poking past the card edge. A geometry test cannot see that. I fixed the column widths, header letter spacing and pill size (button now at 656 px) and looked again. The fit test should be paired with a look at the page, and the PR description says so.
+- **Two Prettier traps in my own edit scripts.** My string-replace edits twice missed because Prettier had reflowed the lines or because the file held a real non-breaking space where I had written an escape. Both showed up as an assertion failure, not as a silent miss.
+- **A test matcher normalised away the thing it tested.** `getByText('0,03 %')` with a non-breaking space did not match, because Testing Library normalises the DOM text. I compared `textContent` instead.
+- Limits: the fit is verified at 375 x 667 only, with an 11 px margin. The intro animation's effect on LCP is not measured yet (note 0016); that comes with the performance PR. Fio and IBKR are not verified, so two pills stay amber.

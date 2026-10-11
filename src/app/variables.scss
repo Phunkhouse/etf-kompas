@@ -20,6 +20,8 @@
   --color-no-fg: #7a2410;
   --color-yes-bg: #d6e8de;
   --color-yes-fg: #154a33;
+  --color-pill-ver-bg: #f3e6be;
+  --color-pill-ver-ink: #6b4e00;
   --color-highlight: #dceee3;
   --color-row-hover: #f3eedf;
   // Focus ring colour. Dark sections set it to paper.
@@ -34,6 +36,7 @@
   --font-size-md: 1.125rem; // 18 px: lead, card headings, buttons
   --font-size-lg: 1.25rem; // 20 px
   --font-size-xl: 1.5rem; // 24 px: section headings (mobile)
+  --font-size-hero-phone: 1.75rem; // 28 px: hero h1 on phones (fits 375x667, note 0031)
   --font-size-2xl: 2rem; // 32 px: section headings (desktop), h1 (mobile)
   --font-size-3xl: 2.5rem; // 40 px
   --font-size-4xl: 3.625rem; // 58 px: h1 (desktop)

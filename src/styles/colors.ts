@@ -18,6 +18,8 @@ export const colors = {
   'no-fg': '#7A2410',
   'yes-bg': '#D6E8DE',
   'yes-fg': '#154A33',
+  'pill-ver-bg': '#F3E6BE',
+  'pill-ver-ink': '#6B4E00',
   highlight: '#DCEEE3',
   'row-hover': '#F3EEDF',
 } as const

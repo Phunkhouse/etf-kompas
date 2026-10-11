@@ -2,8 +2,9 @@ import type { ReactNode } from 'react'
 import styles from './Pill.module.scss'
 
 type PillProps = {
-  // "negative" = not buyable or still unverified, "positive" = buyable
-  tone: 'negative' | 'positive'
+  // negative = verified as not buyable ("Ne"), positive = buyable ("Ano"),
+  // unverified = not checked yet, amber ("[ověřit]", note 0029)
+  tone: 'negative' | 'positive' | 'unverified'
   children: ReactNode
 }
 

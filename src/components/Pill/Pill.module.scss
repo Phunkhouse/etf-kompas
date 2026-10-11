@@ -1,9 +1,12 @@
+@use 'styles/utilities' as *;
+
 .pill {
   display: inline-block;
-  padding: var(--space-1) var(--space-3);
+  // Smaller on phones, where table columns are narrow
+  padding: var(--space-1) var(--space-2);
   border: var(--border-width-strong) solid transparent;
   border-radius: var(--radius-pill);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-base);
   white-space: nowrap;
@@ -19,4 +22,16 @@
   border-color: var(--color-yes-fg);
   background: var(--color-yes-bg);
   color: var(--color-yes-fg);
+}
+
+.unverified {
+  background: var(--color-pill-ver-bg);
+  color: var(--color-pill-ver-ink);
+}
+
+.pill {
+  @include from('md') {
+    padding-inline: var(--space-3);
+    font-size: var(--font-size-sm);
+  }
 }

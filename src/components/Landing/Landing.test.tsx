@@ -26,3 +26,33 @@ describe('Landing', () => {
     )
   })
 })
+
+describe('Landing, variant b with the table', () => {
+  it('shows the hero table with its rows', () => {
+    const rows = [
+      {
+        fundId: 'cspx',
+        ter: 0.07,
+        buyability: {
+          state: 'yes' as const,
+          yesCount: 3,
+          verifiedNoCount: 0,
+          total: 5,
+        },
+        highlight: true,
+      },
+    ]
+    render(<Landing variant="b" dataAsOf="2026-06-30" rows={rows} />)
+    expect(
+      screen.getByRole('table', { name: 'Cena a dostupnost' }),
+    ).toBeTruthy()
+    expect(
+      screen.getByRole('link', { name: /Spočítat, kolik zaplatím/ }),
+    ).toBeTruthy()
+  })
+
+  it('does not show the table in variant a', () => {
+    render(<Landing variant="a" dataAsOf="2026-06-30" />)
+    expect(screen.queryByRole('table')).toBeNull()
+  })
+})

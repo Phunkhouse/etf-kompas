@@ -97,3 +97,92 @@
     font-size: var(--font-size-sm);
   }
 }
+
+.card {
+  padding: var(--space-3) var(--space-3) var(--space-2);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+
+  @include from('md') {
+    padding: var(--space-4) var(--space-5) var(--space-3);
+  }
+}
+
+// Hero table intro (DESIGN-GUIDE section 5, note 0016). Rows are laid out in
+// their final place from the start, so nothing moves and CLS stays 0.
+@media (prefers-reduced-motion: no-preference) {
+  .intro {
+    animation: cardIn var(--duration-intro) var(--ease-out) both;
+
+    .row {
+      animation: rowIn var(--duration-intro) var(--ease-out) both;
+      // 0.4 s, 0.9 s and 1.4 s for rows 1 to 3
+      animation-delay: calc(0.4s + var(--row-index, 0) * 0.5s);
+    }
+
+    .highlight {
+      animation:
+        rowIn var(--duration-intro) var(--ease-out) both,
+        highlightIn 0.8s var(--ease-out) 2.2s both;
+      animation-delay: calc(0.4s + var(--row-index, 0) * 0.5s), 2.2s;
+    }
+  }
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-6));
+  }
+}
+
+@keyframes rowIn {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--space-6) * -1));
+  }
+}
+
+@keyframes highlightIn {
+  from {
+    background-color: transparent;
+  }
+}
+
+// Compact on phones (note 0031): the hero has to fit 375 x 667. From md the
+// table looks as usual.
+.compact {
+  .caption {
+    @include visually-hidden-below('md');
+  }
+
+  // Narrow columns on a phone: less side padding and tighter header letters, so
+  // "POPLATEK" fits its column.
+  .head,
+  .row th,
+  .row td {
+    padding-inline: var(--space-1);
+
+    @include from('md') {
+      padding-inline: var(--space-3);
+    }
+  }
+
+  .head {
+    letter-spacing: var(--tracking-snug);
+
+    @include from('md') {
+      letter-spacing: var(--tracking-tag);
+    }
+  }
+
+  .row th,
+  .row td {
+    padding-block: var(--space-2);
+
+    @include from('md') {
+      padding-block: var(--space-4);
+    }
+  }
+}

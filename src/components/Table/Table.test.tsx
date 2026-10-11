@@ -67,4 +67,17 @@ describe('Table', () => {
       screen.getByRole('row', { name: /Americký fond/ }).dataset.highlight,
     ).toBeUndefined()
   })
+
+  it('adds the card, intro and compact styles only when asked', () => {
+    const { container, rerender } = render(
+      <Table caption="Cena" columns={columns} rows={rows} />,
+    )
+    const plain = (container.firstChild as HTMLElement).className
+    rerender(
+      <Table caption="Cena" columns={columns} rows={rows} card intro compact />,
+    )
+    const styled = (container.firstChild as HTMLElement).className
+    expect(styled).not.toBe(plain)
+    expect(styled.split(' ').length).toBe(plain.split(' ').length + 3)
+  })
 })

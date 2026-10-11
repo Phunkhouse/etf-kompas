@@ -1,0 +1,20 @@
+.block {
+  display: grid;
+  gap: var(--space-2);
+}
+
+// Under the amber pill: how many firms are verified as not selling the fund.
+.note {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+  white-space: normal;
+}
+
+.source {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+}
