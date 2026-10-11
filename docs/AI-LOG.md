@@ -91,4 +91,4 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - The first plan said "failing tests first" in PR A. Failing tests would turn CI red and the PR could not be merged. Changed to `it.todo`.
 - The first plan did not notice that with one `fxFeePct` for all funds the FX line in the twin gap is about 0, so the wireframe's FX line under a gap headline would mislead. Raised with David; the breakdown is now computed per fund.
 - The SPEC §21 test list contradicts itself: "zero deposits give cost 0" and "inputs clamped at the boundary" cannot both hold if the minimum is the slider's 500 Kč. Proposed: the function clamps to 0 to 20 000 and the slider enforces 500. Needs David's approval.
-- Still open: the golden-case results (David), the reason for the 0 to 12 % return cap (David), decision notes for the breakdown rule and the cap (after David gives the reasons).
+- Golden cases G1 to G3 computed by David in a spreadsheet and added to METHODOLOGY §9. Still open: the reason for the 0 to 12 % return cap (David), decision notes for the breakdown rule and the cap (after David gives the reasons).

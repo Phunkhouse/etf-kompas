@@ -1,6 +1,6 @@
 # Calculator methodology
 
-Status: **draft for review** (Phase 2, PR A). Source of truth is SPEC §21; this file writes its formulas out step by step so they can be checked in a spreadsheet. Anything marked **Proposed** is not in the SPEC yet and needs David's approval.
+Status: **draft for review** (Phase 2, PR A; golden cases verified by David). Source of truth is SPEC §21; this file writes its formulas out step by step so they can be checked in a spreadsheet. Anything marked **Proposed** is not in the SPEC yet and needs David's approval.
 
 The calculator shows the **cost drag** of holding a fund, in Kč. It is an illustration of costs, not a forecast of returns.
 
@@ -89,14 +89,14 @@ Compare with the lowest-`Cost` fund in the same `indexGroup`, computed with the 
 
 Every amount that leaves `calc.ts` is an integer number of Kč. Percentages are plain numbers.
 
-## 9. Golden cases (to be computed by hand by David)
+## 9. Golden cases (computed by David)
 
-SPEC §21 requires at least 3 cases derived by hand by the reviewer, not the agent. These inputs are **invented test values, not real fund data**. Results and derivations are filled in by David; the agent then copies them into tests unchanged.
+SPEC §21 requires at least 3 cases derived by hand by the reviewer, not the agent. These inputs are **invented test values, not real fund data**. Results below were computed by David in a spreadsheet; the agent copies them into tests unchanged.
 
-| #   | monthly | years | grossReturn | ter | dividendYieldPct | withholdingRate | fxFeePct | What it checks                                  | Expected `Cost` (Kč) | Derivation |
-| --- | ------- | ----- | ----------- | --- | ---------------- | --------------- | -------- | ----------------------------------------------- | -------------------- | ---------- |
-| G1  | 2 000   | 10    | 0           | 0   | 0                | 0               | 1        | `r = 0` branch; cost is exactly 1 % of deposits | TODO (David)         | TODO       |
-| G2  | 1 000   | 5     | 6           | 1   | 0                | 0               | none     | TER only, no FX, no withholding                 | TODO (David)         | TODO       |
-| G3  | 3 000   | 10    | 6           | 0.5 | 2                | 15              | 0.5      | All three components, and the three parts (§5)  | TODO (David)         | TODO       |
+| #   | monthly | years | grossReturn | ter | dividendYieldPct | withholdingRate | fxFeePct | What it checks                                  | Expected `Cost` (Kč) | Derivation                                                                                                                                                                                                                                                               |
+| --- | ------- | ----- | ----------- | --- | ---------------- | --------------- | -------- | ----------------------------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| G1  | 2 000   | 10    | 0           | 0   | 0                | 0               | 1        | `r = 0` branch; cost is exactly 1 % of deposits | 2 400                | Verified by David in a spreadsheet. S0 = 240 000, S3 = 237 600. Parts: TER 0, FX 2 400, withholding 0.                                                                                                                                                                   |
+| G2  | 1 000   | 5     | 6           | 1   | 0                | 0               | none     | TER only, no FX, no withholding                 | 1 672                | Verified by David in a spreadsheet. S0 = 69 485.79, S1 = S2 = S3 = 67 813.74. Parts: TER 1 672, FX 0, withholding 0.                                                                                                                                                     |
+| G3  | 3 000   | 10    | 6           | 0.5 | 2                | 15              | 0.5      | All three components, and the three parts (§5)  | 21 913               | Verified by David in a spreadsheet. S0 = 487 420.33, S1 = 475 084.17, S2 = 472 708.75, S3 = 465 507.74. Rounded parts: TER 12 336, FX 2 375, withholding 7 201 add up to 21 912, so the largest part (TER) takes the remainder: TER 12 337, FX 2 375, withholding 7 201. |
 
 For G1 the answer needs no spreadsheet: deposits total `2 000 x 120 = 240 000`, and the cost is 1 % of that. For G2 and G3 use the formulas in §3 to §5.
