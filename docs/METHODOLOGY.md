@@ -31,6 +31,12 @@ The two measures are not the same kind of number. The dividend line is small nex
 
 15 % for all five funds (decision note 0025). VOO and QQQ: Czech-US treaty, Article 10(2)(b), which needs Form W-8BEN. CSPX, VUAA and CNDX: US-Ireland convention, Article 10(2)(b), corroborated by the funds' annual reports (actual withholding 14.1 to 14.4 % of dividend income). The prospectuses of the Irish funds state no rate.
 
+### Source of `fxFeePct`
+
+DEGIRO's "Auto FX" fee, 0,25 % of the converted amount, from its "Přehled poplatků" ("rates from 2026-01-01"). The page applies it to both funds, as decided in note 0019 (one conversion fee for every fund).
+
+**Known simplification.** The same document says transfers between EUR and CZK are free. The European fund is bought in euros, so at DEGIRO its conversion cost is probably nil, while a US fund bought in dollars pays the fee. Charging both funds the same fee understates the American fund's disadvantage by up to 0,25 % of the deposits. This has not been checked with a real order. The figure is the verified one, and the calculator says the result is an example.
+
 ## 2. Rates
 
 - `r_gross = g`

@@ -1,6 +1,7 @@
 // What the hero table may claim about buying a fund from Czechia (note 0029,
 // SPEC §18): "no" only with a source per firm, never from a missing value.
-import { TODO_VERIFY, type Broker, type Etf } from '@/server/data/schema'
+import type { Broker, Etf } from '@/server/data/schema'
+import { hasSource } from '@/server/data/verified'
 
 export type Buyability = {
   // yes = at least one firm is verified as selling it; no = every firm is
@@ -14,15 +15,10 @@ export type Buyability = {
 
 type AvailabilityRecord = Broker['availability'][string]
 
-function isSet(text: string | null): boolean {
-  return text !== null && text.trim() !== '' && text !== TODO_VERIFY
-}
-
-// A true or false counts only when it has a source and evidence. Freshness is
-// the data validator's job, not checked here.
+// A true or false counts only when it has a source and evidence.
 function verifiedValue(record: AvailabilityRecord | undefined): boolean | null {
   if (!record || typeof record.value !== 'boolean') return null
-  return isSet(record.sourceUrl) && isSet(record.evidence) ? record.value : null
+  return hasSource(record) ? record.value : null
 }
 
 export function buyability(fundId: string, brokers: Broker[]): Buyability {

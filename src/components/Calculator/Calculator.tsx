@@ -23,6 +23,12 @@ type CalculatorProps = {
   // Absent means the conversion fee is not counted (SPEC §21).
   fxFeePct?: number
   grossReturn?: number
+  // Heading level and id, so the page can name the section after it.
+  headingAs?: 'h2' | 'h3'
+  headingId?: string
+  // Shown under the result only while the featured fund is the cheaper one, for
+  // example to say it cannot be bought everywhere (note 0029).
+  cheaperNote?: string
 }
 
 // The fee and tax drag calculator (SPEC §4, §21). Calculates in the browser
@@ -32,6 +38,9 @@ export function Calculator({
   alternative,
   fxFeePct,
   grossReturn = 6,
+  headingAs = 'h3',
+  headingId,
+  cheaperNote,
 }: CalculatorProps) {
   const [monthly, setMonthly] = useState(3000)
   const [years, setYears] = useState(10)
@@ -44,6 +53,8 @@ export function Calculator({
   // The gap is shown from the point of view of the American fund.
   const gap =
     own.gapKc === null ? 0 : own.gapKc > 0 ? own.gapKc : (other.gapKc ?? 0)
+  // The featured fund is the cheaper one (the label says "méně o").
+  const featuredCheaper = own.gapKc !== null && own.gapKc <= 0 && gap > 0
   const tag =
     own.gapKc !== null && own.gapKc > 0
       ? text.resultMore(years)
@@ -66,7 +77,9 @@ export function Calculator({
   return (
     <div className={styles.calculator}>
       <div className={styles.inputs}>
-        <Tag as="h3">{nbsp(text.heading)}</Tag>
+        <Tag as={headingAs} id={headingId}>
+          {nbsp(text.heading)}
+        </Tag>
         <Slider
           label={nbsp(text.monthlyLabel)}
           value={monthly}
@@ -117,6 +130,9 @@ export function Calculator({
         <p className={styles.note}>
           {nbsp(text.assumption(formatPercent(grossReturn, 0)))}
         </p>
+        {featuredCheaper && cheaperNote ? (
+          <p className={styles.note}>{nbsp(cheaperNote)}</p>
+        ) : null}
       </div>
     </div>
   )
