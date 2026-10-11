@@ -1,6 +1,6 @@
 import { test, expect, type Browser } from '@playwright/test'
 
-// Route JavaScript (SPEC §22 asks for at most 90 KB gzipped). Measured as the
+// Route JavaScript (SPEC §22, decision note 0034). Measured as the
 // bytes the browser downloads for scripts (compressed size from the request
 // sizes), cold, with no shared cache.
 async function scriptBytes(browser: Browser, path: string): Promise<number> {
@@ -37,12 +37,15 @@ test('the page code adds little on top of the framework', async ({
   }
 })
 
-// Not met, and not because of our code: the empty page alone is far above 90 KB
-// with Next 16 and React 19. Skipped on purpose until David decides what the
-// budget should be (see the PR description and the AI log).
-test.fixme('route JavaScript is at most 90 KB gzipped (SPEC §22)', async ({
-  browser,
-}) => {
-  const total = await scriptBytes(browser, '/?v=b')
-  expect(total).toBeLessThanOrEqual(90 * 1024)
-})
+// The whole route (SPEC §22, decision note 0034). Today it is about 142 KB.
+const ROUTE_CEILING = 150 * 1024
+
+for (const path of ['/', '/?v=b']) {
+  test(`route JavaScript for ${path} is at most 150 KB gzipped`, async ({
+    browser,
+  }) => {
+    const total = await scriptBytes(browser, path)
+    console.log(`JS ${path}: ${kb(total)} of ${kb(ROUTE_CEILING)}`)
+    expect(total).toBeLessThanOrEqual(ROUTE_CEILING)
+  })
+}

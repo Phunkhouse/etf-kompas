@@ -51,7 +51,7 @@ Short version of [SPEC.md](SPEC.md) §14, §20 and §22. If this file and the sp
 
 - Sections per SPEC §7, layout from wireframe B, copy from §25
 - Hero fits 375x667 including the primary CTA, no scrolling
-- Lighthouse mobile: performance >= 90, accessibility >= 95, LCP < 2.0 s, CLS < 0.05, route JS <= 90 KB gzipped
+- Lighthouse mobile: performance >= 90, accessibility >= 95, LCP < 2.0 s, CLS < 0.05, route JS: our code adds <= 20 KB over an empty page and the route is <= 150 KB gzipped
 - Form works without JavaScript
 - `?v=a` and `?v=b` show different heroes, unknown value falls back to `a`
 - `pnpm copy:check` passes
