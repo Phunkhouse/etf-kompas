@@ -147,3 +147,6 @@ pre.code{background:#16150F;color:#D9D4C5;border-radius:var(--r);padding:20px;ov
 .flow{grid-template-columns:1fr}.flow li:not(:last-child):after{display:none}
 .notes.c2{grid-template-columns:1fr}}
 @media print{.side{display:none}main{margin:0}}
+
+.pl.v{background:#F3E6BE;color:#6B4E00}.pl.g{background:#D6E8DE;color:#154A33}
+.rev{margin:32px 0 8px;padding:20px 24px;border:1.5px solid var(--ink);border-radius:var(--r);background:var(--card)}.rev h3{margin:8px 0 10px}.rev ul{padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:15px;margin-top:10px}
