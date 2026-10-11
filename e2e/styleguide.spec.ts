@@ -100,9 +100,7 @@ test('buttons and chips are reachable by keyboard and show a focus ring', async 
   expect(outline).toBe('3px')
 })
 
-test('slider works with the keyboard and updates the result', async ({
-  page,
-}) => {
+test('slider works with the keyboard', async ({ page }) => {
   await page.goto('/styleguide')
   const slider = page
     .getByRole('slider', { name: 'Kolik měsíčně uložíte' })
@@ -118,9 +116,6 @@ test('slider works with the keyboard and updates the result', async ({
   expect(await slider.inputValue()).toBe('20000')
   await page.keyboard.press('Home')
   expect(await slider.inputValue()).toBe('500')
-
-  // The cost number follows (8 % of 500 Kč x 120 months = 4 800 Kč)
-  await expect(page.getByRole('status').first()).toHaveText(/4\s800\sKč/)
 })
 
 test('field announces an error and links it to the input', async ({ page }) => {

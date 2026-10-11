@@ -123,7 +123,6 @@ export function Primitives() {
           <Table caption="Cena a dostupnost" columns={columns} rows={rows} />
 
           <FormDemos />
-          <CalculatorDemo />
         </div>
       </section>
 
