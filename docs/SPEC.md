@@ -103,7 +103,7 @@ Chosen over portfolio builder or pure comparison table because it (a) produces a
 **Outputs:** cumulative cost of TER, FX conversion, and dividend withholding, in Kč, plus the difference versus the cheapest alternative.
 
 Rules:
-- Pure function in `lib/calc.ts`, fully unit-tested (Vitest), formulas documented in `docs/METHODOLOGY.md`. The reviewer must be able to verify the maths by hand.
+- Pure function in `src/server/calc.ts`, fully unit-tested (Vitest), formulas documented in `docs/METHODOLOGY.md`. The reviewer must be able to verify the maths by hand.
 - No claims such as "you will lose X". Wording: "orientační odhad nákladů".
 - Result animates for under 300 ms, not longer. Respect `prefers-reduced-motion`. The one other animation is the hero table intro (decision note 0016).
 
