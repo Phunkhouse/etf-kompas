@@ -5,36 +5,36 @@
     "region": "us-listed",
     "indexGroup": "sp500",
     "name": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "Vanguard S&P 500 ETF",
+      "sourceUrl": "https://fund-docs.vanguard.com/F0968.pdf",
+      "asOf": "2026-06-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:e61ed989f327c2742ee91ba9267ce30907a7e6c1b067f4d1688d228e28d79bd4 (webfetch-1791721844339-6dwi26.pdf)"
     },
     "indexName": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "S&P 500 Index",
+      "sourceUrl": "https://fund-docs.vanguard.com/F0968.pdf",
+      "asOf": "2026-06-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:e61ed989f327c2742ee91ba9267ce30907a7e6c1b067f4d1688d228e28d79bd4 (webfetch-1791721844339-6dwi26.pdf)"
     },
     "isin": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "US9229083632",
+      "sourceUrl": "https://fund-docs.vanguard.com/F0968.pdf",
+      "asOf": "2026-06-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:e61ed989f327c2742ee91ba9267ce30907a7e6c1b067f4d1688d228e28d79bd4 (webfetch-1791721844339-6dwi26.pdf); the factsheet prints CUSIP 922908363; the ISIN is derived from it (US + CUSIP + check digit 2), not printed"
     },
     "domicile": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "US",
+      "sourceUrl": "https://www.vanguard.com/prospectus",
+      "asOf": "2026-10-11",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:ee0b6ac88591071fe1966e4c12f805652fe31d2bea0027e2da55a4d4fbdaf356 (voo prospectus.pdf); sha256:c2c628461daceafeed6b8b7e14639d669e21daafc318f495ee014fe6cb3a3e4d (voo statutory prospectus.pdf); registered under the Investment Company Act of 1940, series of Vanguard Index Funds; no domicile sentence, convention in decision note 0022"
     },
     "replication": {
       "value": "TODO_VERIFY",
@@ -53,12 +53,12 @@
       "evidence": null
     },
     "ter": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 0.03,
+      "sourceUrl": "https://fund-docs.vanguard.com/F0968.pdf",
+      "asOf": "2026-06-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:e61ed989f327c2742ee91ba9267ce30907a7e6c1b067f4d1688d228e28d79bd4 (webfetch-1791721844339-6dwi26.pdf); same figure in the summary prospectus of 2026-04-28 (sha256:ee0b6ac88591071fe1966e4c12f805652fe31d2bea0027e2da55a4d4fbdaf356) and on the fund page printed 2026-10-11 (sha256:ae170d70b94b75268ea5c6b2ce851d43c29e11b409fb742f535ed29ef9d02db0)"
     },
     "fundSizeEur": {
       "value": "TODO_VERIFY",
@@ -69,20 +69,20 @@
       "evidence": null
     },
     "dividendYieldPct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 1.11,
+      "sourceUrl": "https://www.spglobal.com/spdji/en/idsenhancedfactsheet/file.pdf?calcFrequency=M&force_download=true&hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&languageId=1&indexId=340",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:152280c126c6896570ae40e9920b87a82a9cdd976e5fc402e58e6e1e836b0889 (fs-sp-500.pdf); Indicated Div Yield 1.11 % as of 2026-09-30"
     },
     "withholdingRate": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 15,
+      "sourceUrl": "https://e-sbirka.gov.cz/sb/1994/32/0000-00-00?f=32%2F1994&zalozka=text",
+      "asOf": "2026-10-11",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:37919b8cba4099aaed743e78a6b16d01277286dcd45bfc6384e4d9baf9f6d252 (cz-us-dtt-32-1994.pdf); Article 10(2)(b), 15 % of the gross dividend for an individual; needs W-8BEN; the 1994 text, amendments not checked"
     },
     "return5yPct": {
       "value": "TODO_VERIFY",
@@ -209,36 +209,36 @@
     "region": "us-listed",
     "indexGroup": "nasdaq100",
     "name": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "Invesco QQQ Trust, Series 1",
+      "sourceUrl": "https://www.invesco.com/us/en/financial-products/etfs/invesco-qqq-trust-series-1.html",
+      "asOf": "2026-10-11",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:c213acf9e55385c6cb59aa506ef6daeb1ebb6a2fde4e54e63ceb829278d7a187 (Invesco QQQ Trust, Series 1 _ Invesco US.pdf)"
     },
     "indexName": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "Nasdaq-100 Index",
+      "sourceUrl": "https://www.invesco.com/us/en/financial-products/etfs/invesco-qqq-trust-series-1.html",
+      "asOf": "2026-10-11",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:c213acf9e55385c6cb59aa506ef6daeb1ebb6a2fde4e54e63ceb829278d7a187 (Invesco QQQ Trust, Series 1 _ Invesco US.pdf)"
     },
     "isin": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "US46090E1038",
+      "sourceUrl": "https://www.invesco.com/us/en/financial-products/etfs/invesco-qqq-trust-series-1.html",
+      "asOf": "2026-10-11",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:c213acf9e55385c6cb59aa506ef6daeb1ebb6a2fde4e54e63ceb829278d7a187 (Invesco QQQ Trust, Series 1 _ Invesco US.pdf)"
     },
     "domicile": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "US",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1067839/000110465925123273/tm2529177d1_485bpos.htm",
+      "asOf": "2026-10-11",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:192fc44cacb8f157e3ab1685854c214a7f7189ea2360e661a2959b73d7f5212f (qqq-prospectus.pdf); open-end management investment company under the SEC rules; no domicile sentence, convention in decision note 0022"
     },
     "replication": {
       "value": "TODO_VERIFY",
@@ -257,12 +257,12 @@
       "evidence": null
     },
     "ter": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 0.18,
+      "sourceUrl": "https://www.invesco.com/us/en/financial-products/etfs/invesco-qqq-trust-series-1.html",
+      "asOf": "2026-10-11",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:c213acf9e55385c6cb59aa506ef6daeb1ebb6a2fde4e54e63ceb829278d7a187 (Invesco QQQ Trust, Series 1 _ Invesco US.pdf); same figure in the prospectus of 2025-12-22 (sha256:192fc44cacb8f157e3ab1685854c214a7f7189ea2360e661a2959b73d7f5212f); supplements of 2026-04-30 and 2026-06-10 do not change fees"
     },
     "fundSizeEur": {
       "value": "TODO_VERIFY",
@@ -273,20 +273,20 @@
       "evidence": null
     },
     "dividendYieldPct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 0.37,
+      "sourceUrl": "https://www.invesco.com/us/en/financial-products/etfs/invesco-qqq-trust-series-1.html",
+      "asOf": "2026-10-08",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:c213acf9e55385c6cb59aa506ef6daeb1ebb6a2fde4e54e63ceb829278d7a187 (Invesco QQQ Trust, Series 1 _ Invesco US.pdf); 30-day SEC yield 0.37 % as of 2026-10-08; Nasdaq publishes no index yield, decision note 0023"
     },
     "withholdingRate": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 15,
+      "sourceUrl": "https://e-sbirka.gov.cz/sb/1994/32/0000-00-00?f=32%2F1994&zalozka=text",
+      "asOf": "2026-10-11",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:37919b8cba4099aaed743e78a6b16d01277286dcd45bfc6384e4d9baf9f6d252 (cz-us-dtt-32-1994.pdf); Article 10(2)(b), 15 % of the gross dividend for an individual; needs W-8BEN; the 1994 text, amendments not checked"
     },
     "return5yPct": {
       "value": "TODO_VERIFY",
@@ -413,36 +413,36 @@
     "region": "ucits",
     "indexGroup": "sp500",
     "name": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "iShares Core S&P 500 UCITS ETF",
+      "sourceUrl": "https://www.ishares.com/gls-download/literature/fact-sheet/cspx-ishares-core-s-p-500-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:c0b7c33f5bbc1e23eac6c0f3194b191475725e585fc84b1a010bfaa9d882ab52 (webfetch-1791721844771-nxxqct.pdf)"
     },
     "indexName": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "S&P 500 Index",
+      "sourceUrl": "https://www.ishares.com/gls-download/literature/fact-sheet/cspx-ishares-core-s-p-500-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:c0b7c33f5bbc1e23eac6c0f3194b191475725e585fc84b1a010bfaa9d882ab52 (webfetch-1791721844771-nxxqct.pdf)"
     },
     "isin": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "IE00B5BMR087",
+      "sourceUrl": "https://www.ishares.com/gls-download/literature/fact-sheet/cspx-ishares-core-s-p-500-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:c0b7c33f5bbc1e23eac6c0f3194b191475725e585fc84b1a010bfaa9d882ab52 (webfetch-1791721844771-nxxqct.pdf)"
     },
     "domicile": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "Ireland",
+      "sourceUrl": "https://www.ishares.com/gls-download/literature/fact-sheet/cspx-ishares-core-s-p-500-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:c0b7c33f5bbc1e23eac6c0f3194b191475725e585fc84b1a010bfaa9d882ab52 (webfetch-1791721844771-nxxqct.pdf)"
     },
     "replication": {
       "value": "TODO_VERIFY",
@@ -461,12 +461,12 @@
       "evidence": null
     },
     "ter": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 0.07,
+      "sourceUrl": "https://www.ishares.com/gls-download/literature/fact-sheet/cspx-ishares-core-s-p-500-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:c0b7c33f5bbc1e23eac6c0f3194b191475725e585fc84b1a010bfaa9d882ab52 (webfetch-1791721844771-nxxqct.pdf)"
     },
     "fundSizeEur": {
       "value": "TODO_VERIFY",
@@ -477,20 +477,20 @@
       "evidence": null
     },
     "dividendYieldPct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 1.11,
+      "sourceUrl": "https://www.spglobal.com/spdji/en/idsenhancedfactsheet/file.pdf?calcFrequency=M&force_download=true&hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&languageId=1&indexId=340",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:152280c126c6896570ae40e9920b87a82a9cdd976e5fc402e58e6e1e836b0889 (fs-sp-500.pdf); Indicated Div Yield 1.11 % as of 2026-09-30"
     },
     "withholdingRate": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 15,
+      "sourceUrl": "https://www.irs.gov/pub/irs-trty/ireland.pdf",
+      "asOf": "2026-10-11",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:1396fb82bdcb5ab3c6da7c607c39bf0b8d4a616d1ddcdfb210ca2f44d58f1b8f (ireland-irs.pdf); sha256:0527d8b9da405f0d25f0a9ca52d799f56fa88c3e5466ce593a0b99b50a0f2f32 (ishares-vii-plc-en-annual-report-2025.pdf); rate corroborated by audited annual reports (effective 14.1 to 14.4 %), see decision note 0025"
     },
     "return5yPct": {
       "value": "TODO_VERIFY",
@@ -515,36 +515,36 @@
     "region": "ucits",
     "indexGroup": "sp500",
     "name": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "Vanguard S&P 500 UCITS ETF",
+      "sourceUrl": "https://fund-docs.vanguard.com/ie00bfmxxd54_priipskid_nl.pdf",
+      "asOf": "2026-09-29",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:9dce090e2e452dcce38715ae0088002d909b345c5b765a045808cf830f63292b (ie00bfmxxd54_priipskid_nl.pdf)"
     },
     "indexName": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "S&P 500 Index",
+      "sourceUrl": "https://fund-docs.vanguard.com/ie00bfmxxd54_priipskid_nl.pdf",
+      "asOf": "2026-09-29",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:9dce090e2e452dcce38715ae0088002d909b345c5b765a045808cf830f63292b (ie00bfmxxd54_priipskid_nl.pdf)"
     },
     "isin": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "IE00BFMXXD54",
+      "sourceUrl": "https://fund-docs.vanguard.com/ie00bfmxxd54_priipskid_nl.pdf",
+      "asOf": "2026-09-29",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:9dce090e2e452dcce38715ae0088002d909b345c5b765a045808cf830f63292b (ie00bfmxxd54_priipskid_nl.pdf)"
     },
     "domicile": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "Ireland",
+      "sourceUrl": "https://fund-docs.vanguard.com/ie00bfmxxd54_priipskid_nl.pdf",
+      "asOf": "2026-09-29",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:9dce090e2e452dcce38715ae0088002d909b345c5b765a045808cf830f63292b (ie00bfmxxd54_priipskid_nl.pdf); fund authorised in Ireland"
     },
     "replication": {
       "value": "TODO_VERIFY",
@@ -563,12 +563,12 @@
       "evidence": null
     },
     "ter": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 0.07,
+      "sourceUrl": "https://fund-docs.vanguard.com/ie00bfmxxd54_priipskid_nl.pdf",
+      "asOf": "2026-09-29",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:9dce090e2e452dcce38715ae0088002d909b345c5b765a045808cf830f63292b (ie00bfmxxd54_priipskid_nl.pdf); ongoing charges 0.07 %"
     },
     "fundSizeEur": {
       "value": "TODO_VERIFY",
@@ -579,20 +579,20 @@
       "evidence": null
     },
     "dividendYieldPct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 1.11,
+      "sourceUrl": "https://www.spglobal.com/spdji/en/idsenhancedfactsheet/file.pdf?calcFrequency=M&force_download=true&hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&languageId=1&indexId=340",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:152280c126c6896570ae40e9920b87a82a9cdd976e5fc402e58e6e1e836b0889 (fs-sp-500.pdf); Indicated Div Yield 1.11 % as of 2026-09-30"
     },
     "withholdingRate": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 15,
+      "sourceUrl": "https://www.irs.gov/pub/irs-trty/ireland.pdf",
+      "asOf": "2026-10-11",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:1396fb82bdcb5ab3c6da7c607c39bf0b8d4a616d1ddcdfb210ca2f44d58f1b8f (ireland-irs.pdf); sha256:969836b279aef94b0763c3737962e4cdd2acea862390d2228f48b69edd0dde68 (vanguard-etf-annual-report.pdf); rate corroborated by audited annual reports (effective 14.1 to 14.4 %), see decision note 0025; the Vanguard report states the fund return is adjusted by 15 % for US dividend withholding (p. 359)"
     },
     "return5yPct": {
       "value": "TODO_VERIFY",
@@ -719,36 +719,36 @@
     "region": "ucits",
     "indexGroup": "nasdaq100",
     "name": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "iShares NASDAQ 100 UCITS ETF",
+      "sourceUrl": "https://blackrock.com/uk/literature/fact-sheet/csndx-ishares-nasdaq-100-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:e457a683e46d38ca5c7d2ce0ebbac1e91e5ce3ded7855fe37e662d40ba55b7e9 (webfetch-1791721845683-2xexnr.pdf)"
     },
     "indexName": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "NASDAQ 100 Index",
+      "sourceUrl": "https://blackrock.com/uk/literature/fact-sheet/csndx-ishares-nasdaq-100-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:e457a683e46d38ca5c7d2ce0ebbac1e91e5ce3ded7855fe37e662d40ba55b7e9 (webfetch-1791721845683-2xexnr.pdf)"
     },
     "isin": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "IE00B53SZB19",
+      "sourceUrl": "https://blackrock.com/uk/literature/fact-sheet/csndx-ishares-nasdaq-100-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:e457a683e46d38ca5c7d2ce0ebbac1e91e5ce3ded7855fe37e662d40ba55b7e9 (webfetch-1791721845683-2xexnr.pdf)"
     },
     "domicile": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "Ireland",
+      "sourceUrl": "https://blackrock.com/uk/literature/fact-sheet/csndx-ishares-nasdaq-100-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:e457a683e46d38ca5c7d2ce0ebbac1e91e5ce3ded7855fe37e662d40ba55b7e9 (webfetch-1791721845683-2xexnr.pdf)"
     },
     "replication": {
       "value": "TODO_VERIFY",
@@ -767,12 +767,12 @@
       "evidence": null
     },
     "ter": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 0.3,
+      "sourceUrl": "https://blackrock.com/uk/literature/fact-sheet/csndx-ishares-nasdaq-100-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:e457a683e46d38ca5c7d2ce0ebbac1e91e5ce3ded7855fe37e662d40ba55b7e9 (webfetch-1791721845683-2xexnr.pdf)"
     },
     "fundSizeEur": {
       "value": "TODO_VERIFY",
@@ -783,20 +783,20 @@
       "evidence": null
     },
     "dividendYieldPct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 0.37,
+      "sourceUrl": "https://www.invesco.com/us/en/financial-products/etfs/invesco-qqq-trust-series-1.html",
+      "asOf": "2026-10-08",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:c213acf9e55385c6cb59aa506ef6daeb1ebb6a2fde4e54e63ceb829278d7a187 (Invesco QQQ Trust, Series 1 _ Invesco US.pdf); 30-day SEC yield 0.37 % as of 2026-10-08; Nasdaq publishes no index yield, decision note 0023; CNDX tracks the same index as QQQ"
     },
     "withholdingRate": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 15,
+      "sourceUrl": "https://www.irs.gov/pub/irs-trty/ireland.pdf",
+      "asOf": "2026-10-11",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-11",
+      "evidence": "sha256:1396fb82bdcb5ab3c6da7c607c39bf0b8d4a616d1ddcdfb210ca2f44d58f1b8f (ireland-irs.pdf); sha256:0527d8b9da405f0d25f0a9ca52d799f56fa88c3e5466ce593a0b99b50a0f2f32 (ishares-vii-plc-en-annual-report-2025.pdf); rate corroborated by audited annual reports (effective 14.1 to 14.4 %), see decision note 0025"
     },
     "return5yPct": {
       "value": "TODO_VERIFY",

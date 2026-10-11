@@ -1,1 +1,72 @@
-[]
+[
+  {
+    "url": "https://fund-docs.vanguard.com/F0968.pdf",
+    "title": "Vanguard S&P 500 ETF (VOO) factsheet, 30 June 2026",
+    "publisher": "Vanguard"
+  },
+  {
+    "url": "https://www.vanguard.com/prospectus",
+    "title": "Vanguard S&P 500 ETF prospectus, 28 April 2026 (address printed in the prospectus)",
+    "publisher": "Vanguard"
+  },
+  {
+    "url": "https://www.invesco.com/us/en/financial-products/etfs/invesco-qqq-trust-series-1.html",
+    "title": "Invesco QQQ Trust, Series 1 fund page, printed 2026-10-11",
+    "publisher": "Invesco"
+  },
+  {
+    "url": "https://www.sec.gov/Archives/edgar/data/1067839/000110465925123273/tm2529177d1_485bpos.htm",
+    "title": "Invesco QQQ Trust, Series 1 prospectus, 22 December 2025 (SEC filing)",
+    "publisher": "Invesco"
+  },
+  {
+    "url": "https://www.ishares.com/gls-download/literature/fact-sheet/cspx-ishares-core-s-p-500-ucits-etf-fund-fact-sheet-en-gb.pdf",
+    "title": "iShares Core S&P 500 UCITS ETF factsheet, September 2026",
+    "publisher": "iShares (BlackRock)"
+  },
+  {
+    "url": "https://blackrock.com/uk/literature/fact-sheet/csndx-ishares-nasdaq-100-ucits-etf-fund-fact-sheet-en-gb.pdf",
+    "title": "iShares NASDAQ 100 UCITS ETF factsheet, September 2026",
+    "publisher": "iShares (BlackRock)"
+  },
+  {
+    "url": "https://fund-docs.vanguard.com/ie00bfmxxd54_priipskid_nl.pdf",
+    "title": "Vanguard S&P 500 UCITS ETF (USD) Accumulating, key information document, 29 September 2026",
+    "publisher": "Vanguard"
+  },
+  {
+    "url": "https://www.spglobal.com/spdji/en/idsenhancedfactsheet/file.pdf?calcFrequency=M&force_download=true&hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&languageId=1&indexId=340",
+    "title": "S&P 500 index factsheet, 30 September 2026",
+    "publisher": "S&P Dow Jones Indices"
+  },
+  {
+    "url": "https://e-sbirka.gov.cz/sb/1994/32/0000-00-00?f=32%2F1994&zalozka=text",
+    "title": "Czech-US double taxation treaty, No. 32/1994 Sb., Article 10 (dividends)",
+    "publisher": "Czech Republic, e-Sbírka"
+  },
+  {
+    "url": "https://www.irs.gov/pub/irs-trty/ireland.pdf",
+    "title": "US-Ireland income tax convention, Article 10 (dividends)",
+    "publisher": "US Internal Revenue Service"
+  },
+  {
+    "url": "https://www.degiro.cz/data/pdf/cs/Prehled_poplatku.pdf",
+    "title": "DEGIRO Přehled poplatků (fee overview), rates from 2026-01-01",
+    "publisher": "DEGIRO"
+  },
+  {
+    "url": "https://www.degiro.cz",
+    "title": "DEGIRO instrument search (logged-in Czech account)",
+    "publisher": "DEGIRO"
+  },
+  {
+    "url": "https://www.trading212.com",
+    "title": "Trading 212 instrument search (logged-in account)",
+    "publisher": "Trading 212"
+  },
+  {
+    "url": "https://www.xtb.com/cz",
+    "title": "XTB instrument search (logged-in Czech account)",
+    "publisher": "XTB"
+  }
+]
