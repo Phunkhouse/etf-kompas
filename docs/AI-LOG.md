@@ -109,3 +109,28 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - `pnpm copy:check` does not exist yet (Phase 3); the new copy follows the glossary by hand (no TER, FX, UCITS in the strings).
 - Existing e2e test `styleguide.spec.ts` (slider and result) failed after the change because it asserted the old fake 8 % cost. Its result assertion was dropped; the new `calculator.spec.ts` covers the result changing. Found by running the full Playwright suite, not only the new spec.
 - Decision note 0021 (calculator runs in the browser on the shared pure function) drafted from the reasons David approved in the PR C plan. They were proposed by the agent, and the note says so. Bundle size is not measured yet; the note says that too.
+
+## Phase 3: page
+
+### Data preparation (before PR A)
+
+**Prompt (summary):** "Let's plan Phase 3", then "Let's talk about data verification. Where should I start?". David supplied a separate analysis file (written by another AI tool), screenshots of three brokers' instrument searches, and fund documents.
+
+**Produced**
+
+- `docs/DATA-CHECKLIST-PHASE3.md`: the value checklist for five funds and three brokers, with source pointers and blank value cells (not committed yet).
+- A review of the other analysis file against the repo's rules, the screenshots and the documents.
+- Decision note 0022 (US fund domicile) and a line in `data/README.md`, from David's decision and reason.
+
+**Mistakes and corrections**
+
+- **My estimate was wrong.** I first said about 35 to 45 values were needed. With availability for 5 funds on 5 brokers it is 61. Corrected in the checklist.
+- **I called identical yields suspicious, wrongly.** CSPX and VUAA showing the same figure is correct if the measure is the underlying index's yield. The real inconsistency was VOO's figure against theirs, from mixing measures.
+- **The other analysis file had real errors, found by checking it:** fractions where the repo stores plain percent (`0.0003`, not `0.03`); QQQ TER 0.20 where the prospectus says 0.18; QQQ SEC yield 0.43 where Invesco shows 0.37; a dead DEGIRO link; the Czech-US treaty cited for three Irish funds; no evidence for fund values. Its "I have verified" opening was not evidence.
+- **Screenshot evidence was wrong in three places, found by looking at each image:** the DEGIRO VOO search typed `V00`, the XTB VOO "yes" came from a public product page that a logged-in Czech account does not show, and the XTB QQQ list was cut off. All three were redone by David.
+- **A date was misread.** The QQQ supplements are dated in US format (June 10, 2026), not 6 October.
+- **Tooling:** `pdftotext` and `pdftoppm` are not installed, so the Read tool could not render PDFs and web fetches could not decode them. I extracted text with a small PDFKit script kept in the scratchpad, outside the repo.
+- Limit: web.archive.org is blocked for the fetch tool, so no archive links were created. Evidence is SHA-256 of the saved PDFs and dated page prints.
+
+- **Yield sources.** I misread the S&P factsheet's ratio row in extracted text (headings and values came out in different orders). David's screenshot of the box showed the yield is the "Indicated Div Yield", 1.11 %. I had planned a trailing 12-month yield; the source gives an indicated one, so METHODOLOGY says so.
+- **A second unsupported figure.** David's message gave the Nasdaq-100 fund yield as 0.43 % as of 2026-09-30 (with another AI tool's citation markers). The Invesco page he saved shows 0.37 % as of 2026-10-08, and 0.43 appears nowhere in it. I wrote the figure the document supports and asked him to confirm it. He did.
