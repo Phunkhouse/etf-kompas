@@ -7,8 +7,8 @@ export const copy = {
   // Page frame: source bar, header, footer (wireframe B, sections 0, 1 and 8).
   shell: {
     sourceBar: (date: string) =>
-      `Čísla z oficiálních stránek fondů · aktualizováno ${date}`,
-    sourceBarNoDate: 'Čísla z oficiálních stránek fondů',
+      `Čísla ze stránek fondů a firem · ověřeno k ${date}`,
+    sourceBarNoDate: 'Čísla ze stránek fondů a firem',
     riskShort: 'Investování nese riziko ztráty.',
     nav: {
       label: 'Hlavní nabídka',
@@ -30,8 +30,10 @@ export const copy = {
   // Hero headlines: variant a is the calculator-first hero (ad A), b the
   // table-first hero (ad B). The rest of each hero comes with the hero PR.
   hero: {
-    a: { headline: 'Kolik z vašich peněz sní poplatky fondu?' },
-    b: { headline: 'Americký, nebo evropský fond? Co vás stojí víc?' },
+    a: { headline: 'Které fondy si z Česka opravdu koupíte?' },
+    b: {
+      headline: 'Které fondy si z Česka opravdu koupíte a kolik vás stojí?',
+    },
   },
   calculator: {
     heading: 'Kolik to u vás dělá?',
