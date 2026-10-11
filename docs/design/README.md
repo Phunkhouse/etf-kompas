@@ -8,6 +8,7 @@ Design source of truth for ETF Kompas (SPEC §24). Wireframe B is the layout dir
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | [DESIGN-GUIDE.md](DESIGN-GUIDE.md) | Palette, type, spacing, radius, borders, motion, components, with contrast ratios. Read before writing any style. |
 | [wireframe-b.md](wireframe-b.md)   | Text spec of every screen in the wireframe: structure, copy, behaviour, open points.                              |
+| [wireframes/](wireframes/)         | Designer-style wireframes document, open `etf-kompas-wireframes.html`; sources and rebuild script included.       |
 
 ## Visual source
 
@@ -24,7 +25,7 @@ The wireframe is a design canvas: [ETF Kompas – wireframes](https://claude.ai/
 
 ## Images
 
-Exports of every board, optimised (256-colour PNG, full pixel size; desktop boards are 2x, mobile boards 2x). Originals are in the canvas.
+Exports of every board, re-rendered from the updated [wireframes](wireframes/) (content height, 2x, 256-colour PNG). Originals are in the canvas.
 
 | Screen                           | Image                                                                      |
 | -------------------------------- | -------------------------------------------------------------------------- |
