@@ -18,6 +18,19 @@ The calculator shows the **cost drag** of holding a fund, in Kč. It is an illus
 
 No initial lump sum (decision note 0015). Percent values are plain numbers everywhere, as in the data files. Below, lowercase symbols are fractions: `g = grossReturn / 100`, `t = ter / 100`, `y = dividendYieldPct / 100`, `w = withholdingRate / 100`, `f = fxFeePct / 100` (0 when off), `D = monthly`, `Y = years`, `n = 12 x Y`.
 
+### Source of `dividendYieldPct`
+
+The yield is one number per index, the same for every fund that tracks it, so twins differ only in cost (decision note 0023).
+
+- **S&P 500** (VOO, CSPX, VUAA): the index's indicated dividend yield, **1.11 %**, as of 2026-09-30 (S&P Dow Jones Indices factsheet). "Indicated" means the current dividend rate divided by price, so it looks forward. It is not a trailing 12-month figure.
+- **Nasdaq-100** (QQQ, CNDX): Nasdaq does not publish an index dividend yield in the documents we reviewed (the NDX factsheet and two other Nasdaq documents). The figure is the 30-day SEC yield of Invesco QQQ Trust, **0.37 %**, as of 2026-10-08, from Invesco's page printed on 2026-10-11. The SEC yield is a fund figure and is calculated after fund expenses.
+
+The two measures are not the same kind of number. The dividend line is small next to the fund fee, but the difference should be stated wherever the figures are shown.
+
+### Source of `withholdingRate`
+
+15 % for all five funds (decision note 0025). VOO and QQQ: Czech-US treaty, Article 10(2)(b), which needs Form W-8BEN. CSPX, VUAA and CNDX: US-Ireland convention, Article 10(2)(b), corroborated by the funds' annual reports (actual withholding 14.1 to 14.4 % of dividend income). The prospectuses of the Irish funds state no rate.
+
 ## 2. Rates
 
 - `r_gross = g`
