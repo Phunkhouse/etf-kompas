@@ -126,16 +126,18 @@ Rules:
 
 ## 6. Ads (two variants)
 
-Both run on Meta (Instagram/Facebook feed and Stories) with a Sklik/Google Search twin. Each ad has its own landing-page hero via `?v=a` / `?v=b` (and UTM), so message match is exact (note 0028). The exact creative and hero copy is in `docs/design/wireframe-b.md` (wireframe copy is the working copy, note 0017) and `src/content/copy.ts`. Ad copy follows the plain-language rules in §25. Search keywords may still contain "ETF" because that is the term people type; the "ETF at most once" rule applies to the landing page itself.
+Both run on Meta (Instagram/Facebook feed and Stories) with a Sklik/Google Search twin. The landing page has two headline variants via `?v=a` / `?v=b` (and UTM), see Landing variants below (notes 0028 and 0041). The exact creative and hero copy is in `docs/design/wireframe-b.md` (wireframe copy is the working copy, note 0017) and `src/content/copy.ts`. Ad copy follows the plain-language rules in §25. Search keywords may still contain "ETF" because that is the term people type; the "ETF at most once" rule applies to the landing page itself.
 
 **Ad A: "Which fund can you really buy" (clarity)**
 - Hook: the question which ETF a Czech can really buy, answered in 20 seconds. The creative shows a big unknown ("? z 5") that is a placeholder until verified.
-- Hero (`?v=a`): calculator first, so the first screen after the ad repeats the headline and shows the two inputs and one button.
+- Hero: the landing page, see Landing variants below.
 
 **Ad B: "Same index, different fund and broker" (curiosity)**
 - Hook: two European twins of the same index side by side with their fees, and the question "U koho je koupíte a za kolik?".
 - An absolute claim such as *"Americký fond z Česka nekoupíte"* is allowed **only** if the evidence file for every firm in the table (§18) proves it on the launch date. Otherwise use the soft wording ("u většiny brokerů nekoupíte").
-- Hero (`?v=b`): table first.
+- Hero: the landing page, see Landing variants below.
+
+**Landing variants (`?v=a` / `?v=b`).** The two ads do not have different heroes. Both ad sets send traffic to both landing variants, split equally, and `utm_content` carries ad and variant. The variants share one layout (headline, lead, 4-fund table, calculator, form) and differ only in the h1: `a` (default, also for an unknown `v`): "Americké indexy z Česka: u koho je koupíte a za kolik?"; `b`: "U stejného fondu můžete zbytečně zaplatit až X XXX Kč. Kde?" The amount is the saving box maximum for the default setting (3 000 Kč a month, 10 years). One sentence under the table states it: "Částka v nadpisu: 3 000 Kč měsíčně, 10 let, odhad bez českých daní a inflace." `b` is served only when the saving box hide rule is met (at least two brokers with verified prices); otherwise everyone gets `a`. Decision: note 0041.
 
 Compliance for both: no guaranteed return, no "get rich" language, risk statement in creative where required, and check the ad platforms' current policies for financial products. Include the planned UTM schema in the README.
 
@@ -219,7 +221,7 @@ Reasoning: generic finance lead-gen landing pages commonly report single-digit c
 ## 11. A/B test hypotheses (ranked by expected impact)
 
 1. **Gate placement and format (highest impact).** H: showing the headline cost in Kč ungated and gating only the full comparison of 5 funds and 5 brokers converts better than gating the calculator result itself. Metric: `calc_result` to `lead`; guard metric: bounce and lead quality.
-2. **Hero framing.** H: a loss-framed numeric hero ("Zbytečně můžete platit až X Kč") beats the neutral/gain framing ("Porovnejte 5 fondů") for cold mobile traffic. Metric: visit to `calc_start`.
+2. **Hero framing.** H: a loss-framed numeric headline ("U stejného fondu můžete zbytečně zaplatit až X XXX Kč. Kde?") beats the neutral question ("Americké indexy z Česka: u koho je koupíte a za kolik?") for cold mobile traffic. Metric: visit to `calc_start`. Run as `?v=a` against `?v=b` (note 0041). Order of running: 2 first (only copy), then 1, then 3.
 3. **Form friction.** H: email-only beats email plus optional "kolik chcete investovat?" chips in lead volume, but the second may increase lead quality enough to lower cost per *qualified* lead. Metric: CPL and `lead_qualified` rate.
 
 Backlog (not top 3): social proof wording, sticky CTA on/off, PDF preview image vs. bullet list.
@@ -508,7 +510,8 @@ A phase is done only when every line is true. **Every phase also ends with at le
 - Hero fits 375x667 including the primary CTA with no scrolling (Playwright geometry assertion at that viewport: the button's bottom edge is above 667 px, note 0031; a pixel screenshot would differ between machines).
 - Lighthouse mobile (throttled, lab): performance >= 90, accessibility >= 95; LCP < 2.0 s, CLS < 0.05; route JS: our code adds <= 20 KB gzipped over an empty Next page and the whole route is <= 150 KB gzipped (note 0034).
 - The form works **without JavaScript** (native POST to a server action) and shows the success state.
-- `?v=a` and `?v=b` render different heroes; an unknown value falls back to `a`.
+- `?v=a` and `?v=b` render the same layout with different h1; an unknown value falls back to `a`; `b` is not served unless the saving box hide rule is met.
+- The hero fits 375x667 for both headlines, including the sentence under the table.
 - The hero layout matches wireframe B in `docs/design/` (reviewed side by side at 375 px).
 - `pnpm copy:check` passes (glossary and plain-language lint, §25).
 - The calculator is in the fund-fee-only state while no broker is priced, and the saving box shows only with at least two priced brokers.

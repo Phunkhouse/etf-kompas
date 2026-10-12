@@ -1,15 +1,14 @@
 import sys,html,json,re
 import os; sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 import bd
-H={'a8f21cef':2852,'ad67ec35':3701,'642661e9':777,'4555091e':1050,'mm01menu':760,'ck01bar-m':780,'ck03set-m':700,'er01404-m':760,'er02unsub-m':760,'ck02bar-d':560,'ck04set-d':800,'pp01priv-d':1257,'pp02priv-m':1718,'fe01form-m':946,'fe02form-d':504,'oi01mail':600,'oi02ok-m':760,'oi03old-m':760,'lc01calc-m':1048,'lc02calc-d':643,'pd01pdf1':1123,'pd02pdf4':1123,'fv01favicon':360,'sh01share':630,'mo01motion':2522,'92ef8ee0':2679,'24e61a2e':3475,'8e84da19':675,'6bf92b0b':720,'c2093dbc':675,'4b5adee3':720,'734d3e9c':667}
+H={'a8f21cef':2852,'ad67ec35':3701,'642661e9':777,'4555091e':1050,'mm01menu':760,'ck01bar-m':780,'ck03set-m':700,'er01404-m':760,'er02unsub-m':760,'ck02bar-d':560,'ck04set-d':800,'pp01priv-d':1257,'pp02priv-m':1718,'fe01form-m':946,'fe02form-d':504,'oi01mail':600,'oi02ok-m':760,'oi03old-m':760,'lc01calc-m':1048,'lc02calc-d':643,'pd01pdf1':1123,'pd02pdf4':1123,'fv01favicon':360,'sh01share':630,'mo01motion':2522,'92ef8ee0':2679,'24e61a2e':3475,'8e84da19':675,'6bf92b0b':720,'c2093dbc':675,'4b5adee3':720,'734d3e9c':667,'vb01hero-d':800,'vb02hero-m':820}
 # id, label, w, x, y
 Y0=1000
-FR=[('a8f21cef','Landing page · desktop',1280,0,Y0,'landing'),('ad67ec35','Landing page · mobil',390,1360,Y0,'landing'),
+FR=[('a8f21cef','Landing page · verze a (?v=a) · desktop',1280,0,Y0,'landing'),('ad67ec35','Landing page · verze a (?v=a) · mobil',390,1360,Y0,'landing'),
     ('642661e9','Po odeslání · desktop',1280,1910,Y0,'success'),('4555091e','Po odeslání · mobil',390,3270,Y0,'success'),
     ('92ef8ee0','Srovnání · desktop',1280,3820,Y0,'compare'),('24e61a2e','Srovnání · mobil',390,5180,Y0,'compare'),
     ('8e84da19','Reklama A · 4:5 feed',540,5730,Y0,'ads'),('6bf92b0b','Reklama A · 9:16 Stories',405,6330,Y0,'ads'),
     ('c2093dbc','Reklama B · 4:5 feed',540,5730,Y0+860,'ads'),('4b5adee3','Reklama B · 9:16 Stories',405,6330,Y0+860,'ads'),
-    ('734d3e9c','První obrazovka po reklamě A · mobil',375,6810,Y0,'ads'),
     ('mm01menu','Menu otevřené · mobil',390,7500,Y0,'extra'),('ck01bar-m','Cookies, první návštěva · mobil',390,7970,Y0,'extra'),
     ('ck03set-m','Nastavení cookies · mobil',390,8440,Y0,'extra'),('er01404-m','Stránka nenalezena · mobil',390,8910,Y0,'extra'),('er02unsub-m','Odhlášeno z odběru · mobil',390,9380,Y0,'extra'),
     ('ck02bar-d','Cookies, první návštěva · desktop',1280,7500,Y0+900,'extra'),('ck04set-d','Nastavení cookies · desktop',1280,8860,Y0+900,'extra'),
@@ -19,6 +18,7 @@ FR=[('a8f21cef','Landing page · desktop',1280,0,Y0,'landing'),('ad67ec35','Land
     ('fe02form-d','Formulář, chyby · desktop',1280,7500,Y0+5000,'extra'),('lc02calc-d','Kalkulačka, načítání a chyba · desktop',1280,8860,Y0+5000,'extra'),
     ('pd01pdf1','PDF · strana 1 (A4)',794,7500,Y0+5850,'extra'),('pd02pdf4','PDF · strana 4 (A4)',794,8374,Y0+5850,'extra'),('fv01favicon','Favicon',640,9248,Y0+5850,'extra'),
     ('sh01share','Sdílený náhled · 1200 × 630',1200,7500,Y0+7150,'extra'),
+    ('vb01hero-d','Landing page · verze b (?v=b) · desktop, jen hero',1280,0,Y0+3800,'landing'),('vb02hero-m','Landing page · verze b (?v=b) · mobil, jen hero',390,1360,Y0+3800,'landing'),
     ('mo01motion','Pohyb · živé ukázky (HTML)',1280,7500,Y0+7990,'extra')]
 SECT=[('landing','Landing page',0,1750),('success','Po odeslání',1910,1750),('compare','Srovnání',3820,1750),('ads','Reklamy',5730,1455),('extra','Menu a doplňkové stránky',7500,2640)]
 def frame(fid,label,w,x,y):
@@ -41,7 +41,8 @@ NOTES=f'''
 <div class="ver"><b>rev. 1</b><span>Původní wireframy: americký vs. evropský fond, kalkulačka s rozdílem v Kč.</span></div>
 <div class="ver"><b>rev. 2</b><span>Zvýraznění = koupíte z ČR, ne nejlevnější. Skutečné poplatky, „Ne“ jen se zdrojem, [ověřit] jinak. Kalkulačka počítá cenu koupitelného ETF.</span></div>
 <div class="ver"><b>rev. 3</b><span>Evropské dvojníky místo VOO a QQQ. Nový nadpis, hero tabulka s Typem, srovnání fondů × brokerů, pozitivní zpráva v kalkulačce, texty reklam. Animace hero tabulky je mimo desku, překreslí se podle nové tabulky.</span></div>
-<div class="ver now"><b>rev. 4</b><span>Zelený box „ponecháte si až X XXX Kč“ s tlačítkem v kalkulačce (web i mobil). Štítek „návrh“ je pryč ze stránky, pravidlo zobrazení je v poznámce. Kalkulačka počítá CSPX v dolarech. Nová sekce „Menu a doplňkové stránky“: otevřené mobilní menu s hamburgerem, cookies (lišta, nastavení), zásady zpracování, 404, odhlášení. Patička má 4 odkazy. Druhá řada: chyby formuláře, potvrzení tipů, kalkulačka při načítání a chybě, PDF, favicon, sdílený náhled.</span></div>
+<div class="ver"><b>rev. 4</b><span>Zelený box „ponecháte si až X XXX Kč“ s tlačítkem v kalkulačce (web i mobil). Štítek „návrh“ je pryč ze stránky, pravidlo zobrazení je v poznámce. Kalkulačka počítá CSPX v dolarech. Nová sekce „Menu a doplňkové stránky“: otevřené mobilní menu s hamburgerem, cookies (lišta, nastavení), zásady zpracování, 404, odhlášení. Patička má 4 odkazy. Druhá řada: chyby formuláře, potvrzení tipů, kalkulačka při načítání a chybě, PDF, favicon, sdílený náhled.</span></div>
+<div class="ver now"><b>rev. 5</b><span>A/B test hlavní stránky: varianta a a b mají stejné rozložení (hero s tabulkou) a liší se jen nadpisem. a = „Americké indexy z Česka: u koho je koupíte a za kolik?“, b = „U stejného fondu můžete zbytečně zaplatit až X XXX Kč. Kde?“ (dole pod landingem). Hero s kalkulačkou jako první (dřívější G5) je pryč. Reklamy A a B vedou na obě varianty.</span></div>
 </div>
 <div class="note n3" style="left:1640px;top:0;width:700px"><span class="k">OTEVŘENÉ</span><h2>Co chybí ověřit</h2><ul>{li([
  'Poplatky VUAA, VUSA, CSNDX, EQQQ ze stránek správců (CSNDX 0,33 % a EQQQ 0,30 % jsou z paměti).',

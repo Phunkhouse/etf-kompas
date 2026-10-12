@@ -16,7 +16,7 @@ FRAMES = [
  ('a8f21cef', 'landing-desktop', 1280), ('ad67ec35', 'landing-mobile', 390),
  ('642661e9', 'success-desktop', 1280), ('4555091e', 'success-mobile', 390),
  ('92ef8ee0', 'results-desktop', 1280), ('24e61a2e', 'results-mobile', 390),
- ('734d3e9c', 'hero-a-mobile', 375),
+ ('vb01hero-d', 'hero-b-desktop', 1280), ('vb02hero-m', 'hero-b-mobile', 390),
  ('8e84da19', 'ad-a-4x5', 540), ('6bf92b0b', 'ad-a-9x16', 405), ('c2093dbc', 'ad-b-4x5', 540), ('4b5adee3', 'ad-b-9x16', 405),
  ('lc01calc-m', 'calculator-states-mobile', 390), ('lc02calc-d', 'calculator-states-desktop', 1280),
  ('mm01menu', 'menu-mobile', 390),
@@ -42,7 +42,11 @@ with sync_playwright() as p:
         pg.set_viewport_size({'width': w, 'height': h})
         pg.wait_for_timeout(200)
         png = pg.screenshot(full_page=True)
-        im = Image.open(io.BytesIO(png)).convert('RGB').quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+        im = Image.open(io.BytesIO(png)).convert('RGB')
+        CROP = {'hero-b-desktop': 800, 'hero-b-mobile': 820}  # hero-only boards: the artboard is the whole landing page
+        if name in CROP:
+            im = im.crop((0, 0, im.width, CROP[name] * 2))
+        im = im.quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
         im.save(f'{OUT}/{name}.png', optimize=True)
         print(name, im.size, os.path.getsize(f'{OUT}/{name}.png') // 1024, 'KB')
         pg.close()
