@@ -497,3 +497,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **CSPX and CNDX are held on purpose.** Fio's pages say only "ISHARES S&P 500 ETF (SXR8)" and "ISHARES NAS. 100 ETF (SXRV)", with no ISIN, and iShares has more than one S&P 500 fund. Our iShares factsheets say the funds are listed on Deutsche Börse Xetra but do not give the tickers; the SXR8/SXRV link to our ISINs rests on a Gemini note and my own knowledge, neither of which is a document. Waiting for the iShares product page (it lists the Xetra ticker with the ISIN) or David's decision to accept the inference.
 - The Fio evidence is a demo account and a purchase form that was not submitted. It proves the instrument exists on XETRA in Fio's system, not that an order would be accepted. The `https://www.fio.cz` source is the broker's home page, not a document.
 - The listing (XETRA, EUR) is not written yet: a Fio `fees` block with only listings would make the calculator treat Fio as a priced broker with fees, and a test pins DEGIRO as the only one. It goes in with the Fio fee batch; the screenshots are its evidence.
+
+### Fio availability for VUSA, and why VUSA's own data waits
+
+**Prompt (summary):** "And what about VUSA?", then David supplied the Vanguard KIID and its URL and said "write Fio records right away, other brokers will follow".
+
+**Produced:** `availability true` for VUSA at Fio, from the page and purchase form (XETRA, EUR), added to the open Fio PR.
+
+**Mistakes and corrections**
+
+- **I had skipped the VUSA screenshots without saying why.** David asked; the reason (VUSA had no ISIN or fund data in the repo to tie the ticker to) should have been in my message.
+- **VUSA's fund values are not written.** The KIID (Vanguard S&P 500 UCITS ETF, (USD) Distributing, ISIN IE00B3XXRP09, ongoing charges 0.07 %, "Income from the ETF Shares will be paid out") is accurate as at 17/02/2026. By note 0024 that date is the `asOf`, which is 237 days old; the validator rejects a value over 120 days even in draft mode, so writing it would turn CI red. Needs either a newer Vanguard document or David's decision on the rule for a current KID.
+- The ticker VUSA is tied to the ISIN by the KIID's class name plus the ticker alone; the KIID prints no ticker. The Fio evidence text says so. Other brokers' VUSA screenshots (ticker and ISIN together) will upgrade it.
