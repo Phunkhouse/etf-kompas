@@ -274,3 +274,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **I broke an existing test by adding two funds.** `validate.test.ts` pinned the data to exactly 8 funds. I updated its list to the 10 now in the data (the 8 of SPEC §5 plus VUSA and EQQQ) and gave it a comment. David should look at that edit.
 - **The wireframe's CSNDX 0,33 % is contradicted by our own verified data**: the iShares factsheet we saved is named "csndx" and says 0,30 %. The wireframe marks its figure "from memory". Nothing in the data uses the wireframe figure.
 - Limits: the needs list is my reading of the rev. 4 text spec, not of the Design Study itself, so a screen detail only in the Study could be missing.
+
+### Fund set: five twins
+
+**Prompt (summary):** "#27 landed. Ok, use your suggestion about fund set." plus a question whether adding funds later is easy.
+
+**Produced:** VTI, SCHD and VWCE removed from `data/` (and from every broker's availability keys), "8 fondů" changed to "5 fondů" in SPEC §3.2, §5, §25 and the ad copy, `needs.ts`, the pinned fund list in `validate.test.ts`, `DATA-NEEDS.md`, decision note 0036 with the answer to "is it easy to add more later".
+
+**Mistakes and corrections**
+
+- **My first search for "8 funds" matched "height" and "weight" everywhere** (I had searched for "eight"). I narrowed it to the real phrases. Nothing was changed from the first result.
+- **SPEC §3.2 still conflicts with rev. 4** (it lists 5 and 10 year performance; the wireframes show no returns, rule "bez výnosů"). I did not change it, because that is a different decision, and wrote it into note 0036 instead.
+- I edited the pinned fund list in an existing validator test a second time (the first was for VUSA and EQQQ). David should look at it.

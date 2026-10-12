@@ -63,9 +63,9 @@ Everything below is visible with no email:
 
 ### 3.2 What the email buys (the gated part): "ETF Kompas 2026"
 
-Brand name: **ETF Kompas** (kept as brand and wordmark; the logo is being made in a separate thread). In body copy the deliverable is called "srovnání 8 fondů" (§25).
+Brand name: **ETF Kompas** (kept as brand and wordmark; the logo is being made in a separate thread). In body copy the deliverable is called "srovnání 5 fondů" (§25).
 
-- Full comparison of **8 ETFs** (US-listed originals plus UCITS equivalents): TER, fund size, replication, distribution policy, domicile, tax treatment, 5/10-yr performance, each with source and "as of" date.
+- Full comparison of **5 European ETFs**, the twins of the S&P 500 and Nasdaq 100 (the US originals VOO and QQQ are named only to say where they cannot be bought; decision note 0036): TER, fund size, replication, distribution policy, domicile, tax treatment, 5/10-yr performance, each with source and "as of" date.
 - One page on Czech taxation of ETFs (3-year time test, dividend withholding, W-8BEN, what to put in the tax return). Must be checked against current law and Finanční správa guidance.
 - A "where can I buy it from CZ" table (4 to 5 brokers: availability, fees, FX cost, CZ-language support). **Do not rank brokers by commission income**; neutrality is the trust asset.
 - 6-page PDF plus an identical interactive results page (so mobile users do not need to open a PDF).
@@ -114,8 +114,8 @@ Rules:
 **Principle:** every number on the page carries a source and an "as of" date. No number is typed from memory or from an LLM.
 
 - Candidate set (verify each; confirm tickers, ISINs, TER, and that UCITS twins track the same index):
-  - US-listed: VOO, VTI, QQQ, SCHD (and possibly SPY as the "everyone knows it" baseline)
-  - UCITS equivalents: iShares Core S&P 500 UCITS (CSPX), Vanguard S&P 500 UCITS (VUAA), Vanguard FTSE All-World UCITS (VWCE), iShares Nasdaq 100 UCITS (CNDX)
+  - US-listed: VOO and QQQ (only to say where they cannot be bought)
+  - UCITS twins: iShares Core S&P 500 UCITS (CSPX), Vanguard S&P 500 UCITS (VUAA), Vanguard S&P 500 UCITS Dist (VUSA), iShares Nasdaq 100 UCITS (CNDX), Invesco EQQQ Nasdaq-100 UCITS (EQQQ)
 - Sources, in order of preference: issuer factsheets/KIDs (Vanguard, iShares, Invesco, Schwab), justETF for UCITS metadata, Finanční správa and the CZ-US double-tax treaty text for tax statements, broker fee schedules for the broker table.
 - Storage: `data/etfs.json` plus `data/sources.json`, each record `{value, sourceUrl, asOf}`. Schema validated at build time with Zod; **the build fails if any value lacks a source or is older than 120 days.**
 - Refresh: `scripts/fetch-data.ts` fetches where machine-readable, otherwise a documented manual-entry template. Agents may not fill in numbers they cannot fetch; they must mark `TODO_VERIFY` and the build must refuse to deploy with any `TODO_VERIFY`.
@@ -129,7 +129,7 @@ Both run on Meta (Instagram/Facebook feed and Stories) with a Sklik/Google Searc
 
 **Ad A: "Cost" angle (clarity)**
 - Hook: *"Kolik vás fond doopravdy stojí? Spočítejte to za 20 sekund."*
-- Body: Poplatky fondu v korunách, ne v procentech. Srovnání 8 fondů zdarma.
+- Body: Poplatky fondu v korunách, ne v procentech. Srovnání 5 fondů zdarma.
 - CTA: *Spočítat*
 - Hero: same promise; headline, one line, the 3-row table, calculator one tap away.
 
@@ -393,7 +393,7 @@ Principle: a number is only on the page if a human has checked it against a prim
 
 **Process**
 1. Agent proposes values via `scripts/fetch-data.ts`, or marks `TODO_VERIFY` where it cannot fetch. It may never fill from memory.
-2. **You verify 100 % of values against the source on every data refresh**, not a spot-check. Scope: about 8 ETFs x 8 fields plus about 5 brokers x 4 fields is roughly 100 values, around an hour. You set `verifiedBy`/`verifiedOn`.
+2. **You verify 100 % of values against the source on every data refresh**, not a spot-check. Scope: what the screens need is listed in `docs/DATA-NEEDS.md` (about 120 values, of which a part is verified), in batches. You set `verifiedBy`/`verifiedOn`.
 3. Calculator outputs: two hand-derived cases per PR (existing checklist).
 4. A monthly GitHub Action opens an issue "refresh data" so staleness is a visible task, not a surprise.
 5. Anything unprovable is removed or softened (e.g. the absolute VOO claim in Ad B).
@@ -598,7 +598,7 @@ Most ad clicks open in a webview where downloads, storage and some inputs behave
 | Metodika | Jak počítáme |
 | Zdroje | Odkud máme čísla |
 | broker | firma nebo aplikace, kde fond koupíte |
-| ETF Kompas (deliverable in body copy) | srovnání 8 fondů |
+| ETF Kompas (deliverable in body copy) | srovnání 5 fondů |
 | gate, odemknout | not used in public text |
 
 **Enforcement (`pnpm copy:check`, part of `pnpm check`):** `scripts/check-copy.ts` loads `src/content/copy.ts` and fails if (a) any "Do not use" term appears (word-boundary match; TER and UCITS case-sensitive), (b) "ETF" appears more than once across the landing-page copy, (c) a headline string contains an abbreviation (two or more capital letters), or (d) a ticker appears outside a table row that has `plainName`. Legal pages (privacy policy, cookie text) are exempt. A unit test covers the checker itself.
@@ -609,7 +609,7 @@ Most ad clicks open in a webview where downloads, storage and some inputs behave
 
 **Microcopy (starting set, in `src/content/copy.ts`)**
 - Primary CTA: "Spočítat moje poplatky" · Gate button: "Poslat mi srovnání"
-- Gate heading: "Srovnání 8 fondů, daně a kde je koupit"
+- Gate heading: "Srovnání 5 fondů, daně a kde je koupit"
 - Calculator: "Investuji měsíčně" · "Na dobu" · "Upřesnit" · disclosure "Jak počítáme" · return label "příklad, ne slib" · conversion label "převod korun na dolary" · tax label "daň, kterou stáhne USA"
 - Table columns: "Roční poplatek fondu" · "v Kč při 100 000 Kč" · "Koupíte z ČR?"
 - Email label: "Váš e-mail" · placeholder: `jmeno@domena.cz`

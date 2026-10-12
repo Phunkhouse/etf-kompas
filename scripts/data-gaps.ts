@@ -35,8 +35,11 @@ async function main() {
   console.log(
     `To do: ${uniqueMissing} different missing values in the data model, and ${notInModel} values the model has no place for yet (NEW).`,
   )
+  const unusedFunds = unusedFundIds.length
+    ? `funds ${unusedFundIds.join(', ')}; `
+    : ''
   console.log(
-    `Not used by any rev. 4 screen (not worth verifying now): funds ${unusedFundIds.join(', ')}; fields ${unusedFundFields.join(', ')}.`,
+    `Not used by any rev. 4 screen (not worth verifying now): ${unusedFunds}fields ${unusedFundFields.join(', ')}.`,
   )
 }
 
