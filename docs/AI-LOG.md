@@ -447,3 +447,5 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Two bugs in my own approved tests**, found when I ran them against the implementation: the new NumberDisplay tests compared against ordinary spaces while the page uses non-breaking spaces, and one fund-only test normalised only the expected text. I fixed the comparisons only; what they assert did not change. I also added a one-line type guard to the test fixture (`record.value` can be the `TODO_VERIFY` string) that typecheck required.
 - **Not done:** the motion scale says the old number rises out as the new one rises in; I built only the rise-in (no exit animation, no extra JS). The loading state is skipped (pricing is synchronous). The saving-box link goes to `#formular`, which does not exist until Phase 4.
 - **Not checked by eye:** I ran the unit, component and e2e tests and the budget, but did not look at the result on a phone screen. Layout of the new parts and the saving box needs your review on `/styleguide` and the live page.
+
+- Decision note 0040 (keep Zod out of browser code) added to this PR after David gave the reason: fitting the JS budget.
