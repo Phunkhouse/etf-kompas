@@ -1,22 +1,36 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
 
-const headlineA = /^Které fondy si z Česka opravdu koupíte\?$/
-const headlineB = /^Americké indexy z Česka: u koho je koupíte a za kolik\?$/
+// Both heroes have the rev. 4 headline; they differ by layout (rev. 4): hero a
+// has the calculator inputs and a start button, hero b has the table.
+const headline = /^Americké indexy z Česka: u koho je koupíte a za kolik\?$/
+const startButton = { name: 'Ukázat, kolik mě to bude stát' }
+
+async function expectHeroA(page: Page) {
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(headline)
+  await expect(page.getByRole('link', startButton)).toHaveCount(1)
+  await expect(page.getByRole('table')).toHaveCount(0)
+}
+
+async function expectHeroB(page: Page) {
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(headline)
+  await expect(page.getByRole('table')).toHaveCount(1)
+  await expect(page.getByRole('link', startButton)).toHaveCount(0)
+}
 
 test.describe('hero variants (?v=a and ?v=b)', () => {
   test('the default is hero a', async ({ page }) => {
     await page.goto('/')
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(headlineA)
+    await expectHeroA(page)
   })
 
   test('?v=a shows hero a', async ({ page }) => {
     await page.goto('/?v=a')
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(headlineA)
+    await expectHeroA(page)
   })
 
   test('?v=b shows hero b @smoke', async ({ page }) => {
     await page.goto('/?v=b')
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(headlineB)
+    await expectHeroB(page)
   })
 
   for (const value of ['zzz', 'B', '', 'b%20']) {
@@ -24,15 +38,13 @@ test.describe('hero variants (?v=a and ?v=b)', () => {
       page,
     }) => {
       await page.goto(`/?v=${value}`)
-      await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-        headlineA,
-      )
+      await expectHeroA(page)
     })
   }
 
   test('?v=b keeps the UTM parameters in the address bar', async ({ page }) => {
     await page.goto('/?v=b&utm_source=instagram&fbclid=abc')
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(headlineB)
+    await expectHeroB(page)
     const url = new URL(page.url())
     expect(url.pathname).toBe('/')
     expect(url.searchParams.get('utm_source')).toBe('instagram')

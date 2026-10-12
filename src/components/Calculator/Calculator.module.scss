@@ -142,6 +142,40 @@
   text-decoration: none;
 }
 
+// Screen readers keep the heading; it is not shown (hero a).
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+// The start button of hero a: phones only. From md up the result is next to the
+// inputs.
+.action {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  // Pushes the result below the first screen on a 375 x 667 phone, so no
+  // half-cut number shows at its bottom edge.
+  margin-bottom: var(--space-8);
+}
+
+.actionNote {
+  margin: 0;
+  color: var(--subtle);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .action {
+    display: none;
+  }
+}
+
 @media (min-width: 768px) {
   .calculator {
     flex-direction: row;
