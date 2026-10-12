@@ -31,6 +31,19 @@ The SPEC §21 sentence "broker commissions: out of scope" is therefore changed. 
 
 Percentages are plain numbers everywhere (as in the data files). Lowercase symbols below are fractions: `g = grossReturn / 100`, `t = ter / 100`.
 
+### Exchange rates, fetched daily (decided, note 0038)
+
+A rate from a file goes stale fast, so the rate is not typed into the data. Instead:
+
+- **Source.** The Czech National Bank's public daily file (`denni_kurz.txt`): one line per currency, `EMU|euro|1|EUR|24,365`, with the date in the first line. The bank publishes it on working days; at weekends and holidays the last fixing stays valid.
+- **How often.** The server fetches it when its cached copy is older than **12 hours** (Next.js `use cache` with `cacheLife`), so the whole site makes about two small requests a day, not one per visitor. A failed fetch is cached for only 5 minutes, so it is retried soon without hammering the bank.
+- **Fallback.** If the fetch fails or the answer cannot be read, the verified record in `data/rates.json` is used while it is at most 45 days old. With neither, there is no rate, brokers with fees in euro or dollars have no price, and the calculator is in the fund-fee-only state (decision A).
+- **Freshness.** A rate older than 45 days is never used, the limit of broker fees. Each currency is chosen on its own.
+- **Shown.** "kurz ČNB z 9. 10. 2026" with the rate's own date, in "Jak počítáme" and under the result.
+- **Privacy.** The request is made by the server and carries nothing about the visitor.
+- **Implemented in** `src/server/cnb.ts` (parsing, freshness, choosing, the request) and `src/app/rates.ts` (the cached fetch, 12 hours, 5 minutes after a failure). A production build was checked: the page is prerendered with a 12 hour revalidate and a 1 week expire, and the rates it got were the bank's.
+- **Not decided yet:** whether Vercel keeps the cache across deployments (check in Phase 6).
+
 ## 3. The broker fee model (**Proposed**)
 
 Every leaf is a sourced record (`value`, `sourceUrl`, `asOf`, `verifiedBy`, `verifiedOn`, `evidence`), like the rest of the data. A value without a source and evidence is "not verified", and a broker with a needed value not verified has **no price**.
