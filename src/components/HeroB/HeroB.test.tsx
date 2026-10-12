@@ -159,6 +159,22 @@ describe('HeroB', () => {
       expect(text).toContain('ověřujeme')
     })
 
+    it('ends with the line that this is price and availability only, no returns', () => {
+      const { unmount } = render(
+        <HeroB twins={twins} note={note()} dataAsOf={null} />,
+      )
+      expect(mutedLine().replace(/\s/g, ' ')).toMatch(
+        /Jen cena a dostupnost, ne výnosy\.$/,
+      )
+      unmount()
+      render(
+        <HeroB twins={twins} note={note({ sellers: [] })} dataAsOf={null} />,
+      )
+      expect(mutedLine().replace(/\s/g, ' ')).toMatch(
+        /Jen cena a dostupnost, ne výnosy\.$/,
+      )
+    })
+
     it('never says "nejlevnější"', () => {
       const { container } = render(
         <HeroB twins={twins} note={note()} dataAsOf="2026-10-12" />,

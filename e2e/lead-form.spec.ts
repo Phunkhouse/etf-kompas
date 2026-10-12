@@ -87,7 +87,7 @@ test.describe('on desktop', () => {
     await page.goto('/?v=b')
     const band = page.locator('#spocitat')
     await expect(band.locator('#formular')).toBeVisible()
-    const result = await page.locator('#vysledek').boundingBox()
+    const result = await band.getByText(/u ověřených brokerů/).boundingBox()
     const form = await page.locator('#formular').boundingBox()
     expect(result && form && form.x > result.x + result.width - 1).toBe(true)
   })

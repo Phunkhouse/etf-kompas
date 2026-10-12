@@ -17,7 +17,7 @@ type HeroTableProps = {
   dataAsOf: string | null
 }
 
-const text = copy.hero.b.table
+const text = copy.hero.table
 type RowCopyKey = keyof typeof text.rows
 
 const columns: TableColumn[] = [

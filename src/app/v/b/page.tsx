@@ -1,26 +1,9 @@
-import { Landing } from '@/components/Landing'
-import { getRates } from '@/app/rates'
-import { calculatorData } from '@/server/calculator-data'
-import { bundledData } from '@/server/data/bundled'
-import { landingData } from '@/server/landing-data'
+import { LandingPage } from '../../landing-page'
 
-const CALCULATOR_FUND = 'cspx'
-
-// Hero b. Visitors reach it as `/?v=b`; the URL /v/b works too (decision note 0028).
-export default async function VariantB() {
-  const { dataAsOf, twins, note } = landingData(bundledData)
-  const calculator = calculatorData(
-    bundledData,
-    await getRates(),
-    CALCULATOR_FUND,
-  )
-  return (
-    <Landing
-      variant="b"
-      dataAsOf={dataAsOf}
-      twins={twins}
-      note={note}
-      calculator={calculator}
-    />
-  )
+// Variant b. Visitors reach it as `/?v=b`; the URL /v/b works too (note 0028).
+// Variant b has its own headline only when the saving box hide rule is met (note
+// 0041), which needs two brokers with verified prices. Until the b headline is
+// built, this page shows variant a, and says so in data-variant.
+export default function VariantB() {
+  return <LandingPage variant="a" />
 }

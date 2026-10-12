@@ -175,38 +175,6 @@ describe('Calculator: a broker is priced', () => {
   })
 })
 
-describe('Calculator: the result anchor', () => {
-  it('has the result block at #vysledek, for the start button of hero a', () => {
-    const { container } = render(<Calculator data={oneBroker()} />)
-    const result = container.querySelector('#vysledek')
-    expect(result).not.toBeNull()
-    expect(result!.textContent).toMatch(/nejvýš/)
-  })
-
-  it('shows an action link and its muted line only when it is given', () => {
-    const action = {
-      label: 'Ukázat, kolik mě to bude stát',
-      href: '#vysledek',
-      note: 'Příklad výpočtu. Investování nese riziko ztráty.',
-    }
-    const { unmount } = render(<Calculator data={oneBroker()} />)
-    expect(screen.queryByRole('link', { name: action.label })).toBeNull()
-    unmount()
-    render(<Calculator data={oneBroker()} action={action} />)
-    expect(
-      screen.getByRole('link', { name: action.label }).getAttribute('href'),
-    ).toBe('#vysledek')
-    expect(screen.getByText(action.note)).toBeTruthy()
-  })
-
-  it('keeps the heading in the page when it is hidden visually', () => {
-    render(<Calculator data={oneBroker()} headingHidden />)
-    expect(
-      screen.getByRole('heading', { name: 'Kolik vás to bude stát?' }),
-    ).toBeTruthy()
-  })
-})
-
 describe('Calculator: no broker is priced yet', () => {
   it('shows only the fund fee, and no total', () => {
     const data = noBrokerPriced()

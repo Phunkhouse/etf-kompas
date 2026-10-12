@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { calculatorData } from '@/server/calculator-data'
 import { bundledData } from '@/server/data/bundled'
@@ -46,86 +46,88 @@ describe('Landing', () => {
   })
 })
 
-describe('Landing, hero a', () => {
-  it('says it takes 20 seconds, free and without registration', () => {
-    render(<Landing variant="a" dataAsOf={null} />)
-    expect(
-      screen.getByText('Zjistěte to za 20 sekund. Zdarma, bez registrace.'),
-    ).toBeTruthy()
-  })
+const twins = [
+  { fundId: 'cspx', ticker: 'CSPX', ter: 0.07, type: 'accumulating' as const },
+  { fundId: 'vuaa', ticker: 'VUAA', ter: 0.07, type: 'accumulating' as const },
+  { fundId: 'cndx', ticker: 'CNDX', ter: 0.3, type: 'accumulating' as const },
+  { fundId: 'eqqq', ticker: 'EQQQ', ter: 0.3, type: 'distributing' as const },
+]
+const note = {
+  fundId: 'cspx',
+  ticker: 'CSPX',
+  sellers: ['DEGIRO'],
+  othersUnverified: true,
+  originals: { tickers: ['VOO', 'QQQ'], mostlyNo: true },
+}
 
-  it('has no table, and its calculator starts the page', () => {
+// Rev. 5 (note 0041): both variants share one layout and differ only in the h1.
+describe.each(['a', 'b'] as const)(
+  'Landing, variant %s: the one layout',
+  (variant) => {
     const data = calculatorData(bundledData, RATES, 'cspx')
-    render(<Landing variant="a" dataAsOf="2026-06-30" calculator={data} />)
-    expect(screen.queryByRole('table')).toBeNull()
-    expect(screen.getByRole('slider', { name: /měsíčně/ })).toBeTruthy()
-    expect(
-      screen
-        .getByRole('link', { name: 'Ukázat, kolik mě to bude stát' })
-        .getAttribute('href'),
-    ).toBe('#vysledek')
-  })
 
-  it('puts the calculator band right after the headline', () => {
-    const data = calculatorData(bundledData, RATES, 'cspx')
-    render(<Landing variant="a" dataAsOf={null} calculator={data} />)
-    const h1 = screen.getByRole('heading', { level: 1 })
-    const band = screen.getByRole('region', { name: 'Kolik vás to bude stát?' })
-    // the h1 comes before the calculator in the page
-    expect(
-      h1.compareDocumentPosition(band) & Node.DOCUMENT_POSITION_FOLLOWING,
-    ).toBeTruthy()
-  })
+    it('has the hero table with four rows, and the button that jumps to the calculator', () => {
+      render(
+        <Landing
+          variant={variant}
+          dataAsOf="2026-06-30"
+          twins={twins}
+          note={note}
+          calculator={data}
+        />,
+      )
+      const table = screen.getByRole('table', { name: 'Cena fondů' })
+      expect(within(table).getAllByRole('row')).toHaveLength(5)
+      expect(
+        screen
+          .getByRole('link', { name: 'Spočítat, kolik mě to bude stát' })
+          .getAttribute('href'),
+      ).toBe('#spocitat')
+    })
 
-  it('does not show the "Ukázat" button in hero b', () => {
-    const data = calculatorData(bundledData, RATES, 'cspx')
-    render(<Landing variant="b" dataAsOf={null} calculator={data} />)
-    expect(
-      screen.queryByRole('link', { name: 'Ukázat, kolik mě to bude stát' }),
-    ).toBeNull()
-  })
-})
+    it('has the headline, then the table, then the calculator band, then the explainers', () => {
+      render(
+        <Landing
+          variant={variant}
+          dataAsOf={null}
+          twins={twins}
+          note={note}
+          calculator={data}
+        />,
+      )
+      const order = [
+        screen.getByRole('heading', { level: 1 }),
+        screen.getByRole('table', { name: 'Cena fondů' }),
+        screen.getByRole('region', { name: 'Kolik vás to bude stát?' }),
+        screen.getByRole('region', { name: 'Za co platíte, aniž to vidíte' }),
+      ]
+      for (let i = 1; i < order.length; i += 1) {
+        expect(
+          order[i - 1].compareDocumentPosition(order[i]) &
+            Node.DOCUMENT_POSITION_FOLLOWING,
+        ).toBeTruthy()
+      }
+    })
 
-describe('Landing, variant b with the table', () => {
-  const twins = [
-    {
-      fundId: 'cspx',
-      ticker: 'CSPX',
-      ter: 0.07,
-      type: 'accumulating' as const,
-    },
-    {
-      fundId: 'vuaa',
-      ticker: 'VUAA',
-      ter: 0.07,
-      type: 'accumulating' as const,
-    },
-    { fundId: 'cndx', ticker: 'CNDX', ter: 0.3, type: 'accumulating' as const },
-    { fundId: 'eqqq', ticker: 'EQQQ', ter: 0.3, type: 'distributing' as const },
-  ]
-  const note = {
-    fundId: 'cspx',
-    ticker: 'CSPX',
-    sellers: ['DEGIRO'],
-    othersUnverified: true,
-    originals: { tickers: ['VOO', 'QQQ'], mostlyNo: true },
-  }
+    it('has nothing left of the calculator-first hero', () => {
+      render(<Landing variant={variant} dataAsOf={null} calculator={data} />)
+      expect(
+        screen.queryByRole('link', { name: 'Ukázat, kolik mě to bude stát' }),
+      ).toBeNull()
+      expect(screen.queryByText(/Zjistěte to za 20 sekund/)).toBeNull()
+      expect(
+        screen.queryByText('Příklad výpočtu. Investování nese riziko ztráty.'),
+      ).toBeNull()
+    })
 
-  it('shows the hero table with its rows', () => {
-    render(
-      <Landing variant="b" dataAsOf="2026-06-30" twins={twins} note={note} />,
-    )
-    expect(screen.getByRole('table', { name: 'Cena fondů' })).toBeTruthy()
-    expect(
-      screen.getByRole('link', { name: /Spočítat, kolik mě to bude stát/ }),
-    ).toBeTruthy()
-  })
-
-  it('does not show the table in variant a', () => {
-    render(<Landing variant="a" dataAsOf="2026-06-30" />)
-    expect(screen.queryByRole('table')).toBeNull()
-  })
-})
+    it('marks the page with the variant it shows, for the tracking that comes later', () => {
+      render(<Landing variant={variant} dataAsOf={null} />)
+      expect(screen.getByRole('main').getAttribute('data-variant')).toBe(
+        variant,
+      )
+    })
+  },
+)
 
 describe('Landing, the explainer sections', () => {
   it.each(['a', 'b'] as const)(

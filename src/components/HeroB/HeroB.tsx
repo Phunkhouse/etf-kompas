@@ -15,7 +15,7 @@ type HeroBProps = {
   dataAsOf: string | null
 }
 
-const text = copy.hero.b
+const text = copy.hero
 
 // "VOO a QQQ" from the tickers in the data.
 function joinTickers(tickers: string[]): string {
@@ -46,6 +46,7 @@ function noteText(note: HeroNote, dataAsOf: string | null): string {
         : lines.originalsChecking(originals),
     )
   }
+  parts.push(lines.priceOnly)
   return parts.join(' ')
 }
 
