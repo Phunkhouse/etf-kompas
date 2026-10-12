@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="cs"><head>
+<meta charset="utf-8">
+<title>Kalkulačka, načítání a chyba – desktop</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style></style>
+<style>
+
+body{margin:0;background:#F6F3EC;color:#16150F;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:16px;line-height:1.45}
+*{box-sizing:border-box}
+h1,h2,h3,p{margin:0}
+.tag{font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#6B665A}
+.tag.g{display:inline-block;background:#C23A1B;color:#fff;padding:5px 8px;border-radius:3px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 24px;background:#16150F;color:#F6F3EC;font:600 17px 'IBM Plex Sans',sans-serif;border:0;border-radius:6px;text-decoration:none}
+.btn.sm{min-height:44px;padding:0 18px;font-size:15px}
+.chip{min-height:48px;min-width:64px;padding:0 18px;border:1.5px solid #16150F;border-radius:999px;background:transparent;font:500 16px 'IBM Plex Sans',sans-serif;color:#16150F}
+.chip.on{background:#16150F;color:#F6F3EC}
+.dk .chip{border-color:#F6F3EC;color:#F6F3EC}
+.dk .chip.on{background:#F6F3EC;color:#16150F}
+.ph{background:repeating-linear-gradient(135deg,#E6E1D4 0 8px,#ECE8DC 8px 16px);border:1px dashed #B5AE9C;color:#6B665A}
+.card{background:#FFFDF8;border:1px solid #D4CEBE;border-radius:10px}
+.num{font-variant-numeric:tabular-nums}
+input[type=email]{width:100%;min-height:56px;padding:0 16px;border:1.5px solid #F6F3EC;border-radius:6px;background:#fff;font:400 17px 'IBM Plex Sans',sans-serif;color:#16150F}
+input[type=range]{width:100%;accent-color:#F6F3EC;margin:8px 0}
+table{border-collapse:collapse;width:100%}
+th{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#6B665A;text-align:left;padding:10px 12px;border-bottom:1.5px solid #16150F}
+td{padding:16px 12px;border-bottom:1px solid #D4CEBE;font-size:17px}
+.pill{padding:5px 12px;border-radius:999px;font-size:14px;font-weight:500;white-space:nowrap}
+.no{background:#F4D9D1;color:#7A2410}
+.yes{background:#D6E8DE;color:#154A33}
+.ver{background:#F3E6BE;color:#6B4E00}
+a{color:#16150F}
+.th2,.tr2{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,.8fr) minmax(0,1fr);gap:12px;align-items:center;padding:16px 12px;font-size:17px}
+.th2{padding:10px 12px;border-bottom:1.5px solid #16150F}
+.tr2{border-bottom:1px solid #D4CEBE}
+.pill{justify-self:start}
+.ver{background:#F3E6BE;color:#6B4E00}.sw{width:48px;height:28px;border-radius:99px;background:#6B665A;position:relative;flex:none}.sw::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff}.sw.on{background:#2F6B49}.sw.on::after{left:23px}.sw.lock{background:#2F6B49}.sw.lock::after{left:23px}
+</style>
+</helmet>
+<div style="max-width:1280px;margin:0 auto;background:#F6F3EC"><div style="background:#16150F;color:#9AD4B2;padding:10px 20px 0;font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase">Načítá se</div><section class="dk" style="background:#16150F;color:#F6F3EC;padding:48px 56px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start"><div style="display:flex;flex-direction:column;gap:20px"><h2 style="font-size:24px;line-height:1.1;letter-spacing:-.015em">Kolik vás to bude stát?</h2><div><div style="display:flex;justify-content:space-between;align-items:baseline"><label for="m" style="font-size:15px">Kolik měsíčně uložíte</label><strong class="num" style="font-size:22px">3 000 Kč</strong></div><input id="m" type="range" min="500" max="20000" step="500" value="3000" aria-label="Měsíční částka"></div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">Na jak dlouho</span><button class="chip">5</button><button class="chip on">10</button><button class="chip">20</button><span style="font-size:15px">let</span></div></div><div><div role="status" aria-live="polite" style="display:flex;flex-direction:column;gap:14px"><span class="tag" style="color:#B9B3A2">Načítáme aktuální poplatky…</span><i style="display:block;width:78%;height:72px;border-radius:4px;background:#4A473D"></i><div style="display:flex;flex-direction:column;gap:12px;margin-top:6px"><i style="display:block;width:100%;height:14px;border-radius:4px;background:#3A372E"></i><i style="display:block;width:100%;height:14px;border-radius:4px;background:#3A372E"></i><i style="display:block;width:100%;height:14px;border-radius:4px;background:#3A372E"></i></div><p style="font-size:12px;color:#B9B3A2;margin-top:4px">Posuvníky můžete hýbat už teď, částky se dopočítají.</p></div></div></section><div style="height:8px;background:#F6F3EC"></div><div style="background:#16150F;color:#9AD4B2;padding:10px 20px 0;font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase">Chyba načtení</div><section class="dk" style="background:#16150F;color:#F6F3EC;padding:48px 56px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start"><div style="display:flex;flex-direction:column;gap:20px"><h2 style="font-size:24px;line-height:1.1;letter-spacing:-.015em">Kolik vás to bude stát?</h2><div><div style="display:flex;justify-content:space-between;align-items:baseline"><label for="m" style="font-size:15px">Kolik měsíčně uložíte</label><strong class="num" style="font-size:22px">3 000 Kč</strong></div><input id="m" type="range" min="500" max="20000" step="500" value="3000" aria-label="Měsíční částka"></div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:15px">Na jak dlouho</span><button class="chip">5</button><button class="chip on">10</button><button class="chip">20</button><span style="font-size:15px">let</span></div></div><div><div role="alert" style="display:flex;flex-direction:column;gap:14px"><span class="tag" style="color:#B9B3A2">Ceny se nepodařilo načíst</span><p style="font-size:18px;line-height:1.35;color:#F6F3EC">Částku teď nespočítáme, aby nebyla nepřesná. Zkuste to prosím znovu.</p><a class="btn" href="#r" style="background:#F6F3EC;color:#16150F;min-height:52px">Zkusit znovu</a><p style="font-size:12px;color:#B9B3A2">Fondy a brokery můžete mezitím projít v tabulce výše.</p></div></div></section></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:800}}">
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body></html>

@@ -1,140 +1,139 @@
-# Wireframe B: text spec
+# Wireframe B: text spec (rev. 4)
 
-Written from the canvas [ETF Kompas – wireframes](https://claude.ai/artifact/8PaM6Y6wAcy6nZbQhtaDoi) and its exported images in [images/](images/) (index in [README.md](README.md)). Styles are in [DESIGN-GUIDE.md](DESIGN-GUIDE.md). All copy here is wireframe draft copy, in Czech as drawn. Final strings come from SPEC §25 in `src/content/copy.ts`.
+Text version of every screen and state in the rev. 4 wireframes. The sources are the Wireframe Board (all screens on one canvas) and the Design Study (the same screens with the reasons), both linked from [README.md](README.md). Images are in [images/](images/). Styles are in [DESIGN-GUIDE.md](DESIGN-GUIDE.md). If this file and the Design Study disagree, the Design Study wins and this file gets fixed.
 
-Wireframes are at revision 2 (see decision note 0029). The fees of the three hero funds are real (VOO 0,03 %, QQQ 0,18 %, CSPX 0,07 %); the other fees and `X XXX Kč` stay placeholders until the data is verified (SPEC §18). The pill `[ověřit]` is a third, amber state ("unverified"): "Ne" is shown only where there is a source per broker. Square brackets such as `[SPRÁVCE]` and `[Firma A]` are slots filled from config or verified data.
+All copy here is wireframe copy, in Czech as drawn. The app copy follows SPEC §25 (no "ETF" in headlines, "firma" for "broker"), see notes 0017 and 0030 and the open points at the end. Square brackets such as `[SPRÁVCE]`, `[doplnit]` and `[ověřit]` are slots and amber "unverified" markers. `X XXX Kč` is a computed amount that is a placeholder until the data is verified (SPEC §18).
 
-## Sections of the landing page
+## Rules that hold everywhere
 
-The order matches SPEC §7. Desktop is 1280 px wide with 56 px gutters. Mobile is 390 px with 16 px gutters.
+1. **Never "nejlevnější".** Not without verified prices for every broker. A highlighted row means "buyable from Czechia", not "cheapest".
+2. **Every number has a source** and a month next to it. A "Ne" needs a source per broker. Anything unverified is the amber pill `[ověřit]`, never a guess.
+3. **One illustrative assumption:** 6 % a year, the same for every fund, always labelled "příklad, ne slib", shown net of fees. Czech taxes and inflation are not counted and the page says so.
+4. **The green saving box is a maximum:** "až X XXX Kč", "při vašem nastavení", "Odhad, bez českých daní a inflace". It is shown only when at least two brokers that offer the chosen fund have verified prices; otherwise the box and its button disappear.
+5. **Currency:** the calculator counts CSPX in dollars (USD listing), so the rows read "převod korun na dolary". A fund listed in euro would read "eura". Verify the listing per broker.
+6. **Disclaimers stay visible:** the top bar and "Investování nese riziko ztráty", plus the footer text on every page. Not investment or tax advice.
+7. **Consent:** the comparison needs only an e-mail. The tips checkbox is optional, unticked and confirmed by a second e-mail (double opt-in). Measurement and advertising cookies stay off until the visitor agrees.
+8. **Placeholders look like placeholders:** `X XXX Kč`, `[ověřit]`, `[doplnit]`, `[SPRÁVCE]`.
 
-| #   | Section                         | Mobile                                      | Desktop                      |
-| --- | ------------------------------- | ------------------------------------------- | ---------------------------- |
-| 0   | Source bar                      | one line, 11 px                             | full width, two items        |
-| 1   | Header                          | logo, "Menu" button                         | logo, nav, small CTA         |
-| 2   | Hero                            | stacked                                     | two columns                  |
-| 3   | Calculator and gate             | dark band, gate is a separate section below | one dark band, three columns |
-| 4   | "Za co platíte, aniž to vidíte" | three stacked cards                         | three columns                |
-| 5   | "Co dostanete e-mailem"         | two PDF previews, then text                 | text left, previews right    |
-| 6   | "Proč nám věřit"                | three ruled blocks                          | three columns                |
-| 7   | FAQ                             | four rows                                   | four rows                    |
-| 8   | Footer                          | risk line, controller, links                | same, two columns            |
-| 9   | Sticky CTA                      | bottom bar after first scroll               | none                         |
+## Screens
 
-Images: [landing-desktop.png](images/landing-desktop.png), [landing-mobile.png](images/landing-mobile.png).
+| Screen                               | Sizes                                    | Boards and images                                                                                                                                                                                                                                          |
+| ------------------------------------ | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Landing page                         | desktop 1280, phone 390                  | [landing-desktop.png](images/landing-desktop.png), [landing-mobile.png](images/landing-mobile.png)                                                                                                                                                         |
+| Calculator states                    | phone, desktop                           | [calculator-states-mobile.png](images/calculator-states-mobile.png), [calculator-states-desktop.png](images/calculator-states-desktop.png)                                                                                                                 |
+| After submit                         | desktop, phone                           | [success-desktop.png](images/success-desktop.png), [success-mobile.png](images/success-mobile.png)                                                                                                                                                         |
+| Comparison page                      | desktop, phone                           | [results-desktop.png](images/results-desktop.png), [results-mobile.png](images/results-mobile.png)                                                                                                                                                         |
+| E-mail: confirm tips                 | 600                                      | [optin-email.png](images/optin-email.png)                                                                                                                                                                                                                  |
+| Tips confirmed, link expired         | phone                                    | [optin-confirmed-mobile.png](images/optin-confirmed-mobile.png), [optin-expired-mobile.png](images/optin-expired-mobile.png)                                                                                                                               |
+| Unsubscribe                          | phone                                    | [unsubscribed-mobile.png](images/unsubscribed-mobile.png)                                                                                                                                                                                                  |
+| Menu                                 | phone                                    | [menu-mobile.png](images/menu-mobile.png)                                                                                                                                                                                                                  |
+| Cookies                              | phone, desktop                           | [cookies-bar-mobile.png](images/cookies-bar-mobile.png), [cookies-settings-mobile.png](images/cookies-settings-mobile.png), [cookies-bar-desktop.png](images/cookies-bar-desktop.png), [cookies-settings-desktop.png](images/cookies-settings-desktop.png) |
+| Privacy policy                       | desktop, phone                           | [privacy-desktop.png](images/privacy-desktop.png), [privacy-mobile.png](images/privacy-mobile.png)                                                                                                                                                         |
+| 404                                  | phone (desktop is the same card centred) | [not-found-mobile.png](images/not-found-mobile.png)                                                                                                                                                                                                        |
+| Form errors                          | phone, desktop                           | [form-errors-mobile.png](images/form-errors-mobile.png), [form-errors-desktop.png](images/form-errors-desktop.png)                                                                                                                                         |
+| PDF, A4 pages 1 and 4                | A4                                       | [pdf-page-1.png](images/pdf-page-1.png), [pdf-page-4.png](images/pdf-page-4.png)                                                                                                                                                                           |
+| Favicon, share image                 | 16 to 180 px, 1200 x 630                 | [favicon.png](images/favicon.png), [share-image.png](images/share-image.png)                                                                                                                                                                               |
+| Motion (live HTML)                   | 1280                                     | [motion.png](images/motion.png) (still)                                                                                                                                                                                                                    |
+| Ads A and B, first screen after ad A | 4:5, 9:16, phone                         | [ad-a-4x5.png](images/ad-a-4x5.png), [ad-a-9x16.png](images/ad-a-9x16.png), [ad-b-4x5.png](images/ad-b-4x5.png), [ad-b-9x16.png](images/ad-b-9x16.png), [hero-a-mobile.png](images/hero-a-mobile.png)                                                      |
 
-### 0. Source bar
+The main path is five steps: ad, landing page (hero table and calculator), e-mail form, success page, comparison page and PDF (valid 30 days).
 
-Dark strip, one wording on desktop and phone: "Čísla ze stránek fondů a brokerů · ověřeno k 10. 2026". Desktop adds "Investování nese riziko ztráty." on the right. The date is generated from the data's `asOf`.
+## Landing page
 
-### 1. Header
+The order of sections matches SPEC §7. Desktop is 1280 px wide with 56 px gutters. Phone is 390 px with 16 px gutters (20 px in the calculator).
 
-Logo and "ETF Kompas". Desktop nav: Jak počítáme, Odkud máme čísla, Časté dotazy, and the small primary button "Poslat mi srovnání". Mobile: a "Menu" chip (44 px), the menu contents are not drawn.
+### Top bar and header
 
-### 2. Hero (variant b, table first)
+- **Top bar:** "Čísla ze stránek fondů a brokerů · ověřeno k 10. 2026" and "Investování nese riziko ztráty." Ink band, 13 px (11 on the phone). The date is generated from the data's `asOf`.
+- **Header:** desktop has the wordmark, three anchors (Jak počítáme, Odkud máme čísla, Časté dotazy) and the small button "Poslat mi srovnání". Phone has the wordmark and a hamburger button labelled "Menu". The phone page also has a sticky bottom bar with the same button after the first scroll (48 px button, 1.5 px top border).
 
-- h1: "Které ETF si z Česka opravdu koupíte a kolik vás stojí?"
-- Lead: "Stejný index často koupíte z Česka jen v evropské verzi. Ukážeme vám, kterou, u koho a za kolik."
-- Callout: "**ETF** je fond, který jen kopíruje trh. Nemá drahé správce, a proto je levný." (the one use of "ETF", SPEC §25). On mobile it sits in its own band after the hero.
-- Primary CTA: "Spočítat, kolik zaplatím", anchors to the calculator. Desktop adds a text link "nebo rovnou kontrola brokerů".
-- Hero table card with caption "Cena a dostupnost", source line "zdroj: stránky fondů a brokerů · ověřeno k 10. 2026", header (Co koupíte, Roční poplatek, Koupíte z ČR?) and three rows:
-  1. Americký fond na 500 největších firem, sub-label "odborně S&P 500, značka VOO", `0,03 %`, amber pill `[ověřit]` with "Ne u 3 z 5 brokerů".
-  2. Americký fond na 100 technologických firem, "odborně Nasdaq 100, značka QQQ", `0,18 %`, amber pill `[ověřit]` with "Ne u 3 z 5 brokerů".
-  3. Evropská verze prvního fondu, "stejných 500 firem, značka CSPX, sídlí v Evropě", `0,07 %`, pill "Ano", highlighted. The highlight means "buyable from Czechia", not "cheapest" (VOO has the lowest fee).
-- Footnote: "Zvýrazněno je to, co koupíte z ČR, ne to nejlevnější. Nejnižší poplatek má VOO, ale u 3 z 5 brokerů ho nekoupíte. Jen cena a dostupnost, ne výnosy." (mobile: "Zvýrazněno = koupíte z ČR, ne nejlevnější. Jen cena a dostupnost, žádné výnosy.")
-- Mobile order: h1, lead, table, CTA, footnote. The whole hero should fit 375x667 (SPEC §22, to be measured in Phase 3).
-- Animation: see the table intro below.
+### Hero
 
-### 2b. Hero (variant a, calculator first, board G5)
+- h1: "Americké indexy z Česka: u koho je koupíte a za kolik?"
+- Lead: "Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik." (one line on the phone)
+- Callout with a left rule explaining ETF (the one use of the word).
+- Primary button "Spočítat, kolik mě to bude stát", and the link "nebo rovnou srovnání brokerů".
+- **Hero table** card with four European twins: Co koupíte, Roční poplatek, Typ (Acc / Dist). Facts that are not verified carry `[ověřit]`. One muted line under it: "CSPX: DEGIRO, Trading 212, XTB (ověřeno k 10. 2026). U ostatních fondů a brokerů ověřujeme. Americké VOO a QQQ u většiny brokerů nekoupíte." There are no broker counts in the table.
+- Mobile order: h1, lead, callout, table, button.
 
-Image: [hero-a-mobile.png](images/hero-a-mobile.png).
+### Calculator
 
-Dark screen for visitors from ad A (375x667): source line, logo, h1 "Které ETF si z Česka opravdu koupíte?", sub-line "Zjistěte to za 20 sekund. Zdarma, bez registrace.", then the calculator controls directly (monthly slider, horizon chips 5 / 10 / 20), button "Ukázat, co koupím" and "Příklad výpočtu. Investování nese riziko ztráty." `?v=a` renders this hero and `?v=b` the table hero above (SPEC §22).
+Dark band directly under the hero, so the first scroll answers "what does it cost me". Three desktop columns, one stacked column on the phone. States are in [calculator-states-mobile.png](images/calculator-states-mobile.png).
 
-### 3. Calculator and gate
+- **Question:** "Kolik vás to bude stát?"
+- **Inputs:** monthly amount 500 to 20 000 Kč in steps of 500, default 3 000 Kč, shown right-aligned and large. Period chips 5 / 10 / 20 years, default 10. One investment a month.
+- **Result:** "Za 10 let vás koupitelné ETF (CSPX) bude stát X XXX Kč", then three parts: roční poplatek fondu, převod korun na dolary, poplatky brokera. Then "Počítáme s výnosem 6 % ročně. Je to příklad, ne slib. Fond CSPX počítáme v dolarech. Nepočítáme české daně ani inflaci."
+- **Illustrative line:** "Ilustrativní hodnota po 10 letech: X XXX Kč, z toho poplatky X XXX Kč · 6 % ročně, příklad, ne slib." Net of fees, small, under the result.
+- **Green saving box:** "Při vašem nastavení · Správným brokerem si u stejného fondu ponecháte až X XXX Kč · Odhad, bez českých daní a inflace." Button "Ukázat, u kterého brokera to koupím", which goes to the e-mail form. The amount is the spread between brokers that offer the chosen fund.
+- **Hide rule:** the box and its button show only when at least two brokers have verified prices. Otherwise the calculator ends with the illustrative line and the form follows.
+- **Loading:** grey placeholders and "Načítáme aktuální poplatky…", the inputs still work. **Failure:** no amount at all, "Částku teď nespočítáme, aby nebyla nepřesná", button "Zkusit znovu".
+- The visitor's amount and period are carried to the comparison page, the PDF and the e-mail.
+- There is no "expected return" figure: it looks like a forecast and is identical for every fund, so it cannot be part of a comparison. The page shows what the visitor keeps.
 
-Dark band. Three desktop columns, one stacked column on mobile.
+### E-mail form
 
-- **Inputs:** "Kolik to u vás dělá?"; slider "Kolik měsíčně uložíte" (500 to 20 000 Kč, step 500, default 3 000 Kč, value shown right); chips "Na jak dlouho" 5 / 10 / 20 "let", default 10.
-- **Result:** tag "Za 10 let u amerického fondu zaplatíte víc o", then the big number (`X XXX Kč`), "Z toho jde na:" and three lines: roční poplatek fondu, převod korun na dolary, daň, kterou stáhne USA (each `X XXX Kč`), then "Počítáme s výnosem 6 % ročně u obou fondů. Je to příklad, ne slib." Under it a note: "Je americký fond levnější, uvidíte „méně o“. Z Česka ho ale zatím nekoupíte u všech brokerů [ověřit]." The label reads "zaplatíte víc o" or "méně o", depending on the result.
-- **Gate** (right column on desktop, light card on the dark band; on mobile its own bordered card below the band): h2 "Chcete vidět, kde který fond koupíte?", "Fondy a 5 brokerů vedle sebe: kdo co nabízí a kolik stojí nákup. Česky, na jedné stránce.", label "Váš e-mail", placeholder `jmeno@domena.cz`, button "Poslat mi srovnání", legal line "Pošleme vám srovnání. Správce: [SPRÁVCE]. Zásady zpracování osobních údajů.", unticked checkbox "Chci občas dostat tip k investování (nepovinné)".
+Light card (on the phone its own card below the calculator). "Chcete vidět, kde který fond koupíte?", one field (Váš e-mail, placeholder `jmeno@domena.cz`), the button "Poslat mi srovnání", the legal line with the controller and a link to the privacy policy, and the optional unticked checkbox "Chci občas dostat tip k investování (nepovinné)". Errors are described under "Form errors" below.
 
-### 4. "Za co platíte, aniž to vidíte"
+### The explainer sections
 
-Three numbered cards. 1 Roční poplatek fondu: "Fond si každý rok vezme malé procento z vašich peněz. Nikdo vám za to nepošle fakturu." 2 Převod korun: "Americké fondy chtějí dolary. Za každý převod z korun se platí." 3 Daň ze zisků: "Část vyplacených zisků si stáhne zahraničí dřív, než se k vám dostanou." (Mobile texts are shorter.)
+- **Za co platíte, aniž to vidíte:** three numbered cards: roční poplatek fondu, převod korun, daň ze zisků (what foreign tax withholding means). One plain sentence each.
+- **Co dostanete e-mailem:** two blurred previews of the real PDF (page 1 comparison, page 4 taxes), a short heading and the button again. Final art is a blurred screenshot of the real pages.
+- **Proč nám věřit:** three items with a top rule: Odkud máme čísla, Jak počítáme, Nic neprodáváme. The header anchors land here.
+- **Časté dotazy:** four accordion questions: Můžu si americký fond koupit z Česka? · Je to zdarma? · Co uděláte s mým e-mailem? · Radíte mi, co koupit? The answers are not drawn.
+- **Footer:** ink band with the wordmark, risk and not-advice text, controller, four links (Jak počítáme, Zásady zpracování, Cookies, Kontakt).
 
-### 5. "Co dostanete e-mailem"
+## After submit and e-mail
 
-Heading "8 fondů, 5 brokerů a co z toho koupíte z Česka", text "Otevře se hned po odeslání, nemusíte nic stahovat. U každého čísla uvádíme odkud je a z jakého měsíce.", button "Poslat mi srovnání" (desktop). Two page previews, "strana 1 – srovnání" and "strana 4 – daně", currently striped placeholders.
+- **Success page** (replaces the gate in place, no redirect): the visitor's number again, "Hotovo. Srovnání je připravené.", buttons "Otevřít srovnání" and "Stáhnout PDF · 6 stran", "Odkaz jsme poslali i na [e-mail]. Pokud nic nepřijde, zkontrolujte spam.", "Zkopírovat odkaz", three "Co dál" items and the consent note.
+- **Tips and double opt-in:** if the tips checkbox was ticked, a second e-mail arrives with one button "Ano, posílejte mi tipy". The comparison never waits for it. Confirmation page: "Odběr tipů potvrzen". A used or expired link gets "Tento odkaz už nefunguje" with a way back.
+- **Unsubscribe:** every e-mail has a link. The page says "Odhlášeno", offers "Přihlásit zpět" and states when the e-mail is deleted.
 
-### 6. "Proč nám věřit"
+## Comparison page
 
-Three ruled blocks: Odkud máme čísla ("Z oficiálních stránek fondů a zákona o daních. U všeho je datum."), Jak počítáme ("Postup je na jedné stránce. Můžete si ho přepočítat."), Nic neprodáváme ("Nedostáváme provize. Nejde o investiční poradenství.").
+- **Header:** wordmark and the button "Stáhnout PDF · 6 stran". Desktop has a left "Na stránce" contents (1 Fondy vedle sebe, 2 Daně v Česku, 3 Kde fond koupit, 4 Jak počítáme). On the phone the contents become a card.
+- **Result strip:** dark band with the visitor's setup (3 000 Kč měsíčně · 10 let) and the same headline number as the calculator.
+- **1 · Fondy vedle sebe:** five European twins with Typ and Roční poplatek (CSPX, VUAA, VUSA, CSNDX, EQQQ). "Acc = fond výnosy sám reinvestuje. Dist = výnosy vyplácí." Unverified fees are `[ověřit]`.
+- **U kterého brokera?** A fund picker (CSPX selected), then five brokers (DEGIRO, Fio, IBKR, Trading 212, XTB) with Koupíte?, Poplatky brokera and Za 10 let celkem. Cells without a source stay `[ověřit]` and are left out of the spread.
+- **Assumption and summary:** "3 000 Kč měsíčně · 10 let · 6 % ročně · jedna investice měsíčně · příklad, ne slib. Částky se řídí kalkulačkou." Then "Mezi ověřenými brokery se výsledek liší až o X XXX Kč. Nejnižší možné poplatky s vaším nastavením: X XXX Kč za 10 let." and "Odhad. Bez českých daní a inflace."
+- **2 · Daně v Česku:** three short items (prodej po letech, dividendy ze zahraničí, přiznání), each with a source link. Text is filled in only from a verified source.
+- **3 · Kde fond koupit:** broker table: poplatek za nákup, převod korun, česky, source link. To be merged with the broker table above once prices are verified.
+- **4 · Jak počítáme:** one page of method: fund fee, currency conversion, broker fees counted; inflation and Czech taxes not. Link "Otevřít postup".
+- **Resend:** "Odkaz platí 30 dní." and a button to send the link to the visitor's e-mail again.
+- The phone page stacks the same content: five fund cards, the fund picker, one card per broker, the summary lines.
 
-### 7. FAQ
+## Menu, cookies, legal, errors
 
-Four collapsed rows with a "+" marker: Můžu si americký fond koupit z Česka? · Je to zdarma? · Co uděláte s mým e-mailem? · Radíte mi, co koupit? Answers are not drawn.
+- **Phone menu:** hamburger with a label (44 px target, `aria-expanded`). Open: full-height panel with the three page anchors in 60 px rows, Zásady zpracování, Cookies, Kontakt, and the main button pinned to the bottom. The page behind does not scroll.
+- **Footer links:** Jak počítáme, Zásady zpracování, Cookies, Kontakt. Kontakt goes to the controller section of the privacy page. Cookies reopens the settings.
+- **Cookies:** first visit shows a bar (bottom sheet on the phone) with "Přijmout vše" and "Odmítnout vše" equally prominent, and "Nastavit". Settings: Nezbytné (always on), Měření návštěvnosti, Reklama a remarketing, both off until agreed. Buttons "Uložit výběr" and "Přijmout vše".
+- **Privacy policy:** contents list and seven sections: kdo údaje zpracovává, jaké údaje, proč a na jakém základě, jak dlouho, komu je předáváme, vaše práva (including the complaint to the Czech data protection office), cookies. The text is a placeholder with `[doplnit]` gaps and needs a lawyer's review before launch.
+- **404:** "Tuhle stránku jsme nenašli", button "Zpět na úvod", link to Jak počítáme.
+- **Invalid e-mail:** red border and a message in words under the field: "Zadejte e-mail ve tvaru jmeno@domena.cz." Linked with `aria-describedby`, not shown by colour alone.
+- **Send failed:** banner above the form: "Odeslání se nepovedlo. Zkuste to prosím znovu za chvíli." The e-mail and the calculator setup stay filled, the button reads "Zkusit znovu". There is no consent error, because the checkbox is optional.
 
-### 8. Footer
+## PDF, favicon, sharing
 
-Dark. Risk line "Investování nese riziko ztráty. Minulé výnosy nezaručují budoucí. Obsah je obecná informace, ne investiční ani daňové poradenství.", "Správce: [SPRÁVCE – IČO, adresa]", links Zásady zpracování and Cookies. The test-project notice from SPEC §17.15 is not drawn.
+- **PDF on A4:** white paper, ink only. Wordmark and the visitor's setup in the header. Page 1 is the comparison table fund x broker with the same `[ověřit]` rule and the illustrative line. Page 4 is the tax page and says nothing that is not from a verified source. Footer: not advice, verified month, controller, page x / 6. Pages 2, 3, 5 and 6 are not drawn.
+- **Favicon:** the compass mark without text, SVG for browsers, PNG 180 px for iPhone, 32 and 16 px for tabs. Readable on light and dark browser chrome.
+- **Share image:** 1200 x 630 with the wordmark, the headline, "Poplatky fondů a brokerů v korunách. Na jedné stránce." and the compass tile. Must stay readable at thumbnail size. Title: "ETF Kompas: americké indexy z Česka, u koho je koupíte". Description: "Srovnání evropských ETF na S&P 500 a Nasdaq 100: poplatky fondů a brokerů v korunách. Česky, na jedné stránce." (to confirm).
 
-### 9. Sticky bar (mobile)
+## Motion
 
-Appears after the first scroll: paper background, 1.5 px top border, a 48 px button "Poslat mi srovnání" that jumps to the gate.
+The Motion board is live HTML with a looping demo for every animated section and a button that shows the reduced-motion result. Timings and rules are in [DESIGN-GUIDE.md](DESIGN-GUIDE.md) section 5. [motion.png](images/motion.png) is a still of it.
 
-## Hero table intro (board T1)
-
-Image: [hero-table-animation.png](images/hero-table-animation.png).
-
-Table card fades in, then rows 1 to 3 slide in one after another, then the highlighted row ("buyable from Czechia", CSPX) turns green. Timings are in [DESIGN-GUIDE.md](DESIGN-GUIDE.md) section 5. Reduced motion shows the final state. The board has a "Přehrát znovu" control for review only.
-
-## After submit (boards E1 desktop, E2 mobile)
-
-Images: [success-desktop.png](images/success-desktop.png), [success-mobile.png](images/success-mobile.png).
-
-The success state replaces the gate in place, no redirect (SPEC §3.5).
-
-- Green check icon and "Hotovo. Srovnání je připravené."
-- Buttons: "Otevřít srovnání" (primary), "Stáhnout PDF · 6 stran" (outline).
-- "Odkaz jsme poslali i na jmeno@domena.cz. Pokud nic nepřijde, zkontrolujte spam." and "Nejde to otevřít? Zkopírovat odkaz".
-- Mobile: the calculator result stays on top as a compact dark band ("3 000 Kč měsíčně · 10 let · příklad, ne slib").
-- Below: "Co dál" with three items (Projděte 8 fondů vedle sebe, Přečtěte si stránku o daních, Zjistěte, kde fond koupit).
-- Small print: confirmation of the newsletter by one more tap in the email, the comparison is delivered either way, controller, unsubscribe in every email.
-
-## Results page (boards F1 desktop, F2 mobile)
-
-Images: [results-desktop.png](images/results-desktop.png), [results-mobile.png](images/results-mobile.png).
-
-Top bar with source date "Ověřeno k 10. 2026 · u každého čísla je zdroj", logo and a PDF link. Then "Vaše srovnání" / "Srovnání 8 fondů" with "Ceny, sídlo fondu a to, kde je koupíte z Česka. Bez výnosů, jen to, co fond stojí." and the visitor's own result ("3 000 Kč měsíčně · 10 let", `X XXX Kč`). Desktop has a 220 px side navigation (Fondy, Daně, Kde koupit, Jak počítáme).
-
-1. **Fondy vedle sebe**, sorted "koupitelné z ČR nahoře · pak podle poplatku". Desktop table: Co koupíte, Roční poplatek, Fond sídlí, Koupíte z ČR?, Zdroj ("stránka fondu ↗"). Eight rows with a plain name and ticker; mobile shows three and "Zobrazit dalších 5 fondů". Below the table, a fund × broker availability matrix ("Dostupnost podle brokera · ověřeno k 10. 2026"): CSPX Ano / [ověřit] / [ověřit] / Ano / Ano and VOO, QQQ Ne / [ověřit] / [ověřit] / Ne / Ne for DEGIRO, Fio, IBKR, Trading 212, XTB. Phone: a broker availability card.
-2. **Daně v Česku**, three cards (Prodej po letech, Dividendy ze zahraničí, Přiznání), text from verified sources only, each with "Zdroj: … ↗", footnote "Obecná informace, ne daňové poradenství."
-3. **Kde fond koupit**, "abecedně · bez provizí · stav 10. 2026", per broker: Poplatek za nákup, Převod korun, Česky, "ceník ↗"; mobile shows two and "Zobrazit dalších 3 firmy". Brokers are named and alphabetical: DEGIRO, Fio, IBKR, Trading 212, XTB.
-4. **Jak počítáme**, what is and is not counted, "Otevřít postup".
-
-- "Poslat odkaz znovu · Odkaz platí 30 dní · Poslat na můj e-mail".
-- Footer with risk line, controller, "Zásady zpracování", "Odhlásit odběr".
-
-## Ads (boards G1 to G4)
-
-Images: [ad-a-4x5.png](images/ad-a-4x5.png), [ad-a-9x16.png](images/ad-a-9x16.png), [ad-b-4x5.png](images/ad-b-4x5.png), [ad-b-9x16.png](images/ad-b-9x16.png).
+## Ads
 
 Ad creatives, not part of the app.
 
-- **Ad A** (4:5 and 9:16): "Které ETF si z Česka opravdu koupíte?", huge `? z 8` in `cost-strong`, "fondů si z ČR opravdu koupíte", "Zjistěte to za 20 sekund. Zdarma.", "Investování nese riziko ztráty. Příklad výpočtu, ne slib výnosu."
-- **Ad B** (4:5 and 9:16): split screen "Americký fond" (dark) versus "Evropský fond" (green tint) with a "vs" mark, panel labels "USA · VOO 0,03 %" and "Evropa · CSPX 0,07 %", "Který koupíte z Česka?", "Stejné firmy, jiná cena i dostupnost. Spočítáme to v korunách.", risk line.
-- Ad A leads to hero a, ad B to hero b (my reading).
-- The 9:16 layouts keep text out of the top 110 px and bottom 150 px for the Stories UI.
-
-## Decisions (David, 2026-10-10)
-
-1. **Calculator inputs:** monthly amount and horizon only. The initial lump sum is dropped for now, and SPEC §4 and §21 are updated. Note 0015.
-2. **Hero animation:** kept. LCP is measured in Phase 3 and the animation is cut or shortened if the target (below 2.0 s) fails. SPEC §4 and §24 are updated. Note 0016.
-3. **Copy:** the wireframe copy is the working copy and wins over SPEC §25 where they differ. It is reviewed later, and `copy:check` rules still apply when Phase 3 builds it. Note 0017.
-4. **Hero variants:** `?v=a` is the calculator-first hero (board G5, ad A) and `?v=b` the table-first hero (ad B), as read in 2b. An unknown value falls back to `a`.
+- **Ad A** (4:5 and 9:16): the hero headline and the unknown "? z 5" with "brokerů nabízí evropský fond na S&P 500" (the number is a placeholder until verified). CTA "Zjistěte to za 20 sekund. Zdarma." Footer "Investování nese riziko ztráty. Příklad výpočtu, ne slib výnosu."
+- **Ad B** (4:5 and 9:16): two twins side by side, "iShares · CSPX 0,07 %" (Fond A) and "Vanguard · VUAA 0,07 %" (Fond B), "U koho je koupíte a za kolik?" and "Stejný index, jiný fond i broker. Spočítáme to v korunách."
+- **First screen after ad A** (phone 375 x 667): repeats the ad headline, "Zjistěte to za 20 sekund. Zdarma, bez registrace.", the two calculator inputs and the button "Ukázat, kolik mě to bude stát". `?v=a` renders this hero and `?v=b` the table hero above (SPEC §22).
+- Feed 4:5 is 540 x 675 and stories 9:16 is 405 x 720. The 9:16 layouts keep text out of the top 110 px and bottom 150 px for the Stories UI.
 
 ## Open points
 
-1. **Not drawn:** FAQ answers, mobile menu, error and loading states, expired results link, StackedBar, cookie banner, the privacy page, the test-project notice.
-2. **Wireframe sample data.** Row labels such as "Evropská verze prvního fondu" assume the verified data matches (same index, UCITS). If verification changes it, the rows change.
+1. **Data to verify:** fees of VUAA, VUSA, CSNDX and EQQQ (CSNDX 0,33 % and EQQQ 0,30 % are from memory); availability of 5 funds x 5 brokers (verified so far: CSPX at DEGIRO, Trading 212, XTB; Fio and IBKR open); broker prices; the USD or EUR listing per broker; tax text from Finanční správa; the calculator formula as a tested pure function.
+2. **Legal text** (privacy policy, cookies, controller, retention periods) must be written and reviewed by someone qualified before launch.
+3. **Not drawn:** the main e-mail with the comparison link, PDF pages 2, 3, 5 and 6, desktop versions of 404, unsubscribe and the confirmation pages, FAQ answers, StackedBar, the test-project notice.
+4. **Copy conflicts with SPEC §25.** The wireframes say "ETF" in the share title, ad copy and the calculator result, "broker" in many places, "S&P 500" and "Nasdaq 100" in the lead. `pnpm copy:check` bans some of these. Which side moves is David's call (note 0035).
+5. **Type sizes:** the drawn 54 / 44 / 30 px headings do not match the tokens (DESIGN-GUIDE section 2).

@@ -62,12 +62,22 @@ rep(MAIN, 'Tabulka ukazuje jen cenu a dostupnost, ne výnosy. Minulé výnosy ne
 rep(BM, 'Jen cena a dostupnost, žádné výnosy.', 'Zvýrazněno = koupíte z ČR, ne nejlevnější. Jen cena a dostupnost, žádné výnosy.')
 rep(T1, 'Jen cena a dostupnost, ne výnosy. Minulé výnosy nezaručují budoucí.', 'Zvýrazněno = koupíte z ČR, ne nejlevnější. Jen cena a dostupnost, ne výnosy.')
 
-# calculator: honest when the US fund is cheaper
+# calculator (rev. 2b): what the ETF you can really buy costs you; broker is the lever
+CALC_TAG = 'Za 10 let vás koupitelné ETF (CSPX) bude stát'
+for b in (MAIN, BM, E1, E2):
+    rep(b, 'Za 10 let u amerického fondu zaplatíte víc o', CALC_TAG)
+for b in (MAIN, BM, E1):
+    rep(b, 'Kolik to u vás dělá?', 'Kolik vás to bude stát?')
+for b in (MAIN, BM):
+    rep(b, 'daň, kterou stáhne USA', 'poplatky brokera')
+rep(F1, 'U amerického fondu zaplatíte víc o', 'Za 10 let vás koupitelné ETF (CSPX) bude stát')
+rep(F2, 'U amerického fondu zaplatíte víc o', 'Za 10 let vás koupitelné ETF (CSPX) bude stát')
+NOTE = '<p style="font-size:13px;color:#D9D4C5;border-top:1px solid #4A473D;padding-top:10px">Podle brokera se výsledek liší až o X XXX Kč. Kdo vyjde nejlevněji, ukážeme vám v srovnání.</p>'
 rep(MAIN, '<p style="font-size:12px;color:#B9B3A2">Počítáme s výnosem 6 % ročně u obou fondů. Je to příklad, ne slib.</p>',
-    '<p style="font-size:12px;color:#B9B3A2">Počítáme s výnosem 6 % ročně u obou fondů. Je to příklad, ne slib.</p>'
-    '<p style="font-size:13px;color:#D9D4C5;border-top:1px solid #4A473D;padding-top:10px">Je americký fond levnější, uvidíte „méně o“. Z Česka ho ale zatím nekoupíte u všech brokerů [ověřit].</p>')
-rx(BM, r'(<p style="[^"]*">Počítáme s výnosem 6 % ročně\. Je to příklad, ne slib\.</p>)',
-   r'\1<p style="font-size:13px;color:#D9D4C5;border-top:1px solid #4A473D;padding-top:10px">Je americký fond levnější, uvidíte „méně o“. Z Česka ho ale zatím nekoupíte u všech brokerů [ověřit].</p>')
+    '<p style="font-size:12px;color:#B9B3A2">Počítáme s výnosem 6 % ročně. Je to příklad, ne slib. Nepočítáme české daně ani inflaci.</p>' + NOTE)
+rx(BM, r'(<p style="[^"]*">)Počítáme s výnosem 6 % ročně\. Je to příklad, ne slib\.</p>',
+   r'\1Počítáme s výnosem 6 % ročně. Je to příklad, ne slib.</p>' + NOTE)
+rep(E1, 'Počítáme s výnosem 6 % ročně u obou fondů. Je to příklad, ne slib.', 'Počítáme s výnosem 6 % ročně. Je to příklad, ne slib. Nepočítáme české daně ani inflaci.')
 
 # gate and e-mail preview: lead magnet = fund + broker check
 for b in (MAIN, BM):
