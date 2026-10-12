@@ -4,7 +4,8 @@ import styles from './Pill.module.scss'
 type PillProps = {
   // negative = verified as not buyable ("Ne"), positive = buyable ("Ano"),
   // unverified = not checked yet, amber ("[ověřit]", note 0029)
-  tone: 'negative' | 'positive' | 'unverified'
+  // neutral = a plain fact that is neither good nor bad ("Acc", "Dist")
+  tone: 'negative' | 'positive' | 'unverified' | 'neutral'
   children: ReactNode
 }
 

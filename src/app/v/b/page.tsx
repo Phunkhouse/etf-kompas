@@ -8,7 +8,7 @@ const CALCULATOR_FUND = 'cspx'
 
 // Hero b. Visitors reach it as `/?v=b`; the URL /v/b works too (decision note 0028).
 export default async function VariantB() {
-  const { dataAsOf, rows } = landingData(bundledData)
+  const { dataAsOf, twins, note } = landingData(bundledData)
   const calculator = calculatorData(
     bundledData,
     await getRates(),
@@ -18,7 +18,8 @@ export default async function VariantB() {
     <Landing
       variant="b"
       dataAsOf={dataAsOf}
-      rows={rows}
+      twins={twins}
+      note={note}
       calculator={calculator}
     />
   )

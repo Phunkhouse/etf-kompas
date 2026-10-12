@@ -53,7 +53,7 @@ test('the table is complete with animations switched off @smoke', async ({
   const page = await context.newPage()
   await page.goto('/?v=b')
   const rows = page.getByRole('row')
-  await expect(rows).toHaveCount(4) // header and three funds
+  await expect(rows).toHaveCount(5) // header and four funds
   for (const row of await rows.all()) {
     await expect(row).toHaveCSS('opacity', '1')
   }

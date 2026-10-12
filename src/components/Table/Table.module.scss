@@ -177,12 +177,30 @@
     }
   }
 
+  // Four rows of two lines each have to fit under the headline on 375 x 667
+  // (note 0031): tight rows and headers on a phone.
+  .head {
+    padding-block: var(--space-1);
+
+    @include from('md') {
+      padding-block: var(--space-2);
+    }
+  }
+
   .row th,
   .row td {
-    padding-block: var(--space-2);
+    padding-block: var(--space-1);
 
     @include from('md') {
       padding-block: var(--space-4);
+    }
+  }
+
+  .title {
+    line-height: var(--line-height-snug);
+
+    @include from('md') {
+      line-height: var(--line-height-base);
     }
   }
 }

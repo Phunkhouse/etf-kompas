@@ -1,107 +1,104 @@
 import { render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import type { HeroRow } from '@/server/availability'
+import type { HeroTwin } from '@/server/hero'
 import { HeroTable } from './HeroTable'
 
-function row(
+function twin(
   fundId: string,
   ter: number | null,
-  state: 'yes' | 'no' | 'unverified',
-  verifiedNoCount = 0,
-): HeroRow {
-  return {
-    fundId,
-    ter,
-    buyability: {
-      state,
-      yesCount: state === 'yes' ? 1 : 0,
-      verifiedNoCount,
-      total: 5,
-    },
-    highlight: state === 'yes',
-  }
+  type: HeroTwin['type'],
+): HeroTwin {
+  return { fundId, ticker: fundId.toUpperCase(), ter, type }
 }
 
-const rows = [
-  row('voo', 0.03, 'unverified', 3),
-  row('qqq', 0.18, 'unverified', 3),
-  row('cspx', 0.07, 'yes'),
+const twins = [
+  twin('cspx', 0.07, 'accumulating'),
+  twin('vuaa', 0.07, 'accumulating'),
+  twin('cndx', 0.3, 'accumulating'),
+  twin('eqqq', 0.3, 'distributing'),
 ]
 
 describe('HeroTable', () => {
-  it('is a table with the three columns', () => {
-    render(<HeroTable rows={rows} dataAsOf="2026-06-30" />)
-    const table = screen.getByRole('table', { name: 'Cena a dostupnost' })
+  it('is a table with three columns: what, annual fee and type', () => {
+    render(<HeroTable twins={twins} dataAsOf="2026-06-30" />)
+    const table = screen.getByRole('table', {
+      name: 'Roční poplatek a typ fondu',
+    })
     expect(
       within(table)
         .getAllByRole('columnheader')
         .map((cell) => cell.textContent),
-    ).toEqual(['Co koupíte', 'Roční poplatek', 'Koupíte z ČR?'])
+    ).toEqual(['Co koupíte', 'Roční poplatek', 'Typ'])
   })
 
-  it('shows each fund with its plain name first and the technical name after', () => {
-    render(<HeroTable rows={rows} dataAsOf={null} />)
-    const voo = screen.getByRole('row', { name: /Americký fond na 500/ })
-    expect(voo.textContent).toContain('odborně S&P 500, značka VOO')
+  it('has one row for each twin, four in all', () => {
+    render(<HeroTable twins={twins} dataAsOf={null} />)
+    // the header row and four funds
+    expect(screen.getAllByRole('row')).toHaveLength(5)
+  })
+
+  it('shows each fund with its plain name first, then the technical name, ticker and manager', () => {
+    render(<HeroTable twins={twins} dataAsOf={null} />)
+    const cspx = screen.getByRole('row', { name: /značka CSPX/ })
+    expect(cspx.textContent).toContain('Evropský fond na 500 největších firem')
+    expect(cspx.textContent).toContain(
+      'odborně S&P 500, značka CSPX, správce iShares',
+    )
+    const eqqq = screen.getByRole('row', { name: /značka EQQQ/ })
+    expect(eqqq.textContent).toContain(
+      'Evropský fond na 100 technologických firem',
+    )
+    expect(eqqq.textContent).toContain('správce Invesco')
   })
 
   it('shows the fees from the data with a decimal comma', () => {
-    render(<HeroTable rows={rows} dataAsOf={null} />)
+    render(<HeroTable twins={twins} dataAsOf={null} />)
     // textContent keeps the non-breaking space that getByText would normalise
     const cells = screen.getAllByRole('cell').map((cell) => cell.textContent)
-    expect(cells).toContain('0,03\u00a0%')
-    expect(cells).toContain('0,18\u00a0%')
-    expect(cells).toContain('0,07\u00a0%')
+    expect(cells).toContain('0,07 %')
+    expect(cells).toContain('0,30 %')
   })
 
-  it('marks an unchecked fund as [ověřit] with how many firms say no', () => {
-    render(<HeroTable rows={rows} dataAsOf={null} />)
-    const voo = screen.getByRole('row', { name: /Americký fond na 500/ })
-    expect(within(voo).getByText('[ověřit]')).toBeTruthy()
-    expect(within(voo).getByText(/Ne u 3 z 5 firem/)).toBeTruthy()
-    expect(within(voo).queryByText('Ano')).toBeNull()
+  it('shows the type as Acc or Dist', () => {
+    render(<HeroTable twins={twins} dataAsOf={null} />)
+    const cspx = screen.getByRole('row', { name: /značka CSPX/ })
+    expect(within(cspx).getByText('Acc')).toBeTruthy()
+    const eqqq = screen.getByRole('row', { name: /značka EQQQ/ })
+    expect(within(eqqq).getByText('Dist')).toBeTruthy()
+    expect(within(eqqq).queryByText('Acc')).toBeNull()
   })
 
-  it('says Ano for a buyable fund, and highlights only that row', () => {
-    render(<HeroTable rows={rows} dataAsOf={null} />)
-    const cspx = screen.getByRole('row', { name: /Evropská verze/ })
-    expect(within(cspx).getByText('Ano')).toBeTruthy()
-    expect(cspx.getAttribute('data-highlight')).toBe('true')
-    const highlighted = screen
-      .getAllByRole('row')
-      .filter((r) => r.getAttribute('data-highlight') === 'true')
-    expect(highlighted).toHaveLength(1)
+  it('shows [ověřit] for an unverified fee and for an unverified type', () => {
+    render(<HeroTable twins={[twin('cspx', null, null)]} dataAsOf={null} />)
+    const cspx = screen.getByRole('row', { name: /značka CSPX/ })
+    expect(within(cspx).getAllByText('[ověřit]')).toHaveLength(2)
+    expect(within(cspx).queryByText('Acc')).toBeNull()
+    expect(within(cspx).queryByText('Dist')).toBeNull()
   })
 
-  it('says Ne only when the fund is verified as not buyable everywhere', () => {
-    render(
-      <HeroTable
-        rows={[row('voo', 0.03, 'no', 5), row('cspx', 0.07, 'yes')]}
-        dataAsOf={null}
-      />,
-    )
-    const voo = screen.getByRole('row', { name: /Americký fond na 500/ })
-    expect(within(voo).getByText('Ne')).toBeTruthy()
-    expect(within(voo).queryByText('[ověřit]')).toBeNull()
-  })
-
-  it('shows [ověřit] instead of a fee while the fee is unverified', () => {
-    render(
-      <HeroTable rows={[row('voo', null, 'unverified')]} dataAsOf={null} />,
-    )
-    const voo = screen.getByRole('row', { name: /Americký fond na 500/ })
-    expect(within(voo).getAllByText('[ověřit]')).toHaveLength(2)
+  it('has no buying column, no Ano or Ne, and highlights no row', () => {
+    render(<HeroTable twins={twins} dataAsOf={null} />)
+    expect(screen.queryByText('Koupíte z ČR?')).toBeNull()
+    expect(screen.queryByText('Ano')).toBeNull()
+    expect(screen.queryByText('Ne')).toBeNull()
+    expect(
+      screen
+        .getAllByRole('row')
+        .filter((r) => r.getAttribute('data-highlight') === 'true'),
+    ).toHaveLength(0)
   })
 
   it('names the source and the month of the oldest number', () => {
-    render(<HeroTable rows={rows} dataAsOf="2026-06-30" />)
+    render(<HeroTable twins={twins} dataAsOf="2026-06-30" />)
     expect(
-      screen.getByText(/zdroj: stránky fondů a firem/).textContent,
-    ).toContain('ověřeno k 6. 2026')
+      screen
+        .getByText(/zdroj: stránky fondů a firem/)
+        .textContent!.replace(/\s/g, ' '),
+    ).toContain('ověřeno k 6. 2026')
   })
 
   it('leaves the source line out without a date', () => {
-    render(<HeroTable rows={rows} dataAsOf={null} />)
+    render(<HeroTable twins={twins} dataAsOf={null} />)
     expect(screen.queryByText(/zdroj:/)).toBeNull()
   })
 })

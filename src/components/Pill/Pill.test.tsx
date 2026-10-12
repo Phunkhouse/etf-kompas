@@ -8,17 +8,20 @@ describe('Pill', () => {
     expect(screen.getByText('[ověřit]')).toBeDefined()
   })
 
-  it('renders the three tones with different styles', () => {
+  it('renders the four tones with different styles', () => {
     render(
       <>
         <Pill tone="negative">ne</Pill>
         <Pill tone="positive">ano</Pill>
         <Pill tone="unverified">ověřit</Pill>
+        <Pill tone="neutral">Acc</Pill>
       </>,
     )
     const classes = new Set(
-      ['ne', 'ano', 'ověřit'].map((text) => screen.getByText(text).className),
+      ['ne', 'ano', 'ověřit', 'Acc'].map(
+        (text) => screen.getByText(text).className,
+      ),
     )
-    expect(classes.size).toBe(3)
+    expect(classes.size).toBe(4)
   })
 })

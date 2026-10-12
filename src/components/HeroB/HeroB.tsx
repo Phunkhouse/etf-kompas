@@ -3,43 +3,55 @@ import { Callout } from '@/components/Callout'
 import { Container } from '@/components/Container'
 import { HeroTable } from '@/components/HeroTable'
 import { copy } from '@/content/copy'
+import { formatMonthYear } from '@/lib/format'
 import { nbsp } from '@/lib/typography'
-import type { HeroRow } from '@/server/availability'
+import type { HeroNote, HeroTwin } from '@/server/hero'
 import styles from './HeroB.module.scss'
 
 type HeroBProps = {
-  rows: HeroRow[]
+  twins: HeroTwin[]
+  // left out when the data has no note
+  note?: HeroNote
   dataAsOf: string | null
 }
 
 const text = copy.hero.b
-type RowCopyKey = keyof typeof text.table.rows
 
-// The footnote under the table says why the highlighted row is highlighted. It
-// is chosen from the data, so it never claims something the table does not show.
-function footnoteText(rows: HeroRow[]): string {
-  const { footnote } = text
-  if (!rows.some((row) => row.highlight)) return footnote.none
+// "VOO a QQQ" from the tickers in the data.
+function joinTickers(tickers: string[]): string {
+  return tickers.join(' a ')
+}
 
-  const priced = rows.filter((row) => row.ter !== null)
-  if (priced.length === 0) return footnote.highlighted
-  const lowest = priced.reduce((best, row) =>
-    (row.ter as number) < (best.ter as number) ? row : best,
-  )
-  if (lowest.highlight) return footnote.highlighted
-
-  const name = text.table.rows[lowest.fundId as RowCopyKey].inSentence
-  const { state, verifiedNoCount, total } = lowest.buyability
-  if (state === 'no') return footnote.notCheapestNowhere(name, total)
-  if (verifiedNoCount > 0) {
-    return footnote.notCheapest(name, verifiedNoCount, total)
+// The muted line under the table. It is chosen from the data, so it never says
+// more than the data shows (SPEC §18, note 0029).
+function noteText(note: HeroNote, dataAsOf: string | null): string {
+  const lines = text.note
+  const parts: string[] = []
+  if (note.sellers.length === 0) {
+    parts.push(lines.noSellers(note.ticker))
+  } else {
+    const names = note.sellers.join(', ')
+    parts.push(
+      dataAsOf
+        ? lines.sellers(note.ticker, names, formatMonthYear(dataAsOf))
+        : lines.sellersNoDate(note.ticker, names),
+    )
   }
-  return footnote.notCheapestUnchecked(name)
+  if (note.othersUnverified) parts.push(lines.others)
+  const originals = joinTickers(note.originals.tickers)
+  if (note.originals.tickers.length > 0) {
+    parts.push(
+      note.originals.mostlyNo
+        ? lines.originalsMostlyNo(originals)
+        : lines.originalsChecking(originals),
+    )
+  }
+  return parts.join(' ')
 }
 
 // Hero b (ad B): the table first, then the call to action. On a phone the order
-// is headline, lead, table, button, footnote, then the ETF explanation.
-export function HeroB({ rows, dataAsOf }: HeroBProps) {
+// is headline, lead, table, button, muted line, then the ETF explanation.
+export function HeroB({ twins, note, dataAsOf }: HeroBProps) {
   return (
     <section aria-labelledby="hero-headline" className={styles.hero}>
       <Container>
@@ -51,14 +63,19 @@ export function HeroB({ rows, dataAsOf }: HeroBProps) {
             <p className={styles.lead}>{nbsp(text.lead)}</p>
           </div>
           <div className={styles.table}>
-            <HeroTable rows={rows} dataAsOf={dataAsOf} />
+            {/* The date is in the muted line, so the table has no source line. */}
+            <HeroTable twins={twins} dataAsOf={null} />
           </div>
           <div className={styles.cta}>
             <ButtonLink href="#spocitat" fullWidth>
               {nbsp(text.cta)}
             </ButtonLink>
           </div>
-          <p className={styles.footnote}>{nbsp(footnoteText(rows))}</p>
+          {note ? (
+            <p className={styles.footnote} data-testid="hero-note">
+              {nbsp(noteText(note, dataAsOf))}
+            </p>
+          ) : null}
           <div className={styles.callout}>
             <Callout>
               <strong>{text.callout.term}</strong>

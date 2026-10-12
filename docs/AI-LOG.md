@@ -542,3 +542,19 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 **Mistakes and corrections**
 
 - This is the weakest evidence in the data so far, and I wrote it only because David decided to accept it. A document that prints "SXR8" and "SXRV" next to the ISINs (the iShares product pages) would replace it; until then the records read as an inference.
+
+### Hero table rev. 4 (four twins, Acc/Dist, muted line)
+
+**Prompt (summary):** David decided the open points (keep the button label "Spočítat, kolik zaplatím", hero a in its own PR, accept the Fio inference), then "tests are fine, proceed".
+
+**Produced:** `src/server/hero.ts` (`heroTwins`, `heroNote`), the four-row hero table with Acc and Dist pills, the muted line under it, a `neutral` Pill tone, new copy, and `heroRows` removed. Tests first: 39 failed before; 351 unit/component and 43 e2e tests pass after. JS budget unchanged (ours 11.0 KB, route 143.5 KB).
+
+**Mistakes and corrections**
+
+- **The hero no longer fitted 375x667 and I had warned it might not.** With four rows the button's bottom edge was at 726 px (limit 667). I measured the layout (rows 89 px each) and fixed it in CSS only: tighter row and header padding and a tighter title line height on phones. Now 653 px, 14 px of margin (note 0031 had 20). Same copy, same order of elements. A narrower margin means a font or rendering change on another machine could push it over; the geometry test runs in CI.
+- **A test I did not list was wrong for four rows:** `hero-fit.spec.ts` counted rows as header plus three funds. I changed it to five rows after approval.
+- **My new `HeroTable` source-line test typed ordinary spaces where the page uses non-breaking ones**, and failed. Fixed the comparison only, not what it asserts.
+- **A real behaviour slip:** my first `Landing` change fell back to hero a when hero b had no note, which broke an existing Landing test. Hero b now renders without the muted line when there is no note.
+- **The first screenshots caught the table's intro animation mid-fade and showed empty rows.** I retook them after the animation; not a bug.
+- **The date in the muted line is the oldest `asOf` on the page** (June 2026, the VOO factsheet), the same as the top bar, not the date of the CSPX availability screenshots (October). It is conservative; the wireframe example shows 10. 2026.
+- `buyability` in `availability.ts` is no longer used by any page. Left in place with its tests.

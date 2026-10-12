@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { buyability, heroRows } from './availability'
-import type { Broker, Etf } from './data/schema'
+import { buyability } from './availability'
+import type { Broker } from './data/schema'
 
 // --- fixtures -------------------------------------------------------------
 
@@ -37,27 +37,6 @@ function broker(
     custodyFeePct: todo,
     czSupport: todo,
     availability,
-  }
-}
-
-function etf(id: string, ter: number | 'TODO_VERIFY'): Etf {
-  return {
-    id,
-    ticker: id.toUpperCase(),
-    region: 'us-listed',
-    indexGroup: 'sp500',
-    name: todo,
-    indexName: todo,
-    isin: todo,
-    domicile: todo,
-    replication: todo,
-    distribution: todo,
-    ter: ter === 'TODO_VERIFY' ? todo : sourced(ter),
-    fundSizeEur: todo,
-    dividendYieldPct: todo,
-    withholdingRate: todo,
-    return5yPct: todo,
-    return10yPct: todo,
   }
 }
 
@@ -172,83 +151,6 @@ describe('buyability: unverified', () => {
     const brokers = [broker('a', { x: yes, y: no })]
     expect(buyability('y', brokers).state).toBe('no')
     expect(buyability('x', brokers).state).toBe('yes')
-  })
-})
-
-// --- the hero rows --------------------------------------------------------
-
-describe('heroRows', () => {
-  const data = {
-    etfs: [etf('voo', 0.03), etf('qqq', 0.18), etf('cspx', 0.07)],
-    brokers: [
-      broker('a', { voo: no, qqq: no, cspx: yes }),
-      broker('b', { voo: no, qqq: no, cspx: yes }),
-      broker('c', { voo: todo, qqq: todo, cspx: todo }),
-    ],
-  }
-
-  it('keeps the order of the funds it is asked for', () => {
-    const rows = heroRows(data, ['voo', 'qqq', 'cspx'])
-    expect(rows.map((row) => row.fundId)).toEqual(['voo', 'qqq', 'cspx'])
-    expect(heroRows(data, ['cspx', 'voo']).map((row) => row.fundId)).toEqual([
-      'cspx',
-      'voo',
-    ])
-  })
-
-  it('takes the fee from the data, as a plain percent number', () => {
-    const rows = heroRows(data, ['voo', 'qqq', 'cspx'])
-    expect(rows.map((row) => row.ter)).toEqual([0.03, 0.18, 0.07])
-  })
-
-  it('gives a null fee while the fee is still TODO_VERIFY', () => {
-    const rows = heroRows({ ...data, etfs: [etf('voo', 'TODO_VERIFY')] }, [
-      'voo',
-    ])
-    expect(rows[0].ter).toBeNull()
-  })
-
-  it('highlights the buyable row, not the cheapest one', () => {
-    const rows = heroRows(data, ['voo', 'qqq', 'cspx'])
-    expect(rows.map((row) => row.highlight)).toEqual([false, false, true])
-    // VOO has the lowest fee and is not highlighted (note 0029)
-    expect(rows[0].ter).toBeLessThan(rows[2].ter as number)
-  })
-
-  it('highlights nothing when no fund is buyable', () => {
-    const rows = heroRows(
-      {
-        etfs: data.etfs,
-        brokers: [broker('a', { voo: no, qqq: no, cspx: no })],
-      },
-      ['voo', 'qqq', 'cspx'],
-    )
-    expect(rows.every((row) => !row.highlight)).toBe(true)
-  })
-
-  it('highlights every buyable row', () => {
-    const rows = heroRows(
-      {
-        etfs: data.etfs,
-        brokers: [broker('a', { voo: yes, qqq: no, cspx: yes })],
-      },
-      ['voo', 'qqq', 'cspx'],
-    )
-    expect(rows.map((row) => row.highlight)).toEqual([true, false, true])
-  })
-
-  it('carries the buyability of each fund', () => {
-    const rows = heroRows(data, ['voo', 'cspx'])
-    expect(rows[0].buyability).toMatchObject({
-      state: 'unverified',
-      verifiedNoCount: 2,
-      total: 3,
-    })
-    expect(rows[1].buyability.state).toBe('yes')
-  })
-
-  it('throws for a fund that is not in the data', () => {
-    expect(() => heroRows(data, ['nope'])).toThrow(/nope/)
   })
 })
 
