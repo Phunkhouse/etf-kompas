@@ -1,5 +1,7 @@
 # Calculator methodology
 
+> **Version 1.** After wireframe rev. 4 the calculator is being replaced by version 2, see [METHODOLOGY-V2.md](METHODOLOGY-V2.md) (draft, waiting for approval). This file describes the calculator that is in the code today.
+
 Status: **draft for review** (Phase 2, PR A; golden cases verified by David). Source of truth is SPEC §21; this file writes its formulas out step by step so they can be checked in a spreadsheet. Anything marked **Proposed** is not in the SPEC yet and needs David's approval.
 
 The calculator shows the **cost drag** of holding a fund, in Kč. It is an illustration of costs, not a forecast of returns.
