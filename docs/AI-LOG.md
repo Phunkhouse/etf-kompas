@@ -461,3 +461,14 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **I told David the documents were saved when they were not.** DATA-NEEDS said the factsheets and the KID were "already saved in `evidence/`", and I put the check on David's list. Only the VUAA KID existed locally (in Downloads); the CSPX and CNDX factsheets had been fetched once and not kept. David asked why he had to check something already saved, which was the right question: I read the documents myself. I downloaded both again, and their SHA-256 matched the records, so they are the same versions.
 - The records say `verifiedBy` David because he confirmed the values after seeing the quoted lines, not because he read the documents himself.
 - **The EQQQ KID David supplied is for a different share class** ("CHF Hdg Acc", ISIN IE00BYVTMT69, accurate as at 26 June 2026, ongoing costs 0,35 %), not the USD class that brokers list as EQQQ. Its fee and Acc type belong to that class, so I wrote nothing for EQQQ. It also states no source URL, which the data requires. Waiting for the right document and where it came from.
+
+### EQQQ availability at DEGIRO, Trading 212 and XTB
+
+**Prompt (summary):** David supplied the EQQQ search screenshots from the three brokers (already saved in `evidence/brokers/`).
+
+**Produced:** three availability records for `eqqq` (all true), each with the screenshot's SHA-256 and what it shows.
+
+**Mistakes and corrections**
+
+- **The first EQQQ documents (the KID and the factsheet) and the Invesco screenshot were for the CHF Hdg Acc class** (EQCH, IE00BYVTMT69), not the fund brokers sell as EQQQ. The broker screenshots settle it: the ticker EQQQ is ISIN IE0032077012; DEGIRO also lists IE00BFZXGZ54 (EQQB/EQAC, Acc), IE00BYVTMT69 (EQCH, CHF), IE00BYVTMS52 (EQEU, EUR hedged) and IE00BYVTMW98 (EQGB, GBP hedged). Trading 212 labels EQQQ "(Dist)" and XTB "DIST", so the fund EQQQ is the distributing class. That is the brokers' labelling; the issuer's own document for IE0032077012 is still needed for the fee and the type.
+- `eqqq` in the data therefore means the class IE0032077012. DEGIRO's screenshot is a logged-in search; the other two are as David supplied them. All three are availability only: no fee, name or type has been written for EQQQ yet.
