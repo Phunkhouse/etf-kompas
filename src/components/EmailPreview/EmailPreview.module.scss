@@ -1,0 +1,118 @@
+@use 'styles/utilities' as *;
+
+.layout {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+
+  @include from('md') {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-14);
+  }
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.heading {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+
+  @include from('md') {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+.text {
+  margin: 0;
+  color: var(--color-ink-soft);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}
+
+.pages {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.page {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+}
+
+// A drawn page: blurred, with no real text or numbers.
+.art {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 11rem;
+  padding: var(--space-3) var(--space-3) var(--space-8);
+  filter: blur(1.5px);
+
+  @include from('md') {
+    min-height: 15rem;
+    padding: var(--space-4) var(--space-4) var(--space-10);
+  }
+}
+
+.title {
+  width: 45%;
+  height: 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-ink);
+}
+
+.bar {
+  height: 0.375rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-border);
+}
+
+.cells {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-1);
+
+  i {
+    height: 0.75rem;
+    border-radius: var(--radius-sm);
+  }
+}
+
+.good {
+  background: var(--color-yes-bg);
+}
+
+.bad {
+  background: var(--color-no-bg);
+}
+
+.box {
+  height: 2.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-highlight);
+}
+
+.caption {
+  position: absolute;
+  bottom: var(--space-2);
+  left: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--tracking-tag);
+  text-transform: uppercase;
+}

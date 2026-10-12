@@ -106,6 +106,36 @@ export const copy = {
       },
     },
   },
+  // "Za co platíte, aniž to vidíte": three plain cards. No figures here, on
+  // purpose: every number on the page comes from the data (SPEC §18).
+  hiddenCosts: {
+    heading: 'Za co platíte, aniž to vidíte',
+    cards: [
+      {
+        title: 'Roční poplatek fondu',
+        text: 'Fond si každý rok vezme malé procento z vašich peněz. Nikdo vám za to nepošle fakturu.',
+      },
+      {
+        title: 'Převod korun',
+        text: 'Když fond nebo broker účtuje v cizí měně, platí se za převod z korun.',
+      },
+      {
+        title: 'Daň ze zisků',
+        text: 'Část vyplacených zisků si stáhne zahraničí dřív, než se k vám dostanou.',
+      },
+    ],
+  },
+  // "Co dostanete e-mailem": what the e-mail leads to, with two drawn previews.
+  emailPreview: {
+    label: 'Co dostanete e-mailem',
+    heading: 'Fondy, brokeři a co z toho koupíte z Česka',
+    text: 'Otevře se hned po odeslání, nemusíte nic stahovat. U každého čísla uvádíme odkud je a z jakého měsíce.',
+    cta: 'Poslat mi srovnání',
+    pages: {
+      comparison: 'Strana 1 · Srovnání',
+      tax: 'Strana 4 · Daně',
+    },
+  },
   // The e-mail form under the result (wireframe B, "E-mail form" and "Form errors").
   leadForm: {
     heading: 'Chcete vidět, kde který fond koupíte?',

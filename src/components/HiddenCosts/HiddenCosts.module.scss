@@ -1,0 +1,47 @@
+@use 'styles/utilities' as *;
+
+.list {
+  display: grid;
+  gap: var(--space-4);
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: cost;
+
+  @include from('md') {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  counter-increment: cost;
+
+  // The big number is drawn by the counter, so it is not part of the text.
+  &::before {
+    content: counter(cost);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-none);
+  }
+}
+
+.title {
+  margin: var(--space-3) 0 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
+
+.text {
+  margin: 0;
+  color: var(--color-ink-soft);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}

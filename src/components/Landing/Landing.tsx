@@ -1,5 +1,7 @@
 import { CalculatorSection } from '@/components/CalculatorSection'
+import { EmailPreview } from '@/components/EmailPreview'
 import { HeroB } from '@/components/HeroB'
+import { HiddenCosts } from '@/components/HiddenCosts'
 import { Section } from '@/components/Section'
 import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
@@ -50,6 +52,8 @@ export function Landing({
         {calculator !== undefined ? (
           <CalculatorSection data={calculator} hero={variant === 'a'} />
         ) : null}
+        <HiddenCosts />
+        <EmailPreview />
       </main>
       <SiteFooter />
     </>
