@@ -106,6 +106,25 @@ export const copy = {
       },
     },
   },
+  // The e-mail form under the result (wireframe B, "E-mail form" and "Form errors").
+  leadForm: {
+    heading: 'Chcete vidět, kde který fond koupíte?',
+    emailLabel: 'Váš e-mail',
+    emailPlaceholder: 'jmeno@domena.cz',
+    send: 'Poslat mi srovnání',
+    sending: 'Posílám…',
+    retry: 'Zkusit znovu',
+    invalid: 'Zadejte e-mail ve tvaru jmeno@domena.cz.',
+    failure: {
+      strong: 'Odeslání se nepovedlo.',
+      text: ' Zkuste to prosím znovu za chvíli. Váš e-mail i nastavení kalkulačky zůstaly vyplněné.',
+    },
+    legal: (controller: string) =>
+      `Pošleme vám srovnání. Správce: ${controller}. Zásady zpracování osobních údajů.`,
+    tips: 'Chci občas dostat tip k investování (nepovinné)',
+    // Before Phase 4 nothing is stored or sent, and the page says so.
+    notice: 'Zkušební provoz: váš e-mail jsme nikam neuložili ani neodeslali.',
+  },
   calculator: {
     heading: 'Kolik vás to bude stát?',
     monthlyLabel: 'Kolik měsíčně uložíte',

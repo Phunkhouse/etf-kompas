@@ -585,3 +585,17 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **I missed a hero difference when I listed them:** on desktop the table's height stretched the grid, so the callout and button were pushed far apart and the button was cut off at an 800 px-high screen. I found it only by looking at the screenshot; fixed with a grid row that takes the spare height.
 - Kept on purpose (David's decisions): the phone shows no lead and the callout stays after the table (fit), long plain names in the rows (note 0026), the muted line below the card. The hamburger menu moved to C, with its panel.
 - The "ověřeno k 6. 2026" in the top bar and the card is the oldest `asOf` in the whole data, not only in what the page shows; the drawing's 10. 2026 is a placeholder. Not changed.
+
+### The e-mail form (B1 of the Phase 3 checklist)
+
+**Prompt (summary):** "yes to both, #47 landed, draft the B plan", David's four OKs (honest placeholder before Phase 4, one form in the band, conversion wording, abstract preview bars), then "approved, implement the form".
+
+**Produced:** `src/server/leads.ts` (address check, tips box, `submitLead` with a sink, `noStorage`), the server action `src/app/lead-action.ts`, the `LeadForm` component (idle, wrong address, send failure, and the honest "Zkušební provoz: váš e-mail jsme nikam neuložili ani neodeslali." state), and the form placed in the calculator band as a third column on desktop. Tests first: 46 failed before; 406 unit/component and 62 e2e pass after, including real no-JavaScript posts. Nothing is stored, logged or sent.
+
+**Mistakes and corrections**
+
+- **The form's button could not use the shared `Button`.** Inside the dark band that component turns paper-coloured, which would have made it invisible on the light card. I gave the form its own ink button. Caught by reading the Button styles before building, not by a test.
+- **A type slip:** `useActionState` widened my initial `{ status: 'idle' }` to a plain string status and typecheck failed; fixed by typing the initial state.
+- **JS budget is getting tight:** our code now adds 14.2 KB (limit 20) and the route is 146.7 KB (limit 150), up 2.8 KB from this PR. The remaining PRs (B2, C, Phase 4 and 5) have about 3 KB to spend on the route, so they must be mostly server-rendered.
+- **Not done on purpose:** the calculator's amount and years are not sent with the lead (Phase 4); no honeypot, no rate limit, no storage (Phase 4); no link on "Zásady zpracování osobních údajů" (privacy page, C).
+- **Noticed, not changed:** on hero b the calculator's own heading ("Kolik vás to bude stát?") renders as a small mono label, while the drawing shows a large bold heading. Left for D (the side-by-side review).
