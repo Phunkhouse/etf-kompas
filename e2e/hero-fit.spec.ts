@@ -5,21 +5,42 @@ import { test, expect } from '@playwright/test'
 // screenshot: font rendering differs between macOS and the CI runner.
 test.use({ viewport: { width: 375, height: 667 } })
 
-test('hero b fits 375x667 including its button', async ({ page }) => {
-  await page.goto('/?v=b')
+for (const path of ['/', '/?v=a', '/?v=b']) {
+  test(`the hero on ${path} fits 375x667 including its button`, async ({
+    page,
+  }) => {
+    await page.goto(path)
+    const button = page.getByRole('link', {
+      name: /Spočítat, kolik mě to bude stát/,
+    })
+    await expect(button).toBeVisible()
+
+    const box = await button.boundingBox()
+    expect(box).not.toBeNull()
+    expect(box!.y + box!.height).toBeLessThanOrEqual(667)
+    // nothing wider than the screen
+    const scrollWidth = await page.evaluate(
+      () => document.documentElement.scrollWidth,
+    )
+    expect(scrollWidth).toBeLessThanOrEqual(375)
+  })
+}
+
+// The b headline is longer and has the amount in it. The real data cannot serve it
+// yet (it needs two priced brokers), so its text is put into the h1 here.
+test('the hero still fits with the longer b headline', async ({ page }) => {
+  await page.goto('/')
+  await page.evaluate(() => {
+    const h1 = document.querySelector('h1')!
+    h1.textContent =
+      'U stejného fondu můžete zbytečně zaplatit až 3\u00a0210\u00a0Kč. Kde?'
+  })
   const button = page.getByRole('link', {
     name: /Spočítat, kolik mě to bude stát/,
   })
-  await expect(button).toBeVisible()
-
   const box = await button.boundingBox()
   expect(box).not.toBeNull()
   expect(box!.y + box!.height).toBeLessThanOrEqual(667)
-  // nothing wider than the screen
-  const scrollWidth = await page.evaluate(
-    () => document.documentElement.scrollWidth,
-  )
-  expect(scrollWidth).toBeLessThanOrEqual(375)
 })
 
 // Rev. 4 draws the phone headline at 30 px and the desktop one at 54 px

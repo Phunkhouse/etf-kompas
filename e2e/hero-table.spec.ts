@@ -60,6 +60,23 @@ test.describe('hero b table', () => {
     }
   })
 
+  test('the muted line ends with "Jen cena a dostupnost, ne výnosy."', async ({
+    page,
+  }) => {
+    await page.goto('/?v=b')
+    await expect(page.getByTestId('hero-note')).toContainText(
+      /Jen cena a dostupnost, ne výnosy\.$/,
+    )
+  })
+
+  test('the default variant has the same table and muted line', async ({
+    page,
+  }) => {
+    await page.goto('/')
+    await expect(page.getByRole('table', { name: 'Cena fondů' })).toBeVisible()
+    await expect(page.getByTestId('hero-note')).toContainText(/CSPX: .*DEGIRO/)
+  })
+
   test('says nothing like "nejlevnější"', async ({ page }) => {
     await page.goto('/?v=b')
     await expect(page.getByText(/nejlevn/i)).toHaveCount(0)

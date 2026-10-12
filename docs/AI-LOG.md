@@ -613,3 +613,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - None found in the code. The wording of the three cards is a proposal for David's copy review: the conversion card is mine (the wireframe's "Americké fondy chtějí dolary" does not match our data), the tax card is the wireframe's sentence as David approved.
 - **Cosmetic, not fixed:** on a 375 px phone the preview caption "Strana 1 · Srovnání" wraps to two lines on the narrow card. Left for D.
 - The "Otevře se hned po odeslání" line promises the finished product (the results page comes in Phase 4); the site is noindex until then.
+
+### One layout for both variants (E1)
+
+**Prompt (summary):** David landed #50 (design rev. 5: `?v=a` and `?v=b` share one layout and differ only in the h1, note 0041), answered the three questions, then "approved, implement E1".
+
+**Produced:** the calculator-first hero is gone. `Landing` always renders the table-first hero; `data-variant` on `<main>` says which variant is shown; `copy.hero.b` became `copy.hero`; the muted line ends with "Jen cena a dostupnost, ne výnosy."; a shared `LandingPage` serves `/` and `/v/b`. Removed with it: the `hero` flag, `action`, `headingHidden` and the `#vysledek` anchor, their styles and tests, and `e2e/hero-a.spec.ts`. Tests first: 7 failed before; 417 unit/component and 68 e2e pass after. JS: ours 14.1 KB, route 146.7 KB (down 0.4 KB).
+
+**Mistakes and corrections**
+
+- **My calculator-first hero (#46) lasted one day before the design dropped it.** I had built it from the rev. 4 drawing; rev. 5 replaced it. The removal is the cost of building a layout that the A/B decision (note 0041) had not been made for. I did warn that its premise was mine, not the design's, but not that it could be dropped.
+- **A leftover in my own tests:** the new Landing test used `within` without importing it (left from an edit I discarded), and typecheck caught it. A second existing test, the lead-form desktop layout, depended on the `#vysledek` anchor I removed; I switched it to find the result by its sentence. I had not grepped the e2e folder for the anchor before removing it.
+- **Left on purpose:** `/v/b` shows variant a (`data-variant="a"`) because variant b is allowed only with two priced brokers and has no headline yet; that is E2. The component is still named `HeroB`: renaming it would change the approved tests' imports, so I left it and noted it here.
