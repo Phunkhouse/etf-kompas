@@ -66,6 +66,25 @@ describe('CalculatorSection', () => {
     ).toBeNull()
   })
 
+  it('has the e-mail form inside the band, at #formular', () => {
+    const data = calculatorData(bundledData, RATES, 'cspx')
+    const { container } = render(<CalculatorSection data={data} />)
+    expect(container.querySelector('#spocitat #formular')).not.toBeNull()
+    expect(screen.getByRole('textbox', { name: 'Váš e-mail' })).toBeTruthy()
+    expect(
+      screen.getByRole('button', { name: 'Poslat mi srovnání' }),
+    ).toBeTruthy()
+  })
+
+  it('has the e-mail form in hero a too, and when the numbers failed to load', () => {
+    const data = calculatorData(bundledData, RATES, 'cspx')
+    const { unmount } = render(<CalculatorSection data={data} hero />)
+    expect(screen.getByRole('textbox', { name: 'Váš e-mail' })).toBeTruthy()
+    unmount()
+    render(<CalculatorSection data={null} />)
+    expect(screen.getByRole('textbox', { name: 'Váš e-mail' })).toBeTruthy()
+  })
+
   it('shows the failure state when there is no data', () => {
     render(<CalculatorSection data={null} />)
     expect(screen.getByRole('button', { name: 'Zkusit znovu' })).toBeTruthy()

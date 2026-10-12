@@ -1,7 +1,10 @@
+import { sendLead } from '@/app/lead-action'
 import { Calculator } from '@/components/Calculator'
+import { LeadForm } from '@/components/LeadForm'
 import { Section } from '@/components/Section'
 import { copy } from '@/content/copy'
 import type { CalculatorData } from '@/server/calculator-data'
+import styles from './CalculatorSection.module.scss'
 
 type CalculatorSectionProps = {
   // null shows the failure state (no amount).
@@ -18,21 +21,28 @@ export function CalculatorSection({
 }: CalculatorSectionProps) {
   return (
     <Section tone="dark" id="spocitat" labelledBy="calculator-heading">
-      <Calculator
-        data={data}
-        headingAs="h2"
-        headingId="calculator-heading"
-        headingHidden={hero}
-        action={
-          hero
-            ? {
-                label: copy.hero.a.cta,
-                href: '#vysledek',
-                note: copy.hero.a.note,
-              }
-            : undefined
-        }
-      />
+      <div className={styles.layout}>
+        <div className={styles.calculator}>
+          <Calculator
+            data={data}
+            headingAs="h2"
+            headingId="calculator-heading"
+            headingHidden={hero}
+            action={
+              hero
+                ? {
+                    label: copy.hero.a.cta,
+                    href: '#vysledek',
+                    note: copy.hero.a.note,
+                  }
+                : undefined
+            }
+          />
+        </div>
+        <div className={styles.form}>
+          <LeadForm action={sendLead} />
+        </div>
+      </div>
     </Section>
   )
 }
