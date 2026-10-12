@@ -76,12 +76,12 @@
         "evidence": null
       },
       "eqqq": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.degiro.cz",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:43ff6a5df68eb1300f142f8545f0db0e18bbacb1214bda85a69199f08d5b5288 (degiro-eqqq-search-2026-10-12.png); logged-in instrument search 2026-10-12: \"Invesco EQQQ NASDAQ-100 UCITS E…\", ticker EQQQ, ISIN IE0032077012, listed on Tradegate, Xetra, Euronext Paris, Euronext Milan (EUR), SIX (USD) and London (GBX, USD)"
       }
     },
     "fees": {
@@ -468,12 +468,12 @@
         "evidence": null
       },
       "eqqq": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.trading212.com",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:56cd45bdcbe5a58251cbf71f9445d011114ff74203eb470dc13545d0cd9a24b1 (trading212-eqqq-search-2026-10-12.png); instrument search 2026-10-12: \"Invesco EQQQ Nasdaq-100 (Dist)\", EQQQ on LSE, MIL and SIX"
       }
     }
   },
@@ -554,12 +554,12 @@
         "evidence": null
       },
       "eqqq": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.xtb.com/cz",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:761079da3d682c1f1b6ce067e2755749509142857625c2c056fa9b39500f6102 (xtb-eqqq-search-2026-10-12.png); instrument search 2026-10-12: \"EQQQ NASDAQ-100\", EQQQ.DE (Invesco, UCITS, DIST, EUR) and EQQQ.UK (DIST, GBP)"
       }
     }
   }
