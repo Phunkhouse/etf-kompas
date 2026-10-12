@@ -4,12 +4,20 @@
 // (src/server/calculator-data.ts).
 import { oldestAsOf } from './data/freshness'
 import { dataSchema } from './data/schema'
-import { heroNote, heroTwins, type HeroNote, type HeroTwin } from './hero'
+import {
+  heroNote,
+  heroTwins,
+  originalsFacts,
+  type HeroNote,
+  type HeroTwin,
+  type OriginalsFacts,
+} from './hero'
 
 export type LandingData = {
   dataAsOf: string | null
   twins: HeroTwin[]
   note: HeroNote
+  faqFacts: OriginalsFacts
 }
 
 // The four twins of the hero table (note 0036), the first one named in the muted
@@ -23,5 +31,6 @@ export function landingData(raw: unknown): LandingData {
     dataAsOf: oldestAsOf(raw),
     twins: heroTwins(data, HERO_FUNDS),
     note: heroNote(data, HERO_FUNDS[0], ORIGINALS),
+    faqFacts: originalsFacts(data, HERO_FUNDS[0], ORIGINALS),
   }
 }

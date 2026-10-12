@@ -21,7 +21,7 @@ export function SiteHeader() {
             <a href="#caste-dotazy">{nbsp(nav.faq)}</a>
           </nav>
           <div className={styles.cta}>
-            <ButtonLink href="#gate" size="sm">
+            <ButtonLink href="#formular" size="sm">
               {nbsp(copy.shell.cta)}
             </ButtonLink>
           </div>

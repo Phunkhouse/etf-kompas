@@ -17,12 +17,12 @@ describe('SiteHeader', () => {
     expect(nav.querySelectorAll('a')).toHaveLength(3)
   })
 
-  it('has a call to action that jumps to the gate', () => {
+  it('has a call to action that jumps to the e-mail form', () => {
     render(<SiteHeader />)
     expect(
       screen
         .getByRole('link', { name: /Poslat mi srovnání/ })
         .getAttribute('href'),
-    ).toBe('#gate')
+    ).toBe('#formular')
   })
 })

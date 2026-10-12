@@ -95,3 +95,39 @@ export function heroNote(
     originals: { tickers: originals.map((etf) => etf.ticker), mostlyNo },
   }
 }
+
+export type OriginalsFacts = {
+  tickers: string[]
+  // brokers verified as not selling them (the smaller count of the originals)
+  verifiedNo: number
+  total: number
+  // at least one broker is verified as selling the first twin
+  europeanSold: boolean
+}
+
+// What the FAQ may say about the American funds: how many brokers are verified as
+// not selling them (the smaller count of the two), out of all brokers, and
+// whether the European twin has a verified seller. Only verified values count.
+export function originalsFacts(
+  data: Data,
+  firstFundId: string,
+  originalIds: string[],
+): OriginalsFacts {
+  findFund(data, firstFundId)
+  const originals = originalIds.map((id) => findFund(data, id))
+  const { brokers } = data
+  const counts = originals.map(
+    (etf) =>
+      brokers.filter(
+        (broker) => verifiedValue(broker.availability[etf.id]) === false,
+      ).length,
+  )
+  return {
+    tickers: originals.map((etf) => etf.ticker),
+    verifiedNo: counts.length > 0 ? Math.min(...counts) : 0,
+    total: brokers.length,
+    europeanSold: brokers.some(
+      (broker) => verifiedValue(broker.availability[firstFundId]) === true,
+    ),
+  }
+}

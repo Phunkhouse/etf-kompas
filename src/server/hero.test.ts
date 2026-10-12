@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { heroNote, heroTwins } from './hero'
+import { heroNote, heroTwins, originalsFacts } from './hero'
 import type { Broker, Etf } from './data/schema'
 
 // --- fixtures -------------------------------------------------------------
@@ -266,5 +266,108 @@ describe('heroNote: the American originals are "mostly not sold"', () => {
     expect(
       heroNote({ etfs, brokers: [] }, 'cspx', originals).originals.mostlyNo,
     ).toBe(false)
+  })
+})
+
+describe('originalsFacts: for the FAQ answer about the American funds', () => {
+  const etfs = [etf('cspx'), etf('voo'), etf('qqq')]
+  const originals = ['voo', 'qqq']
+
+  function brokers(rows: Record<string, unknown>[]) {
+    return rows.map((availability, i) =>
+      broker(`b${i}`, `Broker ${i}`, availability),
+    )
+  }
+
+  it('counts the brokers verified as not selling them, out of all brokers', () => {
+    const facts = originalsFacts(
+      {
+        etfs,
+        brokers: brokers([
+          { voo: no, qqq: no, cspx: yes },
+          { voo: no, qqq: no, cspx: yes },
+          { voo: no, qqq: no, cspx: yes },
+          { voo: todo, qqq: todo },
+          {},
+        ]),
+      },
+      'cspx',
+      originals,
+    )
+    expect(facts).toEqual({
+      tickers: ['VOO', 'QQQ'],
+      verifiedNo: 3,
+      total: 5,
+      europeanSold: true,
+    })
+  })
+
+  it('uses the smaller count when the two originals differ', () => {
+    const facts = originalsFacts(
+      {
+        etfs,
+        brokers: brokers([
+          { voo: no, qqq: no },
+          { voo: no, qqq: no },
+          { voo: no, qqq: todo },
+          { voo: no, qqq: todo },
+        ]),
+      },
+      'cspx',
+      originals,
+    )
+    expect(facts.verifiedNo).toBe(2)
+    expect(facts.total).toBe(4)
+  })
+
+  it('does not count "yes", unverified or unsourced values as "no"', () => {
+    const facts = originalsFacts(
+      {
+        etfs,
+        brokers: brokers([
+          { voo: yes, qqq: yes },
+          { voo: todo, qqq: todo },
+          { voo: { ...no, evidence: null }, qqq: { ...no, evidence: null } },
+          {},
+        ]),
+      },
+      'cspx',
+      originals,
+    )
+    expect(facts.verifiedNo).toBe(0)
+  })
+
+  it('says the European twin is sold only with a verified seller', () => {
+    const base = { etfs }
+    expect(
+      originalsFacts(
+        { ...base, brokers: brokers([{ cspx: yes }]) },
+        'cspx',
+        originals,
+      ).europeanSold,
+    ).toBe(true)
+    expect(
+      originalsFacts(
+        { ...base, brokers: brokers([{ cspx: todo }, { cspx: no }, {}]) },
+        'cspx',
+        originals,
+      ).europeanSold,
+    ).toBe(false)
+    expect(
+      originalsFacts(
+        { ...base, brokers: brokers([{ cspx: unsourcedYes }]) },
+        'cspx',
+        originals,
+      ).europeanSold,
+    ).toBe(false)
+  })
+
+  it('has zero counts with no brokers, and throws for a fund that is not in the data', () => {
+    expect(
+      originalsFacts({ etfs, brokers: [] }, 'cspx', originals),
+    ).toMatchObject({ verifiedNo: 0, total: 0, europeanSold: false })
+    expect(() =>
+      originalsFacts({ etfs, brokers: [] }, 'cspx', ['nope']),
+    ).toThrow(/nope/)
   })
 })

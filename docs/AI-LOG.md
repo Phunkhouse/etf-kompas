@@ -625,3 +625,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **My calculator-first hero (#46) lasted one day before the design dropped it.** I had built it from the rev. 4 drawing; rev. 5 replaced it. The removal is the cost of building a layout that the A/B decision (note 0041) had not been made for. I did warn that its premise was mine, not the design's, but not that it could be dropped.
 - **A leftover in my own tests:** the new Landing test used `within` without importing it (left from an edit I discarded), and typecheck caught it. A second existing test, the lead-form desktop layout, depended on the `#vysledek` anchor I removed; I switched it to find the result by its sentence. I had not grepped the e2e folder for the anchor before removing it.
 - **Left on purpose:** `/v/b` shows variant a (`data-variant="a"`) because variant b is allowed only with two priced brokers and has no headline yet; that is E2. The component is still named `HeroB`: renaming it would change the approved tests' imports, so I left it and noted it here.
+
+### The trust block and the FAQ (C1)
+
+**Prompt (summary):** "Keep the order, draft the C1 plan", David's four yes answers (the "provize" statement, the hedged KID reason, "Jak počítáme" as a short list, the e-mail answer without a retention period), then "approved, implement C1".
+
+**Produced:** `TrustBlock` ("Proč nám věřit", three items with the ids the header links to) and `Faq` ("Časté dotazy", four native `<details>` questions that work without JavaScript), placed after the preview. The FAQ answer about the American funds is chosen from the data by the new `originalsFacts` (how many brokers are verified as not selling them, the smaller count of VOO and QQQ). The header button now points at `#formular`. Tests first: 26 failed before; 443 unit/component and 81 e2e pass after.
+
+**Mistakes and corrections**
+
+- **The header button had pointed at `#gate` since the shell was built**, an anchor from the old gate design that no longer existed, and a test had pinned it. I found it only by reading the header while planning C1. Fixed, with the test.
+- **Static sections still cost JavaScript.** The route grew from 146.7 to 147.3 KB although both sections are server-rendered. The cause is not the components: every client component imports `copy`, and `copy.ts` is one object, so each new string (FAQ answers, trust texts) ships to the browser even if only a server component uses it. Our code is now 14.8 KB and the route has 2.7 KB of room. The fix is to split `copy.ts` into one export per section so client bundles take only theirs. Not done in this PR; flagged to David.
+- **Left on purpose:** no retention period in the e-mail answer (not decided, SPEC §19); the "Jak počítáme" list is inline and a separate page is later; "Nedostáváme provize" and the "zdarma" answer are statements about the project that David confirmed.

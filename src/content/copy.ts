@@ -99,6 +99,65 @@ export const copy = {
         `U amerických ${tickers} zatím ověřujeme, kde je koupíte.`,
     },
   },
+  // "Proč nám věřit": three short items. The ids are the anchors of the header
+  // links. No figures here; the page's numbers come from the data (SPEC §18).
+  trustBlock: {
+    heading: 'Proč nám věřit',
+    items: [
+      {
+        id: 'odkud-mame-cisla',
+        title: 'Odkud máme čísla',
+        paragraphs: [
+          'Z dokumentů fondů, ze stránek brokerů a od České národní banky. U každého čísla je datum.',
+        ],
+      },
+      {
+        id: 'jak-pocitame',
+        title: 'Jak počítáme',
+        paragraphs: [
+          'Počítáme poplatek fondu, převod korun a poplatky brokera.',
+          'Nepočítáme české daně, inflaci ani rozdíl mezi nákupní a prodejní cenou.',
+          'Jedna investice měsíčně. Je to příklad, ne slib.',
+        ],
+      },
+      {
+        id: 'nic-neprodavame',
+        title: 'Nic neprodáváme',
+        paragraphs: ['Nedostáváme provize. Nejde o investiční poradenství.'],
+      },
+    ],
+  },
+  // "Časté dotazy". The answer about the American funds is chosen from the data.
+  faq: {
+    heading: 'Časté dotazy',
+    questions: {
+      us: 'Můžu si americký fond koupit z Česka?',
+      free: 'Je to zdarma?',
+      email: 'Co uděláte s mým e-mailem?',
+      advice: 'Radíte mi, co koupit?',
+    },
+    answers: {
+      free: 'Ano. Srovnání je zdarma. Nedostáváme provize a nic vám neprodáváme.',
+      // No retention period: it is not decided yet (SPEC §19).
+      email:
+        'Pošleme vám na něj srovnání. Tipy k investování jen když to zaškrtnete. V každém e-mailu bude odkaz na odhlášení. Zatím jde o zkušební provoz: e-mail nikam neukládáme.',
+      advice:
+        'Ne. Ukazujeme poplatky a dostupnost. Není to investiční ani daňové poradenství. Rozhodnutí je na vás.',
+      us: {
+        some: (verified: number, total: number, tickers: string) =>
+          `Zatím to vypadá, že ne. U ${verified} z ${total} brokerů máme ověřeno, že ${tickers} nenabízí. U ostatních ověřujeme.`,
+        all: (total: number, tickers: string) =>
+          `Ne. Ani jeden z ${total} ověřených brokerů ${tickers} nenabízí.`,
+        none: (tickers: string) =>
+          `U kterých brokerů koupíte ${tickers}, zatím ověřujeme.`,
+        noFacts: 'U kterých brokerů koupíte americké fondy, zatím ověřujeme.',
+        european: 'Stejné indexy koupíte v evropské verzi.',
+        // From SPEC §2 ("generally cannot be bought ... because they lack a PRIIPs KID").
+        reason:
+          'Důvodem bývá, že americké fondy nemají evropský klíčový informační dokument (KID).',
+      },
+    },
+  },
   // "Za co platíte, aniž to vidíte": three plain cards. No figures here, on
   // purpose: every number on the page comes from the data (SPEC §18).
   hiddenCosts: {
