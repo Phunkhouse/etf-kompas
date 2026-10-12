@@ -484,3 +484,51 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - This is the third document for EQQQ; the first two (KID and factsheet) were for the CHF hedged class and I did not write anything from them. I checked the ISIN and the share-class line in each document before using it, which is what caught it.
 - The document is a UCITS KIID (the older format), accurate as at 26 June 2026. By note 0024 that date is the `asOf`, so the record goes stale on 2026-10-24 (120 days) and needs a newer document by then.
 - The record says `verifiedBy` David, as for the other funds: he confirmed the values after seeing the quoted lines.
+
+### Fio availability for EQQQ and VUAA
+
+**Prompt (summary):** David supplied Fio e-Broker screenshots (instrument pages and purchase forms) for VUAA, EQQQ, SXR8 and SXRV, and after a first set of symbol searches asked what to do about the tickers that change.
+
+**Produced:** `availability true` at Fio for `eqqq` and `vuaa`, with the hashes of both screenshots and what they show (XETRA, EUR). CSPX and CNDX are held. The Fio source (`https://www.fio.cz`, the broker's home page like the other brokers') is added to `sources.json`.
+
+**Mistakes and corrections**
+
+- **My first suggestion was too eager and then too cautious.** The first Fio screenshots were symbol searches only, and I almost took them as evidence; they showed no ISIN, exchange or currency, so I asked for the instrument page and the purchase form. David also pushed back on my list: VOO and QQQ need no Fio and IBKR check (3 of 5 brokers are already verified as not selling them, which is the majority the hero line needs).
+- **CSPX and CNDX are held on purpose.** Fio's pages say only "ISHARES S&P 500 ETF (SXR8)" and "ISHARES NAS. 100 ETF (SXRV)", with no ISIN, and iShares has more than one S&P 500 fund. Our iShares factsheets say the funds are listed on Deutsche Börse Xetra but do not give the tickers; the SXR8/SXRV link to our ISINs rests on a Gemini note and my own knowledge, neither of which is a document. Waiting for the iShares product page (it lists the Xetra ticker with the ISIN) or David's decision to accept the inference.
+- The Fio evidence is a demo account and a purchase form that was not submitted. It proves the instrument exists on XETRA in Fio's system, not that an order would be accepted. The `https://www.fio.cz` source is the broker's home page, not a document.
+- The listing (XETRA, EUR) is not written yet: a Fio `fees` block with only listings would make the calculator treat Fio as a priced broker with fees, and a test pins DEGIRO as the only one. It goes in with the Fio fee batch; the screenshots are its evidence.
+
+### Fio availability for VUSA, and why VUSA's own data waits
+
+**Prompt (summary):** "And what about VUSA?", then David supplied the Vanguard KIID and its URL and said "write Fio records right away, other brokers will follow".
+
+**Produced:** `availability true` for VUSA at Fio, from the page and purchase form (XETRA, EUR), added to the open Fio PR.
+
+**Mistakes and corrections**
+
+- **I had skipped the VUSA screenshots without saying why.** David asked; the reason (VUSA had no ISIN or fund data in the repo to tie the ticker to) should have been in my message.
+- **VUSA's fund values are not written.** The KIID (Vanguard S&P 500 UCITS ETF, (USD) Distributing, ISIN IE00B3XXRP09, ongoing charges 0.07 %, "Income from the ETF Shares will be paid out") is accurate as at 17/02/2026. By note 0024 that date is the `asOf`, which is 237 days old; the validator rejects a value over 120 days even in draft mode, so writing it would turn CI red. Needs either a newer Vanguard document or David's decision on the rule for a current KID.
+- The ticker VUSA is tied to the ISIN by the KIID's class name plus the ticker alone; the KIID prints no ticker. The Fio evidence text says so. Other brokers' VUSA screenshots (ticker and ISIN together) will upgrade it.
+
+### VUSA name, ISIN, fee and type from the August factsheet
+
+**Prompt (summary):** David added the Vanguard factsheet for VUSA (dated 31 August 2026), after the KIID turned out to be too old for the validator.
+
+**Produced:** VUSA `name`, `isin`, `ter` (0,07) and `distribution` (`distributing`), `asOf` 2026-08-31, source added to `sources.json`. The Fio VUSA evidence now cites the factsheet line "Deutsche Börse, EUR, VUSA, VUSA.DE" for ISIN IE00B3XXRP09, which ties the ticker to the ISIN with a document and not by inference.
+
+**Mistakes and corrections**
+
+- **The February KIID I had first read was the wrong choice of source for `asOf`**, not a wrong document: it is accurate as at 17/02/2026, so the validator would have rejected the values. The factsheet from Vanguard's own site carries the same facts with a fresh date. The KIID is still cited in the earlier Fio evidence text.
+- **One risk to decide:** the factsheet says it "is directed at professional investors and should not be distributed to, or relied upon by retail investors". We cite facts from it (ISIN, fee, income schedule), not the document itself, and the KIID (the retail document) says the same ISIN, fee and income treatment. Flagged for David.
+- The record goes stale on 2026-12-29 (120 days after 31 August).
+- **A test depended on data that has now changed.** `calculator-data.test.ts` used VUSA's missing fee as its example of an unverified fee; once VUSA was verified it failed. I changed that one test to blank the fee in a copy of the data (same assertion). I changed an approved test without asking first; it is a one-line fixture change, listed here so David can see it.
+
+### VUSA availability at DEGIRO, Trading 212 and XTB
+
+**Prompt (summary):** David added the VUSA screenshots for the three brokers.
+
+**Produced:** `availability true` for `vusa` at DEGIRO (shows "VUSA | IE00B3XXRP09", exchange Tradegate), Trading 212 (LSE, Dist) and XTB (VUSA.DE and VUSA.UK, DIST), each with the screenshot's hash and what it shows.
+
+**Mistakes and corrections**
+
+- None found. Limits: only DEGIRO prints the ISIN next to the ticker; for Trading 212 and XTB the link rests on the ticker and the "Dist" label plus DEGIRO's screenshot and Vanguard's factsheet, and the evidence text says so. XTB's account was not yet activated (the page says "Aktivovat účet"), the same condition as for the earlier XTB screenshots.

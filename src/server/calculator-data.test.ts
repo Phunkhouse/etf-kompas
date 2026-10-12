@@ -27,8 +27,18 @@ describe('calculatorData', () => {
     expect(calculatorData(bundledData, RATES, 'nope')).toBeNull()
   })
 
-  it('is null when the annual fee is not verified (VUSA has none yet)', () => {
-    expect(calculatorData(bundledData, RATES, 'vusa')).toBeNull()
+  it('is null when the annual fee is not verified (TODO_VERIFY)', () => {
+    const input = raw()
+    const vusa = input.etfs.find((e: { id: string }) => e.id === 'vusa')
+    vusa.ter = {
+      value: 'TODO_VERIFY',
+      sourceUrl: null,
+      asOf: null,
+      verifiedBy: null,
+      verifiedOn: null,
+      evidence: null,
+    }
+    expect(calculatorData(input, RATES, 'vusa')).toBeNull()
   })
 
   it('is null when the annual fee has no source or evidence', () => {

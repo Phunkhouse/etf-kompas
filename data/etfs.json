@@ -515,12 +515,12 @@
     "region": "ucits",
     "indexGroup": "sp500",
     "name": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "Vanguard S&P 500 UCITS ETF",
+      "sourceUrl": "https://fund-docs.vanguard.com/SandP_500_UCITS_ETF_USD_Distributing_9503_EU_INT_UK_EN.pdf",
+      "asOf": "2026-08-31",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-12",
+      "evidence": "sha256:85dd8e418661866430b4c80aec710d4ad0d1688af35279524614d9ce194aed51 (vusa-factsheet.pdf); read in the document: \"Vanguard S&P 500 UCITS ETF (USD) Distributing - An exchange-traded fund\", Factsheet 31 August 2026"
     },
     "indexName": {
       "value": "TODO_VERIFY",
@@ -531,12 +531,12 @@
       "evidence": null
     },
     "isin": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "IE00B3XXRP09",
+      "sourceUrl": "https://fund-docs.vanguard.com/SandP_500_UCITS_ETF_USD_Distributing_9503_EU_INT_UK_EN.pdf",
+      "asOf": "2026-08-31",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-12",
+      "evidence": "sha256:85dd8e418661866430b4c80aec710d4ad0d1688af35279524614d9ce194aed51 (vusa-factsheet.pdf); read in the document: \"ISIN IE00B3XXRP09\""
     },
     "domicile": {
       "value": "TODO_VERIFY",
@@ -555,20 +555,20 @@
       "evidence": null
     },
     "distribution": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "distributing",
+      "sourceUrl": "https://fund-docs.vanguard.com/SandP_500_UCITS_ETF_USD_Distributing_9503_EU_INT_UK_EN.pdf",
+      "asOf": "2026-08-31",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-12",
+      "evidence": "sha256:85dd8e418661866430b4c80aec710d4ad0d1688af35279524614d9ce194aed51 (vusa-factsheet.pdf); read in the document: \"Dividends Distributed\", \"Dividend schedule Quarterly\""
     },
     "ter": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 0.07,
+      "sourceUrl": "https://fund-docs.vanguard.com/SandP_500_UCITS_ETF_USD_Distributing_9503_EU_INT_UK_EN.pdf",
+      "asOf": "2026-08-31",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-12",
+      "evidence": "sha256:85dd8e418661866430b4c80aec710d4ad0d1688af35279524614d9ce194aed51 (vusa-factsheet.pdf); read in the document: \"Ongoing Charges Figure 0.07%\""
     },
     "fundSizeEur": {
       "value": "TODO_VERIFY",

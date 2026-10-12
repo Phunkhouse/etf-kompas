@@ -68,12 +68,12 @@
         "evidence": "sha256:37e61febf39a0b646f115c5e8dccbacf896ac307bb78a546a80c70b5d054b7bf (degiro-cndx-search-2026-10-11.png); logged-in instrument search 2026-10-11"
       },
       "vusa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.degiro.cz",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:a055296a3a5bd544c38511914c6e99d64ed361d71646029b7d7e1842da5feac6 (degiro-vusa-search-2026-10-12.png); logged-in instrument page 2026-10-12: \"Vanguard S&P 500 UCITS ETF USD Dis\", Symbol | ISIN VUSA | IE00B3XXRP09, exchange Tradegate AG, EUR, with Buy and Sell buttons"
       },
       "eqqq": {
         "value": true,
@@ -272,12 +272,12 @@
         "evidence": null
       },
       "vuaa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.fio.cz",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:6e96a301910ff3226f01b9767b30dd4282678b91ee9088649958e042c3ff50f5 (fio-vuaa-search-01-2026-10-12.png) and sha256:9bcdf84b9a7173ab52d6739b25bc15bc3675f66ce43e067f9dcab3e8ce1d2c61 (fio-vuaa-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"VANGUARD S&P 500 ETF (SRN : VUAA)\" and purchase form: ticker VUAA, market XETRA, price in EUR. The ISIN is not shown by Fio; VUAA is linked to IE00BFMXXD54 by the DEGIRO screenshot of the same ticker"
       },
       "cndx": {
         "value": "TODO_VERIFY",
@@ -288,20 +288,20 @@
         "evidence": null
       },
       "vusa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.fio.cz",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:021571f02041386c745d1b05339cffcd2e35ca333fe49584bec9a41eb32fed70 (fio-vusa-search-01-2026-10-12.png) and sha256:3e2a666699bdcfbd66d586c09846558281edcbe0b056e1a272c75ffe5d73a295 (fio-vusa-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"VANGUARD S&P 500 ETF (SRN : VUSA)\" and purchase form: ticker VUSA, market XETRA, price in EUR. The ISIN is not shown by Fio; Vanguard's factsheet (sha256:85dd8e418661866430b4c80aec710d4ad0d1688af35279524614d9ce194aed51, vusa-factsheet.pdf, 31 August 2026) lists \"Deutsche Börse, EUR, VUSA, VUSA.DE\" for ISIN IE00B3XXRP09 (distributing), which ties the ticker VUSA on the German exchange to that ISIN"
       },
       "eqqq": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.fio.cz",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:00a6d33a416af85555b2aeb06143b011348baa01e98e02f8ef42a76ce9dc6933 (fio-eqqq-search-01-2026-10-12.png) and sha256:8d7136ecbba703fd7e8f3d6e5a658122d646f96f9f0e9192ae458b9bd2c68e93 (fio-eqqq-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"INVESCO NAS.-100 ETF (SRN : EQQQ)\" and purchase form: ticker EQQQ, market XETRA, price in EUR. The ISIN is not shown by Fio; EQQQ is linked to IE0032077012 (Dist) by the DEGIRO screenshot of the same ticker"
       }
     }
   },
@@ -460,12 +460,12 @@
         "evidence": "sha256:b7f27d343c14b1dc78e52badafa8494be76aab6a74ebf5caef04570c958ade12 (trading212-cndx-search-2026-10-11.png); logged-in instrument search 2026-10-11"
       },
       "vusa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.trading212.com",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:402b8fb8bf4419a06e925271a6908cc5aa19c41315cf959cb8b56c6d53a4ca17 (trading212-vusa-search-2026-10-12.png); instrument page 2026-10-12: \"Vanguard S&P 500 (Dist)\", VUSA on LSE, price in GBP, Buy button. No ISIN is shown; the ticker VUSA and the Dist class match ISIN IE00B3XXRP09 (DEGIRO screenshot and Vanguard factsheet of 31 August 2026)"
       },
       "eqqq": {
         "value": true,
@@ -546,12 +546,12 @@
         "evidence": "sha256:768c52243f5c0e2fcf1185bbc1829e007fdb4c0e7a619b5643caf5f59c57fa2c (xtb-cndx-search-2026-10-11.png); logged-in instrument search 2026-10-11"
       },
       "vusa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.xtb.com/cz",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:dede9b0262e9bf0c651b124425b79c87a0006430bfec6c1e58df6eb2688074ba (xtb-vusa-search-2026-10-12.png); logged-in instrument search 2026-10-12 (account not yet activated): \"S&P 500 ETF\", VUSA.DE (Vanguard, UCITS, DIST, EUR) and VUSA.UK (DIST, GBP). No ISIN is shown; the ticker VUSA and the DIST class match ISIN IE00B3XXRP09 (DEGIRO screenshot and Vanguard factsheet of 31 August 2026)"
       },
       "eqqq": {
         "value": true,

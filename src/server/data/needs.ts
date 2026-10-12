@@ -65,9 +65,11 @@ export const needs: Need[] = [
   {
     kind: 'availability',
     screen: 'Hero table',
+    // "Most" is a majority: 3 of the 5 brokers verified as not selling them is
+    // enough, so Fio and IBKR are not needed for this line (David, 2026-10-12).
     what: 'the line "Americké VOO a QQQ u většiny brokerů nekoupíte"',
     fundIds: ORIGINALS,
-    brokerIds: BROKERS,
+    brokerIds: ['degiro', 'trading212', 'xtb'],
   },
   {
     kind: 'fund',
