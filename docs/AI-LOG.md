@@ -449,3 +449,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Not checked by eye:** I ran the unit, component and e2e tests and the budget, but did not look at the result on a phone screen. Layout of the new parts and the saving box needs your review on `/styleguide` and the live page.
 
 - Decision note 0040 (keep Zod out of browser code) added to this PR after David gave the reason: fitting the JS budget.
+
+### Acc/Dist of CSPX, VUAA and CNDX
+
+**Prompt (summary):** "Acc/Dist … for CSPX, VUAA and CNDX. The documents are already saved. If you have it already saved, why do I need to check it?", then "yes, download both" and "yes, write the three records".
+
+**Produced:** three `distribution` records (all `accumulating`) in `data/etfs.json`, each with the source, date and hash of the document already cited for that fund's fee, and the quoted line in the evidence text. `pnpm data:gaps`: the hero table is at 9 of 12.
+
+**Mistakes and corrections**
+
+- **I told David the documents were saved when they were not.** DATA-NEEDS said the factsheets and the KID were "already saved in `evidence/`", and I put the check on David's list. Only the VUAA KID existed locally (in Downloads); the CSPX and CNDX factsheets had been fetched once and not kept. David asked why he had to check something already saved, which was the right question: I read the documents myself. I downloaded both again, and their SHA-256 matched the records, so they are the same versions.
+- The records say `verifiedBy` David because he confirmed the values after seeing the quoted lines, not because he read the documents himself.
+- **The EQQQ KID David supplied is for a different share class** ("CHF Hdg Acc", ISIN IE00BYVTMT69, accurate as at 26 June 2026, ongoing costs 0,35 %), not the USD class that brokers list as EQQQ. Its fee and Acc type belong to that class, so I wrote nothing for EQQQ. It also states no source URL, which the data requires. Waiting for the right document and where it came from.

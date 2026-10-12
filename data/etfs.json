@@ -249,12 +249,12 @@
       "evidence": null
     },
     "distribution": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "accumulating",
+      "sourceUrl": "https://www.ishares.com/gls-download/literature/fact-sheet/cspx-ishares-core-s-p-500-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-12",
+      "evidence": "sha256:c0b7c33f5bbc1e23eac6c0f3194b191475725e585fc84b1a010bfaa9d882ab52 (webfetch-1791721844771-nxxqct.pdf); read in the document: \"Use of Income : Accumulating\", share class \"U.S. Dollar (Accumulating)\", ISIN IE00B5BMR087"
     },
     "ter": {
       "value": 0.07,
@@ -351,12 +351,12 @@
       "evidence": null
     },
     "distribution": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "accumulating",
+      "sourceUrl": "https://fund-docs.vanguard.com/ie00bfmxxd54_priipskid_nl.pdf",
+      "asOf": "2026-09-29",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-12",
+      "evidence": "sha256:9dce090e2e452dcce38715ae0088002d909b345c5b765a045808cf830f63292b (ie00bfmxxd54_priipskid_nl.pdf); ongoing charges 0.07 %; read in the document: \"(USD) Accumulating Shares\"; \"Income from the ETF Shares will be reinvested\" (the Dutch KID: \"De inkomsten uit ETF-aandelen zullen worden herbelegd\")"
     },
     "ter": {
       "value": 0.07,
@@ -453,12 +453,12 @@
       "evidence": null
     },
     "distribution": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "accumulating",
+      "sourceUrl": "https://blackrock.com/uk/literature/fact-sheet/csndx-ishares-nasdaq-100-ucits-etf-fund-fact-sheet-en-gb.pdf",
+      "asOf": "2026-09-30",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-12",
+      "evidence": "sha256:e457a683e46d38ca5c7d2ce0ebbac1e91e5ce3ded7855fe37e662d40ba55b7e9 (webfetch-1791721845683-2xexnr.pdf); read in the document: \"Use of Income : Accumulating\", share class \"U.S. Dollar (Accumulating)\", ISIN IE00B53SZB19"
     },
     "ter": {
       "value": 0.3,
