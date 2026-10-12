@@ -17,6 +17,7 @@ Wireframe rev. 4 (note 0035) changes the result of the calculator: it is the cos
 - One order a month. A free first order is entered as a fixed fee of 0.
 - While no broker is priced, the calculator shows only the fund-fee part, with the rest as `[ověřit]` and no total. DEGIRO is priced first (its schedule is on file).
 - Headline wording for now: "u ověřených brokerů vás to bude stát nejvýš X XXX Kč", pending the copy review.
+- When a broker sells a fund in several listings, the cheapest listing is priced, the "Jak počítáme" page says so, and the row label follows the listing ("převod korun na eura" or "na dolary").
 
 ## Alternatives considered
 
@@ -27,6 +28,5 @@ Wireframe rev. 4 (note 0035) changes the result of the calculator: it is the cos
 
 - SPEC §21 changes: broker commissions are in scope. The old calculator stays in the code until version 2 is implemented, then its tests and golden cases are replaced.
 - Today no broker has all its values verified, so the calculator starts in the fund-fee-only state.
-- Which listing is priced when a broker sells a fund in several is still open (METHODOLOGY-V2 §8, point C).
 - A headline that is the highest verified cost should say so in its wording; that is a copy question for David.
 - David accepted these proposals on 2026-10-12 and gave no further reason.

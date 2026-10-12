@@ -107,6 +107,52 @@ Inputs only. The expected values are for David to calculate in a spreadsheet fro
 | G4  | 1 000 | 10  | 6   | 0.2  | CZK          | 0    | 0.5 %, min 20 Kč                | none                      | the minimum of a percent fee applies                            |
 | G5  | 3 000 | 10  | 6   | 0.07 | USD at 25 Kč | 0.25 | fixed 1 USD + 0.1 %, max 10 USD | fixed 2 USD a year        | currency conversion of fixed fees, a maximum that does not bind |
 
+**Results** (computed by David in a spreadsheet on 2026-10-12, then checked with a month-by-month loop; both agree to the Kč, and the code reproduces them in `cost.test.ts`):
+
+| #   | Cost   | Fund fee | Conversion | Broker fees | Note                                                              |
+| --- | ------ | -------- | ---------- | ----------- | ----------------------------------------------------------------- |
+| G1  | 2 400  | 0        | 2 400      | 0           | verified in version 1                                             |
+| G2  | 1 672  | 1 672    | 0          | 0           | verified in version 1                                             |
+| G3  | 21 064 | 12 336   | 2 375      | 6 353       | the parts add up exactly                                          |
+| G4  | 4 875  | 1 659    | 0          | 3 216       | the minimum of 20 Kč applies                                      |
+| G5  | 8 170  | 1 748    | 1 214      | 5 208       | the broker part takes a rounding remainder of 1 Kč (5 207 before) |
+
+### How to compute a golden case
+
+Open a spreadsheet and put one case in a column (G3, G4, G5 side by side). Type the inputs of the table above in the first block, then the formulas. Use English function names; in a Czech Excel replace each comma in a formula with a semicolon.
+
+| Row | Name                             | G3    | G4                   | G5               |
+| --- | -------------------------------- | ----- | -------------------- | ---------------- |
+| 1   | D, monthly Kč                    | 3000  | 1000                 | 3000             |
+| 2   | Y, years                         | 10    | 10                   | 10               |
+| 3   | g, as a fraction                 | 0.06  | 0.06                 | 0.06             |
+| 4   | t, fund fee as a fraction        | 0.005 | 0.002                | 0.0007           |
+| 5   | f, conversion as a fraction      | 0.005 | 0                    | 0.0025           |
+| 6   | P, purchase fee per order in Kč  | 20    | `=MAX(20, 0.005*B1)` | `=1*25+0.001*B1` |
+| 7   | K, custody per year in Kč        | 60    | 0                    | `=2*25`          |
+| 8   | c, custody percent as a fraction | 0.001 | 0                    | 0                |
+
+For G4 and G5 the formula in row 6 refers to that case's own D (row 1). G5's rate is 25 Kč per dollar, and its maximum fee of 10 USD (250 Kč) does not bind, so it is left out.
+
+Then, for each column (`B` is the column letter in the formulas):
+
+| Row | Name                 | Formula                                        |
+| --- | -------------------- | ---------------------------------------------- |
+| 9   | invested each month  | `=MAX(0, B1*(1-B5) - B6 - B7/12)`              |
+| 10  | annuity at g         | `=((1+B3)^B2-1)/((1+B3)^(1/12)-1)`             |
+| 11  | annuity at g - t     | `=((1+B3-B4)^B2-1)/((1+B3-B4)^(1/12)-1)`       |
+| 12  | annuity at g - t - c | `=((1+B3-B4-B8)^B2-1)/((1+B3-B4-B8)^(1/12)-1)` |
+| 13  | S0, no costs         | `=B1*B10`                                      |
+| 14  | S1, + fund fee       | `=B1*B11`                                      |
+| 15  | S2, + conversion     | `=B1*(1-B5)*B11`                               |
+| 16  | S3, + broker fees    | `=B9*B12`                                      |
+| 17  | cost                 | `=B13-B16`                                     |
+| 18  | fund part            | `=B13-B14`                                     |
+| 19  | conversion part      | `=B14-B15`                                     |
+| 20  | broker part          | `=B15-B16`                                     |
+
+**What to send back, per case:** the cost (row 17) rounded to whole Kč, and the three parts (rows 18 to 20), also rounded. If the rounded parts do not add up to the rounded cost, say so: the largest part is then set to the cost minus the other two (the rounding rule of section 4), and the code does the same. A check of your sheet: with `P = 0`, `K = 0`, `c = 0` and `f = 1 %`, `g = 0` the same formulas give 2 400 for D = 2 000 and Y = 10 (use `=B1*B2*12` for the annuity when g = 0).
+
 ## 8. Decided, and still open
 
 **Decided by David on 2026-10-12** (note 0037; he accepted these proposals and gave no further reason):
@@ -117,10 +163,8 @@ Inputs only. The expected values are for David to calculate in a spreadsheet fro
 4. **Withholding and dividend yield** are not in the formula.
 5. **Exchange rates:** the Czech National Bank rate on a stated date, a sourced record.
 6. The saving box is **hidden when the spread is 0 Kč**; **one order a month** (a free first order is entered as `fixed = 0`).
-
 7. **No priced broker:** the calculator shows only the fund-fee part ("roční poplatek fondu") with the rest as `[ověřit]` and no total. DEGIRO is priced first, because its schedule is on file.
 8. **Headline wording** for now: "u ověřených brokerů vás to bude stát nejvýš X XXX Kč" (a copy change to the wireframe, for the copy review).
+9. **Which listing is priced.** A broker may sell a fund in several listings (DEGIRO sells CSPX on the London Stock Exchange in dollars and on Euronext Amsterdam in euros; in euros the conversion from korunas is free, and the purchase fee is the same €2 plus €1 handling). The calculator prices the **cheapest listing the broker offers**, says so on the "Jak počítáme" page, and the row label follows the listing ("převod korun na eura" or "na dolary"). Pricing only the dollar listing would overstate DEGIRO's cost.
 
-**Still open:**
-
-C. **Which listing is priced.** A broker may sell a fund in several listings. DEGIRO sells CSPX on the London Stock Exchange in dollars and on Euronext Amsterdam in euros (screenshots of 2026-10-11). In dollars the Auto FX fee of 0,25 % applies; in euros the conversion from korunas is free, and the purchase fee is the same €2 plus €1 handling. The wireframe (rule 5) counts CSPX in dollars. Suggested: price the **cheapest listing the broker offers** and say so on the "Jak počítáme" page, with the row label following the listing ("převod korun na eura" or "na dolary"). Pricing only the dollar listing would overstate DEGIRO's cost.
+**Still open:** nothing in this section.
