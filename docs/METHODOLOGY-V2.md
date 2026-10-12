@@ -107,6 +107,16 @@ Inputs only. The expected values are for David to calculate in a spreadsheet fro
 | G4  | 1 000 | 10  | 6   | 0.2  | CZK          | 0    | 0.5 %, min 20 Kč                | none                      | the minimum of a percent fee applies                            |
 | G5  | 3 000 | 10  | 6   | 0.07 | USD at 25 Kč | 0.25 | fixed 1 USD + 0.1 %, max 10 USD | fixed 2 USD a year        | currency conversion of fixed fees, a maximum that does not bind |
 
+**Results** (computed by David in a spreadsheet on 2026-10-12, then checked with a month-by-month loop; both agree to the Kč, and the code reproduces them in `cost.test.ts`):
+
+| #   | Cost   | Fund fee | Conversion | Broker fees | Note                                                              |
+| --- | ------ | -------- | ---------- | ----------- | ----------------------------------------------------------------- |
+| G1  | 2 400  | 0        | 2 400      | 0           | verified in version 1                                             |
+| G2  | 1 672  | 1 672    | 0          | 0           | verified in version 1                                             |
+| G3  | 21 064 | 12 336   | 2 375      | 6 353       | the parts add up exactly                                          |
+| G4  | 4 875  | 1 659    | 0          | 3 216       | the minimum of 20 Kč applies                                      |
+| G5  | 8 170  | 1 748    | 1 214      | 5 208       | the broker part takes a rounding remainder of 1 Kč (5 207 before) |
+
 ### How to compute a golden case
 
 Open a spreadsheet and put one case in a column (G3, G4, G5 side by side). Type the inputs of the table above in the first block, then the formulas. Use English function names; in a Czech Excel replace each comma in a formula with a semicolon.

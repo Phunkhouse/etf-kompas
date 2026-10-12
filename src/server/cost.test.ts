@@ -14,8 +14,7 @@ import {
 
 // Version 2 of the calculator (docs/METHODOLOGY-V2.md). The cases were listed
 // first and approved by David on 2026-10-12. The groups at the end (brokers
-// with a price, the data model, golden cases G3 to G5) are still `it.todo`:
-// they follow in the next PR, after David's spreadsheet numbers.
+// with a price, the data model) are still `it.todo` and follow in the next PR.
 
 const NO_FEES: CostFees = {
   ter: 0,
@@ -394,11 +393,62 @@ describe('golden cases (docs/METHODOLOGY-V2.md section 7, computed by David)', (
     expect(parts).toEqual({ fund: 1672, fx: 0, broker: 0 })
   })
 
-  it.todo("G3: all three parts (waiting for David's spreadsheet)")
-  it.todo("G4: the minimum of a percent fee (waiting for David's spreadsheet)")
-  it.todo(
-    "G5: fixed fees in dollars, converted (waiting for David's spreadsheet)",
-  )
+  // G3 to G5 were computed by David in a spreadsheet from METHODOLOGY-V2 §7 and
+  // cross-checked with a month-by-month loop; both agree to the Kč.
+  it('G3: all three parts', () => {
+    // 20 Kč a month, 60 Kč a year, 0,1 % custody, 0,5 % conversion, fund fee 0,5 %
+    const { totalKc, parts } = calcCost(
+      { monthly: 3000, years: 10, grossReturn: 6 },
+      fees({
+        ter: 0.5,
+        fxFeePct: 0.5,
+        purchaseFeeKc: 20,
+        custodyAnnualFixedKc: 60,
+        custodyAnnualPercent: 0.1,
+      }),
+    )
+    expect(totalKc).toBe(21064)
+    expect(parts).toEqual({ fund: 12336, fx: 2375, broker: 6353 })
+  })
+
+  it('G4: the minimum of a percent fee', () => {
+    // 0,5 % of 1 000 Kč is 5 Kč; the minimum of 20 Kč applies
+    const fee = purchaseFeeKc(
+      { venues: null, currency: 'CZK', fixed: 0, percent: 0.5, min: 20 },
+      1000,
+      RATES,
+    )
+    expect(fee).toBe(20)
+    const { totalKc, parts } = calcCost(
+      { monthly: 1000, years: 10, grossReturn: 6 },
+      fees({ ter: 0.2, purchaseFeeKc: fee }),
+    )
+    expect(totalKc).toBe(4875)
+    expect(parts).toEqual({ fund: 1659, fx: 0, broker: 3216 })
+  })
+
+  it('G5: fixed fees in dollars, converted (the broker part takes a rounding remainder of 1 Kč)', () => {
+    // 1 USD + 0,1 % per order (the maximum of 10 USD does not bind), 2 USD a
+    // year, at 25 Kč per dollar
+    const rates: Rates = { EUR: 25, USD: 25 }
+    const fee = purchaseFeeKc(
+      { venues: null, currency: 'USD', fixed: 1, percent: 0.1, max: 10 },
+      3000,
+      rates,
+    )
+    expect(fee).toBeCloseTo(28, 10)
+    const { totalKc, parts } = calcCost(
+      { monthly: 3000, years: 10, grossReturn: 6 },
+      fees({
+        ter: 0.07,
+        fxFeePct: 0.25,
+        purchaseFeeKc: fee,
+        custodyAnnualFixedKc: toKc(2, 'USD', rates),
+      }),
+    )
+    expect(totalKc).toBe(8170)
+    expect(parts).toEqual({ fund: 1748, fx: 1214, broker: 5208 })
+  })
 })
 
 describe('which brokers have a price', () => {

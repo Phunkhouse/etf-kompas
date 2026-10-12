@@ -324,3 +324,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **I added a few small cases to the approved list** because the functions need them: a conversion fee for a currency without a verified fee is `null` (not 0), currency conversion of amounts, `calcCost` rejecting a fee that looks like a fraction, and two crafted cases for the rounding rule. David should know they were not in the 48.
 - **My golden-case table was ambiguous.** G1 to G4 said "listing CZK" next to a conversion fee, but a CZK listing pays no conversion. The pure maths takes the conversion fee as a given number; the step from a listing to that number is a different function. The spreadsheet recipe now gives the already-resolved numbers (purchase fee and custody in Kč).
 - **I have not computed G3 to G5 myself.** They are for David's spreadsheet. I will cross-check them with a month-by-month loop, which is a different method from the closed form, after his numbers arrive.
+
+### Golden cases G3 to G5
+
+**Prompt (summary):** David sent his spreadsheet results in `golden cases.md` and asked me to check them.
+
+**Produced:** the three cases as real tests in `cost.test.ts` and the results table in METHODOLOGY-V2 §7.
+
+**Mistakes and corrections**
+
+- **No mismatch to report.** I recomputed the three cases with a month-by-month loop (a different method from the closed form) and then ran the code. Both agree with David's numbers to the Kč, including G5, where the broker part is 5 207 before the rounding remainder and 5 208 after. His note on G5 describes the same rule.
+- **Two of my edits missed because of Prettier's quote style**: my search string used single quotes, and Prettier had switched that line to double quotes because of an apostrophe. The script stopped with an error before changing anything, so nothing was half-applied. I matched the lines by position instead.
+- Limit: three cases cover the purchase minimum, a currency conversion of fixed fees and the rounding remainder. They do not cover a maximum that binds or a rule picked by venue; those are in the unit tests of the helper functions.
