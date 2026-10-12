@@ -10,7 +10,7 @@ Derived from the rev. 4 text spec ([wireframe-b.md](design/wireframe-b.md), deci
 
 | Screen          | Needs                                                                                       | Verified | Missing                                                                                 |
 | --------------- | ------------------------------------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------------- |
-| Hero table      | name, fee and Acc/Dist type of CSPX, VUAA, CNDX, EQQQ                                       | 6 of 12  | Acc/Dist of the three verified funds; name, fee and type of EQQQ                        |
+| Hero table      | name, fee and Acc/Dist type of CSPX, VUAA, CNDX, EQQQ                                       | 9 of 12  | name, fee and type of EQQQ (the KID given is for a different share class, see AI-LOG)   |
 | Hero line       | where CSPX is sold; where VOO and QQQ are not                                               | 9 of 15  | Fio and IBKR for CSPX, VOO and QQQ                                                      |
 | Calculator      | CSPX fee; conversion and custody fee of five brokers; purchase commission; listing currency | 2 of 16  | 4 conversion fees, 5 custody fees, 5 commission rules (new), 5 listing currencies (new) |
 | Comparison page | five twins: fee and type; availability 5 x 5; Czech support; listing per fund and broker    | 15 of 70 | VUSA and EQQQ entirely, Fio and IBKR entirely, 5 `czSupport`, 25 listings (new)         |
@@ -22,16 +22,16 @@ Derived from the rev. 4 text spec ([wireframe-b.md](design/wireframe-b.md), deci
 
 ## Verification batches, easiest first
 
-| Batch | What                                                                                               | Count    | Source                                               |
-| ----- | -------------------------------------------------------------------------------------------------- | -------- | ---------------------------------------------------- |
-| A     | Acc/Dist for CSPX, VUAA, CNDX (the documents are already saved)                                    | 3        | factsheets and the KID in `evidence/`                |
-| B     | VUSA and EQQQ: name, fee, type                                                                     | 6        | issuer factsheet or KID, as for the others           |
-| C     | Availability screenshots: Fio and IBKR for 7 funds, and DEGIRO, Trading 212, XTB for VUSA and EQQQ | 20       | the broker's instrument search, logged in, as before |
-| D     | Conversion fee per broker                                                                          | 4        | each broker's fee page, saved as a dated PDF         |
-| E     | Custody fee per broker                                                                             | 5        | same                                                 |
-| F     | Purchase commission rule per broker                                                                | 5        | same, once the model is agreed                       |
-| G     | Listing currency per fund and broker                                                               | up to 25 | the instrument page of each broker                   |
-| H     | Czech support per broker                                                                           | 5        | the broker's site                                    |
+| Batch | What                                                                                                                      | Count    | Source                                                                                    |
+| ----- | ------------------------------------------------------------------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------- |
+| A     | Acc/Dist for CSPX, VUAA, CNDX: **done 2026-10-12**, read from the factsheets and the KID by Claude and confirmed by David | 3        | factsheets and the KID (the iShares ones are not kept locally, the hash is in the record) |
+| B     | VUSA and EQQQ: name, fee, type                                                                                            | 6        | issuer factsheet or KID, as for the others                                                |
+| C     | Availability screenshots: Fio and IBKR for 7 funds, and DEGIRO, Trading 212, XTB for VUSA and EQQQ                        | 20       | the broker's instrument search, logged in, as before                                      |
+| D     | Conversion fee per broker                                                                                                 | 4        | each broker's fee page, saved as a dated PDF                                              |
+| E     | Custody fee per broker                                                                                                    | 5        | same                                                                                      |
+| F     | Purchase commission rule per broker                                                                                       | 5        | same, once the model is agreed                                                            |
+| G     | Listing currency per fund and broker                                                                                      | up to 25 | the instrument page of each broker                                                        |
+| H     | Czech support per broker                                                                                                  | 5        | the broker's site                                                                         |
 
 ## Not worth verifying now
 
