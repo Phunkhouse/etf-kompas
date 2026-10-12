@@ -315,25 +315,13 @@ describe('seed data files', () => {
     )
   })
 
-  // The 8 candidates from SPEC §5, plus VUSA and EQQQ that the rev. 4 wireframes
-  // added (note 0035). VTI, SCHD and VWCE are on no rev. 4 screen; the list
-  // changes when David settles the fund set.
-  it('contains the candidate ETFs: SPEC §5 and the rev. 4 twins', async () => {
+  // The fund set of note 0036: the five European twins, plus VOO and QQQ, which
+  // the page names only to say where they cannot be bought.
+  it('contains the five twins and the two American originals', async () => {
     const { loadData } = await import('./load')
     const { etfs } = (await loadData()) as { etfs: { ticker: string }[] }
     expect(etfs.map((e) => e.ticker).sort()).toEqual(
-      [
-        'CNDX',
-        'CSPX',
-        'EQQQ',
-        'QQQ',
-        'SCHD',
-        'VOO',
-        'VTI',
-        'VUAA',
-        'VUSA',
-        'VWCE',
-      ].sort(),
+      ['CNDX', 'CSPX', 'EQQQ', 'QQQ', 'VOO', 'VUAA', 'VUSA'].sort(),
     )
   })
 })

@@ -35,9 +35,9 @@ Derived from the rev. 4 text spec ([wireframe-b.md](design/wireframe-b.md), deci
 
 ## Not worth verifying now
 
-No rev. 4 screen shows these: the funds **VTI, SCHD, VWCE** (and VOO, QQQ beyond availability), and the fields fund size, 5 and 10 year returns, dividend yield, withholding rate and replication. Dividend yield and withholding were verified for the old calculator and stay in the data; the tax text is written from a source, not from these fields.
+No rev. 4 screen shows these fields: fund size, 5 and 10 year returns, dividend yield, withholding rate and replication. VOO and QQQ are needed only for availability. (VTI, SCHD and VWCE were removed from the data, note 0036.) Dividend yield and withholding were verified for the old calculator and stay in the data; the tax text is written from a source, not from these fields.
 
 ## Open decisions
 
-- **Fund set:** five twins on the comparison page, four in the hero. Suggested: CSPX, VUAA, CNDX and EQQQ in the hero, VUSA on the comparison page only. VTI, SCHD and VWCE are dropped, and "8 fondů" in SPEC and the copy becomes "5 fondů".
+- **Fund set (decided, note 0036):** five twins on the comparison page, four in the hero (CSPX, VUAA, CNDX, EQQQ), VUSA on the comparison page only. "8 fondů" became "5 fondů".
 - **Ticker label:** the wireframe says CSNDX. The verified iShares NASDAQ 100 fund (IE00B53SZB19) is listed as CNDX at the three brokers we checked, and its factsheet is called "csndx". The wireframe's fee of 0,33 % (from memory) differs from the verified 0,30 %. The page should use the verified figure.

@@ -35,14 +35,6 @@
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:8fb33c1ef26c46e9be75eac3a54d1bd42656cccdd3ba491c4d89cf808f7331fe (degiro-voo-search-2026-10-11.png); logged-in instrument search 2026-10-11"
       },
-      "vti": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
-      },
       "qqq": {
         "value": false,
         "sourceUrl": "https://www.degiro.cz",
@@ -50,14 +42,6 @@
         "verifiedBy": "David",
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:d31ce7ad711f5a262e059cd6af8aa13d35de4dca9b027dc70c12d5ac6bc190a8 (degiro-qqq-search-2026-10-11.png); logged-in instrument search 2026-10-11"
-      },
-      "schd": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
       },
       "cspx": {
         "value": true,
@@ -74,14 +58,6 @@
         "verifiedBy": "David",
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:684c4ef8825f2433aed5c38422533d3a5dc78028fe3f5314dd2608885ea9de0c (degiro-vuaa-search-2026-10-11.png); logged-in instrument search 2026-10-11"
-      },
-      "vwce": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
       },
       "cndx": {
         "value": true,
@@ -145,23 +121,7 @@
         "verifiedOn": null,
         "evidence": null
       },
-      "vti": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
-      },
       "qqq": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
-      },
-      "schd": {
         "value": "TODO_VERIFY",
         "sourceUrl": null,
         "asOf": null,
@@ -178,14 +138,6 @@
         "evidence": null
       },
       "vuaa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
-      },
-      "vwce": {
         "value": "TODO_VERIFY",
         "sourceUrl": null,
         "asOf": null,
@@ -255,23 +207,7 @@
         "verifiedOn": null,
         "evidence": null
       },
-      "vti": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
-      },
       "qqq": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
-      },
-      "schd": {
         "value": "TODO_VERIFY",
         "sourceUrl": null,
         "asOf": null,
@@ -288,14 +224,6 @@
         "evidence": null
       },
       "vuaa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
-      },
-      "vwce": {
         "value": "TODO_VERIFY",
         "sourceUrl": null,
         "asOf": null,
@@ -365,14 +293,6 @@
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:510d1641a95ac8ddf3ddfeeacd7b74ec98deb9a912d139b91401b66c25779967 (trading212-voo-search-2026-10-11.png); logged-in instrument search 2026-10-11; only a CFD is offered, not the fund"
       },
-      "vti": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
-      },
       "qqq": {
         "value": false,
         "sourceUrl": "https://www.trading212.com",
@@ -380,14 +300,6 @@
         "verifiedBy": "David",
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:06143dc2797346a815183d364e9bc98c110e23aaffee3251802b5d658dc30201 (trading212-qqq-search-2026-10-11.png); logged-in instrument search 2026-10-11; only a CFD is offered, not the fund"
-      },
-      "schd": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
       },
       "cspx": {
         "value": true,
@@ -404,14 +316,6 @@
         "verifiedBy": "David",
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:c07bfdb150d5c5c4cc1827767ef9d1222f32d1157abed73cba9346f736e64325 (trading212-vuaa-search-2026-10-11.png); logged-in instrument search 2026-10-11"
-      },
-      "vwce": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
       },
       "cndx": {
         "value": true,
@@ -475,14 +379,6 @@
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:8584eb36d8ab0062eee87fca3c77da66dba31d9d3fdaefed319ad4e660616f78 (xtb-voo-search-logged-in-2026-10-11.png); logged-in instrument search 2026-10-11"
       },
-      "vti": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
-      },
       "qqq": {
         "value": false,
         "sourceUrl": "https://www.xtb.com/cz",
@@ -490,14 +386,6 @@
         "verifiedBy": "David",
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:a3df7b6a65ffb31d1a69513333206826fd0c3dde9f2c1764d5766c7c55045e5f (xtb-qqq-search-logged-in-2026-10-11.png); logged-in instrument search 2026-10-11; only a CFD is offered, not the fund"
-      },
-      "schd": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
       },
       "cspx": {
         "value": true,
@@ -514,14 +402,6 @@
         "verifiedBy": "David",
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:6f17e2c289867cd033fa9aac2aadd8b85e18683290db7bb6d8d3d6cd818dd124 (xtb-vuaa-search-2026-10-11.png); logged-in instrument search 2026-10-11"
-      },
-      "vwce": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
       },
       "cndx": {
         "value": true,

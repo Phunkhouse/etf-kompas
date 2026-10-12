@@ -127,7 +127,8 @@ export const needs: Need[] = [
   },
 ]
 
-// Data that no rev. 4 screen shows. Not worth verifying now.
+// Data that no rev. 4 screen shows. Not worth verifying now. (VTI, SCHD and VWCE
+// were removed from the data with note 0036.)
 export const unusedFundFields: FundField[] = [
   'fundSizeEur',
   'return5yPct',
@@ -136,6 +137,6 @@ export const unusedFundFields: FundField[] = [
   'withholdingRate',
   'replication',
 ]
-export const unusedFundIds = ['vti', 'schd', 'vwce']
+export const unusedFundIds: string[] = []
 
 export type { Broker }
