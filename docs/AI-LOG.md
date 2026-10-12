@@ -423,3 +423,14 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 
 - **I missed one stale test** when listing the test changes (`HeroB.test.tsx` still expected the old headline); it failed on the first check and I updated it after approval. The styleguide token labels (`page.tsx`) also still said 28 and 58 px.
 - Limit: the 375x667 fit passes at 30 px with the new headline in Chromium (Pixel 7 profile); other fonts and devices are not measured.
+
+### Calculator data for the browser (`calculatorData`)
+
+**Prompt (summary):** "Browser maths is fine, keep that order, start PR 1 tests", then "approved, implement calculatorData".
+
+**Produced:** `src/server/calculator-data.ts`: the verified fee of one fund, every broker by name, the pricing data of brokers with fees (verified records and the chosen fund only) and the exchange rates with their oldest date. 15 tests first, all failing against a stub that threw; 367 tests pass after.
+
+**Mistakes and corrections**
+
+- **My first implementation leaked unverified values.** The test "no TODO_VERIFY reaches the browser" failed: I passed whole broker objects, and a broker's own `fxFeePct`, `custodyFeePct` and `czSupport` are still `TODO_VERIFY` (pricing never reads them). I fixed it by narrowing the pricing functions' parameter to `PricingBroker` (`id`, `availability`, `fees`). That is a type-only change in `broker-pricing.ts`; its tests did not change and still pass. I had not thought of those fields when I wrote the test list; the test was written to catch exactly this class of mistake.
+- Limit: nothing uses `calculatorData` yet; the page wiring and the UI come in PR 2.
