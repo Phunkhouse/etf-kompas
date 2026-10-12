@@ -364,3 +364,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Assumptions I wrote into the evidence, not hid:** the Tradegate rule follows the PDF literally ("ETF listed on Tradegate"), the cap of 0,25 % of the account and the CNX connection fee are ignored, and the model has one custody fee per broker although DEGIRO exempts ETF Selection. All three are in the `evidence` text of the records.
 - **The record says `verifiedBy` David** on his "fine with the rest" after he saw the list. The values themselves were read by me from his PDF, and he confirmed them.
 - **I pushed a red build.** The seed-data test in `validate.test.ts` checks the real data on a fixed day (2026-10-11), and the DEGIRO fee records are dated 2026-10-12, so they counted as future dates. `pnpm check` printed the failure, but I had chained the commit and the push after it with `;` instead of `&&`, so both went ahead. I fixed the date (2026-10-12) in a second commit. The same slip happened with the earlier data PR on 2026-10-11, which is why the test has its own fixed day. From now on a commit follows a green check only.
+
+### A daily exchange rate (proposal)
+
+**Prompt (summary):** "Exchange rate concerns me a little bit. Is there a way you could fetch it lightly at least once a day? Exchange rates could get old pretty fast."
+
+**Produced:** a proposal in METHODOLOGY-V2 (fetch the Czech National Bank daily file on the server, cache it for 12 hours, fall back to a verified record, never use a rate older than 45 days) and a test list of 18 `it.todo` cases in `src/server/cnb.test.ts`. No code that fetches or calculates.
+
+**Mistakes and corrections**
+
+- **My earlier decision was too static, and David saw it first.** I had asked for the rate as "a sourced record that goes stale like the fees" and David accepted. He then pointed out that a rate ages in days, not months, and a hand-verified record could not keep up. The 45-day limit is the right rule for a fee schedule and the wrong one for a rate.
+- **I checked the caching call against the installed Next.js docs, not memory.** `use cache` with an inline `cacheLife({ revalidate })` is supported in this version, and the docs recommend a lifetime in every cached scope.
+- **One open risk I could not test here:** whether Vercel keeps the cached rate across deployments. It is listed as a Phase 6 check.
