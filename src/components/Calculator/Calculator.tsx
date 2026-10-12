@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Button } from '@/components/Button'
+import { Button, ButtonLink } from '@/components/Button'
 import { Chip } from '@/components/Chip'
 import { NumberDisplay } from '@/components/NumberDisplay'
 import { Slider } from '@/components/Slider'
@@ -28,6 +28,11 @@ type CalculatorProps = {
   // Heading level and id, so the page can name the section after it.
   headingAs?: 'h2' | 'h3'
   headingId?: string
+  // The heading stays in the page for screen readers, but is not shown (hero a).
+  headingHidden?: boolean
+  // A link under the inputs, on phones only, for example "Ukázat, kolik mě to
+  // bude stát" to the result (hero a), with a muted line under it.
+  action?: { label: string; href: string; note: string }
 }
 
 // The cost calculator (SPEC §4, §21, docs/METHODOLOGY-V2.md). Prices in the
@@ -37,15 +42,19 @@ export function Calculator({
   onRetry = () => window.location.reload(),
   headingAs = 'h3',
   headingId,
+  headingHidden = false,
+  action,
 }: CalculatorProps) {
   const [monthly, setMonthly] = useState(3000)
   const [years, setYears] = useState(10)
   const text = copy.calculator
 
   const heading = (
-    <Tag as={headingAs} id={headingId}>
-      {nbsp(text.heading)}
-    </Tag>
+    <div className={headingHidden ? styles.srOnly : undefined}>
+      <Tag as={headingAs} id={headingId}>
+        {nbsp(text.heading)}
+      </Tag>
+    </div>
   )
 
   if (data === null) {
@@ -122,9 +131,17 @@ export function Calculator({
             ))}
           </div>
         </div>
+        {action ? (
+          <div className={styles.action}>
+            <ButtonLink href={action.href} fullWidth>
+              {nbsp(action.label)}
+            </ButtonLink>
+            <p className={styles.actionNote}>{nbsp(action.note)}</p>
+          </div>
+        ) : null}
       </div>
 
-      <div className={styles.result}>
+      <div id="vysledek" className={styles.result}>
         <NumberDisplay value={headline ? headline.totalKc : fundFee} />
         <p className={styles.total}>
           {nbsp(

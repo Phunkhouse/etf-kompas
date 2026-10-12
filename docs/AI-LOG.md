@@ -558,3 +558,16 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **The first screenshots caught the table's intro animation mid-fade and showed empty rows.** I retook them after the animation; not a bug.
 - **The date in the muted line is the oldest `asOf` on the page** (June 2026, the VOO factsheet), the same as the top bar, not the date of the CSPX availability screenshots (October). It is conservative; the wireframe example shows 10. 2026.
 - **Dead code, removed after David asked.** `buyability` in `availability.ts` (and its `Buyability` type and 12 tests) became unused when the table lost its buy column. I first left it in place and wrote that down; David asked why it was still there, and it went in the same PR. `availability.ts` keeps `verifiedValue`, which `hero.ts` uses, now with its own small test. The rule "no only with a source per firm" (note 0029) lives on in `heroNote` and will apply per broker on the comparison page.
+
+### Hero a (calculator-first)
+
+**Prompt (summary):** "#45 landed, draft the PR 4 plan", David's three OKs (same rev. 4 headline, no start button on desktop, heading visually hidden), then "approved, implement hero a".
+
+**Produced:** hero a now has the rev. 4 headline, the "Zjistěte to za 20 sekund. Zdarma, bez registrace." line and the calculator band as the hero: slider and chips, the start button "Ukázat, kolik mě to bude stát" with its muted line (phones only), and the result below the first screen at `#vysledek`. `Calculator` got `action` and `headingHidden`, `CalculatorSection` a `hero` flag. Tests first: 6 failed before; 354 unit/component and 50 e2e pass after. JS budget: ours 11.3 KB, route 143.9 KB.
+
+**Mistakes and corrections**
+
+- **My earlier plan was wrong about the reason to split hero a off.** I had said it needed shared state between hero inputs and the result band. The drawing showed the inputs are the same calculator, so one calculator moved up the page and no shared state was needed. The split still helped keep the PR small, but the premise was mine, not the design's.
+- **The first run failed my own approved test:** at 375x667 the top of the result number (y=649) peeked into the first screen, a half-cut "14 416 Kč" at the bottom edge. I added 32 px of space under the start button on phones, which puts the result at about 681 px.
+- The old hero-a headline ("Které fondy si z Česka opravdu koupíte?") is gone from the code. Any ad copy that still points to it would no longer match the page.
+- Desktop hero a is not drawn; it was built as agreed (inputs left, result right, no start button) and looked at in a screenshot only, not reviewed by David.

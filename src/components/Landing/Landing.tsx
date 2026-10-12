@@ -23,8 +23,8 @@ type LandingProps = {
   calculator?: CalculatorData | null
 }
 
-// The landing page: frame plus the hero of the chosen variant. Hero a below is
-// a placeholder (headline only); the hero a PR replaces it.
+// The landing page: frame plus the hero of the chosen variant. In hero a the
+// calculator band is the hero: its inputs come right after the headline.
 export function Landing({
   variant,
   dataAsOf,
@@ -44,10 +44,11 @@ export function Landing({
             <h1 id="hero-headline" className={styles.headline}>
               {nbsp(copy.hero.a.headline)}
             </h1>
+            <p className={styles.sub}>{nbsp(copy.hero.a.sub)}</p>
           </Section>
         )}
         {calculator !== undefined ? (
-          <CalculatorSection data={calculator} />
+          <CalculatorSection data={calculator} hero={variant === 'a'} />
         ) : null}
       </main>
       <SiteFooter />

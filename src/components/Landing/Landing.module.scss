@@ -3,7 +3,8 @@
 .headline {
   max-width: 20ch;
   margin: 0;
-  font-size: var(--font-size-2xl);
+  // 30 px on phones, as hero b, so the first screen holds the inputs (note 0039)
+  font-size: var(--font-size-hero-phone);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
   letter-spacing: var(--tracking-display);
@@ -12,4 +13,11 @@
     font-size: var(--font-size-4xl);
     line-height: var(--line-height-tight);
   }
+}
+
+.sub {
+  margin: var(--space-3) 0 0;
+  color: var(--color-ink-soft);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-base);
 }

@@ -27,10 +27,16 @@ export const copy = {
         'Zkušební projekt vytvořený jako ukázka. Není to nabídka investiční služby.',
     },
   },
-  // Hero headlines: variant a is the calculator-first hero (ad A), b the
-  // table-first hero (ad B). The rest of each hero comes with the hero PR.
+  // Both heroes have the rev. 4 headline; they differ by layout: variant a is
+  // the calculator-first hero (ad A), b the table-first hero (ad B).
   hero: {
-    a: { headline: 'Které fondy si z Česka opravdu koupíte?' },
+    a: {
+      headline: 'Americké indexy z Česka: u koho je koupíte a za kolik?',
+      sub: 'Zjistěte to za 20 sekund. Zdarma, bez registrace.',
+      // The start button under the inputs (phones only) and the line under it.
+      cta: 'Ukázat, kolik mě to bude stát',
+      note: 'Příklad výpočtu. Investování nese riziko ztráty.',
+    },
     b: {
       headline: 'Americké indexy z Česka: u koho je koupíte a za kolik?',
       lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.',

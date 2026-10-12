@@ -30,6 +30,42 @@ describe('CalculatorSection', () => {
     ).toBeTruthy()
   })
 
+  it('has no start button by default', () => {
+    const data = calculatorData(bundledData, RATES, 'cspx')
+    render(<CalculatorSection data={data} />)
+    expect(
+      screen.queryByRole('link', { name: 'Ukázat, kolik mě to bude stát' }),
+    ).toBeNull()
+  })
+
+  it('as a hero (hero a) has the start button and the muted line, and keeps the heading for the region', () => {
+    const data = calculatorData(bundledData, RATES, 'cspx')
+    render(<CalculatorSection data={data} hero />)
+    expect(
+      screen
+        .getByRole('link', { name: 'Ukázat, kolik mě to bude stát' })
+        .getAttribute('href'),
+    ).toBe('#vysledek')
+    expect(
+      screen.getByText('Příklad výpočtu. Investování nese riziko ztráty.'),
+    ).toBeTruthy()
+    // the heading is hidden visually, not removed
+    expect(
+      screen.getByRole('heading', { name: 'Kolik vás to bude stát?' }),
+    ).toBeTruthy()
+    expect(
+      screen.getByRole('region', { name: 'Kolik vás to bude stát?' }),
+    ).toBeTruthy()
+  })
+
+  it('as a hero, still shows the failure state (and no start button) without data', () => {
+    render(<CalculatorSection data={null} hero />)
+    expect(screen.getByRole('button', { name: 'Zkusit znovu' })).toBeTruthy()
+    expect(
+      screen.queryByRole('link', { name: 'Ukázat, kolik mě to bude stát' }),
+    ).toBeNull()
+  })
+
   it('shows the failure state when there is no data', () => {
     render(<CalculatorSection data={null} />)
     expect(screen.getByRole('button', { name: 'Zkusit znovu' })).toBeTruthy()
