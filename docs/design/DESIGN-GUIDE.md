@@ -101,22 +101,22 @@ Watch-outs:
 
 The wireframes use about 20 different font sizes. The code merges them into the token scale below (`--font-size-*` in `src/app/variables.scss`). Some elements end up 1 px larger or smaller than drawn, for example tags are 12 px where the wireframe has 10 to 11 px, which also helps legibility. Review them on `/styleguide`.
 
-| Token        | Size  | Replaces (wireframe)                                  |
-| ------------ | ----- | ----------------------------------------------------- |
-| `xs`         | 12 px | 10, 11, 12 (tags, captions, sources)                  |
-| `sm`         | 14 px | 13, 14 (sub-labels, small body)                       |
-| `base`       | 16 px | 15, 16 (body)                                         |
-| `md`         | 18 px | 17, 18 (lead, buttons, card headings)                 |
-| `lg`         | 20 px | 20                                                    |
-| `xl`         | 24 px | 22, 24, 26                                            |
-| `hero-phone` | 28 px | 28 (hero h1 on phones, note 0031)                     |
-| `2xl`        | 32 px | 30, 32                                                |
-| `3xl`        | 40 px | 40                                                    |
-| `4xl`        | 58 px | 58 (h1 desktop in rev. 2; rev. 4 draws 54, see below) |
-| `display-sm` | 60 px | 52, 60 (result number, mobile)                        |
-| `display`    | 80 px | 80 (result number, desktop)                           |
+| Token        | Size  | Replaces (wireframe)                        |
+| ------------ | ----- | ------------------------------------------- |
+| `xs`         | 12 px | 10, 11, 12 (tags, captions, sources)        |
+| `sm`         | 14 px | 13, 14 (sub-labels, small body)             |
+| `base`       | 16 px | 15, 16 (body)                               |
+| `md`         | 18 px | 17, 18 (lead, buttons, card headings)       |
+| `lg`         | 20 px | 20                                          |
+| `xl`         | 24 px | 22, 24, 26                                  |
+| `hero-phone` | 30 px | 30 (hero h1 on phones, notes 0031 and 0039) |
+| `2xl`        | 32 px | 30, 32                                      |
+| `3xl`        | 40 px | 40                                          |
+| `4xl`        | 54 px | 54 (h1 desktop, rev. 4)                     |
+| `display-sm` | 60 px | 52, 60 (result number, mobile)              |
+| `display`    | 80 px | 80 (result number, desktop)                 |
 
-**Open: rev. 4 sizes against the tokens.** Rev. 4 draws the desktop landing h1 at 54 px (token `4xl` is 58), the phone landing h1 at 30 px (`hero-phone` is 28, chosen in note 0031 to fit the hero on 375 x 667), and the desktop h1 on other pages at 44 px (no token). The guide records what is drawn; David decides whether the tokens move or the drawing does (note 0035).
+**Decided (note 0039, 2026-10-12): the tokens adapt to rev. 4.** `4xl` is 54 px and `hero-phone` is 30 px (the 375 x 667 hero fit still holds, tested in `e2e/hero-fit.spec.ts`). The 44 px h1 for other pages has no token yet; it is added with the first page that uses it.
 
 IBM Plex Sans digits are tabular by default (verified: `1` and `0` have the same width), so Kč amounts align even without `tabular-nums`. We still set it as a guard.
 

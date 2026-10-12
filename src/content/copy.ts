@@ -32,8 +32,8 @@ export const copy = {
   hero: {
     a: { headline: 'Které fondy si z Česka opravdu koupíte?' },
     b: {
-      headline: 'Které fondy si z Česka opravdu koupíte a kolik vás stojí?',
-      lead: 'Stejný index často koupíte z Česka jen v evropské verzi. Ukážeme vám, kterou, u koho a za kolik.',
+      headline: 'Americké indexy z Česka: u koho je koupíte a za kolik?',
+      lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.',
       cta: 'Spočítat, kolik zaplatím',
       // The one use of "ETF" on the page (SPEC §25 rule 2).
       callout: {

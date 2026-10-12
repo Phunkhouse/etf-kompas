@@ -32,7 +32,7 @@ describe('HeroB', () => {
   it('has the headline as h1 and names the section after it', () => {
     render(<HeroB rows={rows} dataAsOf={null} />)
     const heading = screen.getByRole('heading', { level: 1 })
-    expect(heading.textContent).toContain('Které fondy si z Česka')
+    expect(heading.textContent).toContain('Americké indexy z Česka')
     expect(
       screen.getByRole('region', { name: heading.textContent ?? '' }),
     ).toBeTruthy()
@@ -40,7 +40,9 @@ describe('HeroB', () => {
 
   it('has the lead, the table and a button that jumps to the calculator', () => {
     render(<HeroB rows={rows} dataAsOf={null} />)
-    expect(screen.getByText(/Stejný index často koupíte/)).toBeTruthy()
+    expect(
+      screen.getByText(/Stejné firmy ze S&P 500 a Nasdaq 100/),
+    ).toBeTruthy()
     expect(screen.getByRole('table')).toBeTruthy()
     expect(
       screen

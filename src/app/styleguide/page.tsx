@@ -19,10 +19,10 @@ const fontSizes = [
   ['md', '18 px'],
   ['lg', '20 px'],
   ['xl', '24 px'],
-  ['hero-phone', '28 px'],
+  ['hero-phone', '30 px'],
   ['2xl', '32 px'],
   ['3xl', '40 px'],
-  ['4xl', '58 px'],
+  ['4xl', '54 px'],
 ] as const
 
 const spaces = [1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16] as const
