@@ -36,6 +36,7 @@ pnpm contrast:check     # WCAG AA check of every colour pair in src/styles/contr
 pnpm copy:check         # glossary and plain-language lint of src/content/copy.ts (SPEC §25, part of pnpm check)
 pnpm data:validate       # strict: fails on TODO_VERIFY, missing source, stale data (the deploy gate, Phase 6)
 pnpm data:validate:draft # same, but TODO_VERIFY is only a warning (CI today)
+pnpm data:gaps           # what the rev. 4 screens still need from data/*.json, with counts (docs/DATA-NEEDS.md)
 pnpm test:e2e       # Playwright (mobile + desktop smoke). First run: pnpm exec playwright install chromium
 ```
 

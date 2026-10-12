@@ -315,11 +315,25 @@ describe('seed data files', () => {
     )
   })
 
-  it('contains the 8 candidate ETFs from SPEC §5', async () => {
+  // The 8 candidates from SPEC §5, plus VUSA and EQQQ that the rev. 4 wireframes
+  // added (note 0035). VTI, SCHD and VWCE are on no rev. 4 screen; the list
+  // changes when David settles the fund set.
+  it('contains the candidate ETFs: SPEC §5 and the rev. 4 twins', async () => {
     const { loadData } = await import('./load')
     const { etfs } = (await loadData()) as { etfs: { ticker: string }[] }
     expect(etfs.map((e) => e.ticker).sort()).toEqual(
-      ['CNDX', 'CSPX', 'QQQ', 'SCHD', 'VOO', 'VTI', 'VUAA', 'VWCE'].sort(),
+      [
+        'CNDX',
+        'CSPX',
+        'EQQQ',
+        'QQQ',
+        'SCHD',
+        'VOO',
+        'VTI',
+        'VUAA',
+        'VUSA',
+        'VWCE',
+      ].sort(),
     )
   })
 })

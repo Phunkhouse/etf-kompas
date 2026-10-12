@@ -260,3 +260,17 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **A rebuild script edited another script.** One of my patch scripts changed `build_study.py`, which broke the clean rebuild chain. I removed that edit and checked that `make_rev4.sh` reproduces the same files.
 - **Fonts fell back to serif in the motion board** because of shorthands without a generic family. Fixed, and the exported image was checked.
 - Limits: `pnpm check` and the browser were not run against app code, because only docs and wireframe files changed. The copy, type token and headline differences between the design and the code are listed in note 0035 and not resolved here.
+
+### Data needs per screen (after wireframe rev. 4)
+
+**Prompt (summary):** David asked how PR #26 (the rev. 4 design docs) affects the phases, and to fill the data gaps without another design review. He answered: deliver by tomorrow evening, build `docs/DATA-NEEDS.md` and `pnpm data:gaps`, "poplatky brokera" counts both purchase commission and custody fee, fees stay static, and asked me to explain what I meant by a design freeze and to suggest a fund set.
+
+**Produced:** `src/server/data/needs.ts` (what each screen needs), `gaps.ts` and `scripts/data-gaps.ts` (`pnpm data:gaps`), 11 tests, `docs/DATA-NEEDS.md`, and placeholder records for VUSA and EQQQ in `data/` (all `TODO_VERIFY`).
+
+**Mistakes and corrections**
+
+- **My first impact analysis stated what the redesign changed, but I had not yet looked at the data against it.** Only when the report ran did the real gap show: 32 of 118 values verified, and 35 values the data model has no place for (purchase commission, listing currency).
+- **A value two screens need was counted twice** in my first version of the report, which made the gap look bigger than it is. I added a count of unique missing values.
+- **I broke an existing test by adding two funds.** `validate.test.ts` pinned the data to exactly 8 funds. I updated its list to the 10 now in the data (the 8 of SPEC §5 plus VUSA and EQQQ) and gave it a comment. David should look at that edit.
+- **The wireframe's CSNDX 0,33 % is contradicted by our own verified data**: the iShares factsheet we saved is named "csndx" and says 0,30 %. The wireframe marks its figure "from memory". Nothing in the data uses the wireframe figure.
+- Limits: the needs list is my reading of the rev. 4 text spec, not of the Design Study itself, so a screen detail only in the Study could be missing.
