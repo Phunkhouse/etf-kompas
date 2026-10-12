@@ -88,7 +88,7 @@ Cost        = S0 - S3
 
 - A broker is **priced** for a fund when the fund's availability there is verified as sold, the listing is verified, and every fee value that the formula needs is verified. Otherwise it has no price and shows `[ověřit]`.
 - **Spread** = highest `Cost` minus lowest `Cost` among priced brokers. The green box "až X XXX Kč" shows only with **at least two priced brokers** (wireframe rule 4). **Proposed:** it is also hidden when the spread rounds to 0 Kč.
-- **The headline number** "bude stát X XXX Kč" is the `Cost` of the priced broker with the **highest** cost, so that the saving box reads as "až" (decided). With one priced broker the headline is that broker's cost and there is no spread. With none, there is no number (open point A in section 8).
+- **The headline number** "bude stát X XXX Kč" is the `Cost` of the priced broker with the **highest** cost, so that the saving box reads as "až" (decided). With one priced broker the headline is that broker's cost and there is no spread. With none, the result shows only the fund-fee part and no total (decided, section 8).
 - The page sorts nothing by price and never says "nejlevnější" (wireframe rule 1).
 
 ## 6. Clamping and units (unchanged, **Proposed** as in version 1)
@@ -118,7 +118,9 @@ Inputs only. The expected values are for David to calculate in a spreadsheet fro
 5. **Exchange rates:** the Czech National Bank rate on a stated date, a sourced record.
 6. The saving box is **hidden when the spread is 0 Kč**; **one order a month** (a free first order is entered as `fixed = 0`).
 
+7. **No priced broker:** the calculator shows only the fund-fee part ("roční poplatek fondu") with the rest as `[ověřit]` and no total. DEGIRO is priced first, because its schedule is on file.
+8. **Headline wording** for now: "u ověřených brokerů vás to bude stát nejvýš X XXX Kč" (a copy change to the wireframe, for the copy review).
+
 **Still open:**
 
-A. **No priced broker.** Today no broker has all its values verified, so the calculator would have no number. Options: (a) show only the fund-fee part ("roční poplatek fondu") with the rest as `[ověřit]` and no total; (b) hide the calculator band until one broker is priced; (c) price DEGIRO first, because its schedule is on file. My preference is (c), with (a) as the state while other values are missing.
-B. **Wording of the headline.** The wireframe says "bude stát X XXX Kč". Because X is the highest verified broker, a more honest wording is "u ověřených brokerů vás to bude stát nejvýš X XXX Kč". It is a copy change to the wireframe, for David at copy review.
+C. **Which listing is priced.** A broker may sell a fund in several listings. DEGIRO sells CSPX on the London Stock Exchange in dollars and on Euronext Amsterdam in euros (screenshots of 2026-10-11). In dollars the Auto FX fee of 0,25 % applies; in euros the conversion from korunas is free, and the purchase fee is the same €2 plus €1 handling. The wireframe (rule 5) counts CSPX in dollars. Suggested: price the **cheapest listing the broker offers** and say so on the "Jak počítáme" page, with the row label following the listing ("převod korun na eura" or "na dolary"). Pricing only the dollar listing would overstate DEGIRO's cost.

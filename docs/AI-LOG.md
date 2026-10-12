@@ -300,3 +300,14 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Withholding and dividend yield leave the formula** because the rev. 4 text lists three result parts without them. I read that from the text spec, not the Design Study, and asked David to confirm.
 - Golden cases G1 and G2 repeat the verified v1 cases (2 400 and 1 672) so that the new formulas can be checked against numbers David already hand-verified. G3 to G5 have no expected values: David computes them.
 - **The branch conflicted with #28 in `AI-LOG.md`.** Both PRs appended an entry at the end of the file. I rebased onto `main` and kept both entries in order. No other file conflicted. I then wrote David's four answers into the draft and into note 0037, and added 4 more `it.todo` cases for them (now 47). One thing the answers left open: today no broker has every value verified, so the headline rule would produce no number. I asked about it instead of choosing.
+
+### Calculator v2: decisions A and B, and a new open point
+
+**Prompt (summary):** "#29 landed", with answers to the two open points: go with the fund-fee-only state while no broker is priced, and the headline wording "u ověřených brokerů vás to bude stát nejvýš X XXX Kč" is OK for now.
+
+**Produced:** both answers in METHODOLOGY-V2 and note 0037, two test cases changed or added (49 `it.todo` in all), and a third open point.
+
+**Mistakes and corrections**
+
+- **My model priced one listing per fund, as the wireframe does, and I had not checked what the brokers actually offer.** Reading the saved DEGIRO screenshots again showed CSPX in two listings (London in dollars, Amsterdam in euros). In euros the conversion from korunas is free, so pricing only the dollar listing overstates DEGIRO's cost by up to 0,25 % of the deposits. I added it as open point C and did not decide it.
+- **I did not treat #29 as approval of the tests.** The PR asked for approval of the test list and for G3 to G5. Merging it is not that, so I am asking again before writing any calculation code.

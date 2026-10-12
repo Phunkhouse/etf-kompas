@@ -80,7 +80,12 @@ describe('which brokers have a price', () => {
   it.todo(
     'with one priced broker the headline is its cost and there is no spread',
   )
-  it.todo('with no priced broker there is no headline number')
+  it.todo(
+    'with no priced broker the result has only the fund-fee part and no total',
+  )
+  it.todo(
+    'a broker that sells a fund in several listings is priced at its cheapest listing',
+  )
 })
 
 describe('the data model for broker fees', () => {
