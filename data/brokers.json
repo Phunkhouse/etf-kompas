@@ -90,6 +90,22 @@
         "verifiedBy": "David",
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:37e61febf39a0b646f115c5e8dccbacf896ac307bb78a546a80c70b5d054b7bf (degiro-cndx-search-2026-10-11.png); logged-in instrument search 2026-10-11"
+      },
+      "vusa": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "eqqq": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
       }
     }
   },
@@ -178,6 +194,22 @@
         "evidence": null
       },
       "cndx": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "vusa": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "eqqq": {
         "value": "TODO_VERIFY",
         "sourceUrl": null,
         "asOf": null,
@@ -278,6 +310,22 @@
         "verifiedBy": null,
         "verifiedOn": null,
         "evidence": null
+      },
+      "vusa": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "eqqq": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
       }
     }
   },
@@ -372,6 +420,22 @@
         "verifiedBy": "David",
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:b7f27d343c14b1dc78e52badafa8494be76aab6a74ebf5caef04570c958ade12 (trading212-cndx-search-2026-10-11.png); logged-in instrument search 2026-10-11"
+      },
+      "vusa": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "eqqq": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
       }
     }
   },
@@ -466,6 +530,22 @@
         "verifiedBy": "David",
         "verifiedOn": "2026-10-11",
         "evidence": "sha256:768c52243f5c0e2fcf1185bbc1829e007fdb4c0e7a619b5643caf5f59c57fa2c (xtb-cndx-search-2026-10-11.png); logged-in instrument search 2026-10-11"
+      },
+      "vusa": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
+      },
+      "eqqq": {
+        "value": "TODO_VERIFY",
+        "sourceUrl": null,
+        "asOf": null,
+        "verifiedBy": null,
+        "verifiedOn": null,
+        "evidence": null
       }
     }
   }
