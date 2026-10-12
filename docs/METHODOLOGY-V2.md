@@ -19,15 +19,15 @@ The SPEC §21 sentence "broker commissions: out of scope" is therefore changed. 
 
 ## 2. Inputs
 
-| Name            | Unit                   | Meaning                                                                              |
-| --------------- | ---------------------- | ------------------------------------------------------------------------------------ |
-| `monthly` D     | whole Kč               | one investment at the end of every month                                             |
-| `years` Y       | years                  | 5, 10 or 20                                                                          |
-| `grossReturn` g | % p.a.                 | the same for every fund, default 6, 0 to 12                                          |
-| `ter` t         | % p.a.                 | the fund's annual fee (`0.07` means 0,07 %)                                          |
-| listing         | currency and venue     | how the chosen broker sells the fund, for example `USD` on the London Stock Exchange |
-| broker fees     | see §3                 | verified per broker                                                                  |
-| rates           | Kč per EUR and per USD | from the Czech National Bank on a stated date, with its source                       |
+| Name            | Unit                   | Meaning                                                                                                                              |
+| --------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `monthly` D     | whole Kč               | one investment at the end of every month                                                                                             |
+| `years` Y       | years                  | 5, 10 or 20                                                                                                                          |
+| `grossReturn` g | % p.a.                 | the same for every fund, default 6, 0 to 12                                                                                          |
+| `ter` t         | % p.a.                 | the fund's annual fee (`0.07` means 0,07 %)                                                                                          |
+| listing         | currency and venue     | how the chosen broker sells the fund, for example `USD` on the London Stock Exchange                                                 |
+| broker fees     | see §3                 | verified per broker                                                                                                                  |
+| rates           | Kč per EUR and per USD | the Czech National Bank rate on a stated date, a sourced record (decided). **Proposed:** the freshness limit of broker fees, 45 days |
 
 Percentages are plain numbers everywhere (as in the data files). Lowercase symbols below are fractions: `g = grossReturn / 100`, `t = ter / 100`.
 
@@ -88,6 +88,7 @@ Cost        = S0 - S3
 
 - A broker is **priced** for a fund when the fund's availability there is verified as sold, the listing is verified, and every fee value that the formula needs is verified. Otherwise it has no price and shows `[ověřit]`.
 - **Spread** = highest `Cost` minus lowest `Cost` among priced brokers. The green box "až X XXX Kč" shows only with **at least two priced brokers** (wireframe rule 4). **Proposed:** it is also hidden when the spread rounds to 0 Kč.
+- **The headline number** "bude stát X XXX Kč" is the `Cost` of the priced broker with the **highest** cost, so that the saving box reads as "až" (decided). With one priced broker the headline is that broker's cost and there is no spread. With none, there is no number (open point A in section 8).
 - The page sorts nothing by price and never says "nejlevnější" (wireframe rule 1).
 
 ## 6. Clamping and units (unchanged, **Proposed** as in version 1)
@@ -106,9 +107,18 @@ Inputs only. The expected values are for David to calculate in a spreadsheet fro
 | G4  | 1 000 | 10  | 6   | 0.2  | CZK          | 0    | 0.5 %, min 20 Kč                | none                      | the minimum of a percent fee applies                            |
 | G5  | 3 000 | 10  | 6   | 0.07 | USD at 25 Kč | 0.25 | fixed 1 USD + 0.1 %, max 10 USD | fixed 2 USD a year        | currency conversion of fixed fees, a maximum that does not bind |
 
-## 8. Questions for David
+## 8. Decided, and still open
 
-1. **The headline number.** "Za 10 let vás koupitelné ETF (CSPX) bude stát X XXX Kč": at which broker? Options: (a) the broker with the highest cost, so the saving box reads as "až"; (b) a named default broker; (c) show the range. Wireframe rule 1 forbids "cheapest".
-2. **Withholding and dividend yield** leave the formula (rev. 4 lists three parts without them). OK?
-3. **Exchange rates.** A fee in euros or dollars needs Kč per EUR and USD. Proposed: the Czech National Bank rate on a stated date, as a sourced record that goes stale like the fees. The alternative is a fixed illustrative rate stated on the page.
-4. The **hide-at-zero** rule for the saving box, and **one order a month** (a free first order is entered as `fixed = 0`).
+**Decided by David on 2026-10-12** (note 0037; he accepted these proposals and gave no further reason):
+
+1. Broker fees are the purchase commission **and** the custody fee.
+2. Fees are static data in `data/`, not fetched. The loading and failure states of the wireframe are dropped.
+3. **Headline number:** the cost at the priced broker with the highest cost (section 5).
+4. **Withholding and dividend yield** are not in the formula.
+5. **Exchange rates:** the Czech National Bank rate on a stated date, a sourced record.
+6. The saving box is **hidden when the spread is 0 Kč**; **one order a month** (a free first order is entered as `fixed = 0`).
+
+**Still open:**
+
+A. **No priced broker.** Today no broker has all its values verified, so the calculator would have no number. Options: (a) show only the fund-fee part ("roční poplatek fondu") with the rest as `[ověřit]` and no total; (b) hide the calculator band until one broker is priced; (c) price DEGIRO first, because its schedule is on file. My preference is (c), with (a) as the state while other values are missing.
+B. **Wording of the headline.** The wireframe says "bude stát X XXX Kč". Because X is the highest verified broker, a more honest wording is "u ověřených brokerů vás to bude stát nejvýš X XXX Kč". It is a copy change to the wireframe, for David at copy review.

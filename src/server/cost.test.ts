@@ -76,6 +76,11 @@ describe('which brokers have a price', () => {
   it.todo('the spread is null with fewer than two priced brokers')
   it.todo('the spread is null when it rounds to 0 Kč')
   it.todo('the order of the brokers in the result does not depend on price')
+  it.todo('the headline cost is the highest cost among the priced brokers')
+  it.todo(
+    'with one priced broker the headline is its cost and there is no spread',
+  )
+  it.todo('with no priced broker there is no headline number')
 })
 
 describe('the data model for broker fees', () => {
@@ -84,6 +89,9 @@ describe('the data model for broker fees', () => {
   )
   it.todo(
     'rejects negative fees, an unknown currency and a rule with min above max',
+  )
+  it.todo(
+    'an exchange rate older than the broker-fee limit of 45 days is stale',
   )
   it.todo(
     'the real data files give a price only for brokers whose values are all verified',
