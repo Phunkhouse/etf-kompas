@@ -308,4 +308,26 @@ describe('the real data files', () => {
     // spread and headline follow the priced brokers, whatever their number is
     expect(prices.headline === null).toBe(prices.pricedBrokers.length === 0)
   })
+
+  it('prices DEGIRO for CSPX at its euro listing (checked with a month-by-month loop)', async () => {
+    const { loadData } = await import('./data/load')
+    const { dataSchema } = await import('./data/schema')
+    const data = dataSchema.parse(await loadData())
+    // Czech National Bank fixing of 9 October 2026
+    const rates: Rates = { EUR: 24.365, USD: 21.745 }
+    const cspx = data.etfs.find((fund) => fund.id === 'cspx')!
+    const ter = cspx.ter.value as number
+    const prices = priceBrokers(data.brokers, 'cspx', ter, rates, INPUT)
+    const degiro = prices.pricedBrokers.find((p) => p.brokerId === 'degiro')!
+    // EUR 3 per order (2 plus 1 handling), EUR 2.50 a year, no conversion in euro
+    expect(degiro.listing).toEqual({
+      currency: 'EUR',
+      venue: 'Euronext Amsterdam',
+    })
+    expect(degiro.result.totalKc).toBe(14403)
+    expect(degiro.result.parts).toEqual({ fund: 1748, fx: 0, broker: 12655 })
+    // the dollar listing would cost 15 617 Kč (1 214 Kč more, the conversion)
+    expect(prices.headline?.brokerId).toBe('degiro')
+    expect(prices.spreadKc).toBeNull() // only one broker is priced so far
+  })
 })

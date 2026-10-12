@@ -350,3 +350,16 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **I added a case that was not in the approved 15**: a broker falls back to a listing that can be priced when the cheaper one cannot (for example no verified dollar fee). Without it a broker with one unpriceable listing would lose its price even though another listing is fine.
 - **The gaps report is out of date on one point.** `needs.ts` still lists purchase commission and listing currency as "not in the model yet", but the model now has them. I left it for the next PR, which also moves the calculator to version 2, so the report and the UI change together.
 - **`fees` and `rates` are optional in the schema** so that existing fixtures and the current data (no broker has fee values yet) stay valid. The consequence: no broker is priced today, which is the state decided in note 0037.
+
+### DEGIRO fee records, the first priced broker
+
+**Prompt (summary):** "Could you check from this PDF?" (David's own copy of DEGIRO's fee overview), then "I am fine with the rest".
+
+**Produced:** DEGIRO's conversion (USD 0,25 %, EUR 0), two purchase rules, the annual custody fee and the listings of CSPX, CNDX and VUAA in `data/brokers.json`, all with hashes computed from the files; a real-data test that prices CSPX at DEGIRO.
+
+**Mistakes and corrections**
+
+- **David's copy of the PDF has the same SHA-256 as the one my fetch tool saved** (`ab01346d…`), so the evidence hash was right from the start. I had flagged it as a risk; it was not one.
+- **The first price looked too big, and I checked it before trusting it.** At EUR 3 per order on about EUR 123, broker fees come to 12 655 Kč of the 14 403 Kč total, against 1 748 Kč for the fund. A month-by-month loop gives the same figures, so the arithmetic is right. It is a result of the fee schedule, and it is the reason the broker choice matters.
+- **Assumptions I wrote into the evidence, not hid:** the Tradegate rule follows the PDF literally ("ETF listed on Tradegate"), the cap of 0,25 % of the account and the CNX connection fee are ignored, and the model has one custody fee per broker although DEGIRO exempts ETF Selection. All three are in the `evidence` text of the records.
+- **The record says `verifiedBy` David** on his "fine with the rest" after he saw the list. The values themselves were read by me from his PDF, and he confirmed them.

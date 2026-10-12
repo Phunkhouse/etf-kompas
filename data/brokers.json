@@ -83,6 +83,140 @@
         "verifiedOn": null,
         "evidence": null
       }
+    },
+    "fees": {
+      "fx": {
+        "USD": {
+          "value": 0.25,
+          "sourceUrl": "https://www.degiro.cz/data/pdf/cs/Prehled_poplatku.pdf",
+          "asOf": "2026-10-12",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-12",
+          "evidence": "sha256:ab01346db9cda2c41d3c59ac13ed5ae04659c4afa956349fbea5fe8849596d94 (Degiro_Prehled_poplatku.pdf, rates from 2026-01-01); Auto FX trader 0.25 %, p. 8"
+        },
+        "EUR": {
+          "value": 0,
+          "sourceUrl": "https://www.degiro.cz/data/pdf/cs/Prehled_poplatku.pdf",
+          "asOf": "2026-10-12",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-12",
+          "evidence": "sha256:ab01346db9cda2c41d3c59ac13ed5ae04659c4afa956349fbea5fe8849596d94 (Degiro_Prehled_poplatku.pdf, rates from 2026-01-01); transfers between EUR and CZK are free, p. 8 footnote 2"
+        }
+      },
+      "purchase": [
+        {
+          "value": {
+            "venues": ["Tradegate"],
+            "currency": "EUR",
+            "fixed": 1,
+            "percent": 0
+          },
+          "sourceUrl": "https://www.degiro.cz/data/pdf/cs/Prehled_poplatku.pdf",
+          "asOf": "2026-10-12",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-12",
+          "evidence": "sha256:ab01346db9cda2c41d3c59ac13ed5ae04659c4afa956349fbea5fe8849596d94 (Degiro_Prehled_poplatku.pdf, rates from 2026-01-01); ETF listed on Tradegate (ETF Selection) EUR 0.00, p. 4, plus handling fee EUR 1.00, p. 7; read literally, whether a given fund is in the ETF Selection list is not checked"
+        },
+        {
+          "value": {
+            "venues": null,
+            "currency": "EUR",
+            "fixed": 3,
+            "percent": 0
+          },
+          "sourceUrl": "https://www.degiro.cz/data/pdf/cs/Prehled_poplatku.pdf",
+          "asOf": "2026-10-12",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-12",
+          "evidence": "sha256:ab01346db9cda2c41d3c59ac13ed5ae04659c4afa956349fbea5fe8849596d94 (Degiro_Prehled_poplatku.pdf, rates from 2026-01-01); other exchanges EUR 2.00, p. 4, plus handling fee EUR 1.00, p. 7"
+        }
+      ],
+      "custody": {
+        "value": {
+          "currency": "EUR",
+          "annualFixed": 2.5,
+          "annualPercent": 0
+        },
+        "sourceUrl": "https://www.degiro.cz/data/pdf/cs/Prehled_poplatku.pdf",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:ab01346db9cda2c41d3c59ac13ed5ae04659c4afa956349fbea5fe8849596d94 (Degiro_Prehled_poplatku.pdf, rates from 2026-01-01); EUR 2.50 per calendar year per foreign exchange used, p. 10; not charged on ETF Selection and Prague; the cap of 0.25 % of the account value and the CNX connection fee (footnote 2) are ignored"
+      },
+      "listings": {
+        "cspx": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "London Stock Exchange"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-11",
+            "evidence": "sha256:a2df4d6c21ccbfd4068231e4b2a01b0a35b4c224fab67ebd4a56a5323cc46cfb (degiro-cspx-search-2026-10-11.png); logged-in instrument search, listing London Stock Exchange in USD"
+          },
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "Euronext Amsterdam"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-11",
+            "evidence": "sha256:a2df4d6c21ccbfd4068231e4b2a01b0a35b4c224fab67ebd4a56a5323cc46cfb (degiro-cspx-search-2026-10-11.png); logged-in instrument search, listing Euronext Amsterdam in EUR"
+          }
+        ],
+        "cndx": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "London Stock Exchange"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-11",
+            "evidence": "sha256:37e61febf39a0b646f115c5e8dccbacf896ac307bb78a546a80c70b5d054b7bf (degiro-cndx-search-2026-10-11.png); logged-in instrument search, listing London Stock Exchange in USD"
+          },
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "Euronext Amsterdam"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-11",
+            "evidence": "sha256:37e61febf39a0b646f115c5e8dccbacf896ac307bb78a546a80c70b5d054b7bf (degiro-cndx-search-2026-10-11.png); logged-in instrument search, listing Euronext Amsterdam in EUR"
+          }
+        ],
+        "vuaa": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "Tradegate"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-11",
+            "evidence": "sha256:684c4ef8825f2433aed5c38422533d3a5dc78028fe3f5314dd2608885ea9de0c (degiro-vuaa-search-2026-10-11.png); logged-in instrument search, listing Tradegate in EUR"
+          },
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "Xetra"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-11",
+            "evidence": "sha256:684c4ef8825f2433aed5c38422533d3a5dc78028fe3f5314dd2608885ea9de0c (degiro-vuaa-search-2026-10-11.png); logged-in instrument search, listing Xetra in EUR"
+          }
+        ]
+      }
     }
   },
   {
