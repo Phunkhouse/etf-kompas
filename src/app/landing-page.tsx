@@ -10,7 +10,7 @@ const CALCULATOR_FUND = 'cspx'
 // The landing page both A/B variants share (note 0041): one layout, only the h1
 // differs. `variant` is the one the visitor is shown.
 export async function LandingPage({ variant }: { variant: Variant }) {
-  const { dataAsOf, twins, note } = landingData(bundledData)
+  const { dataAsOf, twins, note, faqFacts } = landingData(bundledData)
   const calculator = calculatorData(
     bundledData,
     await getRates(),
@@ -22,6 +22,7 @@ export async function LandingPage({ variant }: { variant: Variant }) {
       dataAsOf={dataAsOf}
       twins={twins}
       note={note}
+      faqFacts={faqFacts}
       calculator={calculator}
     />
   )

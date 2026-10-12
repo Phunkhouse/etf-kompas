@@ -1,11 +1,13 @@
 import { CalculatorSection } from '@/components/CalculatorSection'
 import { EmailPreview } from '@/components/EmailPreview'
 import { HeroB } from '@/components/HeroB'
+import { Faq } from '@/components/Faq'
 import { HiddenCosts } from '@/components/HiddenCosts'
 import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SourceBar } from '@/components/SourceBar'
-import type { HeroNote, HeroTwin } from '@/server/hero'
+import { TrustBlock } from '@/components/TrustBlock'
+import type { HeroNote, HeroTwin, OriginalsFacts } from '@/server/hero'
 import type { CalculatorData } from '@/server/calculator-data'
 
 export type Variant = 'a' | 'b'
@@ -18,6 +20,8 @@ type LandingProps = {
   // The hero table and its muted line.
   twins?: HeroTwin[]
   note?: HeroNote
+  // What the FAQ answer about the American funds is chosen from.
+  faqFacts?: OriginalsFacts
   // The calculator band: left out when undefined, the failure state when null.
   calculator?: CalculatorData | null
 }
@@ -29,6 +33,7 @@ export function Landing({
   dataAsOf,
   twins = [],
   note,
+  faqFacts,
   calculator,
 }: LandingProps) {
   return (
@@ -42,6 +47,8 @@ export function Landing({
         ) : null}
         <HiddenCosts />
         <EmailPreview />
+        <TrustBlock />
+        <Faq facts={faqFacts} />
       </main>
       <SiteFooter />
     </>

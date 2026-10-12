@@ -163,3 +163,44 @@ describe('Landing, the explainer sections', () => {
     ).toBeTruthy()
   })
 })
+
+describe('Landing, the trust block and the FAQ', () => {
+  it.each(['a', 'b'] as const)(
+    'has them in hero %s after the preview, in this order: trust block, then FAQ',
+    (variant) => {
+      render(<Landing variant={variant} dataAsOf={null} />)
+      const order = [
+        screen.getByRole('region', {
+          name: 'Fondy, brokeři a co z toho koupíte z Česka',
+        }),
+        screen.getByRole('region', { name: 'Proč nám věřit' }),
+        screen.getByRole('region', { name: 'Časté dotazy' }),
+        screen.getByRole('contentinfo'),
+      ]
+      for (let i = 1; i < order.length; i += 1) {
+        expect(
+          order[i - 1].compareDocumentPosition(order[i]) &
+            Node.DOCUMENT_POSITION_FOLLOWING,
+        ).toBeTruthy()
+      }
+    },
+  )
+
+  it('passes the facts to the FAQ answer', () => {
+    render(
+      <Landing
+        variant="a"
+        dataAsOf={null}
+        faqFacts={{
+          tickers: ['VOO', 'QQQ'],
+          verifiedNo: 3,
+          total: 5,
+          europeanSold: true,
+        }}
+      />,
+    )
+    expect(
+      screen.getByText(/U 3 z 5 brokerů máme ověřeno/).textContent,
+    ).toContain('VOO a QQQ nenabízí')
+  })
+})

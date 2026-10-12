@@ -29,6 +29,16 @@ describe('landingData (the real data files)', () => {
     expect(note.originals.mostlyNo).toBe(true)
   })
 
+  it('gives the facts the FAQ needs about the American funds', async () => {
+    const { loadData } = await import('./data/load')
+    const { faqFacts } = landingData(await loadData())
+    expect(faqFacts.tickers).toEqual(['VOO', 'QQQ'])
+    expect(faqFacts.total).toBe(5)
+    // DEGIRO, Trading 212 and XTB are verified as not selling them
+    expect(faqFacts.verifiedNo).toBe(3)
+    expect(faqFacts.europeanSold).toBe(true)
+  })
+
   it('gives the date of the oldest number', async () => {
     const { loadData } = await import('./data/load')
     const result = landingData(await loadData())

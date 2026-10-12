@@ -1,0 +1,49 @@
+.faq {
+  scroll-margin-top: var(--space-6);
+}
+
+.list {
+  margin-top: var(--space-6);
+  border-top: var(--border-width-heavy) solid var(--color-ink);
+}
+
+.item {
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+// The plus sign is drawn with CSS: no icon, no JavaScript.
+.question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--touch-target-lg);
+  padding-block: var(--space-3);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  list-style: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::after {
+    content: '+';
+    flex: none;
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-none);
+  }
+}
+
+.item[open] > .question::after {
+  content: '\2212';
+}
+
+.answer {
+  max-width: 48rem;
+  margin: 0 0 var(--space-4);
+  color: var(--color-ink-soft);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}
