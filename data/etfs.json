@@ -617,12 +617,12 @@
     "region": "ucits",
     "indexGroup": "nasdaq100",
     "name": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "Invesco EQQQ NASDAQ-100 UCITS ETF",
+      "sourceUrl": "https://www.invesco.com/content/dam/invesco/uk/en/product-documents/etf/share-class/kiid/IE0032077012_kiid_en-uk.pdf",
+      "asOf": "2026-06-26",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-12",
+      "evidence": "sha256:28aa5ef0d42ad46c9a4a9a413ededaec41318dc757f958e090869e6541c61856 (eqqq-dist-kid.pdf); read in the document: \"Invesco EQQQ NASDAQ-100 UCITS ETF (the \\\"Fund\\\")\""
     },
     "indexName": {
       "value": "TODO_VERIFY",
@@ -633,12 +633,12 @@
       "evidence": null
     },
     "isin": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "IE0032077012",
+      "sourceUrl": "https://www.invesco.com/content/dam/invesco/uk/en/product-documents/etf/share-class/kiid/IE0032077012_kiid_en-uk.pdf",
+      "asOf": "2026-06-26",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-12",
+      "evidence": "sha256:28aa5ef0d42ad46c9a4a9a413ededaec41318dc757f958e090869e6541c61856 (eqqq-dist-kid.pdf); read in the document: \"Dist (ISIN: IE0032077012) (the \\\"Share Class\\\")\""
     },
     "domicile": {
       "value": "TODO_VERIFY",
@@ -657,20 +657,20 @@
       "evidence": null
     },
     "distribution": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": "distributing",
+      "sourceUrl": "https://www.invesco.com/content/dam/invesco/uk/en/product-documents/etf/share-class/kiid/IE0032077012_kiid_en-uk.pdf",
+      "asOf": "2026-06-26",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-12",
+      "evidence": "sha256:28aa5ef0d42ad46c9a4a9a413ededaec41318dc757f958e090869e6541c61856 (eqqq-dist-kid.pdf); read in the document: \"Any income from your investment will be paid quarterly\"; share class \"Dist\""
     },
     "ter": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": 0.3,
+      "sourceUrl": "https://www.invesco.com/content/dam/invesco/uk/en/product-documents/etf/share-class/kiid/IE0032077012_kiid_en-uk.pdf",
+      "asOf": "2026-06-26",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-12",
+      "evidence": "sha256:28aa5ef0d42ad46c9a4a9a413ededaec41318dc757f958e090869e6541c61856 (eqqq-dist-kid.pdf); read in the document: \"Ongoing charge 0.30%\""
     },
     "fundSizeEur": {
       "value": "TODO_VERIFY",
