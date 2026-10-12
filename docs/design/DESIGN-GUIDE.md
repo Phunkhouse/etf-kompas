@@ -1,6 +1,6 @@
 # Design guide
 
-Extracted from the wireframes at revision 4 (see [README.md](README.md) and the Design Study listed there). Direction from SPEC §8: "Czech financial print", editorial and numeric, not app-like. Colour and type values below are what the wireframes use; token names are proposals for Phase 1b PR 1 (prefixed `--color-…` as in the starter guide). Rev. 4 adds the saving box colours, the error colour, the cookie switch, the motion scale and the logo orange; the values that differ from the code are listed in section 2.
+Extracted from the wireframes at revision 5 (see [README.md](README.md) and the Design Study listed there). Direction from SPEC §8: "Czech financial print", editorial and numeric, not app-like. Colour and type values below are what the wireframes use; token names are proposals for Phase 1b PR 1 (prefixed `--color-…` as in the starter guide). Rev. 4 adds the saving box colours, the error colour, the cookie switch, the motion scale and the logo orange; the values that differ from the code are listed in section 2.
 
 Every contrast ratio is calculated (WCAG 2.x relative luminance). AA needs 4.5:1 for normal text and 3:1 for large text (24 px, or 19 px bold) and UI components.
 
@@ -130,7 +130,7 @@ IBM Plex Sans digits are tabular by default (verified: `1` and `0` have the same
 
 ## 4. Components
 
-Primitives from SPEC §24, as drawn in the rev. 4 wireframes.
+Primitives from SPEC §24, as drawn in the rev. 5 wireframes.
 
 | Component                   | Spec from the wireframes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

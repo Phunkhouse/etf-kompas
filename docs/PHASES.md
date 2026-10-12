@@ -54,7 +54,7 @@ Short version of [SPEC.md](SPEC.md) §14, §20 and §22. If this file and the sp
 - Hero fits 375x667 including the primary CTA, no scrolling (geometry test, note 0031)
 - Lighthouse mobile: performance >= 90, accessibility >= 95, LCP < 2.0 s, CLS < 0.05, route JS: our code adds <= 20 KB over an empty page and the route is <= 150 KB gzipped
 - Form works without JavaScript
-- `?v=a` and `?v=b` show different heroes, unknown value falls back to `a`
+- `?v=a` and `?v=b` show the same layout with a different h1, unknown value falls back to `a` (note 0041)
 - `pnpm copy:check` passes
 - 5-second test: 3 non-investors, at least 2 can say what they get and that it is free
 

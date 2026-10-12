@@ -54,7 +54,8 @@ BOARDS = [
     ('G2-adA-9x16', '6bf92b0b', 'Reklama A · 9:16', 405, 720),
     ('G3-adB-4x5', 'c2093dbc', 'Reklama B · 4:5', 540, 675),
     ('G4-adB-9x16', '4b5adee3', 'Reklama B · 9:16', 405, 720),
-    ('G5-hero-A-mobile', '734d3e9c', 'První obrazovka po reklamě A', 375, 667),
+    ('VB1', 'vb01hero-d', 'Landing page · verze b · jen hero · desktop', 1280, 800),
+    ('VB2', 'vb02hero-m', 'Landing page · verze b · jen hero · mobil', 390, 820),
 ]
 BD = {b[0]: b for b in BOARDS}
 # rendered height = measured content height (declared canvas heights leave empty space below the footer)
@@ -174,8 +175,9 @@ TYPE_ROWS = [
 ]
 SITEMAP = [
     ('Motion', '1280', 'One live artboard with looping demos of every animated section and the timing rules'),
-    ('Ads', 'Feed 4:5, stories 9:16 · A and B', 'Concept A and B (artboards G1 to G4); the first screen after ad A (G5)'),
+    ('Ads', 'Feed 4:5, stories 9:16 · A and B', 'Concept A and B (artboards G1 to G4); both lead to both landing variants'),
     ('Landing page', 'Desktop 1280, phone 390', 'Main (hero, table, calculator, form, explainers, trust, FAQ, footer)'),
+    ('Landing page · variant b', 'Desktop, phone (hero only)', 'Same page, headline for the A/B test (<code>?v=b</code>)'),
     ('After submit', 'Desktop, phone', 'E1, E2: the comparison is ready, link also sent by e-mail'),
     ('Comparison page', 'Desktop, phone', 'F1, F2: five funds, brokers, taxes, where to buy, method; valid 30 days'),
     ('PDF', 'A4', 'Six pages; pages 1 and 4 drawn'),
@@ -191,7 +193,7 @@ SITEMAP = [
 N_LANDING = [
     ('Top bar', '„Čísla ze stránek fondů a brokerů · ověřeno k 10. 2026“ and „Investování nese riziko ztráty.“ Ink band, 13 px (11 on the phone).'),
     ('Header', 'Desktop: wordmark and three anchors (Jak počítáme, Odkud máme čísla, Časté dotazy) plus the small button „Poslat mi srovnání“. Phone: wordmark and a hamburger button with the label „Menu“; the phone page also has a sticky bottom bar with the same button.'),
-    ('Hero', f'H1 „{HERO}“, lead „Stejné firmy ze S&amp;P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.“ (one line on the phone), an ETF explainer with a left rule, the button „Spočítat, kolik mě to bude stát“ and the link „nebo rovnou srovnání brokerů“.'),
+    ('Hero', f'H1 „{HERO}“, lead „Stejné firmy ze S&amp;P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.“ (one line on the phone), an ETF explainer with a left rule, the button „Spočítat, kolik mě to bude stát“ and the link „nebo rovnou srovnání brokerů“. This is variant a; variant b changes only the headline, see below.'),
     ('Hero table', 'Card with four European twins: Co koupíte, Roční poplatek, Typ (Acc / Dist). Facts that are not verified carry <code>[ověřit]</code>. One muted line under it: „CSPX: DEGIRO, Trading 212, XTB (ověřeno k 10. 2026). U ostatních fondů a brokerů ověřujeme. Americké VOO a QQQ u většiny brokerů nekoupíte.“ No broker counts.'),
     ('Calculator', 'Dark band, see section 05. It sits directly under the hero so the first scroll answers „what does it cost me“.'),
     ('E-mail form', 'Light card: „Chcete vidět, kde který fond koupíte?“, one field (e-mail), the button „Poslat mi srovnání“, controller and privacy link, and the optional tips checkbox. Error states in section 08.'),
@@ -245,11 +247,20 @@ N_OUT = [
     ('Favicon', 'The compass mark without text: SVG for browsers, PNG 180 px for iPhone, 32 and 16 px for tabs. Readable on light and dark browser chrome.'),
     ('Share image', '1200 × 630: wordmark, the headline, „Poplatky fondů a brokerů v korunách. Na jedné stránce.“, compass tile. Must stay readable at thumbnail size. Title for sharing: „ETF Kompas: americké indexy z Česka, u koho je koupíte“. Description: „Srovnání evropských ETF na S&amp;P 500 a Nasdaq 100: poplatky fondů a brokerů v korunách. Česky, na jedné stránce.“ (to confirm).'),
 ]
+N_AB = [
+    ('What is tested', 'Headline framing: a loss-framed number against the neutral question (SPEC section 11, hypothesis 2). Metric: visit to <code>calc_start</code>. Guard metrics: bounce and lead quality.'),
+    ('Variant a (<code>?v=a</code>, default)', f'H1 „{HERO}“. This is the landing page drawn above.'),
+    ('Variant b (<code>?v=b</code>)', 'H1 „U stejného fondu můžete zbytečně zaplatit až X XXX Kč. Kde?“ Everything else is identical: layout, lead, table, calculator, form, buttons. The non-breaking spaces keep „X XXX Kč“ on one line.'),
+    ('Honest number', 'The amount is the saving box maximum for the default setting (3 000 Kč a month, 10 years). One line under the table says so: „Částka v nadpisu: 3 000 Kč měsíčně, 10 let, odhad bez českých daní a inflace.“ Variant b is served only when the saving box hide rule is met (two brokers with verified prices). Otherwise every visitor gets a.'),
+    ('Ads', 'Both ad sets send traffic to both variants, split equally. Ad angle and headline are separate factors.'),
+    ('Not tested here', 'Calculator-first against table-first (dropped), gate placement (hypothesis 1) and form friction (hypothesis 3). They run later as separate tests, in that order of expected impact.'),
+    ('Before launch', 'Check that the hero still fits 375 × 667 with the longer headline and the extra note (SPEC section 22). <code>track()</code> and the <code>variant</code> field on every event must exist, or the test cannot be read.'),
+]
 N_ADS = [
     ('Ad A', f'Headline „{HERO}“ and the unknown „? z 5“ with „brokerů nabízí evropský fond na S&amp;P 500“ (the number is a placeholder until verified). CTA „Zjistěte to za 20 sekund. Zdarma.“ Footer: „Investování nese riziko ztráty. Příklad výpočtu, ne slib výnosu.“'),
     ('Ad B', 'Two twins side by side, „iShares · CSPX 0,07 %“ (Fond A) and „Vanguard · VUAA 0,07 %“ (Fond B), „U koho je koupíte a za kolik?“ and „Stejný index, jiný fond i broker. Spočítáme to v korunách.“'),
     ('Sizes', 'Feed 4:5 is 540 × 675, stories 9:16 is 405 × 720. Keep the risk line inside the safe area.'),
-    ('First screen after ad A', 'Repeats the ad headline, „Zjistěte to za 20 sekund. Zdarma, bez registrace.“, the two calculator inputs and the button „Ukázat, kolik mě to bude stát“.'),
+    ('Ad and landing variant', 'The ad angle (A or B) and the landing headline (a or b) are separate factors. Each ad set sends traffic to two URLs, <code>?v=a</code> and <code>?v=b</code>, split equally, with <code>utm_content</code> carrying both. The calculator-first hero that used to follow ad A was dropped in rev. 5.'),
 ]
 VERIFY = [
     ('Fees', 'VUAA, VUSA, CSNDX, EQQQ', 'Issuer pages (iShares, Vanguard, Invesco); date and link per number. CSNDX 0,33 % and EQQQ 0,30 % are from memory.'),
@@ -271,6 +282,7 @@ HISTORY = [
     ('rev. 1', 'The original wireframes: an American versus a European fund, and a calculator that showed the difference in Kč.'),
     ('rev. 2', 'Highlighted row means buyable from Czechia, not cheapest. Real fees, „Ne“ only with a source, <code>[ověřit]</code> otherwise. The calculator prices the fund you can buy.'),
     ('rev. 3', 'European twins instead of VOO and QQQ. New headline about <i>where</i> and <i>how much</i>. Typ column. Fund × broker comparison. New ad copy.'),
+    ('rev. 5', 'A/B test defined: <code>?v=a</code> and <code>?v=b</code> share one layout and differ only in the headline (neutral question against a loss-framed number). The calculator-first hero and its artboard were dropped from the documents; ads A and B lead to both variants.'),
     ('rev. 4', 'The green saving box with its hide rule, CSPX in dollars, more room in the phone calculator, honest placeholder previews. Hamburger menu, cookies, privacy policy, 404, unsubscribe, double opt-in, form errors, calculator states, PDF, favicon and share image. This document rewritten as the current reference.'),
 ]
 
@@ -291,12 +303,12 @@ p.append(f'''<!doctype html><html lang="cs"><head><meta charset="utf-8">
 <style>{CSS}</style></head><body>
 <aside class="side" id="side"><a class="side-logo" href="#cover" aria-label="ETF Kompas">{logo(126, 32)}</a>
 <nav aria-label="Obsah">{''.join(f'<a href="#{i}" data-s="{i}"><i>{n}</i>{t}</a>' for i, n, t in NAV)}</nav>
-<p class="side-foot">Design · rev. 4<br>12. 10. 2026</p></aside>
+<p class="side-foot">Design · rev. 5<br>12. 10. 2026</p></aside>
 <main>''')
-p.append(f'''<section class="cover" id="cover"><div class="cover-top">{logo(188, 48, True)}<span class="tag on-dark">Design · current · rev. 4</span></div>
+p.append(f'''<section class="cover" id="cover"><div class="cover-top">{logo(188, 48, True)}<span class="tag on-dark">Design · current · rev. 5</span></div>
 <div class="cover-mid"><span class="tag on-dark">Source of truth</span><h1>ETF Kompas<br>Design study</h1>
 <p>The design as it stands: what the product is and the rules it follows, the design system, every screen and every state. The Wireframe Board shows the same screens on one canvas; this document says why they look like this and what they must do.</p></div>
-<dl class="cover-meta"><div><dt>Datum</dt><dd>12. 10. 2026</dd></div><div><dt>Autor</dt><dd>David Krapka</dd></div><div><dt>Stav</dt><dd>Hotový návrh · rev. 4</dd></div><div><dt>Úroveň</dt><dd>Wireframe · čísla jsou zástupná, [ověřit] = neověřeno</dd></div></dl>
+<dl class="cover-meta"><div><dt>Datum</dt><dd>12. 10. 2026</dd></div><div><dt>Autor</dt><dd>David Krapka</dd></div><div><dt>Stav</dt><dd>Hotový návrh · rev. 5</dd></div><div><dt>Úroveň</dt><dd>Wireframe · čísla jsou zástupná, [ověřit] = neověřeno</dd></div></dl>
 <div class="cover-compass" aria-hidden="true">{favicon(520)}</div></section>''')
 
 p.append('<section id="produkt" class="sec">' + section_head('01', 'Product and rules', 'What the site is for and the rules every screen follows. If a screen and a rule disagree, the rule wins.')
@@ -331,7 +343,8 @@ p.append('<section id="mapa" class="sec">' + section_head('03', 'Screens and flo
 
 p.append('<section id="landing" class="sec">' + section_head('04', 'Landing page', 'One page, top to bottom: the question, the table, the cost, the e-mail, then trust. Desktop 1280 and phone 390.')
          + plate('Main', 'wide')
-         + '<div class="dual"><div>' + plate('B-mobile', 'phone') + '</div><div><h3>Section by section</h3>' + notes(N_LANDING, 1) + '</div></div></section>')
+         + '<div class="dual"><div>' + plate('B-mobile', 'phone') + '</div><div><h3>Section by section</h3>' + notes(N_LANDING, 1) + '</div></div>'
+         + '<h3>Hero variants for the A/B test</h3>' + notes(N_AB, 2) + plate('VB1', 'wide') + '<div class="dual"><div>' + plate('VB2', 'phone') + '</div><div></div></div></section>')
 
 p.append('<section id="kalkulacka" class="sec">' + section_head('05', 'Calculator', 'It answers one question: what does the fund you can actually buy cost over the years, with the broker as the lever. It ends on something positive, but only when the data supports it.')
          + notes(N_CALC) + '<h3>Loading and failure</h3><div class="adrow">' + plate('LC1', 'ad') + '</div>' + plate('LC2', 'wide')
@@ -374,7 +387,7 @@ p.append('<section id="motion" class="sec">' + section_head('10', 'Motion', 'Whe
 p.append('<section id="reklamy" class="sec">' + section_head('11', 'Ads', 'Two concepts, both ending on the landing page. Launch waits for verified data; the message does not.')
          + '<h3>Ad A</h3><div class="adrow">' + plate('G1-adA-4x5', 'ad') + plate('G2-adA-9x16', 'ad') + '</div>'
          + '<h3>Ad B</h3><div class="adrow">' + plate('G3-adB-4x5', 'ad') + plate('G4-adB-9x16', 'ad') + '</div>'
-         + '<div class="dual"><div>' + plate('G5-hero-A-mobile', 'phone') + '</div><div><h3>Copy and rules</h3>' + notes(N_ADS, 1) + '</div></div></section>')
+         + '<h3>Copy and rules</h3>' + notes(N_ADS, 1) + '</section>')
 
 p.append('<section id="otevrene" class="sec">' + section_head('12', 'Open data and build', 'Every amber <code>[ověřit]</code> on the screens is a data task. Launch waits for these; the design does not.')
          + table(['What', 'For', 'How to close it'], [(f'<b>{a}</b>', b, c) for a, b, c in VERIFY])
@@ -384,6 +397,6 @@ p.append('<section id="otevrene" class="sec">' + section_head('12', 'Open data a
 p.append('<section id="historie" class="sec">' + section_head('13', 'History', 'How the design got here. Only for context; the sections above are the current state.')
          + '<div class="hist">' + ''.join(f'<div><b>{a}</b><p>{b}</p></div>' for a, b in HISTORY) + '</div></section>')
 
-p.append(f'<footer class="docfoot">{logo(110, 28, True)}<span>ETF Kompas · Design study · rev. 4 · 12. 10. 2026 · David Krapka</span></footer></main><script>{JS}</script></body></html>')
+p.append(f'<footer class="docfoot">{logo(110, 28, True)}<span>ETF Kompas · Design study · rev. 5 · 12. 10. 2026 · David Krapka</span></footer></main><script>{JS}</script></body></html>')
 open(OUT, 'w').write(''.join(p))
 print('wrote', OUT, os.path.getsize(OUT))

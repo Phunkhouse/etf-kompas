@@ -1,6 +1,6 @@
 # Design
 
-Design source of truth for ETF Kompas (SPEC §24). The wireframes are at revision 4. Wireframe B is the layout direction chosen by David.
+Design source of truth for ETF Kompas (SPEC §24). The wireframes are at revision 5. Wireframe B is the layout direction chosen by David.
 
 ## Files
 
@@ -22,7 +22,7 @@ The older canvas (https://claude.ai/artifact/8PaM6Y6wAcy6nZbQhtaDoi) shows revis
 
 ## Images
 
-Exports of the rev. 4 artboards (content height, 2x, 256-colour PNG).
+Exports of the rev. 5 artboards (content height, 2x, 256-colour PNG).
 
 | Screen                                | Image                                                                                                                                                                                                                                                      |
 | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -39,7 +39,7 @@ Exports of the rev. 4 artboards (content height, 2x, 256-colour PNG).
 | PDF, A4 pages 1 and 4                 | [pdf-page-1.png](images/pdf-page-1.png), [pdf-page-4.png](images/pdf-page-4.png)                                                                                                                                                                           |
 | Favicon, share image                  | [favicon.png](images/favicon.png), [share-image.png](images/share-image.png)                                                                                                                                                                               |
 | Motion (still of the live board)      | [motion.png](images/motion.png)                                                                                                                                                                                                                            |
-| First screen after ad A (hero a)      | [hero-a-mobile.png](images/hero-a-mobile.png)                                                                                                                                                                                                              |
+| Hero variant b (A/B test, hero only)  | [hero-b-desktop.png](images/hero-b-desktop.png), [hero-b-mobile.png](images/hero-b-mobile.png)                                                                                                                                                             |
 | Ads A and B, 4:5 and 9:16             | [ad-a-4x5.png](images/ad-a-4x5.png), [ad-a-9x16.png](images/ad-a-9x16.png), [ad-b-4x5.png](images/ad-b-4x5.png), [ad-b-9x16.png](images/ad-b-9x16.png)                                                                                                     |
 
 The text spec and the design guide are the working references for agents. If an image or the Design Study disagrees with them, tell David and fix the files after he decides.
@@ -47,6 +47,6 @@ The text spec and the design guide are the working references for agents. If an 
 ## Rules
 
 - Spacing, type and colour only from tokens (SPEC §24). A value that is not in the guide needs a note in the PR.
-- Wireframe copy is a draft. Final Czech copy comes from SPEC §25 and `src/content/copy.ts`, which lags the rev. 4 wireframes (note 0035).
+- Wireframe copy is a draft. Final Czech copy comes from SPEC §25 and `src/content/copy.ts`, which lags the rev. 5 wireframes (note 0035).
 - No logo design: the logo is final and lives in `public/brand/`.
 - A change to the design lands in the Design Study first, then in these files.

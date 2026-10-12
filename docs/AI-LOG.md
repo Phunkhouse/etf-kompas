@@ -261,6 +261,8 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Fonts fell back to serif in the motion board** because of shorthands without a generic family. Fixed, and the exported image was checked.
 - Limits: `pnpm check` and the browser were not run against app code, because only docs and wireframe files changed. The copy, type token and headline differences between the design and the code are listed in note 0035 and not resolved here.
 
+**Follow-up in a second PR (rev. 5):** PR #26 was already merged when this work started, so rev. 5 is a new branch from main. David chose the A/B definition "same layout, headline only" (note 0041). The Study and Board gained two variant b hero boards, the calculator-first hero was removed from the documents, `hero-b-desktop.png` and `hero-b-mobile.png` replaced `hero-a-mobile.png`, and SPEC §6, §11 and §22 and the README sections for conversion and hypotheses were updated. Mistakes: the brief said the PR was open and its decision would be note 0036, but PR #26 was merged and 0036 to 0040 already existed, so I numbered the note 0041; the brief's own sample-size figure (3,300 per variant) was a little high, and I recomputed 3,200. Limit: the 375 x 667 hero fit with the longer headline and the extra sentence is not measured.
+
 ### Data needs per screen (after wireframe rev. 4)
 
 **Prompt (summary):** David asked how PR #26 (the rev. 4 design docs) affects the phases, and to fill the data gaps without another design review. He answered: deliver by tomorrow evening, build `docs/DATA-NEEDS.md` and `pnpm data:gaps`, "poplatky brokera" counts both purchase commission and custody fee, fees stay static, and asked me to explain what I meant by a design freeze and to suggest a fund set.
