@@ -29,6 +29,12 @@
   color: var(--color-pill-ver-ink);
 }
 
+.neutral {
+  border-color: var(--color-border);
+  background: var(--color-row-hover);
+  color: var(--color-ink);
+}
+
 .pill {
   @include from('md') {
     padding-inline: var(--space-3);

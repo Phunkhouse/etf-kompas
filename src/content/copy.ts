@@ -41,52 +41,57 @@ export const copy = {
         text: ' je fond, který jen kopíruje trh. Nemá drahé správce, a proto je levný.',
       },
       table: {
-        caption: 'Cena a dostupnost',
+        caption: 'Roční poplatek a typ fondu',
         columns: {
           what: 'Co koupíte',
           fee: 'Roční poplatek',
-          buyable: 'Koupíte z ČR?',
+          type: 'Typ',
         },
         source: (date: string) =>
           `zdroj: stránky fondů a firem · ověřeno k ${date}`,
         feeUnknown: '[ověřit]',
-        pill: { yes: 'Ano', no: 'Ne', unverified: '[ověřit]' },
-        // Shown under the amber pill: how many firms are verified as not selling it.
-        verifiedNo: (count: number, total: number) =>
-          `Ne u ${count} z ${total} firem`,
-        // A row's plainName comes first; the technical name and ticker follow
-        // (SPEC §25 rule 3, decision note 0026). The rows follow the funds in
-        // data/etfs.json by id.
+        // Acc: the fund reinvests its income; Dist: it pays it out.
+        type: {
+          accumulating: 'Acc',
+          distributing: 'Dist',
+          unverified: '[ověřit]',
+        },
+        // A row's plainName comes first; the technical name, ticker and manager
+        // follow (SPEC §25 rule 3, decision note 0026). The rows follow the funds
+        // in data/etfs.json by id; the manager is in the fund's name there.
         rows: {
-          voo: {
-            plainName: 'Americký fond na 500 největších firem',
-            detail: 'odborně S&P 500, značka VOO',
-            inSentence: 'americký fond na 500 největších firem (VOO)',
-          },
-          qqq: {
-            plainName: 'Americký fond na 100 technologických firem',
-            detail: 'odborně Nasdaq 100, značka QQQ',
-            inSentence: 'americký fond na 100 technologických firem (QQQ)',
-          },
           cspx: {
-            plainName: 'Evropská verze prvního fondu',
-            detail: 'stejných 500 firem, značka CSPX, sídlí v Evropě',
-            inSentence: 'evropská verze prvního fondu (CSPX)',
+            plainName: 'Evropský fond na 500 největších firem',
+            detail: 'odborně S&P 500, značka CSPX, správce iShares',
+          },
+          vuaa: {
+            plainName: 'Evropský fond na 500 největších firem',
+            detail: 'odborně S&P 500, značka VUAA, správce Vanguard',
+          },
+          cndx: {
+            plainName: 'Evropský fond na 100 technologických firem',
+            detail: 'odborně Nasdaq 100, značka CNDX, správce iShares',
+          },
+          eqqq: {
+            plainName: 'Evropský fond na 100 technologických firem',
+            detail: 'odborně Nasdaq 100, značka EQQQ, správce Invesco',
           },
         },
       },
-      // One text for every screen width. It is chosen from the data, so it
-      // cannot say something that the table no longer shows.
-      footnote: {
-        none: 'Jen cena a dostupnost, ne výnosy.',
-        highlighted:
-          'Zvýrazněno je to, co koupíte z ČR. Jen cena a dostupnost, ne výnosy.',
-        notCheapest: (lowest: string, verifiedNo: number, total: number) =>
-          `Zvýrazněno je to, co koupíte z ČR, ne to nejlevnější. Nejnižší poplatek má ${lowest}, ale u ${verifiedNo} z ${total} firem ho nekoupíte. Jen cena a dostupnost, ne výnosy.`,
-        notCheapestNowhere: (lowest: string, total: number) =>
-          `Zvýrazněno je to, co koupíte z ČR, ne to nejlevnější. Nejnižší poplatek má ${lowest}, ale u žádné z ${total} firem ho nekoupíte. Jen cena a dostupnost, ne výnosy.`,
-        notCheapestUnchecked: (lowest: string) =>
-          `Zvýrazněno je to, co koupíte z ČR, ne to nejlevnější. Nejnižší poplatek má ${lowest}, kde ho koupíte, zatím ověřujeme. Jen cena a dostupnost, ne výnosy.`,
+      // The muted line under the table. Chosen from the data, so it never says
+      // more than the data shows. The tickers come in as parameters from the data.
+      note: {
+        sellers: (ticker: string, names: string, date: string) =>
+          `${ticker}: ${names} (ověřeno k ${date}).`,
+        sellersNoDate: (ticker: string, names: string) =>
+          `${ticker}: ${names}.`,
+        noSellers: (ticker: string) =>
+          `U kterých brokerů koupíte ${ticker}, zatím ověřujeme.`,
+        others: 'U ostatních fondů a brokerů ověřujeme.',
+        originalsMostlyNo: (tickers: string) =>
+          `Americké ${tickers} u většiny brokerů nekoupíte.`,
+        originalsChecking: (tickers: string) =>
+          `U amerických ${tickers} zatím ověřujeme, kde je koupíte.`,
       },
     },
   },

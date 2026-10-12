@@ -2,10 +2,31 @@ import { describe, expect, it } from 'vitest'
 import { landingData } from './landing-data'
 
 describe('landingData (the real data files)', () => {
-  it('gives the three hero rows in the order VOO, QQQ, CSPX', async () => {
+  it('gives the four hero twins in the order CSPX, VUAA, CNDX, EQQQ', async () => {
     const { loadData } = await import('./data/load')
     const result = landingData(await loadData())
-    expect(result.rows.map((row) => row.fundId)).toEqual(['voo', 'qqq', 'cspx'])
+    expect(result.twins.map((twin) => twin.fundId)).toEqual([
+      'cspx',
+      'vuaa',
+      'cndx',
+      'eqqq',
+    ])
+    expect(result.twins.map((twin) => twin.type)).toEqual([
+      'accumulating',
+      'accumulating',
+      'accumulating',
+      'distributing',
+    ])
+  })
+
+  it('gives the note about the first twin and the American originals', async () => {
+    const { loadData } = await import('./data/load')
+    const { note } = landingData(await loadData())
+    expect(note.fundId).toBe('cspx')
+    expect(note.sellers).toEqual(expect.arrayContaining(['DEGIRO']))
+    expect(note.originals.tickers).toEqual(['VOO', 'QQQ'])
+    // DEGIRO, Trading 212 and XTB are verified as not selling them
+    expect(note.originals.mostlyNo).toBe(true)
   })
 
   it('gives the date of the oldest number', async () => {

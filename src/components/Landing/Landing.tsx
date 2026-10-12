@@ -6,7 +6,7 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { SourceBar } from '@/components/SourceBar'
 import { copy } from '@/content/copy'
 import { nbsp } from '@/lib/typography'
-import type { HeroRow } from '@/server/availability'
+import type { HeroNote, HeroTwin } from '@/server/hero'
 import type { CalculatorData } from '@/server/calculator-data'
 import styles from './Landing.module.scss'
 
@@ -16,8 +16,9 @@ type LandingProps = {
   // a = calculator-first hero (ad A), b = table-first hero (ad B)
   variant: Variant
   dataAsOf: string | null
-  // The rows of the hero b table; hero a does not use them.
-  rows?: HeroRow[]
+  // The hero b table and its muted line; hero a does not use them.
+  twins?: HeroTwin[]
+  note?: HeroNote
   // The calculator band: left out when undefined, the failure state when null.
   calculator?: CalculatorData | null
 }
@@ -27,7 +28,8 @@ type LandingProps = {
 export function Landing({
   variant,
   dataAsOf,
-  rows = [],
+  twins = [],
+  note,
   calculator,
 }: LandingProps) {
   return (
@@ -36,7 +38,7 @@ export function Landing({
       <SiteHeader />
       <main>
         {variant === 'b' ? (
-          <HeroB rows={rows} dataAsOf={dataAsOf} />
+          <HeroB twins={twins} note={note} dataAsOf={dataAsOf} />
         ) : (
           <Section labelledBy="hero-headline">
             <h1 id="hero-headline" className={styles.headline}>
