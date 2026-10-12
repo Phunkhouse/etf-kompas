@@ -78,5 +78,10 @@
     "url": "https://www.fio.cz",
     "title": "Fio e-Broker instrument search (demo account)",
     "publisher": "Fio banka"
+  },
+  {
+    "url": "https://fund-docs.vanguard.com/SandP_500_UCITS_ETF_USD_Distributing_9503_EU_INT_UK_EN.pdf",
+    "title": "Vanguard S&P 500 UCITS ETF (USD) Distributing: factsheet 31 August 2026",
+    "publisher": "Vanguard"
   }
 ]

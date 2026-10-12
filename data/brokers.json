@@ -293,7 +293,7 @@
         "asOf": "2026-10-12",
         "verifiedBy": "David",
         "verifiedOn": "2026-10-12",
-        "evidence": "sha256:021571f02041386c745d1b05339cffcd2e35ca333fe49584bec9a41eb32fed70 (fio-vusa-search-01-2026-10-12.png) and sha256:3e2a666699bdcfbd66d586c09846558281edcbe0b056e1a272c75ffe5d73a295 (fio-vusa-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"VANGUARD S&P 500 ETF (SRN : VUSA)\" and purchase form: ticker VUSA, market XETRA, price in EUR. The ISIN is not shown by Fio; VUSA is the distributing class IE00B3XXRP09 named in Vanguard's key investor information (sha256:a9a658c3f035937654e64418cd5fec8b333db9981f3395631b2e703010e4e8a8, vusa-kiid.pdf), tied by the ticker only (no other broker screenshot yet shows ticker and ISIN together)"
+        "evidence": "sha256:021571f02041386c745d1b05339cffcd2e35ca333fe49584bec9a41eb32fed70 (fio-vusa-search-01-2026-10-12.png) and sha256:3e2a666699bdcfbd66d586c09846558281edcbe0b056e1a272c75ffe5d73a295 (fio-vusa-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"VANGUARD S&P 500 ETF (SRN : VUSA)\" and purchase form: ticker VUSA, market XETRA, price in EUR. The ISIN is not shown by Fio; Vanguard's factsheet (sha256:85dd8e418661866430b4c80aec710d4ad0d1688af35279524614d9ce194aed51, vusa-factsheet.pdf, 31 August 2026) lists \"Deutsche Börse, EUR, VUSA, VUSA.DE\" for ISIN IE00B3XXRP09 (distributing), which ties the ticker VUSA on the German exchange to that ISIN"
       },
       "eqqq": {
         "value": true,

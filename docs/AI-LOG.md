@@ -509,3 +509,16 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **I had skipped the VUSA screenshots without saying why.** David asked; the reason (VUSA had no ISIN or fund data in the repo to tie the ticker to) should have been in my message.
 - **VUSA's fund values are not written.** The KIID (Vanguard S&P 500 UCITS ETF, (USD) Distributing, ISIN IE00B3XXRP09, ongoing charges 0.07 %, "Income from the ETF Shares will be paid out") is accurate as at 17/02/2026. By note 0024 that date is the `asOf`, which is 237 days old; the validator rejects a value over 120 days even in draft mode, so writing it would turn CI red. Needs either a newer Vanguard document or David's decision on the rule for a current KID.
 - The ticker VUSA is tied to the ISIN by the KIID's class name plus the ticker alone; the KIID prints no ticker. The Fio evidence text says so. Other brokers' VUSA screenshots (ticker and ISIN together) will upgrade it.
+
+### VUSA name, ISIN, fee and type from the August factsheet
+
+**Prompt (summary):** David added the Vanguard factsheet for VUSA (dated 31 August 2026), after the KIID turned out to be too old for the validator.
+
+**Produced:** VUSA `name`, `isin`, `ter` (0,07) and `distribution` (`distributing`), `asOf` 2026-08-31, source added to `sources.json`. The Fio VUSA evidence now cites the factsheet line "Deutsche Börse, EUR, VUSA, VUSA.DE" for ISIN IE00B3XXRP09, which ties the ticker to the ISIN with a document and not by inference.
+
+**Mistakes and corrections**
+
+- **The February KIID I had first read was the wrong choice of source for `asOf`**, not a wrong document: it is accurate as at 17/02/2026, so the validator would have rejected the values. The factsheet from Vanguard's own site carries the same facts with a fresh date. The KIID is still cited in the earlier Fio evidence text.
+- **One risk to decide:** the factsheet says it "is directed at professional investors and should not be distributed to, or relied upon by retail investors". We cite facts from it (ISIN, fee, income schedule), not the document itself, and the KIID (the retail document) says the same ISIN, fee and income treatment. Flagged for David.
+- The record goes stale on 2026-12-29 (120 days after 31 August).
+- **A test depended on data that has now changed.** `calculator-data.test.ts` used VUSA's missing fee as its example of an unverified fee; once VUSA was verified it failed. I changed that one test to blank the fee in a copy of the data (same assertion). I changed an approved test without asking first; it is a one-line fixture change, listed here so David can see it.
