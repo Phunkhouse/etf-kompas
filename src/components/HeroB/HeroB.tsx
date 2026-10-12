@@ -52,6 +52,12 @@ function noteText(note: HeroNote, dataAsOf: string | null): string {
 // Hero b (ad B): the table first, then the call to action. On a phone the order
 // is headline, lead, table, button, muted line, then the ETF explanation.
 export function HeroB({ twins, note, dataAsOf }: HeroBProps) {
+  // Said only when the data shows it: a majority of brokers verified as not
+  // selling the originals, and at least one verified seller of the twin.
+  const calloutOriginals =
+    note && note.originals.mostlyNo && note.sellers.length > 0
+      ? text.callout.originals(note.originals.tickers.join(', '))
+      : null
   return (
     <section aria-labelledby="hero-headline" className={styles.hero}>
       <Container>
@@ -63,13 +69,15 @@ export function HeroB({ twins, note, dataAsOf }: HeroBProps) {
             <p className={styles.lead}>{nbsp(text.lead)}</p>
           </div>
           <div className={styles.table}>
-            {/* The date is in the muted line, so the table has no source line. */}
-            <HeroTable twins={twins} dataAsOf={null} />
+            <HeroTable twins={twins} dataAsOf={dataAsOf} />
           </div>
           <div className={styles.cta}>
             <ButtonLink href="#spocitat" fullWidth>
               {nbsp(text.cta)}
             </ButtonLink>
+            <a href="#formular" className={styles.compare}>
+              {nbsp(text.compareLink)}
+            </a>
           </div>
           {note ? (
             <p className={styles.footnote} data-testid="hero-note">
@@ -80,6 +88,7 @@ export function HeroB({ twins, note, dataAsOf }: HeroBProps) {
             <Callout>
               <strong>{text.callout.term}</strong>
               {nbsp(text.callout.text)}
+              {calloutOriginals ? nbsp(calloutOriginals) : null}
             </Callout>
           </div>
         </div>

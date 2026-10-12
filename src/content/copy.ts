@@ -7,8 +7,8 @@ export const copy = {
   // Page frame: source bar, header, footer (wireframe B, sections 0, 1 and 8).
   shell: {
     sourceBar: (date: string) =>
-      `Čísla ze stránek fondů a firem · ověřeno k ${date}`,
-    sourceBarNoDate: 'Čísla ze stránek fondů a firem',
+      `Čísla ze stránek fondů a brokerů · ověřeno k ${date}`,
+    sourceBarNoDate: 'Čísla ze stránek fondů a brokerů',
     riskShort: 'Investování nese riziko ztráty.',
     nav: {
       label: 'Hlavní nabídka',
@@ -40,21 +40,26 @@ export const copy = {
     b: {
       headline: 'Americké indexy z Česka: u koho je koupíte a za kolik?',
       lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.',
-      cta: 'Spočítat, kolik zaplatím',
+      cta: 'Spočítat, kolik mě to bude stát',
+      // Under the button: goes to the e-mail form (the comparison is behind it).
+      compareLink: 'nebo rovnou srovnání brokerů',
       // The one use of "ETF" on the page (SPEC §25 rule 2).
+      // The second sentence is shown only when the data supports it.
       callout: {
         term: 'ETF',
-        text: ' je fond, který jen kopíruje trh. Nemá drahé správce, a proto je levný.',
+        text: ' je fond, který jen kopíruje trh.',
+        originals: (tickers: string) =>
+          ` Americké fondy (${tickers}) u většiny brokerů z Česka nekoupíte, evropské verze stejných indexů ano.`,
       },
       table: {
-        caption: 'Roční poplatek a typ fondu',
+        caption: 'Cena fondů',
         columns: {
           what: 'Co koupíte',
           fee: 'Roční poplatek',
           type: 'Typ',
         },
         source: (date: string) =>
-          `zdroj: stránky fondů a firem · ověřeno k ${date}`,
+          `zdroj: stránky fondů a brokerů · ověřeno k ${date}`,
         feeUnknown: '[ověřit]',
         // Acc: the fund reinvests its income; Dist: it pays it out.
         type: {

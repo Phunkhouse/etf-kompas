@@ -6,13 +6,15 @@ describe('SourceBar', () => {
   it('names the source and the month of the oldest number', () => {
     render(<SourceBar dataAsOf="2026-06-30" />)
     expect(
-      screen.getByText(/Čísla ze stránek fondů a firem/).textContent,
+      screen.getByText(/Čísla ze stránek fondů a brokerů/).textContent,
     ).toContain('ověřeno k 6. 2026')
   })
 
   it('leaves the date out when there is no data', () => {
     render(<SourceBar dataAsOf={null} />)
-    const text = screen.getByText(/Čísla ze stránek fondů a firem/).textContent
+    const text = screen.getByText(
+      /Čísla ze stránek fondů a brokerů/,
+    ).textContent
     expect(text).not.toContain('ověřeno')
   })
 

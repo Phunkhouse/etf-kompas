@@ -18,10 +18,14 @@
 
   @include from('md') {
     grid-template-columns: 1fr 1fr;
+    // The table spans the left column's rows; the spare height goes to the row of
+    // the button, so headline, callout and button stay together at the top.
+    grid-template-rows: auto auto 1fr auto;
     grid-template-areas:
       'intro table'
       'callout table'
-      'cta footnote';
+      'cta table'
+      '. footnote';
     align-items: start;
     column-gap: var(--space-14);
     row-gap: var(--space-6);
@@ -46,6 +50,7 @@
 .cta {
   @include from('md') {
     grid-area: cta;
+    align-self: start;
   }
 }
 
@@ -93,4 +98,12 @@
     display: block;
     font-size: var(--font-size-lg);
   }
+}
+
+// "nebo rovnou srovnání brokerů" under the button
+.compare {
+  display: inline-block;
+  margin-top: var(--space-3);
+  color: var(--color-ink);
+  font-size: var(--font-size-sm);
 }

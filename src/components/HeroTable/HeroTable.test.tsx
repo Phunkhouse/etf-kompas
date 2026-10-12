@@ -22,7 +22,7 @@ describe('HeroTable', () => {
   it('is a table with three columns: what, annual fee and type', () => {
     render(<HeroTable twins={twins} dataAsOf="2026-06-30" />)
     const table = screen.getByRole('table', {
-      name: 'Roční poplatek a typ fondu',
+      name: 'Cena fondů',
     })
     expect(
       within(table)
@@ -92,7 +92,7 @@ describe('HeroTable', () => {
     render(<HeroTable twins={twins} dataAsOf="2026-06-30" />)
     expect(
       screen
-        .getByText(/zdroj: stránky fondů a firem/)
+        .getByText(/zdroj: stránky fondů a brokerů/)
         .textContent!.replace(/\s/g, ' '),
     ).toContain('ověřeno k 6. 2026')
   })

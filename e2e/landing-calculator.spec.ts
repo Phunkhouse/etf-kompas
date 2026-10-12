@@ -4,7 +4,9 @@ import { test, expect } from '@playwright/test'
 test.describe('landing page calculator', () => {
   test('the hero button jumps to the calculator @smoke', async ({ page }) => {
     await page.goto('/?v=b')
-    await page.getByRole('link', { name: /Spočítat, kolik zaplatím/ }).click()
+    await page
+      .getByRole('link', { name: /Spočítat, kolik mě to bude stát/ })
+      .click()
     await expect(page).toHaveURL(/#spocitat$/)
     const section = page.getByRole('region', {
       name: 'Kolik vás to bude stát?',

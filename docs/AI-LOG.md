@@ -571,3 +571,17 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **The first run failed my own approved test:** at 375x667 the top of the result number (y=649) peeked into the first screen, a half-cut "14 416 Kč" at the bottom edge. I added 32 px of space under the start button on phones, which puts the result at about 681 px.
 - The old hero-a headline ("Které fondy si z Česka opravdu koupíte?") is gone from the code. Any ad copy that still points to it would no longer match the page.
 - Desktop hero a is not drawn; it was built as agreed (inputs left, result right, no start button) and looked at in a screenshot only, not reviewed by David.
+
+### Hero polish (A of the Phase 3 checklist)
+
+**Prompt (summary):** "Fix all hero differences, order A B C D, also create a checklist"; then "yes, keep, keep, keep; tests approved".
+
+**Produced:** the callout in the drawing's wording (its second sentence only when the data supports it), the link "nebo rovnou srovnání brokerů" (to `#formular`, a dead anchor until B), the table header "Cena fondů" with the source at its top right on desktop, "brokerů" in the top bar and the source line, the button label "Spočítat, kolik mě to bude stát", and a desktop grid fix that packs headline, callout and button together. Tests first: 7 failed before; 358 unit/component and 52 e2e pass after. JS unchanged.
+
+**Mistakes and corrections**
+
+- **My edit script replaced nothing in four test files** (I passed a replacement count of 0 to `str.replace`), so the old button label stayed in the tests and two failed. Fixed by replacing all occurrences. The earlier test-first step of this slice is why I noticed at once.
+- **A macOS `sed -i` call failed** (it needs an empty suffix argument); I used Python for the one-line edit instead.
+- **I missed a hero difference when I listed them:** on desktop the table's height stretched the grid, so the callout and button were pushed far apart and the button was cut off at an 800 px-high screen. I found it only by looking at the screenshot; fixed with a grid row that takes the spare height.
+- Kept on purpose (David's decisions): the phone shows no lead and the callout stays after the table (fit), long plain names in the rows (note 0026), the muted line below the card. The hamburger menu moved to C, with its panel.
+- The "ověřeno k 6. 2026" in the top bar and the card is the oldest `asOf` in the whole data, not only in what the page shows; the drawing's 10. 2026 is a placeholder. Not changed.
