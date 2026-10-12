@@ -599,3 +599,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **JS budget is getting tight:** our code now adds 14.2 KB (limit 20) and the route is 146.7 KB (limit 150), up 2.8 KB from this PR. The remaining PRs (B2, C, Phase 4 and 5) have about 3 KB to spend on the route, so they must be mostly server-rendered.
 - **Not done on purpose:** the calculator's amount and years are not sent with the lead (Phase 4); no honeypot, no rate limit, no storage (Phase 4); no link on "Zásady zpracování osobních údajů" (privacy page, C).
 - **Noticed, not changed:** on hero b the calculator's own heading ("Kolik vás to bude stát?") renders as a small mono label, while the drawing shows a large bold heading. Left for D (the side-by-side review).
+
+### The explainer sections (B2 of the Phase 3 checklist)
+
+**Prompt (summary):** David's decision to leave the JS budget alone for now, then "approved, implement B2".
+
+**Produced:** `HiddenCosts` ("Za co platíte, aniž to vidíte": three numbered cards, the numbers drawn by a CSS counter so the text has no figures) and `EmailPreview` ("Co dostanete e-mailem": heading, text, the button to the form, two drawn page previews with captions), both server-rendered and placed after the calculator band. Tests first: 12 failed before; 419 unit/component and 69 e2e pass after. JS: ours 14.5 KB, route 147.1 KB (+0.4 KB, the Landing wiring only).
+
+**Mistakes and corrections**
+
+- None found in the code. The wording of the three cards is a proposal for David's copy review: the conversion card is mine (the wireframe's "Americké fondy chtějí dolary" does not match our data), the tax card is the wireframe's sentence as David approved.
+- **Cosmetic, not fixed:** on a 375 px phone the preview caption "Strana 1 · Srovnání" wraps to two lines on the narrow card. Left for D.
+- The "Otevře se hned po odeslání" line promises the finished product (the results page comes in Phase 4); the site is noindex until then.

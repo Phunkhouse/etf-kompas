@@ -126,3 +126,38 @@ describe('Landing, variant b with the table', () => {
     expect(screen.queryByRole('table')).toBeNull()
   })
 })
+
+describe('Landing, the explainer sections', () => {
+  it.each(['a', 'b'] as const)(
+    'has "Za co platíte" and "Co dostanete e-mailem" in hero %s, after the calculator band',
+    (variant) => {
+      const data = calculatorData(bundledData, RATES, 'cspx')
+      render(<Landing variant={variant} dataAsOf={null} calculator={data} />)
+      const band = screen.getByRole('region', {
+        name: 'Kolik vás to bude stát?',
+      })
+      const costs = screen.getByRole('region', {
+        name: 'Za co platíte, aniž to vidíte',
+      })
+      const preview = screen.getByRole('region', {
+        name: 'Fondy, brokeři a co z toho koupíte z Česka',
+      })
+      const after = (a: Element, b: Element) =>
+        Boolean(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING)
+      expect(after(band, costs)).toBe(true)
+      expect(after(costs, preview)).toBe(true)
+    },
+  )
+
+  it('has them without a calculator too, since they are static content', () => {
+    render(<Landing variant="a" dataAsOf={null} />)
+    expect(
+      screen.getByRole('region', { name: 'Za co platíte, aniž to vidíte' }),
+    ).toBeTruthy()
+    expect(
+      screen.getByRole('region', {
+        name: 'Fondy, brokeři a co z toho koupíte z Česka',
+      }),
+    ).toBeTruthy()
+  })
+})
