@@ -7,7 +7,9 @@ test.use({ viewport: { width: 375, height: 667 } })
 
 test('hero b fits 375x667 including its button', async ({ page }) => {
   await page.goto('/?v=b')
-  const button = page.getByRole('link', { name: /Spočítat, kolik zaplatím/ })
+  const button = page.getByRole('link', {
+    name: /Spočítat, kolik mě to bude stát/,
+  })
   await expect(button).toBeVisible()
 
   const box = await button.boundingBox()

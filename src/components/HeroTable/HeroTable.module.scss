@@ -1,4 +1,7 @@
+@use 'styles/utilities' as *;
+
 .block {
+  position: relative;
   display: grid;
   gap: var(--space-2);
 }
@@ -13,8 +16,19 @@
   white-space: normal;
 }
 
+// The source line sits at the top right of the card on wide screens, in line
+// with the table name. On phones it is left out: the date is in the top bar and
+// in the muted line (the caption is hidden there too).
 .source {
+  display: none;
   margin: 0;
   color: var(--color-muted);
   font-size: var(--font-size-xs);
+
+  @include from('md') {
+    display: block;
+    position: absolute;
+    top: var(--space-5);
+    right: var(--space-5);
+  }
 }

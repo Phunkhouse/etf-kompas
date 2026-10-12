@@ -6,7 +6,7 @@ test.describe('hero b table', () => {
   test('has four funds with three columns', async ({ page }) => {
     await page.goto('/?v=b')
     const table = page.getByRole('table', {
-      name: 'Roční poplatek a typ fondu',
+      name: 'Cena fondů',
     })
     await expect(table.getByRole('columnheader')).toHaveText([
       'Co koupíte',
@@ -33,6 +33,31 @@ test.describe('hero b table', () => {
     await expect(line).toContainText(/CSPX: .*DEGIRO/)
     await expect(line).toContainText(/ověřeno k \d+\.\s2026/)
     await expect(line).toContainText(/VOO a QQQ u většiny brokerů nekoupíte/)
+  })
+
+  test('has the callout and the link to the form', async ({ page }) => {
+    await page.goto('/?v=b')
+    await expect(page.getByRole('note')).toContainText(
+      /Americké fondy \(VOO, QQQ\) u většiny brokerů z Česka nekoupíte/,
+    )
+    await expect(
+      page.getByRole('link', { name: 'nebo rovnou srovnání brokerů' }),
+    ).toHaveAttribute('href', '#formular')
+  })
+
+  test('the card header names the source and the top bar says brokers', async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto('/?v=b')
+    await expect(
+      page.getByText(/Čísla ze stránek fondů a brokerů/),
+    ).toBeVisible()
+    if (!isMobile) {
+      await expect(
+        page.getByText(/zdroj: stránky fondů a brokerů/),
+      ).toBeVisible()
+    }
   })
 
   test('says nothing like "nejlevnější"', async ({ page }) => {

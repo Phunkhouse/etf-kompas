@@ -115,11 +115,9 @@ describe('Landing, variant b with the table', () => {
     render(
       <Landing variant="b" dataAsOf="2026-06-30" twins={twins} note={note} />,
     )
+    expect(screen.getByRole('table', { name: 'Cena fondů' })).toBeTruthy()
     expect(
-      screen.getByRole('table', { name: 'Roční poplatek a typ fondu' }),
-    ).toBeTruthy()
-    expect(
-      screen.getByRole('link', { name: /Spočítat, kolik zaplatím/ }),
+      screen.getByRole('link', { name: /Spočítat, kolik mě to bude stát/ }),
     ).toBeTruthy()
   })
 

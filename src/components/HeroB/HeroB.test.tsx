@@ -41,7 +41,7 @@ describe('HeroB', () => {
     expect(screen.getByRole('table')).toBeTruthy()
     expect(
       screen
-        .getByRole('link', { name: /Spočítat, kolik zaplatím/ })
+        .getByRole('link', { name: /Spočítat, kolik mě to bude stát/ })
         .getAttribute('href'),
     ).toBe('#spocitat')
   })
@@ -53,9 +53,53 @@ describe('HeroB', () => {
     )
   })
 
-  it('has no link to a comparison of brokers yet (the page does not exist)', () => {
+  it('has a link "nebo rovnou srovnání brokerů" that goes to the e-mail form', () => {
     render(<HeroB twins={twins} note={note()} dataAsOf={null} />)
-    expect(screen.queryByText(/srovnání brokerů/)).toBeNull()
+    expect(
+      screen
+        .getByRole('link', { name: 'nebo rovnou srovnání brokerů' })
+        .getAttribute('href'),
+    ).toBe('#formular')
+  })
+
+  describe('the callout', () => {
+    const calloutText = () =>
+      (screen.getByRole('note').textContent ?? '').replace(/\s/g, ' ')
+
+    it('explains ETF in one sentence and, when the data shows it, says what can be bought', () => {
+      render(<HeroB twins={twins} note={note()} dataAsOf={null} />)
+      expect(calloutText()).toContain('ETF je fond, který jen kopíruje trh.')
+      expect(calloutText()).toContain(
+        'Americké fondy (VOO, QQQ) u většiny brokerů z Česka nekoupíte, evropské verze stejných indexů ano.',
+      )
+    })
+
+    it('does not say the originals are mostly not sold without a majority in the data', () => {
+      render(
+        <HeroB
+          twins={twins}
+          note={note({
+            originals: { tickers: ['VOO', 'QQQ'], mostlyNo: false },
+          })}
+          dataAsOf={null}
+        />,
+      )
+      expect(calloutText()).toContain('ETF je fond, který jen kopíruje trh.')
+      expect(calloutText()).not.toContain('nekoupíte')
+    })
+
+    it('does not say the European versions can be bought while no seller is verified', () => {
+      render(
+        <HeroB twins={twins} note={note({ sellers: [] })} dataAsOf={null} />,
+      )
+      expect(calloutText()).not.toContain('evropské verze stejných indexů ano')
+    })
+
+    it('has only the ETF sentence without a note', () => {
+      render(<HeroB twins={twins} dataAsOf={null} />)
+      expect(calloutText()).toContain('ETF je fond, který jen kopíruje trh.')
+      expect(calloutText()).not.toContain('nekoupíte')
+    })
   })
 
   describe('the muted line under the table', () => {
