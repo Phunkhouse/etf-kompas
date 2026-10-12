@@ -264,12 +264,12 @@
         "evidence": null
       },
       "cspx": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.fio.cz",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:75c216b7a2c9bed82282dff56d0c4a7f3cd053eca733edca5b552e83ef80ffcb (fio-sxr8-search-01-2026-10-12.png) and sha256:39e043a76d282a9e5ed84011855f0eea9caea793e416bc8450b4cf94e0631e68 (fio-sxr8-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"ISHARES S&P 500 ETF (SRN : SXR8)\" and purchase form: ticker SXR8, market XETRA, price in EUR. INFERENCE accepted by David (2026-10-12): Fio shows no ISIN and its name does not tell iShares funds apart; the ticker SXR8 is taken to be iShares Core S&P 500 UCITS ETF (IE00B5BMR087) on the strength of a Gemini note and David's check, and the iShares factsheet (listed on Deutsche Boerse Xetra) does not print the ticker. To be replaced by a document that does"
       },
       "vuaa": {
         "value": true,
@@ -280,12 +280,12 @@
         "evidence": "sha256:6e96a301910ff3226f01b9767b30dd4282678b91ee9088649958e042c3ff50f5 (fio-vuaa-search-01-2026-10-12.png) and sha256:9bcdf84b9a7173ab52d6739b25bc15bc3675f66ce43e067f9dcab3e8ce1d2c61 (fio-vuaa-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"VANGUARD S&P 500 ETF (SRN : VUAA)\" and purchase form: ticker VUAA, market XETRA, price in EUR. The ISIN is not shown by Fio; VUAA is linked to IE00BFMXXD54 by the DEGIRO screenshot of the same ticker"
       },
       "cndx": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.fio.cz",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:84ea4355c0cc1eb000ef03a78dbd1ccca5b9868a17d6e0cfeb5f5098cd1dfd90 (fio-sxrv-search-01-2026-10-12.png) and sha256:d01f6b96668e51246f87036e77f750a49135573524b3de9a54119ee16546c867 (fio-sxrv-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"ISHARES NAS. 100 ETF (SRN : SXRV)\" and purchase form: ticker SXRV, market XETRA, price in EUR. INFERENCE accepted by David (2026-10-12): Fio shows no ISIN and its name does not tell iShares funds apart; the ticker SXRV is taken to be iShares NASDAQ 100 UCITS ETF (IE00B53SZB19) on the strength of a Gemini note and David's check, and the iShares factsheet (listed on Deutsche Boerse Xetra) does not print the ticker. To be replaced by a document that does"
       },
       "vusa": {
         "value": true,

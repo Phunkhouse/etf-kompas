@@ -532,3 +532,13 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 **Mistakes and corrections**
 
 - None found. Limits: only DEGIRO prints the ISIN next to the ticker; for Trading 212 and XTB the link rests on the ticker and the "Dist" label plus DEGIRO's screenshot and Vanguard's factsheet, and the evidence text says so. XTB's account was not yet activated (the page says "Aktivovat účet"), the same condition as for the earlier XTB screenshots.
+
+### Fio availability for CSPX and CNDX, written as an accepted inference
+
+**Prompt (summary):** David: "Accept the inference for Fio".
+
+**Produced:** `availability true` at Fio for `cspx` (SXR8) and `cndx` (SXRV), with the screenshots' hashes. The evidence text says in capitals that it is an inference accepted by David, and why: Fio shows no ISIN, the names ("ISHARES S&P 500 ETF") do not tell iShares funds apart, and the iShares factsheets do not print the Xetra tickers.
+
+**Mistakes and corrections**
+
+- This is the weakest evidence in the data so far, and I wrote it only because David decided to accept it. A document that prints "SXR8" and "SXRV" next to the ISINs (the iShares product pages) would replace it; until then the records read as an inference.
