@@ -20,6 +20,29 @@ test('hero b fits 375x667 including its button', async ({ page }) => {
   expect(scrollWidth).toBeLessThanOrEqual(375)
 })
 
+// Rev. 4 draws the phone headline at 30 px and the desktop one at 54 px
+// (note 0039, decision 5). The phone size must still keep the button in view.
+test('the hero headline is 30 px on a phone', async ({ page }) => {
+  await page.goto('/?v=b')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveCSS(
+    'font-size',
+    '30px',
+  )
+})
+
+test('the hero headline is 54 px on desktop @smoke', async ({ browser }) => {
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+  })
+  const page = await context.newPage()
+  await page.goto('/?v=b')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveCSS(
+    'font-size',
+    '54px',
+  )
+  await context.close()
+})
+
 test('the table is complete with animations switched off @smoke', async ({
   browser,
 }) => {

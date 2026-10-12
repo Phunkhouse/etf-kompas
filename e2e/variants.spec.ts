@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 const headlineA = /^Které fondy si z Česka opravdu koupíte\?$/
-const headlineB = /^Které fondy si z Česka opravdu koupíte a kolik vás stojí\?$/
+const headlineB = /^Americké indexy z Česka: u koho je koupíte a za kolik\?$/
 
 test.describe('hero variants (?v=a and ?v=b)', () => {
   test('the default is hero a', async ({ page }) => {

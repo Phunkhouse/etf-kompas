@@ -22,7 +22,7 @@ describe('Landing', () => {
   it('shows a different headline for variant b', () => {
     render(<Landing variant="b" dataAsOf={null} />)
     expect(screen.getByRole('heading', { level: 1 }).textContent).toContain(
-      'Které fondy si z Česka opravdu koupíte a kolik vás stojí?',
+      'Americké indexy z Česka: u koho je koupíte a za kolik?',
     )
   })
 })

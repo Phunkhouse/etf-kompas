@@ -412,3 +412,14 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 **Mistakes and corrections**
 
 - None found in this change. Limit: the exemption is by key name only, so any future string under a key called `lead` gets it; the PR keeps type tokens and the rev. 4 headline out, because they change the hero's geometry.
+
+### Type tokens and the rev. 4 hero headline
+
+**Prompt (summary):** "#36 landed, start the type tokens PR tests first", then "approved, implement the tokens".
+
+**Produced:** `hero-phone` 28 to 30 px, `4xl` 58 to 54 px, hero b headline and lead from the rev. 4 wireframe, DESIGN-GUIDE updated. Tests first: two font-size checks and the headline expectations; 7 failed before, all 352 unit and 37 e2e tests pass after.
+
+**Mistakes and corrections**
+
+- **I missed one stale test** when listing the test changes (`HeroB.test.tsx` still expected the old headline); it failed on the first check and I updated it after approval. The styleguide token labels (`page.tsx`) also still said 28 and 58 px.
+- Limit: the 375x667 fit passes at 30 px with the new headline in Chromium (Pixel 7 profile); other fonts and devices are not measured.
