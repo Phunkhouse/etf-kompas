@@ -376,3 +376,16 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **My earlier decision was too static, and David saw it first.** I had asked for the rate as "a sourced record that goes stale like the fees" and David accepted. He then pointed out that a rate ages in days, not months, and a hand-verified record could not keep up. The 45-day limit is the right rule for a fee schedule and the wrong one for a rate.
 - **I checked the caching call against the installed Next.js docs, not memory.** `use cache` with an inline `cacheLife({ revalidate })` is supported in this version, and the docs recommend a lifetime in every cached scope.
 - **One open risk I could not test here:** whether Vercel keeps the cached rate across deployments. It is listed as a Phase 6 check.
+
+### The daily exchange rate, implemented
+
+**Prompt (summary):** "#34 approved, but needs to resolve merge conflicts."
+
+**Produced:** `src/server/cnb.ts` (parse the bank's daily file, freshness, choosing between the fetched and the verified rate, one plain request), 18 tests that were listed first and approved, `src/app/rates.ts` (the cached fetch, 12 hours or 5 minutes after a failure), decision note 0038.
+
+**Mistakes and corrections**
+
+- **Only `AI-LOG.md` conflicted** with `main` after #33 landed; I kept both entries in order.
+- **Tests first, then the code:** 17 of 18 failed against stubs (1 passed trivially), and the implementation passed all 18 on the first run, with no test changed.
+- **I did not trust that the cache would behave, so I checked a real build.** A temporary change to the page called `getRates()`. The build reported the route as revalidating every 12 hours with a 1 week expire, the page contained the bank's actual rates, and the response header said `s-maxage=43200`. I then reverted the temporary change. Nothing on the page uses `getRates()` yet: the calculator UI does, in the next PR.
+- Limits: a failing bank was tested only with a stubbed `fetch`, not with a real outage. The first request happens at build time, so a build without network access falls back to the verified record, which is a placeholder today.

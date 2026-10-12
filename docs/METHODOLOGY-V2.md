@@ -31,7 +31,7 @@ The SPEC §21 sentence "broker commissions: out of scope" is therefore changed. 
 
 Percentages are plain numbers everywhere (as in the data files). Lowercase symbols below are fractions: `g = grossReturn / 100`, `t = ter / 100`.
 
-### Exchange rates, fetched daily (**Proposed**)
+### Exchange rates, fetched daily (decided, note 0038)
 
 A rate from a file goes stale fast, so the rate is not typed into the data. Instead:
 
@@ -41,6 +41,7 @@ A rate from a file goes stale fast, so the rate is not typed into the data. Inst
 - **Freshness.** A rate older than 45 days is never used, the limit of broker fees. Each currency is chosen on its own.
 - **Shown.** "kurz ČNB z 9. 10. 2026" with the rate's own date, in "Jak počítáme" and under the result.
 - **Privacy.** The request is made by the server and carries nothing about the visitor.
+- **Implemented in** `src/server/cnb.ts` (parsing, freshness, choosing, the request) and `src/app/rates.ts` (the cached fetch, 12 hours, 5 minutes after a failure). A production build was checked: the page is prerendered with a 12 hour revalidate and a 1 week expire, and the rates it got were the bank's.
 - **Not decided yet:** whether Vercel keeps the cache across deployments (check in Phase 6).
 
 ## 3. The broker fee model (**Proposed**)
