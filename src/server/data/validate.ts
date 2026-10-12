@@ -94,7 +94,12 @@ export function validateData(
     issues.push({ code, severity, path, message })
   }
 
-  function checkRecord(record: Sourced, path: string, key: string) {
+  function checkRecord(
+    record: Sourced,
+    path: string,
+    key: string,
+    isFee: boolean,
+  ) {
     const isPlaceholder =
       record.value === TODO_VERIFY ||
       META_FIELDS.some((field) => record[field] === TODO_VERIFY)
@@ -139,9 +144,10 @@ export function validateData(
       } else if (asOfTime > todayTime!) {
         add('FUTURE_DATE', `${path}.asOf`, 'asOf is in the future')
       } else {
-        const limit = BROKER_FEE_KEYS.has(key)
-          ? MAX_AGE_DAYS_BROKER_FEE
-          : MAX_AGE_DAYS
+        const limit =
+          BROKER_FEE_KEYS.has(key) || isFee
+            ? MAX_AGE_DAYS_BROKER_FEE
+            : MAX_AGE_DAYS
         const ageDays = Math.round((todayTime! - asOfTime) / DAY_MS)
         if (ageDays > limit) {
           add(
@@ -156,7 +162,9 @@ export function validateData(
 
   function walk(node: unknown, path: PropertyKey[]) {
     if (isSourced(node)) {
-      checkRecord(node, formatPath(path), String(path[path.length - 1]))
+      // broker fees (version 2) and exchange rates go stale as fast as fees
+      const isFee = path[0] === 'rates' || path.includes('fees')
+      checkRecord(node, formatPath(path), String(path[path.length - 1]), isFee)
     } else if (Array.isArray(node)) {
       node.forEach((child, index) => walk(child, [...path, index]))
     } else if (typeof node === 'object' && node !== null) {
@@ -168,6 +176,7 @@ export function validateData(
 
   walk(parsed.data.etfs, ['etfs'])
   walk(parsed.data.brokers, ['brokers'])
+  walk(parsed.data.rates, ['rates'])
 
   return { ok: issues.every((i) => i.severity !== 'error'), issues }
 }

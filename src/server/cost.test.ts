@@ -13,8 +13,9 @@ import {
 } from './cost'
 
 // Version 2 of the calculator (docs/METHODOLOGY-V2.md). The cases were listed
-// first and approved by David on 2026-10-12. The groups at the end (brokers
-// with a price, the data model) are still `it.todo` and follow in the next PR.
+// first and approved by David on 2026-10-12. The maths is tested here; which
+// brokers have a price is in broker-pricing.test.ts and the data model for fees
+// in data/broker-fees.test.ts.
 
 const NO_FEES: CostFees = {
   ter: 0,
@@ -449,43 +450,4 @@ describe('golden cases (docs/METHODOLOGY-V2.md section 7, computed by David)', (
     expect(totalKc).toBe(8170)
     expect(parts).toEqual({ fund: 1748, fx: 1214, broker: 5208 })
   })
-})
-
-describe('which brokers have a price', () => {
-  it.todo(
-    'a broker is priced only when availability, listing and every needed fee are verified',
-  )
-  it.todo('a value without a source or evidence does not count as verified')
-  it.todo('a fund the broker does not sell has no price')
-  it.todo(
-    'the spread is the highest cost minus the lowest among priced brokers',
-  )
-  it.todo('the spread is null with fewer than two priced brokers')
-  it.todo('the spread is null when it rounds to 0 Kč')
-  it.todo('the order of the brokers in the result does not depend on price')
-  it.todo('the headline cost is the highest cost among the priced brokers')
-  it.todo(
-    'with one priced broker the headline is its cost and there is no spread',
-  )
-  it.todo(
-    'with no priced broker the result has only the fund-fee part and no total',
-  )
-  it.todo(
-    'a broker that sells a fund in several listings is priced at its cheapest listing',
-  )
-})
-
-describe('the data model for broker fees', () => {
-  it.todo(
-    'accepts a purchase rule, a custody fee, a listing and an exchange rate as sourced records',
-  )
-  it.todo(
-    'rejects negative fees, an unknown currency and a rule with min above max',
-  )
-  it.todo(
-    'an exchange rate older than the broker-fee limit of 45 days is stale',
-  )
-  it.todo(
-    'the real data files give a price only for brokers whose values are all verified',
-  )
 })
