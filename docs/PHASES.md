@@ -2,20 +2,20 @@
 
 Short version of [SPEC.md](SPEC.md) §14, §20 and §22. If this file and the spec disagree, the spec wins.
 
-**Deadline:** Fri 2026-10-16. **Stretch:** phases 1 to 4 by Sunday evening, P0 complete Monday, Tue to Thu is buffer.
+**Deadline:** Fri 2026-10-16. **Re-planned 2026-10-12:** the P0 core by Tuesday evening 2026-10-13, Wed to Thu is buffer (SPEC §20). Status of each phase is in the git history and `docs/AI-LOG.md`.
 
 ## At a glance
 
-| #   | Phase                  | Target        | Needs from David                              |
-| --- | ---------------------- | ------------- | --------------------------------------------- |
-| 0   | Scaffold (done)        | Sat 10.10.    | GitHub remote, starter guide                  |
-| 1   | CI, data, validator    | Sat evening   | Create repo, verify data (~1 h), wireframe B  |
-| 1b  | Design foundation      | Sat evening   | Review `/styleguide` on desktop and phone     |
-| 2   | Calculator             | Sat evening   | Hand-check golden cases                       |
-| 3   | Page sections and copy | Sun morning   | Review Czech copy, run 5-second test          |
-| 4   | Lead flow              | Sun afternoon | Supabase (EU), Resend, test domain            |
-| 5   | Tracking and consent   | Sun eve / Mon | GA4 and Meta dataset, real-phone test events  |
-| 6   | Deploy and polish      | Mon           | Open the live link inside Instagram/Messenger |
+| #   | Phase                  | Target     | Needs from David                              |
+| --- | ---------------------- | ---------- | --------------------------------------------- |
+| 0   | Scaffold (done)        | Sat 10.10. | GitHub remote, starter guide                  |
+| 1   | CI, data, validator    | done       | Verified data, wireframe B                    |
+| 1b  | Design foundation      | done       | Review `/styleguide` on desktop and phone     |
+| 2   | Calculator v2          | Mon 12.10. | Data batches in `docs/DATA-NEEDS.md`          |
+| 3   | Page sections and copy | Tue 13.10. | Review Czech copy, run 5-second test          |
+| 4   | Lead flow              | Tue 13.10. | Supabase (EU), Resend, test domain            |
+| 5   | Tracking and consent   | Wed 14.10. | GA4 and Meta dataset, real-phone test events  |
+| 6   | Deploy and polish      | Wed to Thu | Open the live link inside Instagram/Messenger |
 
 ## Phase 0: Scaffold (done)
 
@@ -42,15 +42,16 @@ Short version of [SPEC.md](SPEC.md) §14, §20 and §22. If this file and the sp
 
 ## Phase 2: Calculator
 
-- Exactly per SPEC §21; no self-chosen formulas, ask if anything is unclear
+- Exactly per SPEC §21 and `docs/METHODOLOGY-V2.md` (broker fees, daily exchange rate); no self-chosen formulas, tests first, ask if anything is unclear
 - All §21 tests pass, golden cases hand-verified and documented
 - Sliders and chips work by keyboard and screen reader
 - Playwright: changing inputs changes the result
 
 ## Phase 3: Page
 
-- Sections per SPEC §7, layout from wireframe B, copy from §25
-- Hero fits 375x667 including the primary CTA, no scrolling
+- Sections per SPEC §7, layout from wireframe B revision 4 (`docs/design/`), copy from §25
+- Calculator in the fund-fee-only state until a broker is priced; saving box only with two priced brokers
+- Hero fits 375x667 including the primary CTA, no scrolling (geometry test, note 0031)
 - Lighthouse mobile: performance >= 90, accessibility >= 95, LCP < 2.0 s, CLS < 0.05, route JS: our code adds <= 20 KB over an empty page and the route is <= 150 KB gzipped
 - Form works without JavaScript
 - `?v=a` and `?v=b` show different heroes, unknown value falls back to `a`
@@ -61,7 +62,7 @@ Short version of [SPEC.md](SPEC.md) §14, §20 and §22. If this file and the sp
 
 - Valid email gives success state and a stored lead; same email twice is idempotent
 - Invalid email shows the Czech error; honeypot is rejected silently; 6th request per hashed IP per hour gets 429
-- Results page: valid token renders; expired token shows a generic message and "send link again"; `noindex`, `Cache-Control: private`
+- Results page and personalised PDF: valid token renders; expired token shows a generic message and "send link again"; `noindex`, `Cache-Control: private`
 - Unsubscribe and double opt-in work
 - In `sandbox` email mode the UI never claims an email was sent to a non-allowlisted address
 
@@ -83,7 +84,7 @@ Short version of [SPEC.md](SPEC.md) §14, §20 and §22. If this file and the sp
 
 - **P0 (launch blockers):** everything above through Phase 6
 - **P1:** funnel dashboard, `docs/LEGAL-PACK.md`, monthly data-refresh action, Playwright e2e in CI, Lighthouse CI, OG image, error monitoring
-- **P2:** nurture emails, personalised PDF, broker comparison depth, English version
+- **P2:** nurture emails, English version (the personalised PDF is in the main path, note 0039)
 
 ## If we slip, cut in this order
 
