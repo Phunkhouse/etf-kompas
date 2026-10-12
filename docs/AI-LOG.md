@@ -242,3 +242,21 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **A screenshot tool failed**: the Browser pane was not displayed. I used Playwright's own screenshot to look at the band at 375 px and 1280 px instead.
 - Limits: the page was checked at 375 px and 1280 px only. The calculator uses one conversion fee for both funds, a known simplification (see above).
 - **The JavaScript budget was changed, by David's decision.** After the measurement above he asked to replace the 90 KB with a realistic number (our code at most 20 KB over an empty page, the route at most 150 KB), saying the 90 KB was never a real concern and he chose Next because he knows it. SPEC §12, SPEC §22, PHASES and the e2e test now say so, and note 0034 records it. The skipped test is now a real one. The older notes that mention 90 KB are left as written.
+
+### PR: design docs at rev. 4
+
+**Prompt (summary):** David reviewed the new Design Study and Wireframe Board and asked for them to be reflected in `docs/`, especially `design`.
+
+**Produced**
+
+- `docs/design/DESIGN-GUIDE.md`, `wireframe-b.md`, `README.md` and `wireframes/README.md` rewritten to rev. 4: saving box, error and switch colours with calculated contrasts, the motion scale, the new screens and states, the open points.
+- 32 new PNG exports in `docs/design/images/` (the old set and the hero animation image replaced), the Design Study and Board HTML with their build scripts, decision note 0035.
+- The old `build.py`, `dump_frames.py`, `png.js` and the rev. 2 document removed.
+
+**Mistakes and corrections**
+
+- **I first wrote a 2 px focus ring into the Design Study.** The repo guide says 3 px with 2 px offset (section 6). I corrected the study and the motion board before copying the text here.
+- **The cookie switch failed contrast.** The first off track was 1.63:1 against the card, below the 3:1 for controls. It is now `muted` (5.62:1) and the on state is `#2F6B49`.
+- **A rebuild script edited another script.** One of my patch scripts changed `build_study.py`, which broke the clean rebuild chain. I removed that edit and checked that `make_rev4.sh` reproduces the same files.
+- **Fonts fell back to serif in the motion board** because of shorthands without a generic family. Fixed, and the exported image was checked.
+- Limits: `pnpm check` and the browser were not run against app code, because only docs and wireframe files changed. The copy, type token and headline differences between the design and the code are listed in note 0035 and not resolved here.

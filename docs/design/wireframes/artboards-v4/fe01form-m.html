@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="cs"><head>
+<meta charset="utf-8">
+<title>Formulář, chyby – mobil</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style></style>
+<style>
+
+body{margin:0;background:#F6F3EC;color:#16150F;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:16px;line-height:1.45}
+*{box-sizing:border-box}
+h1,h2,h3,p{margin:0}
+.tag{font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#6B665A}
+.tag.g{display:inline-block;background:#C23A1B;color:#fff;padding:5px 8px;border-radius:3px}
+.btn{display:flex;width:100%;align-items:center;justify-content:center;min-height:56px;padding:0 20px;background:#16150F;color:#F6F3EC;font:600 17px 'IBM Plex Sans',sans-serif;border:0;border-radius:6px;text-decoration:none}
+.chip{min-height:48px;min-width:56px;padding:0 16px;border:1.5px solid #16150F;border-radius:999px;background:transparent;font:500 16px 'IBM Plex Sans',sans-serif;color:#16150F}
+.chip.on{background:#16150F;color:#F6F3EC}
+.dk .chip{border-color:#F6F3EC;color:#F6F3EC}
+.dk .chip.on{background:#F6F3EC;color:#16150F}
+.ph{background:repeating-linear-gradient(135deg,#E6E1D4 0 8px,#ECE8DC 8px 16px);border:1px dashed #B5AE9C;color:#6B665A}
+.card{background:#FFFDF8;border:1px solid #D4CEBE;border-radius:10px}
+.num{font-variant-numeric:tabular-nums}
+input[type=email]{width:100%;min-height:56px;padding:0 14px;border:1.5px solid #16150F;border-radius:6px;background:#fff;font:400 17px 'IBM Plex Sans',sans-serif;color:#16150F}
+input[type=range]{width:100%;accent-color:#F6F3EC;margin:6px 0}
+.row{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr) minmax(0,.9fr);gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #D4CEBE;font-size:14px}
+.pill{padding:4px 8px;border-radius:999px;font-size:13px;font-weight:500;justify-self:start;white-space:nowrap}
+.no{background:#F4D9D1;color:#7A2410}
+.yes{background:#D6E8DE;color:#154A33}
+.ver{background:#F3E6BE;color:#6B4E00}
+a{color:#16150F}
+.ver{background:#F3E6BE;color:#6B4E00}.sw{width:48px;height:28px;border-radius:99px;background:#6B665A;position:relative;flex:none}.sw::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff}.sw.on{background:#2F6B49}.sw.on::after{left:23px}.sw.lock{background:#2F6B49}.sw.lock::after{left:23px}
+</style>
+</helmet>
+<div style="background:#F6F3EC;padding:20px 16px;display:flex;flex-direction:column;gap:24px"><form style="border:1.5px solid #16150F;border-radius:10px;background:#FFFDF8;padding:20px;display:flex;flex-direction:column;gap:10px" onsubmit="return false"><span class="tag">Špatný e-mail</span><h2 style="font-size:24px;line-height:1.12;letter-spacing:-.02em">Chcete vidět, kde který fond koupíte?</h2><label for="e" style="font-weight:500;font-size:15px">Váš e-mail</label><input id="e" type="email" value="jmeno@domena" aria-invalid="true" aria-describedby="e-err" style="border-color:#B3341A;border-width:2px"><p id="e-err" role="alert" style="font-size:14px;color:#B3341A;font-weight:500">Zadejte e-mail ve tvaru jmeno@domena.cz.</p><button class="btn" type="button" style="width:100%">Poslat mi srovnání</button><p style="font-size:12px;color:#6B665A">Pošleme vám srovnání. Správce: [SPRÁVCE]. Zásady zpracování osobních údajů.</p><label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:22px"><input type="checkbox" style="width:22px;height:22px;margin:0;flex:none"> Chci občas dostat tip k investování (nepovinné)</label></form><form style="border:1.5px solid #16150F;border-radius:10px;background:#FFFDF8;padding:20px;display:flex;flex-direction:column;gap:10px" onsubmit="return false"><span class="tag">Chyba odeslání</span><h2 style="font-size:24px;line-height:1.12;letter-spacing:-.02em">Chcete vidět, kde který fond koupíte?</h2><div role="alert" style="background:#F4D9D1;color:#7A2410;border-radius:8px;padding:12px 14px;font-size:14px"><b>Odeslání se nepovedlo.</b> Zkuste to prosím znovu za chvíli. Váš e-mail i nastavení kalkulačky zůstaly vyplněné.</div><label for="e" style="font-weight:500;font-size:15px">Váš e-mail</label><input id="e" type="email" value="jmeno@domena.cz"><button class="btn" type="button" style="width:100%">Zkusit znovu</button><p style="font-size:12px;color:#6B665A">Pošleme vám srovnání. Správce: [SPRÁVCE]. Zásady zpracování osobních údajů.</p><label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:22px"><input type="checkbox" style="width:22px;height:22px;margin:0;flex:none"> Chci občas dostat tip k investování (nepovinné)</label></form></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body></html>
