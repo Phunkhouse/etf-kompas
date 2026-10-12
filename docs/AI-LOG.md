@@ -389,3 +389,16 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Tests first, then the code:** 17 of 18 failed against stubs (1 passed trivially), and the implementation passed all 18 on the first run, with no test changed.
 - **I did not trust that the cache would behave, so I checked a real build.** A temporary change to the page called `getRates()`. The build reported the route as revalidating every 12 hours with a 1 week expire, the page contained the bank's actual rates, and the response header said `s-maxage=43200`. I then reverted the temporary change. Nothing on the page uses `getRates()` yet: the calculator UI does, in the next PR.
 - Limits: a failing bank was tested only with a stubbed `fetch`, not with a real outage. The first request happens at build time, so a build without network access falls back to the verified record, which is a placeholder today.
+
+### SPEC and PHASES synced with rev. 4 (docs only)
+
+**Prompt (summary):** "Before we start calculator UI I guess we should check latest v4 design change and docs change against specs.md. Could you verify the file is up to date?", then David's answers 1 to 7 on the open points.
+
+**Produced:** SPEC.md brought to draft v3 (§0 to §29: hero and calculator, data and rates, schedule, methodology §21, launch gate, glossary), PHASES.md, decision note 0039.
+
+**Mistakes and corrections**
+
+- **The spec had silently drifted.** Nothing in the earlier PRs touched it after #28, so the notes (0030 to 0038) and rev. 4 were never written in. I found it only when David asked; I should have flagged the drift when each note was written.
+- **A dangling reference** in §2 pointed at `docs/audience-and-plain-language.md`, which does not exist; replaced.
+- **Point 5 ("Adapt it") was ambiguous.** I read it as adapting the tokens to the wireframe sizes, and wrote it so, with the hero fit still to be re-measured. David should confirm.
+- **Note 0039 records only one reason** (point 7); the others were decisions without reasons, and I did not invent any.
