@@ -18,6 +18,8 @@ type Term = {
   // Allowed inside a table row that has a plainName (decision on the wireframe's
   // "odborně S&P 500, značka VOO" sub-label).
   allowedInRow?: boolean
+  // Also allowed under a key named "lead" (hero lead, note 0039).
+  allowedInLead?: boolean
 }
 
 const GLOSSARY: Term[] = [
@@ -25,8 +27,18 @@ const GLOSSARY: Term[] = [
   { name: 'UCITS', source: 'UCITS', caseSensitive: true },
   { name: 'domicil', source: String.raw`domicil\p{L}*` },
   { name: 'fond sídlí v Irsku', source: 'fond sídlí v Irsku' },
-  { name: 'S&P 500', source: '(?:S&P)[ -]?500', allowedInRow: true },
-  { name: 'Nasdaq 100', source: 'Nasdaq[ -]?100', allowedInRow: true },
+  {
+    name: 'S&P 500',
+    source: '(?:S&P)[ -]?500',
+    allowedInRow: true,
+    allowedInLead: true,
+  },
+  {
+    name: 'Nasdaq 100',
+    source: 'Nasdaq[ -]?100',
+    allowedInRow: true,
+    allowedInLead: true,
+  },
   { name: 'kurzový rozdíl', source: String.raw`kurzov\p{L}* rozdíl\p{L}*` },
   { name: 'FX poplatek', source: String.raw`FX poplat\p{L}*` },
   {
@@ -39,7 +51,6 @@ const GLOSSARY: Term[] = [
   },
   { name: 'Metodika', source: String.raw`metodik\p{L}*` },
   { name: 'Zdroje', source: 'zdroje' },
-  { name: 'broker', source: String.raw`broker\p{L}*` },
   { name: 'gate', source: 'gate' },
   { name: 'odemknout', source: String.raw`odemkn\p{L}*` },
 ]
@@ -160,9 +171,15 @@ function collect(
   }
 }
 
-function matchedTerms(text: string, terms: Term[], inRow: boolean): string[] {
+function matchedTerms(
+  text: string,
+  terms: Term[],
+  inRow: boolean,
+  inLead = false,
+): string[] {
   return terms
     .filter((term) => !(inRow && term.allowedInRow))
+    .filter((term) => !(inLead && term.allowedInLead))
     .filter((term) => wordRegExp(term.source, term.caseSensitive).test(text))
     .map((term) => term.name)
 }
@@ -183,7 +200,7 @@ export function checkCopy(
   let firstEtfPath: string | null = null
 
   for (const { path, key, text, inRow } of entries) {
-    const glossary = matchedTerms(text, GLOSSARY, inRow)
+    const glossary = matchedTerms(text, GLOSSARY, inRow, key === 'lead')
     if (glossary.length > 0) {
       issues.push({
         rule: 'glossary',

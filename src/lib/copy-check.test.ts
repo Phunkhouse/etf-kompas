@@ -31,7 +31,6 @@ describe('glossary (rule a)', () => {
     ['ilustrativní předpoklad', 'To je ilustrativní předpoklad.'],
     ['Metodika', 'Metodika výpočtu.'],
     ['Zdroje', 'Zdroje dat.'],
-    ['broker', 'Zvolte vhodný broker.'],
     ['gate', 'Otevřete gate.'],
     ['odemknout', 'Můžete odemknout srovnání.'],
   ])('flags "%s" with its path', (_term, text) => {
@@ -66,10 +65,13 @@ describe('glossary (rule a)', () => {
     ).toEqual([])
   })
 
-  it('catches inflected forms of broker', () => {
+  it('allows "broker" and its inflected forms (note 0039)', () => {
     expect(
-      paths(run({ a: 'U brokera', b: 'Pro brokerů' }), 'glossary'),
-    ).toEqual(['a', 'b'])
+      paths(
+        run({ a: 'U brokera', b: 'Pro brokerů', c: 'Zvolte broker.' }),
+        'glossary',
+      ),
+    ).toEqual([])
   })
 
   it('matches terms at word edges next to punctuation and diacritics', () => {
@@ -210,6 +212,22 @@ describe('tickers (rule d)', () => {
     ).toEqual([])
   })
 
+  it('lets text under the key "lead" name S&P 500 and Nasdaq 100 (note 0039)', () => {
+    const copy = {
+      hero: {
+        lead: 'Fondy na S&P 500 a Nasdaq 100 koupíte z Česka jen v evropské verzi.',
+      },
+      other: { intro: 'Sleduje S&P 500.' },
+    }
+    expect(paths(run(copy), 'glossary')).toEqual(['other.intro'])
+  })
+
+  it('still flags other glossary terms and tickers under "lead"', () => {
+    const issues = run({ hero: { lead: 'S&P 500, TER a VOO' } })
+    expect(paths(issues, 'glossary')).toEqual(['hero.lead'])
+    expect(paths(issues, 'ticker')).toEqual(['hero.lead'])
+  })
+
   it('still flags other glossary terms inside a row', () => {
     const copy = { rows: [{ plainName: 'x', detail: 'TER a UCITS' }] }
     expect(paths(run(copy), 'glossary')).toEqual(['rows[0].detail'])
@@ -254,7 +272,7 @@ describe('reporting', () => {
   it('reports every problem, not only the first', () => {
     const issues = run({
       a: 'TER',
-      b: 'broker',
+      b: 'gate',
       c: 'Hotovo!',
       d: 'VOO',
     })

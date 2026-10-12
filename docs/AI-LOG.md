@@ -402,3 +402,13 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **A dangling reference** in §2 pointed at `docs/audience-and-plain-language.md`, which does not exist; replaced.
 - **Point 5 ("Adapt it") was ambiguous.** I read it as adapting the tokens to the wireframe sizes, and wrote it so, with the hero fit still to be re-measured. David should confirm.
 - **Note 0039 records only one reason** (point 7); the others were decisions without reasons, and I did not invent any.
+
+### Copy checker: "broker" allowed, index names allowed in the lead
+
+**Prompt (summary):** "#35 landed, start the code PR tests first", then "approved, implement the rules".
+
+**Produced:** `copy-check.ts` no longer bans "broker" and allows "S&P 500" and "Nasdaq 100" under a key named `lead` (as already allowed in rows with a plain name). Tests changed first (one removed, one replaced, two added) and approved; 2 failed before the change, all 352 pass after.
+
+**Mistakes and corrections**
+
+- None found in this change. Limit: the exemption is by key name only, so any future string under a key called `lead` gets it; the PR keeps type tokens and the rev. 4 headline out, because they change the hero's geometry.
