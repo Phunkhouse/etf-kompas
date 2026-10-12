@@ -14,7 +14,8 @@ import {
   type PurchaseRule,
   type Rates,
 } from './cost'
-import { TODO_VERIFY, type Broker } from './data/schema'
+import type { Broker } from './data/schema'
+import { TODO_VERIFY } from './data/todo'
 import { hasSource } from './data/verified'
 
 // What the pricing reads from a broker: nothing else is needed, so the browser

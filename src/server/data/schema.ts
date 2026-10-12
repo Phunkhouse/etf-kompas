@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
-export const TODO_VERIFY = 'TODO_VERIFY'
+import { TODO_VERIFY } from './todo'
+export { TODO_VERIFY }
 
 // Metadata fields are nullable on purpose: a missing source is reported by the
 // validator as MISSING_SOURCE rather than rejected as a schema error.

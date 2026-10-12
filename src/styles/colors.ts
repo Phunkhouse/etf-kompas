@@ -22,6 +22,10 @@ export const colors = {
   'pill-ver-ink': '#6B4E00',
   highlight: '#DCEEE3',
   'row-hover': '#F3EEDF',
+  'saving-bg': '#1F3A2B',
+  'saving-border': '#2F6B49',
+  'saving-fg': '#9AD4B2',
+  'saving-soft': '#B9D9C6',
 } as const
 
 export type ColorName = keyof typeof colors

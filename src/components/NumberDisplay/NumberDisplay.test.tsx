@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { NumberDisplay } from './NumberDisplay'
 
@@ -22,38 +22,16 @@ describe('NumberDisplay', () => {
     expect(screen.getByRole('status').textContent).toBe('12 480 Kč')
   })
 
-  it('announces only the final value, not the count-up frames', () => {
+  it('announces the value once, from the status text', () => {
     mockReducedMotion(false)
     const { container } = render(<NumberDisplay value={1000} />)
-    const visible = container.querySelector('[aria-hidden="true"]')
-    expect(visible).not.toBeNull()
-    expect(screen.getByRole('status').textContent).toBe('1 000 Kč')
+    expect(container.querySelector('[aria-hidden="true"]')).not.toBeNull()
+    expect(screen.getByRole('status').textContent).toBe('1\u00a0000\u00a0Kč')
   })
 
-  it('counts up to a new value within 300 ms', async () => {
-    mockReducedMotion(false)
-    const { container, rerender } = render(<NumberDisplay value={1000} />)
-    rerender(<NumberDisplay value={5000} />)
-
-    const visible = () =>
-      container.querySelector('[aria-hidden="true"]')!.textContent
-    // The status text jumps at once, the visible number follows.
-    expect(screen.getByRole('status').textContent).toBe('5 000 Kč')
-    const started = performance.now()
-    await waitFor(() => expect(visible()).toBe('5 000 Kč'), { timeout: 600 })
-    expect(performance.now() - started).toBeLessThan(500)
-  })
-
-  it('shows the new value at once with reduced motion', () => {
-    mockReducedMotion(true)
-    const { container, rerender } = render(<NumberDisplay value={1000} />)
-    rerender(<NumberDisplay value={5000} />)
-    expect(container.querySelector('[aria-hidden="true"]')!.textContent).toBe(
-      '5 000 Kč',
-    )
-  })
-
-  it('counts up smoothly: in range, never going backwards, done within 300 ms', () => {
+  // Motion scale (DESIGN-GUIDE section 5, note 0035): the number swaps, it
+  // never counts up.
+  it('shows the new value at once, with no counting through values in between', () => {
     mockReducedMotion(false)
     vi.useFakeTimers({
       toFake: ['requestAnimationFrame', 'cancelAnimationFrame', 'performance'],
@@ -61,28 +39,35 @@ describe('NumberDisplay', () => {
     try {
       const { container, rerender } = render(<NumberDisplay value={1000} />)
       rerender(<NumberDisplay value={5000} />)
-
-      const read = () =>
-        Number(
-          container
-            .querySelector('[aria-hidden="true"]')!
-            .textContent!.replace(/[^\d-]/g, ''),
-        )
-      const seen = [read()]
-      for (let elapsed = 0; elapsed < 300; elapsed += 16) {
+      const visible = () =>
+        container.querySelector('[aria-hidden="true"]')!.textContent
+      const seen = new Set([visible()])
+      for (let elapsed = 0; elapsed < 400; elapsed += 16) {
         act(() => {
           vi.advanceTimersByTime(16)
         })
-        seen.push(read())
+        seen.add(visible())
       }
-
-      expect(Math.min(...seen)).toBeGreaterThanOrEqual(1000)
-      expect(Math.max(...seen)).toBeLessThanOrEqual(5000)
-      expect(seen).toEqual([...seen].sort((x, y) => x - y))
-      expect(new Set(seen).size).toBeGreaterThan(3)
-      expect(seen.at(-1)).toBe(5000)
+      expect([...seen]).toEqual(['5\u00a0000\u00a0Kč'])
     } finally {
       vi.useRealTimers()
     }
+  })
+
+  it('swaps with a keyed animation: a new element for each new value', () => {
+    mockReducedMotion(false)
+    const { container, rerender } = render(<NumberDisplay value={1000} />)
+    const first = container.querySelector('[aria-hidden="true"]')
+    rerender(<NumberDisplay value={5000} />)
+    expect(container.querySelector('[aria-hidden="true"]')).not.toBe(first)
+  })
+
+  it('shows the new value at once with reduced motion', () => {
+    mockReducedMotion(true)
+    const { container, rerender } = render(<NumberDisplay value={1000} />)
+    rerender(<NumberDisplay value={5000} />)
+    expect(container.querySelector('[aria-hidden="true"]')!.textContent).toBe(
+      '5\u00a0000\u00a0Kč',
+    )
   })
 })

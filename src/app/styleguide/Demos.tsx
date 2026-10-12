@@ -3,7 +3,8 @@
 import { Calculator } from '@/components/Calculator'
 import { Field } from '@/components/Field'
 import { Tag } from '@/components/Tag'
-import type { CalcFund } from '@/server/calc'
+import { calculatorData, type CalculatorData } from '@/server/calculator-data'
+import { bundledData } from '@/server/data/bundled'
 import styles from './Primitives.module.scss'
 
 export function FormDemos() {
@@ -40,32 +41,40 @@ export function FormDemos() {
   )
 }
 
-// Invented numbers, not real fund data (all real data is still unverified).
-const sampleUs: CalcFund = {
-  id: 'sample-us',
-  indexGroup: 'sample',
-  ter: 0.3,
-  dividendYieldPct: 1.5,
-  withholdingRate: 30,
+// Sample data: DEGIRO's real fees with invented exchange rates, and a copy of it
+// with dearer orders so the saving box shows.
+const rates = {
+  EUR: { rate: 25, date: '2026-01-01', source: 'data' as const },
+  USD: { rate: 23, date: '2026-01-01', source: 'data' as const },
 }
-const sampleEu: CalcFund = {
-  id: 'sample-eu',
-  indexGroup: 'sample',
-  ter: 0.07,
-  dividendYieldPct: 1.5,
-  withholdingRate: 15,
+
+function sample(twoBrokers: boolean): CalculatorData | null {
+  const data = calculatorData(bundledData, rates, 'cspx')
+  if (!data || !twoBrokers) return data
+  const other = structuredClone(data.pricing[0])
+  other.id = 'sample-other'
+  for (const record of other.fees!.purchase) {
+    if (typeof record.value !== 'string') {
+      record.value = { ...record.value, fixed: record.value.fixed * 4 }
+    }
+  }
+  return { ...data, pricing: [...data.pricing, other] }
 }
 
 export function CalculatorDemo() {
   return (
     <div className={`${styles.stack} ${styles.fill}`}>
-      <Tag as="h3">Calculator (sample numbers, not real fund data)</Tag>
+      <Tag as="h3">Calculator: one priced broker (sample rates)</Tag>
       <div className={styles.fill}>
-        <Calculator featured={sampleUs} alternative={sampleEu} fxFeePct={0.5} />
+        <Calculator data={sample(false)} />
       </div>
-      <Tag as="h3">Calculator without a conversion fee</Tag>
+      <Tag as="h3">Calculator: two priced brokers, with the saving box</Tag>
       <div className={styles.fill}>
-        <Calculator featured={sampleUs} alternative={sampleEu} />
+        <Calculator data={sample(true)} />
+      </div>
+      <Tag as="h3">Calculator: no data (failure)</Tag>
+      <div className={styles.fill}>
+        <Calculator data={null} />
       </div>
     </div>
   )

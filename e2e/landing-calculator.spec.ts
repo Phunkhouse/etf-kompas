@@ -6,7 +6,9 @@ test.describe('landing page calculator', () => {
     await page.goto('/?v=b')
     await page.getByRole('link', { name: /Spočítat, kolik zaplatím/ }).click()
     await expect(page).toHaveURL(/#spocitat$/)
-    const section = page.getByRole('region', { name: 'Kolik to u vás dělá?' })
+    const section = page.getByRole('region', {
+      name: 'Kolik vás to bude stát?',
+    })
     await expect(section).toBeInViewport()
   })
 
@@ -32,14 +34,30 @@ test.describe('landing page calculator', () => {
     await expect(result).not.toHaveText(before!)
   })
 
-  test('says the American fund is cheaper, and where it cannot be bought', async ({
+  test('says the cost at the verified brokers, and shows no saving box with one', async ({
     page,
   }) => {
     await page.goto('/?v=b')
     const section = page.locator('#spocitat')
-    await expect(section.getByText(/zaplatíte méně\so/)).toBeVisible()
-    await expect(section.getByText(/Je americký fond levnější/)).toBeVisible()
-    await expect(section.getByText(/nekoupíte u 3 z 5 firem/)).toBeVisible()
+    await expect(section.getByText(/u ověřených brokerů/)).toBeVisible()
+    await expect(section.getByText(/nejvýš/)).toBeVisible()
+    await expect(section.getByText(/ponecháte až/)).toHaveCount(0)
+    await expect(section.getByText(/nejlevn/i)).toHaveCount(0)
+  })
+
+  test('moving the slider with the keyboard changes the result', async ({
+    page,
+  }) => {
+    await page.goto('/?v=b')
+    const section = page.locator('#spocitat')
+    const result = section.getByRole('status').first()
+    await section.scrollIntoViewIfNeeded()
+    const before = await result.textContent()
+    const slider = section.getByRole('slider', { name: /měsíčně/ })
+    await slider.focus()
+    await slider.press('End')
+    await expect(slider).toHaveValue('20000')
+    await expect(result).not.toHaveText(before!)
   })
 
   test('states the return as an example, not a promise', async ({ page }) => {
