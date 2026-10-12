@@ -305,7 +305,7 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 
 **Prompt (summary):** "#29 landed", with answers to the two open points: go with the fund-fee-only state while no broker is priced, and the headline wording "u ověřených brokerů vás to bude stát nejvýš X XXX Kč" is OK for now.
 
-**Produced:** both answers in METHODOLOGY-V2 and note 0037, two test cases changed or added (49 `it.todo` in all), and a third open point.
+**Produced:** both answers in METHODOLOGY-V2 and note 0037, two test cases changed or added (48 `it.todo` in all), and a third open point.
 
 **Mistakes and corrections**
 
