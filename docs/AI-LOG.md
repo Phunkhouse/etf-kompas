@@ -311,3 +311,16 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 
 - **My model priced one listing per fund, as the wireframe does, and I had not checked what the brokers actually offer.** Reading the saved DEGIRO screenshots again showed CSPX in two listings (London in dollars, Amsterdam in euros). In euros the conversion from korunas is free, so pricing only the dollar listing overstates DEGIRO's cost by up to 0,25 % of the deposits. I added it as open point C and did not decide it.
 - **I did not treat #29 as approval of the tests.** The PR asked for approval of the test list and for G3 to G5. Merging it is not that, so I am asking again before writing any calculation code.
+
+### Calculator v2 core: tests first, then the maths
+
+**Prompt (summary):** David approved the 48-case test list, said "do it as suggested" for the listing question (cheapest listing), and asked what exactly I need for the golden cases G3 to G5.
+
+**Produced:** `src/server/cost.ts` (the pure maths: `calcCost`, `splitRounded`, `purchaseFeeKc`, `findPurchaseRule`, `conversionFeePct`, `toKc`, `assertPlainPercent`) and its tests: 33 real tests, 17 still `it.todo` (brokers with a price, the data model, golden cases G3 to G5). A spreadsheet recipe for the golden cases in METHODOLOGY-V2 §7, decision C in the draft and in note 0037.
+
+**Mistakes and corrections**
+
+- **The tests were written against a stub first and failed as they should:** 27 failed and 6 passed trivially. The implementation then passed all 33 on the first run, and G1 and G2 reproduce the verified old values (2 400 and 1 672). No test was changed to fit the code.
+- **I added a few small cases to the approved list** because the functions need them: a conversion fee for a currency without a verified fee is `null` (not 0), currency conversion of amounts, `calcCost` rejecting a fee that looks like a fraction, and two crafted cases for the rounding rule. David should know they were not in the 48.
+- **My golden-case table was ambiguous.** G1 to G4 said "listing CZK" next to a conversion fee, but a CZK listing pays no conversion. The pure maths takes the conversion fee as a given number; the step from a listing to that number is a different function. The spreadsheet recipe now gives the already-resolved numbers (purchase fee and custody in Kč).
+- **I have not computed G3 to G5 myself.** They are for David's spreadsheet. I will cross-check them with a month-by-month loop, which is a different method from the closed form, after his numbers arrive.
