@@ -17,6 +17,10 @@ import {
 import { TODO_VERIFY, type Broker } from './data/schema'
 import { hasSource } from './data/verified'
 
+// What the pricing reads from a broker: nothing else is needed, so the browser
+// is not sent the rest (it may hold unverified values).
+export type PricingBroker = Pick<Broker, 'id' | 'availability' | 'fees'>
+
 export type Listing = { currency: Currency; venue: string }
 
 export type PricedBroker = {
@@ -54,7 +58,7 @@ function needsRate(currency: Currency, rates: Partial<Rates>): boolean {
 
 // The price of one listing, or null when a value it needs is not verified.
 function priceListing(
-  broker: Broker,
+  broker: PricingBroker,
   listing: Listing,
   ter: number,
   rates: Partial<Rates>,
@@ -95,7 +99,7 @@ function priceListing(
 
 // The price of a fund at one broker, at its cheapest listing that can be priced.
 export function priceBroker(
-  broker: Broker,
+  broker: PricingBroker,
   fundId: string,
   ter: number,
   rates: Partial<Rates>,
@@ -117,7 +121,7 @@ export function priceBroker(
 }
 
 export function priceBrokers(
-  brokers: Broker[],
+  brokers: PricingBroker[],
   fundId: string,
   ter: number,
   rates: Partial<Rates>,
