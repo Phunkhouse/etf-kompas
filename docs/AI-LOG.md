@@ -484,3 +484,16 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - This is the third document for EQQQ; the first two (KID and factsheet) were for the CHF hedged class and I did not write anything from them. I checked the ISIN and the share-class line in each document before using it, which is what caught it.
 - The document is a UCITS KIID (the older format), accurate as at 26 June 2026. By note 0024 that date is the `asOf`, so the record goes stale on 2026-10-24 (120 days) and needs a newer document by then.
 - The record says `verifiedBy` David, as for the other funds: he confirmed the values after seeing the quoted lines.
+
+### Fio availability for EQQQ and VUAA
+
+**Prompt (summary):** David supplied Fio e-Broker screenshots (instrument pages and purchase forms) for VUAA, EQQQ, SXR8 and SXRV, and after a first set of symbol searches asked what to do about the tickers that change.
+
+**Produced:** `availability true` at Fio for `eqqq` and `vuaa`, with the hashes of both screenshots and what they show (XETRA, EUR). CSPX and CNDX are held. The Fio source (`https://www.fio.cz`, the broker's home page like the other brokers') is added to `sources.json`.
+
+**Mistakes and corrections**
+
+- **My first suggestion was too eager and then too cautious.** The first Fio screenshots were symbol searches only, and I almost took them as evidence; they showed no ISIN, exchange or currency, so I asked for the instrument page and the purchase form. David also pushed back on my list: VOO and QQQ need no Fio and IBKR check (3 of 5 brokers are already verified as not selling them, which is the majority the hero line needs).
+- **CSPX and CNDX are held on purpose.** Fio's pages say only "ISHARES S&P 500 ETF (SXR8)" and "ISHARES NAS. 100 ETF (SXRV)", with no ISIN, and iShares has more than one S&P 500 fund. Our iShares factsheets say the funds are listed on Deutsche Börse Xetra but do not give the tickers; the SXR8/SXRV link to our ISINs rests on a Gemini note and my own knowledge, neither of which is a document. Waiting for the iShares product page (it lists the Xetra ticker with the ISIN) or David's decision to accept the inference.
+- The Fio evidence is a demo account and a purchase form that was not submitted. It proves the instrument exists on XETRA in Fio's system, not that an order would be accepted. The `https://www.fio.cz` source is the broker's home page, not a document.
+- The listing (XETRA, EUR) is not written yet: a Fio `fees` block with only listings would make the calculator treat Fio as a priced broker with fees, and a test pins DEGIRO as the only one. It goes in with the Fio fee batch; the screenshots are its evidence.

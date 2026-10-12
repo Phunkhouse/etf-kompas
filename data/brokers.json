@@ -272,12 +272,12 @@
         "evidence": null
       },
       "vuaa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.fio.cz",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:6e96a301910ff3226f01b9767b30dd4282678b91ee9088649958e042c3ff50f5 (fio-vuaa-search-01-2026-10-12.png) and sha256:9bcdf84b9a7173ab52d6739b25bc15bc3675f66ce43e067f9dcab3e8ce1d2c61 (fio-vuaa-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"VANGUARD S&P 500 ETF (SRN : VUAA)\" and purchase form: ticker VUAA, market XETRA, price in EUR. The ISIN is not shown by Fio; VUAA is linked to IE00BFMXXD54 by the DEGIRO screenshot of the same ticker"
       },
       "cndx": {
         "value": "TODO_VERIFY",
@@ -296,12 +296,12 @@
         "evidence": null
       },
       "eqqq": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.fio.cz",
+        "asOf": "2026-10-12",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-12",
+        "evidence": "sha256:00a6d33a416af85555b2aeb06143b011348baa01e98e02f8ef42a76ce9dc6933 (fio-eqqq-search-01-2026-10-12.png) and sha256:8d7136ecbba703fd7e8f3d6e5a658122d646f96f9f0e9192ae458b9bd2c68e93 (fio-eqqq-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"INVESCO NAS.-100 ETF (SRN : EQQQ)\" and purchase form: ticker EQQQ, market XETRA, price in EUR. The ISIN is not shown by Fio; EQQQ is linked to IE0032077012 (Dist) by the DEGIRO screenshot of the same ticker"
       }
     }
   },
