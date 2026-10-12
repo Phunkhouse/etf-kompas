@@ -336,3 +336,17 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **No mismatch to report.** I recomputed the three cases with a month-by-month loop (a different method from the closed form) and then ran the code. Both agree with David's numbers to the Kč, including G5, where the broker part is 5 207 before the rounding remainder and 5 208 after. His note on G5 describes the same rule.
 - **Two of my edits missed because of Prettier's quote style**: my search string used single quotes, and Prettier had switched that line to double quotes because of an apostrophe. The script stopped with an error before changing anything, so nothing was half-applied. I matched the lines by position instead.
 - Limit: three cases cover the purchase minimum, a currency conversion of fixed fees and the rounding remainder. They do not cover a maximum that binds or a rule picked by venue; those are in the unit tests of the helper functions.
+
+### Broker pricing and the data model for broker fees
+
+**Prompt (summary):** "#30 landed, there are conflicts in #31", then "what do you want from me for DEGIRO: check the exact fees on the website?"
+
+**Produced:** `priceBroker` and `priceBrokers` (`src/server/broker-pricing.ts`), `fundFeeKc`, the schema for broker fees (`fees`: conversion per currency, purchase rules, custody, listings per fund) and `rates`, the 45-day freshness limit for them in the validator, `data/rates.json` (all `TODO_VERIFY`), and the 15 remaining approved cases as real tests (21 tests in two files). The 15 `it.todo` in `cost.test.ts` are gone.
+
+**Mistakes and corrections**
+
+- **The #31 conflict was my stacking.** #31 was based on #30, which landed as a squash, so my branch still carried #30's commits. I replayed only my two commits onto `main` with `rebase --onto`. No file conflicted.
+- **My new type was called `Record`**, which hid TypeScript's own `Record` in the same file. Typecheck caught it; the tests had already passed, because vitest does not type-check. Renamed to `SourcedValue`.
+- **I added a case that was not in the approved 15**: a broker falls back to a listing that can be priced when the cheaper one cannot (for example no verified dollar fee). Without it a broker with one unpriceable listing would lose its price even though another listing is fine.
+- **The gaps report is out of date on one point.** `needs.ts` still lists purchase commission and listing currency as "not in the model yet", but the model now has them. I left it for the next PR, which also moves the calculator to version 2, so the report and the UI change together.
+- **`fees` and `rates` are optional in the schema** so that existing fixtures and the current data (no broker has fee values yet) stay valid. The consequence: no broker is priced today, which is the state decided in note 0037.

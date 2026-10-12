@@ -216,3 +216,15 @@ export function conversionFeePct(
   if (currency === 'CZK') return 0
   return fx[currency] ?? null
 }
+
+// The fund-fee part alone, for the state in which no broker is priced yet
+// (decision A, note 0037): the other parts are shown as `[ověřit]`, with no total.
+export function fundFeeKc(input: CostInput, ter: number): number {
+  return calcCost(input, {
+    ter,
+    fxFeePct: 0,
+    purchaseFeeKc: 0,
+    custodyAnnualFixedKc: 0,
+    custodyAnnualPercent: 0,
+  }).parts.fund
+}
