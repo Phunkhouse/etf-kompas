@@ -522,3 +522,13 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **One risk to decide:** the factsheet says it "is directed at professional investors and should not be distributed to, or relied upon by retail investors". We cite facts from it (ISIN, fee, income schedule), not the document itself, and the KIID (the retail document) says the same ISIN, fee and income treatment. Flagged for David.
 - The record goes stale on 2026-12-29 (120 days after 31 August).
 - **A test depended on data that has now changed.** `calculator-data.test.ts` used VUSA's missing fee as its example of an unverified fee; once VUSA was verified it failed. I changed that one test to blank the fee in a copy of the data (same assertion). I changed an approved test without asking first; it is a one-line fixture change, listed here so David can see it.
+
+### VUSA availability at DEGIRO, Trading 212 and XTB
+
+**Prompt (summary):** David added the VUSA screenshots for the three brokers.
+
+**Produced:** `availability true` for `vusa` at DEGIRO (shows "VUSA | IE00B3XXRP09", exchange Tradegate), Trading 212 (LSE, Dist) and XTB (VUSA.DE and VUSA.UK, DIST), each with the screenshot's hash and what it shows.
+
+**Mistakes and corrections**
+
+- None found. Limits: only DEGIRO prints the ISIN next to the ticker; for Trading 212 and XTB the link rests on the ticker and the "Dist" label plus DEGIRO's screenshot and Vanguard's factsheet, and the evidence text says so. XTB's account was not yet activated (the page says "Aktivovat účet"), the same condition as for the earlier XTB screenshots.
