@@ -472,3 +472,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 
 - **The first EQQQ documents (the KID and the factsheet) and the Invesco screenshot were for the CHF Hdg Acc class** (EQCH, IE00BYVTMT69), not the fund brokers sell as EQQQ. The broker screenshots settle it: the ticker EQQQ is ISIN IE0032077012; DEGIRO also lists IE00BFZXGZ54 (EQQB/EQAC, Acc), IE00BYVTMT69 (EQCH, CHF), IE00BYVTMS52 (EQEU, EUR hedged) and IE00BYVTMW98 (EQGB, GBP hedged). Trading 212 labels EQQQ "(Dist)" and XTB "DIST", so the fund EQQQ is the distributing class. That is the brokers' labelling; the issuer's own document for IE0032077012 is still needed for the fee and the type.
 - `eqqq` in the data therefore means the class IE0032077012. DEGIRO's screenshot is a logged-in search; the other two are as David supplied them. All three are availability only: no fee, name or type has been written for EQQQ yet.
+
+### EQQQ name, ISIN, fee and type
+
+**Prompt (summary):** David supplied the key investor information for the Dist class (IE0032077012) and its Invesco URL, after "This is it?".
+
+**Produced:** `name`, `isin`, `ter` (0,30) and `distribution` (`distributing`) for EQQQ in `data/etfs.json`, one `asOf` 2026-06-26 (the date printed in the document), and the source added to `sources.json`. The hero table is at 12 of 12 values.
+
+**Mistakes and corrections**
+
+- This is the third document for EQQQ; the first two (KID and factsheet) were for the CHF hedged class and I did not write anything from them. I checked the ISIN and the share-class line in each document before using it, which is what caught it.
+- The document is a UCITS KIID (the older format), accurate as at 26 June 2026. By note 0024 that date is the `asOf`, so the record goes stale on 2026-10-24 (120 days) and needs a newer document by then.
+- The record says `verifiedBy` David, as for the other funds: he confirmed the values after seeing the quoted lines.
