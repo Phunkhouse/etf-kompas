@@ -24,6 +24,10 @@
   --color-pill-ver-ink: #6b4e00;
   --color-highlight: #dceee3;
   --color-row-hover: #f3eedf;
+  --color-saving-bg: #1f3a2b;
+  --color-saving-border: #2f6b49;
+  --color-saving-fg: #9ad4b2;
+  --color-saving-soft: #b9d9c6;
   // Focus ring colour. Dark sections set it to paper.
   --color-focus: var(--color-ink);
 
@@ -92,7 +96,7 @@
 
   // Motion
   --duration-fast: 0.2s; // hover, state changes
-  --duration-count: 0.3s; // result count-up (max, SPEC §4)
+  --duration-swap: 0.25s; // calculator number swap (DESIGN-GUIDE section 5)
   --duration-intro: 0.7s; // hero table intro
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
 

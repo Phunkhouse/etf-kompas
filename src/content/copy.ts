@@ -91,34 +91,37 @@ export const copy = {
     },
   },
   calculator: {
-    heading: 'Kolik to u vás dělá?',
+    heading: 'Kolik vás to bude stát?',
     monthlyLabel: 'Kolik měsíčně uložíte',
     horizonLabel: 'Na jak dlouho',
     years: (years: number) => `${years} let`,
-    resultMore: (years: number) =>
-      `Za ${years} let u amerického fondu zaplatíte víc o`,
-    resultLess: (years: number) =>
-      `Za ${years} let u amerického fondu zaplatíte méně o`,
-    resultSame: (years: number) => `Za ${years} let je rozdíl mezi oběma fondy`,
-    total: (amount: string) =>
-      `U amerického fondu zaplatíte celkem ${amount}. Z toho jde na:`,
+    // The dearest of the brokers with verified prices (note 0037).
+    total: (years: number, ticker: string, amount: string) =>
+      `Za ${years} let vás koupitelný fond (${ticker}) u ověřených brokerů bude stát nejvýš ${amount}. Z toho jde na:`,
+    // Only the fund fee is known while no broker has verified prices.
+    fundOnly: (years: number, ticker: string, amount: string) =>
+      `Za ${years} let vás poplatek fondu (${ticker}) bude stát ${amount}.`,
+    fundOnlyNote:
+      'Ceny brokerů ověřujeme, proto zatím ukazujeme jen poplatek fondu.',
     parts: {
-      ter: 'roční poplatek fondu',
-      fx: 'převod korun na dolary',
-      withholding: 'daň, kterou stáhne USA',
+      fund: 'roční poplatek fondu',
+      fx: 'převod korun na cizí měnu',
+      broker: 'poplatky brokera',
     },
-    fxOff: 'Převod korun na dolary zatím nepočítáme.',
-    // Under the result while the American fund is the cheaper one (wireframe
-    // revision 2, section 3). Chosen from the data, like the hero footnote.
-    cheaperNote: {
-      unverified: (verifiedNo: number, total: number) =>
-        `Je americký fond levnější, uvidíte „méně o“. Z Česka ho ale zatím nekoupíte u ${verifiedNo} z ${total} firem, u ostatních to ověřujeme.`,
-      unchecked:
-        'Je americký fond levnější, uvidíte „méně o“. U kterých firem ho z Česka koupíte, zatím ověřujeme.',
-      nowhere: (total: number) =>
-        `Je americký fond levnější, uvidíte „méně o“. Z Česka ho ale nekoupíte u žádné z ${total} firem.`,
+    illustrative: (years: number, value: string, fees: string, rate: string) =>
+      `Ilustrativní hodnota po ${years} letech: ${value}, z toho poplatky ${fees} · ${rate} ročně, příklad, ne slib.`,
+    assumption: (rate: string) =>
+      `Počítáme s výnosem ${rate} ročně. Je to příklad, ne slib. Nepočítáme české daně ani inflaci.`,
+    saving: {
+      lead: 'Při vašem nastavení',
+      text: (amount: string) =>
+        `Správným brokerem si u stejného fondu ponecháte až ${amount}`,
+      note: 'Odhad, bez českých daní a inflace.',
+      button: 'Ukázat, u kterého brokera to koupím',
     },
-    assumption: (returnText: string) =>
-      `Počítáme s výnosem ${returnText} ročně u obou fondů. Je to příklad, ne slib.`,
+    failure: {
+      text: 'Částku teď nespočítáme, aby nebyla nepřesná',
+      retry: 'Zkusit znovu',
+    },
   },
 }

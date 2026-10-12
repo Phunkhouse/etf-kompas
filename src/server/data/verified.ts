@@ -1,4 +1,4 @@
-import { TODO_VERIFY } from './schema'
+import { TODO_VERIFY } from './todo'
 
 // A value may be shown or used only with a source and evidence (SPEC §18).
 // Freshness is the data validator's job, not checked here.

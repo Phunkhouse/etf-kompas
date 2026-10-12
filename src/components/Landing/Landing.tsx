@@ -7,7 +7,7 @@ import { SourceBar } from '@/components/SourceBar'
 import { copy } from '@/content/copy'
 import { nbsp } from '@/lib/typography'
 import type { HeroRow } from '@/server/availability'
-import type { LandingData } from '@/server/landing-data'
+import type { CalculatorData } from '@/server/calculator-data'
 import styles from './Landing.module.scss'
 
 export type Variant = 'a' | 'b'
@@ -18,8 +18,8 @@ type LandingProps = {
   dataAsOf: string | null
   // The rows of the hero b table; hero a does not use them.
   rows?: HeroRow[]
-  // The calculator band; left out when its numbers are not verified.
-  calculator?: LandingData['calculator']
+  // The calculator band: left out when undefined, the failure state when null.
+  calculator?: CalculatorData | null
 }
 
 // The landing page: frame plus the hero of the chosen variant. Hero a below is
@@ -28,7 +28,7 @@ export function Landing({
   variant,
   dataAsOf,
   rows = [],
-  calculator = null,
+  calculator,
 }: LandingProps) {
   return (
     <>
@@ -44,11 +44,8 @@ export function Landing({
             </h1>
           </Section>
         )}
-        {calculator ? (
-          <CalculatorSection
-            inputs={calculator.inputs}
-            featuredBuyability={calculator.featuredBuyability}
-          />
+        {calculator !== undefined ? (
+          <CalculatorSection data={calculator} />
         ) : null}
       </main>
       <SiteFooter />

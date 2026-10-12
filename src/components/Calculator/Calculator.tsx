@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Button } from '@/components/Button'
 import { Chip } from '@/components/Chip'
 import { NumberDisplay } from '@/components/NumberDisplay'
 import { Slider } from '@/components/Slider'
@@ -8,78 +9,89 @@ import { Tag } from '@/components/Tag'
 import { copy } from '@/content/copy'
 import { formatKc, formatPercent } from '@/lib/format'
 import { nbsp } from '@/lib/typography'
-import { calcComparison, type CalcFund } from '@/server/calc'
+import { priceBrokers } from '@/server/broker-pricing'
+import type { CalculatorData } from '@/server/calculator-data'
+import { fundFeeKc } from '@/server/cost'
 import styles from './Calculator.module.scss'
 
 const HORIZONS = [5, 10, 20]
 const MONTHLY_MIN = 500
 const MONTHLY_MAX = 20000
 const MONTHLY_STEP = 500
+// The same for every fund, so only the costs differ (SPEC §17.3).
+const GROSS_RETURN = 6
 
 type CalculatorProps = {
-  // The US-listed fund the headline is about, and its European twin.
-  featured: CalcFund
-  alternative: CalcFund
-  // Absent means the conversion fee is not counted (SPEC §21).
-  fxFeePct?: number
-  grossReturn?: number
+  // null when the numbers are not available: the calculator then shows no amount.
+  data: CalculatorData | null
+  onRetry?: () => void
   // Heading level and id, so the page can name the section after it.
   headingAs?: 'h2' | 'h3'
   headingId?: string
-  // Shown under the result only while the featured fund is the cheaper one, for
-  // example to say it cannot be bought everywhere (note 0029).
-  cheaperNote?: string
 }
 
-// The fee and tax drag calculator (SPEC §4, §21). Calculates in the browser
-// with the same pure function the server uses to recompute.
+// The cost calculator (SPEC §4, §21, docs/METHODOLOGY-V2.md). Prices in the
+// browser with the same pure functions the server uses to recompute.
 export function Calculator({
-  featured,
-  alternative,
-  fxFeePct,
-  grossReturn = 6,
+  data,
+  onRetry = () => window.location.reload(),
   headingAs = 'h3',
   headingId,
-  cheaperNote,
 }: CalculatorProps) {
   const [monthly, setMonthly] = useState(3000)
   const [years, setYears] = useState(10)
   const text = copy.calculator
 
-  const [own, other] = calcComparison(
-    { monthly, years, grossReturn, fxFeePct },
-    [featured, alternative],
+  const heading = (
+    <Tag as={headingAs} id={headingId}>
+      {nbsp(text.heading)}
+    </Tag>
   )
-  // The gap is shown from the point of view of the American fund.
-  const gap =
-    own.gapKc === null ? 0 : own.gapKc > 0 ? own.gapKc : (other.gapKc ?? 0)
-  // The featured fund is the cheaper one (the label says "méně o").
-  const featuredCheaper = own.gapKc !== null && own.gapKc <= 0 && gap > 0
-  const tag =
-    own.gapKc !== null && own.gapKc > 0
-      ? text.resultMore(years)
-      : gap > 0
-        ? text.resultLess(years)
-        : text.resultSame(years)
 
-  const lines = [
-    { id: 'ter', label: text.parts.ter, amount: own.parts.ter },
-    ...(own.fxApplied
-      ? [{ id: 'fx', label: text.parts.fx, amount: own.parts.fx }]
-      : []),
-    {
-      id: 'withholding',
-      label: text.parts.withholding,
-      amount: own.parts.withholding,
-    },
-  ]
+  if (data === null) {
+    return (
+      <div className={styles.calculator}>
+        <div className={styles.inputs}>
+          {heading}
+          <p>{nbsp(text.failure.text)}</p>
+          <div>
+            <Button variant="secondary" onClick={onRetry}>
+              {text.failure.retry}
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const input = { monthly, years, grossReturn: GROSS_RETURN }
+  const prices = priceBrokers(
+    data.pricing,
+    data.fundId,
+    data.ter,
+    data.rates,
+    input,
+  )
+  const headline = prices.headline?.result ?? null
+  const fundFee = fundFeeKc(input, data.ter)
+  const rate = formatPercent(GROSS_RETURN, 0)
+
+  const lines = headline
+    ? [
+        { id: 'fund', label: text.parts.fund, amount: headline.parts.fund },
+        { id: 'fx', label: text.parts.fx, amount: headline.parts.fx },
+        {
+          id: 'broker',
+          label: text.parts.broker,
+          amount: headline.parts.broker,
+        },
+      ]
+    : [{ id: 'fund', label: text.parts.fund, amount: fundFee }]
 
   return (
     <div className={styles.calculator}>
       <div className={styles.inputs}>
-        <Tag as={headingAs} id={headingId}>
-          {nbsp(text.heading)}
-        </Tag>
+        {heading}
         <Slider
           label={nbsp(text.monthlyLabel)}
           value={monthly}
@@ -113,10 +125,13 @@ export function Calculator({
       </div>
 
       <div className={styles.result}>
-        <p className={styles.resultTag}>{nbsp(tag)}</p>
-        <NumberDisplay value={gap} />
+        <NumberDisplay value={headline ? headline.totalKc : fundFee} />
         <p className={styles.total}>
-          {nbsp(text.total(formatKc(own.totalKc)))}
+          {nbsp(
+            headline
+              ? text.total(years, data.ticker, formatKc(headline.totalKc))
+              : text.fundOnly(years, data.ticker, formatKc(fundFee)),
+          )}
         </p>
         <ul className={styles.lines}>
           {lines.map((line) => (
@@ -126,12 +141,32 @@ export function Calculator({
             </li>
           ))}
         </ul>
-        {!own.fxApplied && <p className={styles.note}>{nbsp(text.fxOff)}</p>}
-        <p className={styles.note}>
-          {nbsp(text.assumption(formatPercent(grossReturn, 0)))}
-        </p>
-        {featuredCheaper && cheaperNote ? (
-          <p className={styles.note}>{nbsp(cheaperNote)}</p>
+        {headline ? (
+          <p className={styles.note}>
+            {nbsp(
+              text.illustrative(
+                years,
+                formatKc(headline.valueKc),
+                formatKc(headline.totalKc),
+                rate,
+              ),
+            )}
+          </p>
+        ) : (
+          <p className={styles.note}>{nbsp(text.fundOnlyNote)}</p>
+        )}
+        <p className={styles.note}>{nbsp(text.assumption(rate))}</p>
+        {prices.spreadKc !== null ? (
+          <div className={styles.saving}>
+            <p className={styles.savingLead}>{nbsp(text.saving.lead)}</p>
+            <p className={styles.savingText}>
+              {nbsp(text.saving.text(formatKc(prices.spreadKc)))}
+            </p>
+            <p className={styles.savingNote}>{nbsp(text.saving.note)}</p>
+            <a href="#formular" className={styles.savingButton}>
+              {nbsp(text.saving.button)}
+            </a>
+          </div>
         ) : null}
       </div>
     </div>

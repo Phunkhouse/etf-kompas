@@ -434,3 +434,18 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 
 - **My first implementation leaked unverified values.** The test "no TODO_VERIFY reaches the browser" failed: I passed whole broker objects, and a broker's own `fxFeePct`, `custodyFeePct` and `czSupport` are still `TODO_VERIFY` (pricing never reads them). I fixed it by narrowing the pricing functions' parameter to `PricingBroker` (`id`, `availability`, `fees`). That is a type-only change in `broker-pricing.ts`; its tests did not change and still pass. I had not thought of those fields when I wrote the test list; the test was written to catch exactly this class of mistake.
 - Limit: nothing uses `calculatorData` yet; the page wiring and the UI come in PR 2.
+
+### Calculator UI v2
+
+**Prompt (summary):** "#38 landed, draft the PR 2 tests", then "approved, implement the calculator".
+
+**Produced:** the new `Calculator` (browser maths with `priceBrokers`; priced, fund-fee-only and failure states; the saving box under its hide rule), `CalculatorSection`, `NumberDisplay` with a swap instead of a count-up, the saving-box colour tokens with their contrast pairs, new copy in `copy.ts`, both pages calling `getRates()` and `calculatorData()`. Removed the v1 code (`calc.ts`, `calculator-inputs.ts`, their tests, `cheaperNote`). Tests first: 25 component tests failed before; 339 unit/component and 38 e2e tests pass after.
+
+**Mistakes and corrections**
+
+- **I blew the JS budget and nearly did not notice.** The first full e2e run failed the budget test: our code added 42.8 KB over an empty page (limit 20) and the route was 178.5 KB (limit 150). Cause: the pricing code imported the `TODO_VERIFY` constant from `schema.ts`, which dragged the whole Zod library into the browser. I moved the constant into `data/todo.ts` (re-exported from `schema.ts`, no other change). Now ours is 11.0 KB and the route 143.5 KB. A unit test cannot see this; only the budget e2e did.
+- **Two bugs in my own approved tests**, found when I ran them against the implementation: the new NumberDisplay tests compared against ordinary spaces while the page uses non-breaking spaces, and one fund-only test normalised only the expected text. I fixed the comparisons only; what they assert did not change. I also added a one-line type guard to the test fixture (`record.value` can be the `TODO_VERIFY` string) that typecheck required.
+- **Not done:** the motion scale says the old number rises out as the new one rises in; I built only the rise-in (no exit animation, no extra JS). The loading state is skipped (pricing is synchronous). The saving-box link goes to `#formular`, which does not exist until Phase 4.
+- **Not checked by eye:** I ran the unit, component and e2e tests and the budget, but did not look at the result on a phone screen. Layout of the new parts and the saving box needs your review on `/styleguide` and the live page.
+
+- Decision note 0040 (keep Zod out of browser code) added to this PR after David gave the reason: fitting the JS budget.
