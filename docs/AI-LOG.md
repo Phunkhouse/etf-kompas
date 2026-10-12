@@ -286,3 +286,17 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **My first search for "8 funds" matched "height" and "weight" everywhere** (I had searched for "eight"). I narrowed it to the real phrases. Nothing was changed from the first result.
 - **SPEC §3.2 still conflicts with rev. 4** (it lists 5 and 10 year performance; the wireframes show no returns, rule "bez výnosů"). I did not change it, because that is a different decision, and wrote it into note 0036 instead.
 - I edited the pinned fund list in an existing validator test a second time (the first was for VUSA and EQQQ). David should look at it.
+
+### Calculator v2: methodology and test list (draft)
+
+**Prompt (summary):** "#27 landed ... Do you want the new broker fee model drafted now (tests first)? Yes". "Poplatky brokera" counts both purchase commission and custody fee; fees stay static.
+
+**Produced:** `docs/METHODOLOGY-V2.md` (draft: broker fee model, formulas, golden-case inputs, four questions) and `src/server/cost.test.ts` with 43 `it.todo` cases. `METHODOLOGY.md` gets a banner pointing to the draft. No code that calculates.
+
+**Mistakes and corrections**
+
+- **My first idea of the fee model was too simple.** I started from one `custodyFeePct` per broker, as in the old schema. DEGIRO's own fee document, which David had verified, showed otherwise: the purchase fee depends on the exchange a fund is listed on (€0 on its Tradegate selection, €2 elsewhere, plus a €1 handling fee per order), there is a fixed yearly fee per exchange used, and EUR to CZK is free. So the model prices a broker and a listing together, and fees in euro or dollar need an exchange rate in Kč, which the data did not have. I found this by reading the document, not by designing first.
+- **I cannot say the model fits the other four brokers.** Only DEGIRO's schedule is on file. The shapes for Fio, IBKR, Trading 212 and XTB are my expectation, to be checked when David verifies them; the model may need one more field.
+- **Withholding and dividend yield leave the formula** because the rev. 4 text lists three result parts without them. I read that from the text spec, not the Design Study, and asked David to confirm.
+- Golden cases G1 and G2 repeat the verified v1 cases (2 400 and 1 672) so that the new formulas can be checked against numbers David already hand-verified. G3 to G5 have no expected values: David computes them.
+- **The branch conflicted with #28 in `AI-LOG.md`.** Both PRs appended an entry at the end of the file. I rebased onto `main` and kept both entries in order. No other file conflicted. I then wrote David's four answers into the draft and into note 0037, and added 4 more `it.todo` cases for them (now 47). One thing the answers left open: today no broker has every value verified, so the headline rule would produce no number. I asked about it instead of choosing.
