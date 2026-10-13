@@ -985,3 +985,13 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **The bug I reported does not exist** (details in the entry "Closing Phase 3" above). I found out when I started on a fix and asked why the scroll reset: Playwright's element click scrolls the button into view first, and the header is not sticky, so the page can never be 1 200 px down with the button in reach. The known-gaps bullet is removed in PR 72.
 - **The test is a guard, not a regression test:** it passed before and after because nothing changed in the code. I wrote it so that the next change to the menu cannot break the scroll without notice, and so that the test does not hide the problem again: it clicks by position.
 - **A small real thing I noticed on the way:** when the header is scrolled partly out of view (about 40 px), the panel starts at the top of the screen, so the logo and the Menu button in the panel are a few pixels away from where they were in the header. It is the clamp in `show()`; not a jump of the page, and not changed.
+
+### Phase 4 start: env names and the first migration
+
+**Prompt (summary):** David: Phase 4 checklist; then Supabase (EU, Ireland) and Resend accounts are ready, the sending domain exists, "start on `.env.example` and the migration draft on a branch".
+
+**Produced:** `.env.example` (names only) and `supabase/migrations/0001_lead_flow.sql` (`leads`, `result_tokens`, `rate_limits`, RLS on with no policies, an atomic `rate_limit_hit` function). Not run against any database yet.
+
+**Mistakes and corrections**
+
+- None yet. Open: the folder `supabase/migrations/` is not in SPEC §13; I used the Supabase convention and am asking David (a decision note needs his reason). `events` is left for Phase 5.
