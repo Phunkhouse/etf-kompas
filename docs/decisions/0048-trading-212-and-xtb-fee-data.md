@@ -1,10 +1,10 @@
 # 0048. How the Trading 212 and XTB fee records were filled
 
 Date: 2026-10-13
-Status: proposed
+Status: accepted
 Phase: 3
 
-Note: David asked the agent to draft the reason. It is built from the evidence in the records; David should confirm or correct it.
+Note: David asked the agent to draft the reason, built from the evidence in the records (and, for Fio, from what the agent did). David confirmed it on 2026-10-13 without changes.
 
 ## Context
 
