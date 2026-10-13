@@ -74,6 +74,20 @@ test.describe('saving box button', () => {
   })
 })
 
+test.describe('"Zdarma, bez registrace" under the hero button', () => {
+  test('is muted text, centred under the button on a phone and left-aligned on desktop @smoke', async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto('/')
+    const line = page.getByText('Zdarma, bez registrace')
+    await expect(line).toBeVisible()
+    await expect(line).toHaveCSS('color', 'rgb(107, 102, 90)')
+    await expect(line).toHaveCSS('font-size', '14px')
+    await expect(line).toHaveCSS('text-align', isMobile ? 'center' : 'start')
+  })
+})
+
 test.describe('hero b headline', () => {
   test('has the amount in the red for light backgrounds, the rest in ink', async ({
     page,

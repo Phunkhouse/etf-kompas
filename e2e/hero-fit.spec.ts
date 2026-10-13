@@ -18,6 +18,11 @@ for (const path of ['/', '/?v=a', '/?v=b']) {
     const box = await button.boundingBox()
     expect(box).not.toBeNull()
     expect(box!.y + box!.height).toBeLessThanOrEqual(667)
+    // the reassurance under the button is in view too, and under the button
+    const line = await page.getByText('Zdarma, bez registrace').boundingBox()
+    expect(line).not.toBeNull()
+    expect(line!.y).toBeGreaterThanOrEqual(box!.y + box!.height)
+    expect(line!.y + line!.height).toBeLessThanOrEqual(667)
     // nothing wider than the screen
     const scrollWidth = await page.evaluate(
       () => document.documentElement.scrollWidth,

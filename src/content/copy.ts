@@ -45,6 +45,8 @@ export const heroCopy = {
   },
   lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.',
   cta: 'Spočítat, kolik mě to bude stát',
+  // Under the button: no account, no price (decided 2026-10-13, before the 5-second test).
+  ctaNote: 'Zdarma, bez registrace',
   // The one use of "ETF" on the page (SPEC §25 rule 2).
   // The second sentence is shown only when the data supports it.
   callout: {

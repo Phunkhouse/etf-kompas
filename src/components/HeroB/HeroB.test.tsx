@@ -214,6 +214,20 @@ describe('HeroB', () => {
     )
   })
 
+  it('says "Zdarma, bez registrace" right after the button, outside it', () => {
+    render(<HeroB twins={twins} note={note()} dataAsOf={null} />)
+    const line = screen.getByText('Zdarma, bez registrace')
+    const button = screen.getByRole('link', {
+      name: 'Spočítat, kolik mě to bude stát',
+    })
+    expect(button.contains(line)).toBe(false)
+    expect(
+      button.compareDocumentPosition(line) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy()
+    // the button keeps its own label, so the link name is not changed by the line
+    expect(button.textContent).toBe('Spočítat, kolik mě to bude stát')
+  })
+
   it('has no link "nebo rovnou srovnání brokerů" under the button', () => {
     render(<HeroB twins={twins} note={note()} dataAsOf={null} />)
     expect(

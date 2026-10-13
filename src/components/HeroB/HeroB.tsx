@@ -104,6 +104,7 @@ export function HeroB({
             <ButtonLink href="#spocitat" fullWidth>
               {nbsp(text.cta)}
             </ButtonLink>
+            <p className={styles.ctaNote}>{nbsp(text.ctaNote)}</p>
           </div>
           {note ? (
             <p className={styles.footnote} data-testid="hero-note">
