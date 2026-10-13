@@ -56,10 +56,11 @@ describe('calculatorData', () => {
     expect(data.brokers.every((b) => b.name.length > 0)).toBe(true)
   })
 
-  it('passes pricing data only for brokers that have fees (DEGIRO, Trading 212 and XTB today)', () => {
+  it('passes pricing data only for brokers that have fees (DEGIRO, Fio, Trading 212 and XTB today)', () => {
     const data = calculatorData(bundledData, RATES, 'cspx')!
     expect(data.pricing.map((b) => b.id)).toEqual([
       'degiro',
+      'fio',
       'trading212',
       'xtb',
     ])

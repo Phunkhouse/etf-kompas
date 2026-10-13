@@ -327,7 +327,14 @@ describe('the real data files', () => {
     expect(degiro.result.totalKc).toBe(14403)
     expect(degiro.result.parts).toEqual({ fund: 1748, fx: 0, broker: 12655 })
     // the dollar listing would cost 15 617 Kč (1 214 Kč more, the conversion)
-    expect(prices.headline?.brokerId).toBe('degiro')
+    // Fio is priced too and is now the dearest: XETRA in euros, 3,95 EUR an order,
+    // no custody, 2,766 % to convert korunas into euros. The loop gives 30 762 Kč:
+    // the fund fee 1 748 Kč, the conversion about 13 434 Kč, the commission about
+    // 15 581 Kč.
+    const fio = prices.pricedBrokers.find((p) => p.brokerId === 'fio')!
+    expect(fio.listing).toEqual({ currency: 'EUR', venue: 'XETRA' })
+    expect(fio.result.totalKc).toBe(30762)
+    expect(prices.headline?.brokerId).toBe('fio')
     // Trading 212 is priced too: dollar listing in London, no commission, no
     // custody, 0.15 % to convert. Checked with an independent month-by-month loop:
     // the fund fee part is 1 748 Kč, the conversion about 729 Kč, in all 2 476 Kč.
@@ -344,6 +351,6 @@ describe('the real data files', () => {
     expect(xtb.result.totalKc).toBe(4176)
     expect(xtb.result.parts.broker).toBe(0)
     // the spread between the dearest and the cheapest priced broker
-    expect(prices.spreadKc).toBe(14403 - 2476)
+    expect(prices.spreadKc).toBe(30762 - 2476)
   })
 })
