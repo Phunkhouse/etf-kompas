@@ -918,3 +918,8 @@ Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in h
 - **I read the red "NT" badge and the "Notice" button as a restriction before I could read the text** and said so as "my reading, not verified"; I wrote no record until the notice text was in the file. The text confirmed the reading for VOO.
 - **QQQ is not recorded.** Its quote page has the same badge and button, but the notice text of QQQ is not in a file (the notice file shows only the VOO page). I did not infer QQQ from VOO. The FAQ count "U 3 z 5 brokerů" needs both VOO and QQQ to be `false`, so it does not change yet.
 - **The notice file has no date or fund in its name** (`ibkr-notice.png`); the record names it as the VOO notice. A name with date and fund would be clearer.
+
+**Update 3 (same PR): QQQ at IBKR.** David saved the QQQ notice (`ibkr-qqq-notice.png`): the same text as for VOO (a retail client under MiFID cannot trade a product with no KID in an approved language). `availability.qqq` of IBKR is `false`, citing the search, the quote page and the notice. The FAQ now says "U 4 z 5 brokerů".
+
+- **An approved test changed with the data:** `landing-data.test.ts` expected 3 brokers verified as not selling VOO and QQQ; it now expects 4 and names IBKR in the comment. The assertion is as strong as before. The same kind of change as in #58 (a test that counts data).
+- **David renamed the VOO notice file** (`ibkr-notice.png` to `ibkr-voo-notice.png`; the SHA-256 is the same). My first VOO record named the old file, so I corrected the name in the record. Renaming evidence after it is cited is the same trap as the overwritten CSPX file; the hash stays the proof, and I check the folder before every record.
