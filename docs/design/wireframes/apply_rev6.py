@@ -78,8 +78,6 @@ def hero_rows_mobile(s):
     s = one(s, '<span class="tag">Poplatek</span>', '<span class="tag">Poplatek*</span>')
     s = one(s, '</div>\n<a class="btn" href="#calc">',
             f'</div>\n<p style="font-size:12px;color:#6B665A">{FOOTNOTE}</p>\n<a class="btn" href="#calc">')
-    s = one(s, 'CSPX: DEGIRO, Trading 212, XTB', 'CSPX: DEGIRO, Fio e-Broker, Trading 212, XTB')
-    s = one(s, 'žádné výnosy.', 'ne výnosy.')
     s = one(s, CALLOUT_OLD, CALLOUT_NEW)
     return s
 
@@ -95,8 +93,34 @@ def hero_rows_desktop(s):
     s = s[:i] + rows + '\n' + f'<p style="padding:8px 12px 0;font-size:13px;color:#6B665A">{FOOTNOTE}</p>\n' + s[j:]
     s = one(s, '<span class="tag">Roční poplatek</span>', '<span class="tag">Poplatek*</span>')
     s = one(s, 'zdroj: stránky fondů · ověřeno k 10. 2026', 'zdroj: stránky fondů a brokerů · ověřeno k 10. 2026')
-    s = one(s, 'CSPX: DEGIRO, Trading 212, XTB', 'CSPX: DEGIRO, Fio e-Broker, Trading 212, XTB')
     s = one(s, '<a href="#gate" style="font-size:15px">nebo rovnou srovnání brokerů</a>', '')
+    return s
+
+
+BROKERS_NOTE = 'Brokeři: DEGIRO, Fio e-Broker, Interactive Brokers, Trading 212, XTB. Jen cena a dostupnost, ne výnosy.'
+SETTING = 'Částka v nadpisu: 3 000 Kč měsíčně, 10 let, odhad bez českých daní a inflace.'
+
+
+def short_line(s, mobile):
+    # The short line (2026-10-13): how many known brokers, when verified. A phone has the names and
+    # "jen cena a dostupnost, ne výnosy" in a note after the callout, a wide screen in the short line.
+    m = re.search(r'<p style="[^"]*">CSPX: DEGIRO[^<]*</p>', s)
+    assert m, 'no muted line'
+    old = m.group(0)
+    b = SETTING in old
+    if mobile:
+        new = '<p style="font-size:12px;color:#6B665A">CSPX: 5 známých brokerů · ověřeno k 6. 2026</p>'
+        s = s.replace(old, new)
+        callout_end = 'evropské verze stejných indexů ano.</p>\n</section>'
+        assert s.count(callout_end) == 1
+        note = BROKERS_NOTE + (' ' + SETTING if b else '')
+        s = s.replace(callout_end, callout_end + '<section style="padding:0 16px 24px"><p style="font-size:12px;color:#6B665A">' + note + '</p></section>')
+    else:
+        lines = '<p>CSPX: 5 známých brokerů · ověřeno k 6. 2026 · jen cena a dostupnost, ne výnosy</p>'
+        if b:
+            lines += '<p>' + SETTING.rstrip('.') + '</p>'
+        new = '<div style="padding:12px 12px 4px;font-size:13px;color:#6B665A;display:flex;flex-direction:column;gap:4px">' + lines + '</div>'
+        s = s.replace(old, new)
     return s
 
 
@@ -109,6 +133,7 @@ def landing(f, mobile, variant_b):
                 'zaplatit až <span style="color:#C23A1B">' + SAVING_B.replace(' ', '\u00a0') + '</span>. Kde?')
     s = hero_rows_mobile(s) if mobile else hero_rows_desktop(s)
     s = calc_block(s, mobile)
+    s = short_line(s, mobile)
     # "Zdarma, bez registrace" under the hero button (2026-10-13, option A), the same text as the built page
     btn = '<a class="btn" href="#calc">Spočítat, kolik mě to bude stát</a>'
     if mobile:

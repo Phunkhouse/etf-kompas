@@ -56,7 +56,6 @@ const note = {
   fundId: 'cspx',
   ticker: 'CSPX',
   sellers: ['DEGIRO'],
-  othersUnverified: true,
   originals: { tickers: ['VOO', 'QQQ'], mostlyNo: true },
 }
 

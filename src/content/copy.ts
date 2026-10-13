@@ -95,24 +95,31 @@ export const heroCopy = {
       },
     },
   },
-  // The muted line under the table. Chosen from the data, so it never says
-  // more than the data shows. The tickers come in as parameters from the data.
+  // The short line under the table and the note under the callout. Chosen from the
+  // data, so they never say more than the data shows. The ticker and the numbers
+  // come in as parameters. The American funds are explained by the callout alone.
   note: {
-    sellers: (ticker: string, names: string, date: string) =>
-      `${ticker}: ${names} (ověřeno k ${date}).`,
-    sellersNoDate: (ticker: string, names: string) => `${ticker}: ${names}.`,
+    // "CSPX: 5 známých brokerů" (Czech plural: 1 broker, 2 to 4 brokeři, 5 brokerů)
+    known: (ticker: string, count: number) =>
+      `${ticker}: ${count} ${
+        count === 1
+          ? 'známý broker'
+          : count >= 2 && count <= 4
+            ? 'známí brokeři'
+            : 'známých brokerů'
+      }`,
+    verifiedOn: (date: string) => `ověřeno k ${date}`,
     noSellers: (ticker: string) =>
       `U kterých brokerů koupíte ${ticker}, zatím ověřujeme.`,
-    others: 'U ostatních fondů a brokerů ověřujeme.',
+    // After the short line on wide screens (a phone has it in the note instead).
+    priceOnlyShort: 'jen cena a dostupnost, ne výnosy',
+    // The note under the callout, on a phone: who the brokers are.
+    names: (names: string) => `Brokeři: ${names}.`,
     // The page shows no returns (note 0039).
     priceOnly: 'Jen cena a dostupnost, ne výnosy.',
-    // Under the table in variant b: which setting the amount in the headline is for.
+    // Variant b: which setting the amount in the headline is for.
     headlineSetting: (monthly: string, years: number) =>
       `Částka v nadpisu: ${monthly} měsíčně, ${years} let, odhad bez českých daní a inflace.`,
-    originalsMostlyNo: (tickers: string) =>
-      `Americké ${tickers} u většiny brokerů nekoupíte.`,
-    originalsChecking: (tickers: string) =>
-      `U amerických ${tickers} zatím ověřujeme, kde je koupíte.`,
   },
 }
 

@@ -933,3 +933,17 @@ Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in h
 - **The IBIS2 exchange is taken to be covered by the Germany table**, because the search shows the German flag; the commission page does not name IBIS2. The record says so.
 - **"Custody" is taken from a general FAQ sentence**, not from a table; third-party custody fees are not priced and the record says so.
 - **The venue of the LSE listing is named "LSE"**, as at Trading 212 and XTB, while IBKR shows "LSEETF".
+
+### A short line under the hero table
+
+**Prompt (summary):** David did not like the long grey line under the hero table ("5 známých brokerů" instead, details lower or under an asterisk); I made two options for phone and desktop; he chose A for desktop and B for phone, but without the wall of text and with only one asterisk; I showed the revision and he said the note below the fold was fine ("additional info, not the claim itself"); then "approved, implement it".
+
+**Produced:** the line is now "CSPX: 5 známých brokerů · ověřeno k 6. 2026" (Czech plural, from the data). On wide screens it goes on with "jen cena a dostupnost, ne výnosy", and in variant b a second line gives the setting of the amount. On a phone a note after the callout says "Brokeři: DEGIRO, Fio e-Broker, Interactive Brokers, Trading 212, XTB. Jen cena a dostupnost, ne výnosy." (plus the setting in b). The sentences about the American funds and "U ostatních fondů a brokerů ověřujeme" are gone (the callout explains the funds). The boards, four PNGs, the text spec and the Design Study show the same. Tests first (6 component and 4 e2e failed); 524 unit/component and 129 e2e pass.
+
+**Mistakes and corrections**
+
+- **I kept "CSPX:" in front of "5 známých brokerů"**, which David's wording did not have: only CSPX is priced at all five brokers, and "5 známých brokerů" next to a table of four funds could be read as five for each of them. I said so before implementing and offered to drop it; he approved the implementation without objecting.
+- **Dead code removed:** `othersUnverified` of the hero note was no longer used by any copy; I removed the field and the two tests that only checked it (the assertions were about that field alone).
+- **The JS grew by 0.7 KB** (146.7 to 147.4 KB, 150 KB budget): the new strings and the second block of markup. Not reduced; the margin is now 2.6 KB.
+- **Board and built page differ in one detail:** the board's phone line is left-aligned like the built page, but the draft David approved showed it centred. I followed the built footnote above it.
+- **The amount in the headline on the live page is now 28 293 Kč**, not 28 302 Kč (the daily ČNB rate changed); the boards show the amount of 2026-10-12 and the design study says the numbers are from that data.

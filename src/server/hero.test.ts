@@ -157,39 +157,6 @@ describe('heroNote: where the first twin is sold', () => {
     expect(note.sellers).toEqual([])
   })
 
-  it('says others are unverified while any broker is neither verified yes nor no', () => {
-    const base = {
-      etfs,
-      brokers: [broker('a', 'DEGIRO', { cspx: yes })],
-    }
-    expect(heroNote(base, 'cspx', []).othersUnverified).toBe(false)
-    const withTodo = {
-      etfs,
-      brokers: [...base.brokers, broker('b', 'IBKR', { cspx: todo })],
-    }
-    expect(heroNote(withTodo, 'cspx', []).othersUnverified).toBe(true)
-    const withMissing = {
-      etfs,
-      brokers: [...base.brokers, broker('b', 'IBKR', {})],
-    }
-    expect(heroNote(withMissing, 'cspx', []).othersUnverified).toBe(true)
-  })
-
-  it('does not count a verified "no" as unverified', () => {
-    const note = heroNote(
-      {
-        etfs,
-        brokers: [
-          broker('a', 'DEGIRO', { cspx: yes }),
-          broker('b', 'Fio', { cspx: no }),
-        ],
-      },
-      'cspx',
-      [],
-    )
-    expect(note.othersUnverified).toBe(false)
-  })
-
   it('throws for a first fund that is not in the data', () => {
     expect(() => heroNote({ etfs, brokers: [] }, 'nope', [])).toThrow(/nope/)
   })
