@@ -893,3 +893,16 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Not tested:** whether the line helps the 5-second test; that is the point of the test.
 
 Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in his words ("more converting"); the one-sentence reason is thin, so the note says that conversion is a hope, not a measurement, and flags the "bez registrace" against "an e-mail is needed" wording for the copy review.
+
+### Data: IBKR availability of CSPX
+
+**Prompt (summary):** David got access to Interactive Brokers and sent a quote screenshot of CSPX, then the search popup; he saved the quote page as `ibkr-cspx-search-2026-10-13.png` and said the date is the file name's, the account is his own, and search shows only the single LSE line.
+
+**Produced:** `availability.cspx` of IBKR (`true`, source `https://www.interactivebrokers.com`, SHA-256 of the saved file, the quoted page text) and one entry in `sources.json`. IBKR now counts as a seller of CSPX, so the hero line names five brokers. IBKR is still not priced: commission, conversion and account fees are missing, and so is the CSPX listing record (it lives with the fees).
+
+**Mistakes and corrections**
+
+- **My first record failed the validator** (the source URL was not in `sources.json`). The draft check caught it before commit; I added the source entry.
+- **Two screenshots arrived in the chat but only one was saved to disk** (the quote page, not the search popup). The record says what the popup showed from David's description, and the evidence hash covers only the quote page. The search popup should be saved too if it is meant as evidence.
+- **The screenshot does not show which IBKR entity the account belongs to**; David said it is his own account. The record says the screenshot does not show it.
+- **Side effect I did not expect:** the hero line now names five brokers ("CSPX: DEGIRO, Fio e-Broker, Interactive Brokers, Trading 212, XTB") and the sentence "U ostatních fondů a brokerů ověřujeme." disappeared, because the rule says every broker is now verified for CSPX. The line is longer, which is the opposite of what David wants; it is the next change.

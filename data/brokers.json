@@ -404,12 +404,12 @@
         "evidence": null
       },
       "cspx": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:8cc233d6187418992cdc14de6c01c8fabc2f87499a6b2f0bff017c119bf79969 (ibkr-cspx-search-2026-10-13.png); Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the page shows a time but no date): quote page \"CSPX  ISHARES CORE S&P 500  LSEETF\", price USD 842.33 (ask 842.30, bid 842.22), Buy and Sell buttons. David's search for \"cspx\" under Stocks/ETF listed CSPX (LSEETF), CSPXN (MEXI) and CSPXJ (EBS, a different fund); only the LSE line is for this fund. The screenshot does not show which IBKR entity the account belongs to."
       },
       "vuaa": {
         "value": "TODO_VERIFY",

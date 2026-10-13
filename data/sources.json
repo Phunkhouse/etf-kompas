@@ -113,5 +113,10 @@
     "url": "https://www.fio.cz/akcie-investice/dalsi-sluzby-fio/devizove-konverze",
     "title": "Fio banka: Devizové konverze",
     "publisher": "Fio banka"
+  },
+  {
+    "url": "https://www.interactivebrokers.com",
+    "title": "Interactive Brokers client portal, instrument search and quote (logged-in account)",
+    "publisher": "Interactive Brokers"
   }
 ]
