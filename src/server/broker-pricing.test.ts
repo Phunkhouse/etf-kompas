@@ -336,6 +336,13 @@ describe('the real data files', () => {
     expect(t212.result.totalKc).toBe(2476)
     expect(t212.result.parts.broker).toBe(0)
     expect(t212.result.parts.fund + t212.result.parts.fx).toBe(2476)
+    // XTB is priced too: dollar listing in London, no commission below EUR 100 000
+    // a month, no custody fee for a saver, 0,5 % to convert. The same loop gives
+    // 4 176 Kč: the fund fee 1 748 Kč and the conversion about 2 428 Kč.
+    const xtb = prices.pricedBrokers.find((p) => p.brokerId === 'xtb')!
+    expect(xtb.listing).toEqual({ currency: 'USD', venue: 'LSE' })
+    expect(xtb.result.totalKc).toBe(4176)
+    expect(xtb.result.parts.broker).toBe(0)
     // the spread between the dearest and the cheapest priced broker
     expect(prices.spreadKc).toBe(14403 - 2476)
   })

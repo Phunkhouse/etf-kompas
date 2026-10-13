@@ -623,6 +623,68 @@
         "verifiedOn": "2026-10-12",
         "evidence": "sha256:761079da3d682c1f1b6ce067e2755749509142857625c2c056fa9b39500f6102 (xtb-eqqq-search-2026-10-12.png); instrument search 2026-10-12: \"EQQQ NASDAQ-100\", EQQQ.DE (Invesco, UCITS, DIST, EUR) and EQQQ.UK (DIST, GBP)"
       }
+    },
+    "fees": {
+      "fx": {
+        "USD": {
+          "value": 0.5,
+          "sourceUrl": "https://xas-new-cdn.xtb.com/file/0104/79/93e25843-d67e-4f7c-a252-fa0955e5f9f3/tabulkapoplatkuaprovizi30092026.pdf",
+          "asOf": "2026-09-30",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:9b4c0e6d14cedae0d5333cbac67088c00bf21c10e598704b9ece7528d4e6eba2 (xtb-fees.pdf, \"Tabulka poplatků a provizí XTB ze dne 30. září 2026\") and sha256:03b8cce6be6255b4ef02f752fc0c8b0c65f6c4e0f5b9dc6797cca3d76f60a925 (xtb-fees-screenshot.png, https://www.xtb.com/cz/ucet-a-poplatky, captured 2026-10-13); section 2: \"všechny měnové konverze související s obchodováním ... podléhají 0,5% přirážce\" (footnote 2), and \"Poplatek za konverzi měn 0,5 %\" on the page. The account is in CZK (xtb screenshot of 2026-10-11 shows 0.00 CZK), so a dollar ETF is one conversion from korunas"
+        },
+        "EUR": {
+          "value": 0.5,
+          "sourceUrl": "https://xas-new-cdn.xtb.com/file/0104/79/93e25843-d67e-4f7c-a252-fa0955e5f9f3/tabulkapoplatkuaprovizi30092026.pdf",
+          "asOf": "2026-09-30",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:9b4c0e6d14cedae0d5333cbac67088c00bf21c10e598704b9ece7528d4e6eba2 (xtb-fees.pdf, \"Tabulka poplatků a provizí XTB ze dne 30. září 2026\") and sha256:03b8cce6be6255b4ef02f752fc0c8b0c65f6c4e0f5b9dc6797cca3d76f60a925 (xtb-fees-screenshot.png, https://www.xtb.com/cz/ucet-a-poplatky, captured 2026-10-13); section 2: 0,5 % on every conversion related to trading (footnote 2), and \"Poplatek za konverzi měn 0,5 %\" on the page"
+        }
+      },
+      "purchase": [
+        {
+          "value": {
+            "venues": null,
+            "currency": "CZK",
+            "fixed": 0,
+            "percent": 0
+          },
+          "sourceUrl": "https://xas-new-cdn.xtb.com/file/0104/79/93e25843-d67e-4f7c-a252-fa0955e5f9f3/tabulkapoplatkuaprovizi30092026.pdf",
+          "asOf": "2026-09-30",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:9b4c0e6d14cedae0d5333cbac67088c00bf21c10e598704b9ece7528d4e6eba2 (xtb-fees.pdf, \"Tabulka poplatků a provizí XTB ze dne 30. září 2026\") and sha256:03b8cce6be6255b4ef02f752fc0c8b0c65f6c4e0f5b9dc6797cca3d76f60a925 (xtb-fees-screenshot.png, https://www.xtb.com/cz/ucet-a-poplatky, captured 2026-10-13); section 2: commission \"0 %, minimálně 0 EUR\" before a turnover of EUR 100 000 a month on all accounts, 0,2 % (minimum EUR 10) after it; the page says \"Zdarma\" up to EUR 100 000 a month. A saver puts in at most 20 000 Kč a month, far below the limit. Zero in every currency, so the rule is written in CZK"
+        }
+      ],
+      "custody": {
+        "value": {
+          "currency": "CZK",
+          "annualFixed": 0,
+          "annualPercent": 0
+        },
+        "sourceUrl": "https://xas-new-cdn.xtb.com/file/0104/79/93e25843-d67e-4f7c-a252-fa0955e5f9f3/tabulkapoplatkuaprovizi30092026.pdf",
+        "asOf": "2026-09-30",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:9b4c0e6d14cedae0d5333cbac67088c00bf21c10e598704b9ece7528d4e6eba2 (xtb-fees.pdf, \"Tabulka poplatků a provizí XTB ze dne 30. září 2026\") and sha256:03b8cce6be6255b4ef02f752fc0c8b0c65f6c4e0f5b9dc6797cca3d76f60a925 (xtb-fees-screenshot.png, https://www.xtb.com/cz/ucet-a-poplatky, captured 2026-10-13); section 1: the monthly account fee of EUR 10 is charged only if there was no opened or closed position in 365 days and no deposit in 90 days, so never for a monthly saver; \"Poplatek za úschovu\" 0,02 % a year only on the part of the portfolio above EUR 250 000 (section 5), which the calculator reaches only at the very top of the slider and does not model"
+      },
+      "listings": {
+        "cspx": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "LSE"
+            },
+            "sourceUrl": "https://www.xtb.com/cz",
+            "asOf": "2026-09-30",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-13",
+            "evidence": "sha256:9e1e0794af40e82bd623c87b6337332239fd366c0bcaa58934bca4c07bc2c7fe (xtb-cspx-search-2026-10-11.png): CSPX.UK, \"iShares Core S&P 500 UCITS (Acc USD)\", price in USD (841.39). Listing evidence from 2026-10-11"
+          }
+        ]
+      }
     }
   }
 ]
