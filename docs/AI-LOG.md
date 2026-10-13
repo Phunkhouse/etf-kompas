@@ -637,3 +637,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **The header button had pointed at `#gate` since the shell was built**, an anchor from the old gate design that no longer existed, and a test had pinned it. I found it only by reading the header while planning C1. Fixed, with the test.
 - **Static sections still cost JavaScript.** The route grew from 146.7 to 147.3 KB although both sections are server-rendered. The cause is not the components: every client component imports `copy`, and `copy.ts` is one object, so each new string (FAQ answers, trust texts) ships to the browser even if only a server component uses it. Our code is now 14.8 KB and the route has 2.7 KB of room. The fix is to split `copy.ts` into one export per section so client bundles take only theirs. Not done in this PR; flagged to David.
 - **Left on purpose:** no retention period in the e-mail answer (not decided, SPEC §19); the "Jak počítáme" list is inline and a separate page is later; "Nedostáváme provize" and the "zdarma" answer are statements about the project that David confirmed.
+
+### Splitting the copy by section
+
+**Prompt (summary):** "#52 landed, split copy.ts first", after I found that static sections still cost client JavaScript.
+
+**Produced:** `src/content/copy.ts` now has one export per section (`shellCopy`, `heroCopy`, `trustBlockCopy`, `faqCopy`, `hiddenCostsCopy`, `emailPreviewCopy`, `leadFormCopy`, `calculatorCopy`) and a combined `copy` that only the copy checker and its tests use. Every component imports its own section. The route went from 147.3 KB to 145.3 KB and our code from 14.8 KB to 12.8 KB (room on the route: 4.7 KB). A small test fails if app code imports the whole `copy` again. Behaviour is unchanged: 444 unit/component and 81 e2e tests pass, `copy:check` reports the same 0 problems.
+
+**Mistakes and corrections**
+
+- **Not a mistake in this PR, but the cause of the problem:** I wrote `copy.ts` as one object and every client component imported all of it, which I did not check until C1 added a lot of text and the route grew although the sections were static. The JS budget test caught the effect, not the cause.
+- No tests changed besides the new guard; this was a refactor covered by the existing tests, and I did not write the failing test first because there was no new behaviour to test. The guard test was written with the change, not before it.
+- Limit: the split does not remove strings that a client component imports but never uses within its own section (for example `calculatorCopy` has a failure text that renders only on error). Splitting further would need a separate module per component.

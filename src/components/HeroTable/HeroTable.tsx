@@ -5,7 +5,7 @@ import {
   type TableColumn,
   type TableRowData,
 } from '@/components/Table'
-import { copy } from '@/content/copy'
+import { heroCopy } from '@/content/copy'
 import { formatMonthYear, formatPercent } from '@/lib/format'
 import { nbsp } from '@/lib/typography'
 import type { HeroTwin } from '@/server/hero'
@@ -17,7 +17,7 @@ type HeroTableProps = {
   dataAsOf: string | null
 }
 
-const text = copy.hero.table
+const text = heroCopy.table
 type RowCopyKey = keyof typeof text.rows
 
 const columns: TableColumn[] = [

@@ -1,10 +1,10 @@
 import { Section } from '@/components/Section'
 import { Tag } from '@/components/Tag'
-import { copy } from '@/content/copy'
+import { hiddenCostsCopy } from '@/content/copy'
 import { nbsp } from '@/lib/typography'
 import styles from './HiddenCosts.module.scss'
 
-const text = copy.hiddenCosts
+const text = hiddenCostsCopy
 
 // "Za co platíte, aniž to vidíte": the three costs, one plain sentence each. Static
 // content (no client JavaScript). The numbers on the cards are a CSS counter, so

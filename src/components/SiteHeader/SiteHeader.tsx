@@ -1,7 +1,7 @@
 import { ButtonLink } from '@/components/Button'
 import { Container } from '@/components/Container'
 import { Wordmark } from '@/components/Wordmark'
-import { copy } from '@/content/copy'
+import { shellCopy } from '@/content/copy'
 import { nbsp } from '@/lib/typography'
 import styles from './SiteHeader.module.scss'
 
@@ -9,7 +9,7 @@ import styles from './SiteHeader.module.scss'
 // The links and the button point at sections that the next page PRs add. The
 // mobile "Menu" chip is left out until its contents are designed.
 export function SiteHeader() {
-  const { nav } = copy.shell
+  const { nav } = shellCopy
   return (
     <header className={styles.header}>
       <Container>
@@ -22,7 +22,7 @@ export function SiteHeader() {
           </nav>
           <div className={styles.cta}>
             <ButtonLink href="#formular" size="sm">
-              {nbsp(copy.shell.cta)}
+              {nbsp(shellCopy.cta)}
             </ButtonLink>
           </div>
         </div>

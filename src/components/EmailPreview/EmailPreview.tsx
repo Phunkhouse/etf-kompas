@@ -1,11 +1,11 @@
 import { ButtonLink } from '@/components/Button'
 import { Section } from '@/components/Section'
 import { Tag } from '@/components/Tag'
-import { copy } from '@/content/copy'
+import { emailPreviewCopy } from '@/content/copy'
 import { nbsp } from '@/lib/typography'
 import styles from './EmailPreview.module.scss'
 
-const text = copy.emailPreview
+const text = emailPreviewCopy
 
 // "Co dostanete e-mailem": the heading, one line of what to expect, the button
 // again, and two drawn previews of the PDF pages. The previews are abstract art

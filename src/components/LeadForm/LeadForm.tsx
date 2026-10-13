@@ -3,7 +3,7 @@
 import { useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { Field } from '@/components/Field'
-import { copy } from '@/content/copy'
+import { leadFormCopy } from '@/content/copy'
 import { site } from '@/config/site'
 import { nbsp } from '@/lib/typography'
 import type { LeadFormState } from '@/server/leads'
@@ -17,7 +17,7 @@ type LeadFormProps = {
   initialState?: LeadFormState
 }
 
-const text = copy.leadForm
+const text = leadFormCopy
 
 function SubmitButton({ retry }: { retry: boolean }) {
   const { pending } = useFormStatus()

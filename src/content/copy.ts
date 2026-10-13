@@ -3,242 +3,261 @@
 // (non-breaking spaces) is applied at render time with nbsp(); a one-letter word
 // at the very end of a string gets its non-breaking space written in here.
 
-export const copy = {
-  // Page frame: source bar, header, footer (wireframe B, sections 0, 1 and 8).
-  shell: {
-    sourceBar: (date: string) =>
-      `Čísla ze stránek fondů a brokerů · ověřeno k ${date}`,
-    sourceBarNoDate: 'Čísla ze stránek fondů a brokerů',
-    riskShort: 'Investování nese riziko ztráty.',
-    nav: {
-      label: 'Hlavní nabídka',
-      method: 'Jak počítáme',
-      sources: 'Odkud máme čísla',
-      faq: 'Časté dotazy',
-    },
-    cta: 'Poslat mi srovnání',
-    footer: {
-      risk: 'Investování nese riziko ztráty. Minulé výnosy nezaručují budoucí. Obsah je obecná informace, ne investiční ani daňové poradenství.',
-      controller: (controller: string) => `Správce: ${controller}`,
-      privacy: 'Zásady zpracování',
-      cookies: 'Cookies',
-      // Draft for David's copy review (SPEC §17.15).
-      testNotice:
-        'Zkušební projekt vytvořený jako ukázka. Není to nabídka investiční služby.',
-    },
+// Page frame: source bar, header, footer (wireframe B, sections 0, 1 and 8).
+export const shellCopy = {
+  sourceBar: (date: string) =>
+    `Čísla ze stránek fondů a brokerů · ověřeno k ${date}`,
+  sourceBarNoDate: 'Čísla ze stránek fondů a brokerů',
+  riskShort: 'Investování nese riziko ztráty.',
+  nav: {
+    label: 'Hlavní nabídka',
+    method: 'Jak počítáme',
+    sources: 'Odkud máme čísla',
+    faq: 'Časté dotazy',
   },
-  // Both heroes have the rev. 4 headline; they differ by layout: variant a is
-  // the calculator-first hero (ad A), b the table-first hero (ad B).
-  hero: {
-    // One layout for both A/B variants (note 0041); variant a's headline is this one.
-    headline: 'Americké indexy z Česka: u koho je koupíte a za kolik?',
-    lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.',
-    cta: 'Spočítat, kolik mě to bude stát',
-    // Under the button: goes to the e-mail form (the comparison is behind it).
-    compareLink: 'nebo rovnou srovnání brokerů',
-    // The one use of "ETF" on the page (SPEC §25 rule 2).
-    // The second sentence is shown only when the data supports it.
-    callout: {
-      term: 'ETF',
-      text: ' je fond, který jen kopíruje trh.',
-      originals: (tickers: string) =>
-        ` Americké fondy (${tickers}) u většiny brokerů z Česka nekoupíte, evropské verze stejných indexů ano.`,
-    },
-    table: {
-      caption: 'Cena fondů',
-      columns: {
-        what: 'Co koupíte',
-        fee: 'Roční poplatek',
-        type: 'Typ',
-      },
-      source: (date: string) =>
-        `zdroj: stránky fondů a brokerů · ověřeno k ${date}`,
-      feeUnknown: '[ověřit]',
-      // Acc: the fund reinvests its income; Dist: it pays it out.
-      type: {
-        accumulating: 'Acc',
-        distributing: 'Dist',
-        unverified: '[ověřit]',
-      },
-      // A row's plainName comes first; the technical name, ticker and manager
-      // follow (SPEC §25 rule 3, decision note 0026). The rows follow the funds
-      // in data/etfs.json by id; the manager is in the fund's name there.
-      rows: {
-        cspx: {
-          plainName: 'Evropský fond na 500 největších firem',
-          detail: 'odborně S&P 500, značka CSPX, správce iShares',
-        },
-        vuaa: {
-          plainName: 'Evropský fond na 500 největších firem',
-          detail: 'odborně S&P 500, značka VUAA, správce Vanguard',
-        },
-        cndx: {
-          plainName: 'Evropský fond na 100 technologických firem',
-          detail: 'odborně Nasdaq 100, značka CNDX, správce iShares',
-        },
-        eqqq: {
-          plainName: 'Evropský fond na 100 technologických firem',
-          detail: 'odborně Nasdaq 100, značka EQQQ, správce Invesco',
-        },
-      },
-    },
-    // The muted line under the table. Chosen from the data, so it never says
-    // more than the data shows. The tickers come in as parameters from the data.
-    note: {
-      sellers: (ticker: string, names: string, date: string) =>
-        `${ticker}: ${names} (ověřeno k ${date}).`,
-      sellersNoDate: (ticker: string, names: string) => `${ticker}: ${names}.`,
-      noSellers: (ticker: string) =>
-        `U kterých brokerů koupíte ${ticker}, zatím ověřujeme.`,
-      others: 'U ostatních fondů a brokerů ověřujeme.',
-      // The page shows no returns (note 0039).
-      priceOnly: 'Jen cena a dostupnost, ne výnosy.',
-      originalsMostlyNo: (tickers: string) =>
-        `Americké ${tickers} u většiny brokerů nekoupíte.`,
-      originalsChecking: (tickers: string) =>
-        `U amerických ${tickers} zatím ověřujeme, kde je koupíte.`,
-    },
+  cta: 'Poslat mi srovnání',
+  footer: {
+    risk: 'Investování nese riziko ztráty. Minulé výnosy nezaručují budoucí. Obsah je obecná informace, ne investiční ani daňové poradenství.',
+    controller: (controller: string) => `Správce: ${controller}`,
+    privacy: 'Zásady zpracování',
+    cookies: 'Cookies',
+    // Draft for David's copy review (SPEC §17.15).
+    testNotice:
+      'Zkušební projekt vytvořený jako ukázka. Není to nabídka investiční služby.',
   },
-  // "Proč nám věřit": three short items. The ids are the anchors of the header
-  // links. No figures here; the page's numbers come from the data (SPEC §18).
-  trustBlock: {
-    heading: 'Proč nám věřit',
-    items: [
-      {
-        id: 'odkud-mame-cisla',
-        title: 'Odkud máme čísla',
-        paragraphs: [
-          'Z dokumentů fondů, ze stránek brokerů a od České národní banky. U každého čísla je datum.',
-        ],
-      },
-      {
-        id: 'jak-pocitame',
-        title: 'Jak počítáme',
-        paragraphs: [
-          'Počítáme poplatek fondu, převod korun a poplatky brokera.',
-          'Nepočítáme české daně, inflaci ani rozdíl mezi nákupní a prodejní cenou.',
-          'Jedna investice měsíčně. Je to příklad, ne slib.',
-        ],
-      },
-      {
-        id: 'nic-neprodavame',
-        title: 'Nic neprodáváme',
-        paragraphs: ['Nedostáváme provize. Nejde o investiční poradenství.'],
-      },
-    ],
+}
+
+// Both heroes have the rev. 4 headline; they differ by layout: variant a is
+// the calculator-first hero (ad A), b the table-first hero (ad B).
+export const heroCopy = {
+  // One layout for both A/B variants (note 0041); variant a's headline is this one.
+  headline: 'Americké indexy z Česka: u koho je koupíte a za kolik?',
+  lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.',
+  cta: 'Spočítat, kolik mě to bude stát',
+  // Under the button: goes to the e-mail form (the comparison is behind it).
+  compareLink: 'nebo rovnou srovnání brokerů',
+  // The one use of "ETF" on the page (SPEC §25 rule 2).
+  // The second sentence is shown only when the data supports it.
+  callout: {
+    term: 'ETF',
+    text: ' je fond, který jen kopíruje trh.',
+    originals: (tickers: string) =>
+      ` Americké fondy (${tickers}) u většiny brokerů z Česka nekoupíte, evropské verze stejných indexů ano.`,
   },
-  // "Časté dotazy". The answer about the American funds is chosen from the data.
-  faq: {
-    heading: 'Časté dotazy',
-    questions: {
-      us: 'Můžu si americký fond koupit z Česka?',
-      free: 'Je to zdarma?',
-      email: 'Co uděláte s mým e-mailem?',
-      advice: 'Radíte mi, co koupit?',
+  table: {
+    caption: 'Cena fondů',
+    columns: {
+      what: 'Co koupíte',
+      fee: 'Roční poplatek',
+      type: 'Typ',
     },
-    answers: {
-      free: 'Ano. Srovnání je zdarma. Nedostáváme provize a nic vám neprodáváme.',
-      // No retention period: it is not decided yet (SPEC §19).
-      email:
-        'Pošleme vám na něj srovnání. Tipy k investování jen když to zaškrtnete. V každém e-mailu bude odkaz na odhlášení. Zatím jde o zkušební provoz: e-mail nikam neukládáme.',
-      advice:
-        'Ne. Ukazujeme poplatky a dostupnost. Není to investiční ani daňové poradenství. Rozhodnutí je na vás.',
-      us: {
-        some: (verified: number, total: number, tickers: string) =>
-          `Zatím to vypadá, že ne. U ${verified} z ${total} brokerů máme ověřeno, že ${tickers} nenabízí. U ostatních ověřujeme.`,
-        all: (total: number, tickers: string) =>
-          `Ne. Ani jeden z ${total} ověřených brokerů ${tickers} nenabízí.`,
-        none: (tickers: string) =>
-          `U kterých brokerů koupíte ${tickers}, zatím ověřujeme.`,
-        noFacts: 'U kterých brokerů koupíte americké fondy, zatím ověřujeme.',
-        european: 'Stejné indexy koupíte v evropské verzi.',
-        // From SPEC §2 ("generally cannot be bought ... because they lack a PRIIPs KID").
-        reason:
-          'Důvodem bývá, že americké fondy nemají evropský klíčový informační dokument (KID).',
+    source: (date: string) =>
+      `zdroj: stránky fondů a brokerů · ověřeno k ${date}`,
+    feeUnknown: '[ověřit]',
+    // Acc: the fund reinvests its income; Dist: it pays it out.
+    type: {
+      accumulating: 'Acc',
+      distributing: 'Dist',
+      unverified: '[ověřit]',
+    },
+    // A row's plainName comes first; the technical name, ticker and manager
+    // follow (SPEC §25 rule 3, decision note 0026). The rows follow the funds
+    // in data/etfs.json by id; the manager is in the fund's name there.
+    rows: {
+      cspx: {
+        plainName: 'Evropský fond na 500 největších firem',
+        detail: 'odborně S&P 500, značka CSPX, správce iShares',
+      },
+      vuaa: {
+        plainName: 'Evropský fond na 500 největších firem',
+        detail: 'odborně S&P 500, značka VUAA, správce Vanguard',
+      },
+      cndx: {
+        plainName: 'Evropský fond na 100 technologických firem',
+        detail: 'odborně Nasdaq 100, značka CNDX, správce iShares',
+      },
+      eqqq: {
+        plainName: 'Evropský fond na 100 technologických firem',
+        detail: 'odborně Nasdaq 100, značka EQQQ, správce Invesco',
       },
     },
   },
-  // "Za co platíte, aniž to vidíte": three plain cards. No figures here, on
-  // purpose: every number on the page comes from the data (SPEC §18).
-  hiddenCosts: {
-    heading: 'Za co platíte, aniž to vidíte',
-    cards: [
-      {
-        title: 'Roční poplatek fondu',
-        text: 'Fond si každý rok vezme malé procento z vašich peněz. Nikdo vám za to nepošle fakturu.',
-      },
-      {
-        title: 'Převod korun',
-        text: 'Když fond nebo broker účtuje v cizí měně, platí se za převod z korun.',
-      },
-      {
-        title: 'Daň ze zisků',
-        text: 'Část vyplacených zisků si stáhne zahraničí dřív, než se k vám dostanou.',
-      },
-    ],
+  // The muted line under the table. Chosen from the data, so it never says
+  // more than the data shows. The tickers come in as parameters from the data.
+  note: {
+    sellers: (ticker: string, names: string, date: string) =>
+      `${ticker}: ${names} (ověřeno k ${date}).`,
+    sellersNoDate: (ticker: string, names: string) => `${ticker}: ${names}.`,
+    noSellers: (ticker: string) =>
+      `U kterých brokerů koupíte ${ticker}, zatím ověřujeme.`,
+    others: 'U ostatních fondů a brokerů ověřujeme.',
+    // The page shows no returns (note 0039).
+    priceOnly: 'Jen cena a dostupnost, ne výnosy.',
+    originalsMostlyNo: (tickers: string) =>
+      `Americké ${tickers} u většiny brokerů nekoupíte.`,
+    originalsChecking: (tickers: string) =>
+      `U amerických ${tickers} zatím ověřujeme, kde je koupíte.`,
   },
-  // "Co dostanete e-mailem": what the e-mail leads to, with two drawn previews.
-  emailPreview: {
-    label: 'Co dostanete e-mailem',
-    heading: 'Fondy, brokeři a co z toho koupíte z Česka',
-    text: 'Otevře se hned po odeslání, nemusíte nic stahovat. U každého čísla uvádíme odkud je a z jakého měsíce.',
-    cta: 'Poslat mi srovnání',
-    pages: {
-      comparison: 'Strana 1 · Srovnání',
-      tax: 'Strana 4 · Daně',
+}
+
+// "Proč nám věřit": three short items. The ids are the anchors of the header
+// links. No figures here; the page's numbers come from the data (SPEC §18).
+export const trustBlockCopy = {
+  heading: 'Proč nám věřit',
+  items: [
+    {
+      id: 'odkud-mame-cisla',
+      title: 'Odkud máme čísla',
+      paragraphs: [
+        'Z dokumentů fondů, ze stránek brokerů a od České národní banky. U každého čísla je datum.',
+      ],
+    },
+    {
+      id: 'jak-pocitame',
+      title: 'Jak počítáme',
+      paragraphs: [
+        'Počítáme poplatek fondu, převod korun a poplatky brokera.',
+        'Nepočítáme české daně, inflaci ani rozdíl mezi nákupní a prodejní cenou.',
+        'Jedna investice měsíčně. Je to příklad, ne slib.',
+      ],
+    },
+    {
+      id: 'nic-neprodavame',
+      title: 'Nic neprodáváme',
+      paragraphs: ['Nedostáváme provize. Nejde o investiční poradenství.'],
+    },
+  ],
+}
+
+// "Časté dotazy". The answer about the American funds is chosen from the data.
+export const faqCopy = {
+  heading: 'Časté dotazy',
+  questions: {
+    us: 'Můžu si americký fond koupit z Česka?',
+    free: 'Je to zdarma?',
+    email: 'Co uděláte s mým e-mailem?',
+    advice: 'Radíte mi, co koupit?',
+  },
+  answers: {
+    free: 'Ano. Srovnání je zdarma. Nedostáváme provize a nic vám neprodáváme.',
+    // No retention period: it is not decided yet (SPEC §19).
+    email:
+      'Pošleme vám na něj srovnání. Tipy k investování jen když to zaškrtnete. V každém e-mailu bude odkaz na odhlášení. Zatím jde o zkušební provoz: e-mail nikam neukládáme.',
+    advice:
+      'Ne. Ukazujeme poplatky a dostupnost. Není to investiční ani daňové poradenství. Rozhodnutí je na vás.',
+    us: {
+      some: (verified: number, total: number, tickers: string) =>
+        `Zatím to vypadá, že ne. U ${verified} z ${total} brokerů máme ověřeno, že ${tickers} nenabízí. U ostatních ověřujeme.`,
+      all: (total: number, tickers: string) =>
+        `Ne. Ani jeden z ${total} ověřených brokerů ${tickers} nenabízí.`,
+      none: (tickers: string) =>
+        `U kterých brokerů koupíte ${tickers}, zatím ověřujeme.`,
+      noFacts: 'U kterých brokerů koupíte americké fondy, zatím ověřujeme.',
+      european: 'Stejné indexy koupíte v evropské verzi.',
+      // From SPEC §2 ("generally cannot be bought ... because they lack a PRIIPs KID").
+      reason:
+        'Důvodem bývá, že americké fondy nemají evropský klíčový informační dokument (KID).',
     },
   },
-  // The e-mail form under the result (wireframe B, "E-mail form" and "Form errors").
-  leadForm: {
-    heading: 'Chcete vidět, kde který fond koupíte?',
-    emailLabel: 'Váš e-mail',
-    emailPlaceholder: 'jmeno@domena.cz',
-    send: 'Poslat mi srovnání',
-    sending: 'Posílám…',
+}
+
+// "Za co platíte, aniž to vidíte": three plain cards. No figures here, on
+// purpose: every number on the page comes from the data (SPEC §18).
+export const hiddenCostsCopy = {
+  heading: 'Za co platíte, aniž to vidíte',
+  cards: [
+    {
+      title: 'Roční poplatek fondu',
+      text: 'Fond si každý rok vezme malé procento z vašich peněz. Nikdo vám za to nepošle fakturu.',
+    },
+    {
+      title: 'Převod korun',
+      text: 'Když fond nebo broker účtuje v cizí měně, platí se za převod z korun.',
+    },
+    {
+      title: 'Daň ze zisků',
+      text: 'Část vyplacených zisků si stáhne zahraničí dřív, než se k vám dostanou.',
+    },
+  ],
+}
+
+// "Co dostanete e-mailem": what the e-mail leads to, with two drawn previews.
+export const emailPreviewCopy = {
+  label: 'Co dostanete e-mailem',
+  heading: 'Fondy, brokeři a co z toho koupíte z Česka',
+  text: 'Otevře se hned po odeslání, nemusíte nic stahovat. U každého čísla uvádíme odkud je a z jakého měsíce.',
+  cta: 'Poslat mi srovnání',
+  pages: {
+    comparison: 'Strana 1 · Srovnání',
+    tax: 'Strana 4 · Daně',
+  },
+}
+
+// The e-mail form under the result (wireframe B, "E-mail form" and "Form errors").
+export const leadFormCopy = {
+  heading: 'Chcete vidět, kde který fond koupíte?',
+  emailLabel: 'Váš e-mail',
+  emailPlaceholder: 'jmeno@domena.cz',
+  send: 'Poslat mi srovnání',
+  sending: 'Posílám…',
+  retry: 'Zkusit znovu',
+  invalid: 'Zadejte e-mail ve tvaru jmeno@domena.cz.',
+  failure: {
+    strong: 'Odeslání se nepovedlo.',
+    text: ' Zkuste to prosím znovu za chvíli. Váš e-mail i nastavení kalkulačky zůstaly vyplněné.',
+  },
+  legal: (controller: string) =>
+    `Pošleme vám srovnání. Správce: ${controller}. Zásady zpracování osobních údajů.`,
+  tips: 'Chci občas dostat tip k investování (nepovinné)',
+  // Before Phase 4 nothing is stored or sent, and the page says so.
+  notice: 'Zkušební provoz: váš e-mail jsme nikam neuložili ani neodeslali.',
+}
+
+export const calculatorCopy = {
+  heading: 'Kolik vás to bude stát?',
+  monthlyLabel: 'Kolik měsíčně uložíte',
+  horizonLabel: 'Na jak dlouho',
+  years: (years: number) => `${years} let`,
+  // The dearest of the brokers with verified prices (note 0037).
+  total: (years: number, ticker: string, amount: string) =>
+    `Za ${years} let vás koupitelný fond (${ticker}) u ověřených brokerů bude stát nejvýš ${amount}. Z toho jde na:`,
+  // Only the fund fee is known while no broker has verified prices.
+  fundOnly: (years: number, ticker: string, amount: string) =>
+    `Za ${years} let vás poplatek fondu (${ticker}) bude stát ${amount}.`,
+  fundOnlyNote:
+    'Ceny brokerů ověřujeme, proto zatím ukazujeme jen poplatek fondu.',
+  parts: {
+    fund: 'roční poplatek fondu',
+    fx: 'převod korun na cizí měnu',
+    broker: 'poplatky brokera',
+  },
+  illustrative: (years: number, value: string, fees: string, rate: string) =>
+    `Ilustrativní hodnota po ${years} letech: ${value}, z toho poplatky ${fees} · ${rate} ročně, příklad, ne slib.`,
+  assumption: (rate: string) =>
+    `Počítáme s výnosem ${rate} ročně. Je to příklad, ne slib. Nepočítáme české daně ani inflaci.`,
+  saving: {
+    lead: 'Při vašem nastavení',
+    text: (amount: string) =>
+      `Správným brokerem si u stejného fondu ponecháte až ${amount}`,
+    note: 'Odhad, bez českých daní a inflace.',
+    button: 'Ukázat, u kterého brokera to koupím',
+  },
+  failure: {
+    text: 'Částku teď nespočítáme, aby nebyla nepřesná',
     retry: 'Zkusit znovu',
-    invalid: 'Zadejte e-mail ve tvaru jmeno@domena.cz.',
-    failure: {
-      strong: 'Odeslání se nepovedlo.',
-      text: ' Zkuste to prosím znovu za chvíli. Váš e-mail i nastavení kalkulačky zůstaly vyplněné.',
-    },
-    legal: (controller: string) =>
-      `Pošleme vám srovnání. Správce: ${controller}. Zásady zpracování osobních údajů.`,
-    tips: 'Chci občas dostat tip k investování (nepovinné)',
-    // Before Phase 4 nothing is stored or sent, and the page says so.
-    notice: 'Zkušební provoz: váš e-mail jsme nikam neuložili ani neodeslali.',
   },
-  calculator: {
-    heading: 'Kolik vás to bude stát?',
-    monthlyLabel: 'Kolik měsíčně uložíte',
-    horizonLabel: 'Na jak dlouho',
-    years: (years: number) => `${years} let`,
-    // The dearest of the brokers with verified prices (note 0037).
-    total: (years: number, ticker: string, amount: string) =>
-      `Za ${years} let vás koupitelný fond (${ticker}) u ověřených brokerů bude stát nejvýš ${amount}. Z toho jde na:`,
-    // Only the fund fee is known while no broker has verified prices.
-    fundOnly: (years: number, ticker: string, amount: string) =>
-      `Za ${years} let vás poplatek fondu (${ticker}) bude stát ${amount}.`,
-    fundOnlyNote:
-      'Ceny brokerů ověřujeme, proto zatím ukazujeme jen poplatek fondu.',
-    parts: {
-      fund: 'roční poplatek fondu',
-      fx: 'převod korun na cizí měnu',
-      broker: 'poplatky brokera',
-    },
-    illustrative: (years: number, value: string, fees: string, rate: string) =>
-      `Ilustrativní hodnota po ${years} letech: ${value}, z toho poplatky ${fees} · ${rate} ročně, příklad, ne slib.`,
-    assumption: (rate: string) =>
-      `Počítáme s výnosem ${rate} ročně. Je to příklad, ne slib. Nepočítáme české daně ani inflaci.`,
-    saving: {
-      lead: 'Při vašem nastavení',
-      text: (amount: string) =>
-        `Správným brokerem si u stejného fondu ponecháte až ${amount}`,
-      note: 'Odhad, bez českých daní a inflace.',
-      button: 'Ukázat, u kterého brokera to koupím',
-    },
-    failure: {
-      text: 'Částku teď nespočítáme, aby nebyla nepřesná',
-      retry: 'Zkusit znovu',
-    },
-  },
+}
+
+// The whole copy in one object, for the copy checker and its tests only. App
+// code imports the section it needs, so a client bundle takes only that section
+// and not every string on the page.
+export const copy = {
+  shell: shellCopy,
+  hero: heroCopy,
+  trustBlock: trustBlockCopy,
+  faq: faqCopy,
+  hiddenCosts: hiddenCostsCopy,
+  emailPreview: emailPreviewCopy,
+  leadForm: leadFormCopy,
+  calculator: calculatorCopy,
 }
