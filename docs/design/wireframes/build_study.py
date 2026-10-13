@@ -138,7 +138,7 @@ def table(head, rows, cls='inv'):
 
 PRODUCT_CLAIMS = [
     ('What it is', 'A Czech-language comparison for people who want to buy American stock indexes (S&amp;P 500, Nasdaq 100) from Czechia: which European fund tracks the index, which broker sells it, and what it costs over the years, in koruna.'),
-    ('The hook', f'„{HERO}“ American VOO and QQQ are what people search for, but most Czech brokers will not sell them. The page compares the European twins (CSPX, VUAA, VUSA, CSNDX, EQQQ) and asks <i>where</i> and <i>for how much</i>.'),
+    ('The hook', f'„{HERO}“ American VOO and QQQ are what people search for, but most Czech brokers will not sell them. The page compares the European twins (CSPX, VUAA, VUSA, CNDX, EQQQ) and asks <i>where</i> and <i>for how much</i>.'),
     ('Who it is for', 'Beginners who read in a few seconds. Plain Czech, no jargon (ETF is explained once, in one sentence), native copy that David reviews himself.'),
     ('What it is not', 'No advice, no forecasts, no „nejlepší“. Costs and availability only, never returns. Nothing is sold, no commissions.'),
 ]
@@ -147,8 +147,8 @@ RULES = [
     ('Every number has a source', 'Source and month next to it. A „Ne“ needs a source per broker. Anything unverified is the amber pill <code>[ověřit]</code>, never a guess.'),
     ('One illustrative assumption', '6 % a year, the same for every fund, always labelled „příklad, ne slib“, shown net of fees. Czech taxes and inflation are not counted and the page says so.'),
     ('The green saving box is a maximum', '„až X XXX Kč“, „při vašem nastavení“, „Odhad, bez českých daní a inflace“. Shown only when at least two brokers that offer the chosen fund have verified prices; otherwise the box and its button disappear.'),
-    ('Currency', 'The calculator counts CSPX in dollars (USD listing), so the rows read „převod korun na dolary“. A fund listed in euro would read „eura“. Verify the listing per broker.'),
-    ('Disclaimers stay visible', 'Top bar „Čísla ze stránek fondů a brokerů · ověřeno k 10. 2026“ and „Investování nese riziko ztráty“, plus the footer text on every page. Not investment or tax advice.'),
+    ('Currency', 'Each broker is priced at its cheapest listing of the fund (rev. 6), so the row reads „převod korun na cizí měnu“ (it was „na dolary“).'),
+    ('Disclaimers stay visible', 'Top bar „Čísla ze stránek fondů a brokerů · ověřeno k 6. 2026“ (the oldest date in the data, rev. 6) and „Investování nese riziko ztráty“, plus the footer text on every page. Not investment or tax advice.'),
     ('Consent', 'The comparison needs only an e-mail. The tips checkbox is optional, unticked, and confirmed by a second e-mail (double opt-in). Measurement and advertising cookies stay off until the visitor agrees.'),
     ('Placeholders look like placeholders', 'X XXX Kč for computed amounts, <code>[ověřit]</code> for unverified facts, <code>[doplnit]</code> for legal gaps, <code>[SPRÁVCE]</code> for the controller.'),
 ]
@@ -191,10 +191,10 @@ SITEMAP = [
     ('Favicon, share image', '16 to 180 px, 1200 × 630', 'Compass mark; headline card'),
 ]
 N_LANDING = [
-    ('Top bar', '„Čísla ze stránek fondů a brokerů · ověřeno k 10. 2026“ and „Investování nese riziko ztráty.“ Ink band, 13 px (11 on the phone).'),
+    ('Top bar', '„Čísla ze stránek fondů a brokerů · ověřeno k 6. 2026“ and „Investování nese riziko ztráty.“ Ink band, 13 px (11 on the phone).'),
     ('Header', 'Desktop: wordmark and three anchors (Jak počítáme, Odkud máme čísla, Časté dotazy) plus the small button „Poslat mi srovnání“. Phone: wordmark and a hamburger button with the label „Menu“; the phone page also has a sticky bottom bar with the same button.'),
-    ('Hero', f'H1 „{HERO}“, lead „Stejné firmy ze S&amp;P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.“ (one line on the phone), an ETF explainer with a left rule, the button „Spočítat, kolik mě to bude stát“ and the link „nebo rovnou srovnání brokerů“. This is variant a; variant b changes only the headline, see below.'),
-    ('Hero table', 'Card with four European twins: Co koupíte, Roční poplatek, Typ (Acc / Dist). Facts that are not verified carry <code>[ověřit]</code>. One muted line under it: „CSPX: DEGIRO, Trading 212, XTB (ověřeno k 10. 2026). U ostatních fondů a brokerů ověřujeme. Americké VOO a QQQ u většiny brokerů nekoupíte.“ No broker counts.'),
+    ('Hero', f'H1 „{HERO}“, lead „Stejné firmy ze S&amp;P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.“ (one line on the phone), an ETF explainer with a left rule, the button „Spočítat, kolik mě to bude stát“ (rev. 6: the link „nebo rovnou srovnání brokerů“ is gone). This is variant a; variant b changes only the headline, see below.'),
+    ('Hero table', 'Card with four European twins: Co koupíte, Poplatek*, Typ (Acc / Dist), rev. 6. A row is titled by the index (S&amp;P 500, Nasdaq 100) with manager, ticker and a plain description under it („iShares CSPX, 500 největších firem“). A footnote explains the asterisk: „* Roční poplatek fondu, počítaný z vašich peněz ve fondu.“ A fact that is not verified would carry <code>[ověřit]</code>; today all four rows are verified. One muted line under it: „CSPX: DEGIRO, Fio e-Broker, Trading 212, XTB (ověřeno k 6. 2026). U ostatních fondů a brokerů ověřujeme. Americké VOO a QQQ u většiny brokerů nekoupíte.“ No broker counts.'),
     ('Calculator', 'Dark band, see section 05. It sits directly under the hero so the first scroll answers „what does it cost me“.'),
     ('E-mail form', 'Light card: „Chcete vidět, kde který fond koupíte?“, one field (e-mail), the button „Poslat mi srovnání“, controller and privacy link, and the optional tips checkbox. Error states in section 08.'),
     ('Za co platíte, aniž to vidíte', 'Three numbered cards: roční poplatek fondu, převod korun, daň ze zisků (what foreign tax withholding means). Plain words, one sentence each.'),
@@ -206,7 +206,7 @@ N_LANDING = [
 N_CALC = [
     ('Question', '„Kolik vás to bude stát?“'),
     ('Inputs', 'Monthly amount 500 to 20 000 Kč in steps of 500, default 3 000 Kč, shown right-aligned and large. Period chips 5 / 10 / 20 years, default 10. One investment a month.'),
-    ('Result', '„Za 10 let vás koupitelné ETF (CSPX) bude stát X XXX Kč“, then the three parts: roční poplatek fondu, převod korun na dolary, poplatky brokera. Then „Počítáme s výnosem 6 % ročně. Je to příklad, ne slib. Fond CSPX počítáme v dolarech. Nepočítáme české daně ani inflaci.“'),
+    ('Result', '„Za 10 let vás fond (CSPX) může u ověřených brokerů stát i 30 778 Kč“ (rev. 6; the amount is the real calculator result at the dearest verified broker), then the three parts: roční poplatek fondu, převod korun na cizí měnu, poplatky brokera. Then „Počítáme s výnosem 6 % ročně. Je to příklad, ne slib. Nepočítáme české daně ani inflaci.“'),
     ('Illustrative line', '„Ilustrativní hodnota po 10 letech: X XXX Kč, z toho poplatky X XXX Kč · 6 % ročně, příklad, ne slib.“ Net of fees, same assumption for every fund, small, under the result.'),
     ('Green saving box', '„Při vašem nastavení · Správným brokerem si u stejného fondu ponecháte až X XXX Kč · Odhad, bez českých daní a inflace.“ Button „Ukázat, u kterého brokera to koupím“, which goes to the e-mail form. The amount is the spread between brokers that offer the chosen fund.'),
     ('Hide rule', 'The box and its button show only when at least two brokers have verified prices. Otherwise the calculator ends with the illustrative line and the form follows. Never „až 0 Kč“ and never an invented number.'),
@@ -217,7 +217,7 @@ N_CALC = [
 N_F1 = [
     ('Header', 'Wordmark and the button „Stáhnout PDF · 6 stran“. Left column on desktop: „Na stránce“ contents (1 Fondy vedle sebe, 2 Daně v Česku, 3 Kde fond koupit, 4 Jak počítáme). On the phone the contents become a card.'),
     ('Result strip', 'Dark band with the visitor\'s setup (3 000 Kč měsíčně · 10 let) and the same headline number as the calculator.'),
-    ('1 · Fondy vedle sebe', 'Five twins with Typ and Roční poplatek. „Acc = fond výnosy sám reinvestuje. Dist = výnosy vyplácí.“ Unverified fees are <code>[ověřit]</code>.'),
+    ('1 · Fondy vedle sebe', 'Five twins with Typ and Roční poplatek. „Acc = fond výnosy sám reinvestuje. Dist = výnosy vyplácí.“ All five fees are verified (rev. 6); an unverified fee would carry <code>[ověřit]</code>.'),
     ('U kterého brokera?', 'Fund picker (CSPX selected), then five brokers (DEGIRO, Fio, IBKR, Trading 212, XTB) with Koupíte?, Poplatky brokera and Za 10 let celkem. Cells without a source stay <code>[ověřit]</code> and are left out of the spread.'),
     ('Assumption and summary', '„3 000 Kč měsíčně · 10 let · 6 % ročně · jedna investice měsíčně · příklad, ne slib. Částky se řídí kalkulačkou.“ Then „Mezi ověřenými brokery se výsledek liší až o X XXX Kč. Nejnižší možné poplatky s vaším nastavením: X XXX Kč za 10 let.“ and „Odhad. Bez českých daní a inflace.“'),
     ('2 · Daně v Česku', 'Three short items (prodej po letech, dividendy ze zahraničí, přiznání), each with a source link. Text is filled in only from a verified source; until then the placeholder says so.'),
@@ -225,9 +225,9 @@ N_F1 = [
     ('4 · Jak počítáme', 'One page of method: fund fee, currency conversion, broker fees counted; inflation and Czech taxes not. Link „Otevřít postup“.'),
     ('Resend link', '„Odkaz platí 30 dní.“ and a button to send the link to the visitor\'s e-mail again.'),
 ]
-FUNDS = [('S&amp;P 500', 'iShares Core S&amp;P 500 UCITS · CSPX', 'Acc', '0,07 %', True), ('S&amp;P 500', 'Vanguard S&amp;P 500 UCITS · VUAA', 'Acc', '0,07 %', False),
-         ('S&amp;P 500', 'Vanguard S&amp;P 500 UCITS · VUSA', 'Dist', '0,07 %', False), ('Nasdaq 100', 'iShares Nasdaq 100 UCITS · CSNDX', 'Acc', '0,33 %', False),
-         ('Nasdaq 100', 'Invesco EQQQ Nasdaq-100 UCITS · EQQQ', 'Dist', '0,30 %', False)]
+FUNDS = [('S&amp;P 500', 'iShares Core S&amp;P 500 UCITS · CSPX', 'Acc', '0,07 %', True), ('S&amp;P 500', 'Vanguard S&amp;P 500 UCITS · VUAA', 'Acc', '0,07 %', True),
+         ('S&amp;P 500', 'Vanguard S&amp;P 500 UCITS · VUSA', 'Dist', '0,07 %', True), ('Nasdaq 100', 'iShares Nasdaq 100 UCITS · CNDX', 'Acc', '0,30 %', True),
+         ('Nasdaq 100', 'Invesco EQQQ Nasdaq-100 UCITS · EQQQ', 'Dist', '0,30 %', True)]
 N_AFTER = [
     ('Success page', 'Right after the form: the visitor\'s number again, „Hotovo. Srovnání je připravené.“, buttons „Otevřít srovnání“ and „Stáhnout PDF · 6 stran“, „Odkaz jsme poslali i na [e-mail]. Pokud nic nepřijde, zkontrolujte spam.“, „Zkopírovat odkaz“, three „Co dál“ items and the consent note.'),
     ('Tips and double opt-in', 'If the tips checkbox was ticked, a second e-mail arrives with one button „Ano, posílejte mi tipy“. The comparison never waits for it. Confirmation page: „Odběr tipů potvrzen“. A used or expired link gets „Tento odkaz už nefunguje“ with a way back.'),
@@ -263,11 +263,11 @@ N_ADS = [
     ('Ad and landing variant', 'The ad angle (A or B) and the landing headline (a or b) are separate factors. Each ad set sends traffic to two URLs, <code>?v=a</code> and <code>?v=b</code>, split equally, with <code>utm_content</code> carrying both. The calculator-first hero that used to follow ad A was dropped in rev. 5.'),
 ]
 VERIFY = [
-    ('Fees', 'VUAA, VUSA, CSNDX, EQQQ', 'Issuer pages (iShares, Vanguard, Invesco); date and link per number. CSNDX 0,33 % and EQQQ 0,30 % are from memory.'),
+    ('Fees', 'VUAA, VUSA, CNDX, EQQQ', 'Verified (rev. 6): factsheets and KIDs of the issuers, date and link per number. The earlier „CSNDX 0,33 %“ was from memory; the verified CNDX fee is 0,30 %.'),
     ('Availability', '5 funds × 5 brokers', 'Broker search or price list. Verified so far: CSPX at DEGIRO, Trading 212, XTB. Fio and IBKR: open.'),
     ('Fio and IBKR for US funds', 'QQQ, VOO', 'Fio lists QQQ (under its old name) in its ETF directory and not VOO; order access is unverified. IBKR: unverified. Wording stays „u většiny brokerů nekoupíte“.'),
     ('Broker prices', 'Order fee, currency conversion, custody', 'Price list per broker, with date. Needed for „Za 10 let celkem“ and the saving box.'),
-    ('Currency listing', 'CSPX and the others', 'USD or EUR line per broker; it decides the wording „převod korun na dolary“ or „eura“.'),
+    ('Currency listing', 'CSPX and the others', 'USD or EUR line per broker; each broker is priced at its cheapest listing (verified for CSPX; the others follow).'),
     ('Tax text', 'Acc / Dist, 3-year test, foreign withholding', 'Only from a verified source (Finanční správa), with a link per statement.'),
     ('Legal text', 'Privacy policy, cookies, controller', 'Written and reviewed by someone qualified. Consent flow and retention periods decided.'),
     ('Calculator formula', 'Fund fee, FX, broker fees, rounding', 'Pure function with tests, every rate from a dated data file.'),
@@ -303,12 +303,12 @@ p.append(f'''<!doctype html><html lang="cs"><head><meta charset="utf-8">
 <style>{CSS}</style></head><body>
 <aside class="side" id="side"><a class="side-logo" href="#cover" aria-label="ETF Kompas">{logo(126, 32)}</a>
 <nav aria-label="Obsah">{''.join(f'<a href="#{i}" data-s="{i}"><i>{n}</i>{t}</a>' for i, n, t in NAV)}</nav>
-<p class="side-foot">Design · rev. 5<br>12. 10. 2026</p></aside>
+<p class="side-foot">Design · rev. 6<br>13. 10. 2026</p></aside>
 <main>''')
 p.append(f'''<section class="cover" id="cover"><div class="cover-top">{logo(188, 48, True)}<span class="tag on-dark">Design · current · rev. 5</span></div>
 <div class="cover-mid"><span class="tag on-dark">Source of truth</span><h1>ETF Kompas<br>Design study</h1>
 <p>The design as it stands: what the product is and the rules it follows, the design system, every screen and every state. The Wireframe Board shows the same screens on one canvas; this document says why they look like this and what they must do.</p></div>
-<dl class="cover-meta"><div><dt>Datum</dt><dd>12. 10. 2026</dd></div><div><dt>Autor</dt><dd>David Krapka</dd></div><div><dt>Stav</dt><dd>Hotový návrh · rev. 5</dd></div><div><dt>Úroveň</dt><dd>Wireframe · čísla jsou zástupná, [ověřit] = neověřeno</dd></div></dl>
+<dl class="cover-meta"><div><dt>Datum</dt><dd>13. 10. 2026</dd></div><div><dt>Autor</dt><dd>David Krapka</dd></div><div><dt>Stav</dt><dd>Hotový návrh · rev. 6</dd></div><div><dt>Úroveň</dt><dd>Wireframe · čísla jsou z ověřených dat k 13. 10. 2026, [ověřit] = neověřeno</dd></div></dl>
 <div class="cover-compass" aria-hidden="true">{favicon(520)}</div></section>''')
 
 p.append('<section id="produkt" class="sec">' + section_head('01', 'Product and rules', 'What the site is for and the rules every screen follows. If a screen and a rule disagree, the rule wins.')
@@ -397,6 +397,6 @@ p.append('<section id="otevrene" class="sec">' + section_head('12', 'Open data a
 p.append('<section id="historie" class="sec">' + section_head('13', 'History', 'How the design got here. Only for context; the sections above are the current state.')
          + '<div class="hist">' + ''.join(f'<div><b>{a}</b><p>{b}</p></div>' for a, b in HISTORY) + '</div></section>')
 
-p.append(f'<footer class="docfoot">{logo(110, 28, True)}<span>ETF Kompas · Design study · rev. 5 · 12. 10. 2026 · David Krapka</span></footer></main><script>{JS}</script></body></html>')
+p.append(f'<footer class="docfoot">{logo(110, 28, True)}<span>ETF Kompas · Design study · rev. 6 · 13. 10. 2026 · David Krapka</span></footer></main><script>{JS}</script></body></html>')
 open(OUT, 'w').write(''.join(p))
 print('wrote', OUT, os.path.getsize(OUT))

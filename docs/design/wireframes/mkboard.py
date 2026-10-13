@@ -29,7 +29,7 @@ def frame(fid,label,w,x,y):
 def li(items): return ''.join(f'<li>{i}</li>' for i in items)
 NOTES=f'''
 <div class="note n1" style="left:0;top:0;width:860px"><span class="k">ROZHODNUTÍ · rev. 4</span><h2>Co už platí</h2><ol>{li([
- '<b>Hák:</b> americké indexy, evropské ETF. Americké VOO a QQQ u většiny brokerů z Česka nekoupíte, proto srovnáváme evropské dvojníky (S&amp;P 500: CSPX, VUAA, VUSA · Nasdaq 100: CSNDX, EQQQ).',
+ '<b>Hák:</b> americké indexy, evropské ETF. Americké VOO a QQQ u většiny brokerů z Česka nekoupíte, proto srovnáváme evropské dvojníky (S&amp;P 500: CSPX, VUAA, VUSA · Nasdaq 100: CNDX, EQQQ).',
  '<b>Nadpis:</b> „Americké indexy z Česka: u koho je koupíte a za kolik?“ Otázka není <i>jestli</i>, ale <i>u koho</i> a <i>za kolik</i>.',
  '<b>Hero tabulka:</b> bez sloupce „Koupíte z ČR?“ (všechny řádky jsou pro ČR). Sloupec Typ (Acc / Dist). Dostupnost jedním řádkem pod tabulkou.',
  '<b>Kalkulačka:</b> „Kolik vás to bude stát?“ Hlavní číslo = cena fondu, který koupíte. 6 % ročně jako příklad, bez českých daní a inflace.',
@@ -42,13 +42,14 @@ NOTES=f'''
 <div class="ver"><b>rev. 2</b><span>Zvýraznění = koupíte z ČR, ne nejlevnější. Skutečné poplatky, „Ne“ jen se zdrojem, [ověřit] jinak. Kalkulačka počítá cenu koupitelného ETF.</span></div>
 <div class="ver"><b>rev. 3</b><span>Evropské dvojníky místo VOO a QQQ. Nový nadpis, hero tabulka s Typem, srovnání fondů × brokerů, pozitivní zpráva v kalkulačce, texty reklam. Animace hero tabulky je mimo desku, překreslí se podle nové tabulky.</span></div>
 <div class="ver"><b>rev. 4</b><span>Zelený box „ponecháte si až X XXX Kč“ s tlačítkem v kalkulačce (web i mobil). Štítek „návrh“ je pryč ze stránky, pravidlo zobrazení je v poznámce. Kalkulačka počítá CSPX v dolarech. Nová sekce „Menu a doplňkové stránky“: otevřené mobilní menu s hamburgerem, cookies (lišta, nastavení), zásady zpracování, 404, odhlášení. Patička má 4 odkazy. Druhá řada: chyby formuláře, potvrzení tipů, kalkulačka při načítání a chybě, PDF, favicon, sdílený náhled.</span></div>
-<div class="ver now"><b>rev. 5</b><span>A/B test hlavní stránky: varianta a a b mají stejné rozložení (hero s tabulkou) a liší se jen nadpisem. a = „Americké indexy z Česka: u koho je koupíte a za kolik?“, b = „U stejného fondu můžete zbytečně zaplatit až X XXX Kč. Kde?“ (dole pod landingem). Hero s kalkulačkou jako první (dřívější G5) je pryč. Reklamy A a B vedou na obě varianty.</span></div>
+<div class="ver"><b>rev. 5</b><span>A/B test hlavní stránky: varianta a a b mají stejné rozložení (hero s tabulkou) a liší se jen nadpisem. a = „Americké indexy z Česka: u koho je koupíte a za kolik?“, b = „U stejného fondu můžete zbytečně zaplatit až X XXX Kč. Kde?“ (dole pod landingem). Hero s kalkulačkou jako první (dřívější G5) je pryč. Reklamy A a B vedou na obě varianty.</span></div>
+<div class="ver now"><b>rev. 6</b><span>Podle kontroly hotového webu: sloupec „Poplatek*“ s poznámkou, řádek tabulky se jmenuje podle indexu (S&amp;P 500, Nasdaq 100) a pod ním je správce, značka a popis, odkaz „nebo rovnou srovnání brokerů“ je pryč. Místo zástupných údajů ([ověřit], X XXX Kč) jsou ověřená data a výsledek skutečné kalkulačky (3 000 Kč měsíčně, 10 let, 6 %, CSPX). Zůstává [ověřit] jen tam, kde data opravdu chybí (IBKR, „Česky“).</span></div>
 </div>
 <div class="note n3" style="left:1640px;top:0;width:700px"><span class="k">OTEVŘENÉ</span><h2>Co chybí ověřit</h2><ul>{li([
- 'Poplatky VUAA, VUSA, CSNDX, EQQQ ze stránek správců (CSNDX 0,33 % a EQQQ 0,30 % jsou z paměti).',
- 'Dostupnost každého fondu u DEGIRO, Fio, IBKR, Trading 212, XTB. Ověřeno jen CSPX u DEGIRO, Trading 212, XTB.',
- 'Ceny brokerů (nákup, převod měny, správa účtu) pro „Za 10 let celkem“ a větu „až o X XXX Kč“.',
- 'Fio: QQQ je ve výpisu ETF, VOO nenalezeno, přístup k nákupu neověřen. IBKR: zatím neověřeno.',
+ 'IBKR: nic není ověřeno (dostupnost fondů, poplatky, ceny). Ostatní brokeři mají ověřené poplatky a ceny jen pro CSPX; VUAA má cenu jen u DEGIRO, CNDX také.',
+ 'Sloupec „Česky“ (podpora v češtině) u všech brokerů: v datech zatím není.',
+ 'Fio: QQQ je ve výpisu ETF, VOO nenalezeno, přístup k nákupu neověřen.',
+ 'Ceny brokerů se hlídají: poplatky brokerů starší než 45 dní se neukážou.',
  'Obsah okénka Acc / Dist a texty o daních jen z ověřeného zdroje.'])}</ul></div>
 <div class="note n6" style="left:3740px;top:0;width:900px"><span class="k">AUDIT · NOTE K NÁVRHU, NENÍ TEXT STRÁNKY</span><h2>Co na webu chybělo</h2><ul>{li([
  '<b>Menu na mobilu:</b> tlačítko „Menu“ bez ikony a bez otevřeného stavu. Teď hamburger s textem (44 px) na landingu i po odeslání a nová obrazovka s otevřeným menu a odkazy.',
@@ -63,7 +64,7 @@ NOTES=f'''
  '<b>Zobrazit jen</b>, když jsou ověřené ceny alespoň u dvou brokerů, kteří nabízejí zvolený fond. Částka je rozdíl mezi nejlevnějším a nejdražším z nich.',
  '<b>Jinak box zmizí</b> včetně tlačítka. Stránka ukáže jen náklady, ilustrativní hodnotu a formulář. Žádné „až 0 Kč“ a žádné vymyšlené číslo.',
  '<b>Zůstává maximem:</b> „až X XXX Kč“, „při vašem nastavení“, „Odhad, bez českých daní a inflace“. Nikdy „nejlevnější“ bez ověřených cen všech brokerů.',
- '<b>Měna:</b> kalkulačka počítá CSPX v dolarech (kotace USD), proto řádek „převod korun na dolary“. U fondu v eurech by se změnil na „eura“. [ověřit kotaci u každého brokera]',
+ '<b>Měna:</b> kalkulačka počítá u každého brokera jeho nejlevnější kotaci fondu (u CSPX eura u DEGIRO a Fia, dolary u Trading 212 a XTB), proto řádek „převod korun na cizí měnu“ (rev. 6).',
  'Do zveřejnění cen brokerů je box jen v návrhu. Wireframe ukazuje stav „zobrazeno“.'])}</ul></div>
 <div class="note n4" style="left:2400px;top:0;width:520px"><span class="k">LEGENDA</span><h2>Jak číst desku</h2><div class="lg"><span class="pill ver">[ověřit]</span><span>zatím neověřeno, před spuštěním doplnit zdroj</span></div><div class="lg"><span class="x">X XXX Kč</span><span>zástupné číslo, počítá se z kalkulačky</span></div><div class="lg"><span class="pill yes">Ano</span><span>ověřeno k 10. 2026</span></div><p>Posouvejte tažením, zoom kolečkem s Ctrl nebo ikonami dole.</p></div>
 '''

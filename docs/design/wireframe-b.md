@@ -1,6 +1,6 @@
-# Wireframe B: text spec (rev. 5)
+# Wireframe B: text spec (rev. 6)
 
-Text version of every screen and state in the rev. 5 wireframes. The sources are the Wireframe Board (all screens on one canvas) and the Design Study (the same screens with the reasons), both linked from [README.md](README.md). Images are in [images/](images/). Styles are in [DESIGN-GUIDE.md](DESIGN-GUIDE.md). If this file and the Design Study disagree, the Design Study wins and this file gets fixed.
+Text version of every screen and state in the rev. 6 wireframes. The sources are the Wireframe Board (all screens on one canvas) and the Design Study (the same screens with the reasons), both linked from [README.md](README.md). Images are in [images/](images/). Styles are in [DESIGN-GUIDE.md](DESIGN-GUIDE.md). If this file and the Design Study disagree, the Design Study wins and this file gets fixed.
 
 All copy here is wireframe copy, in Czech as drawn. The app copy follows SPEC §25 (no "ETF" in headlines, "firma" for "broker"), see notes 0017 and 0030 and the open points at the end. Square brackets such as `[SPRÁVCE]`, `[doplnit]` and `[ověřit]` are slots and amber "unverified" markers. `X XXX Kč` is a computed amount that is a placeholder until the data is verified (SPEC §18).
 
@@ -10,7 +10,7 @@ All copy here is wireframe copy, in Czech as drawn. The app copy follows SPEC §
 2. **Every number has a source** and a month next to it. A "Ne" needs a source per broker. Anything unverified is the amber pill `[ověřit]`, never a guess.
 3. **One illustrative assumption:** 6 % a year, the same for every fund, always labelled "příklad, ne slib", shown net of fees. Czech taxes and inflation are not counted and the page says so.
 4. **The green saving box is a maximum:** "až X XXX Kč", "při vašem nastavení", "Odhad, bez českých daní a inflace". It is shown only when at least two brokers that offer the chosen fund have verified prices; otherwise the box and its button disappear.
-5. **Currency:** the calculator counts CSPX in dollars (USD listing), so the rows read "převod korun na dolary". A fund listed in euro would read "eura". Verify the listing per broker.
+5. **Currency:** the calculator prices each broker at its cheapest listing of the fund (euro at DEGIRO and Fio, dollars at Trading 212 and XTB for CSPX), so the row reads "převod korun na cizí měnu".
 6. **Disclaimers stay visible:** the top bar and "Investování nese riziko ztráty", plus the footer text on every page. Not investment or tax advice.
 7. **Consent:** the comparison needs only an e-mail. The tips checkbox is optional, unticked and confirmed by a second e-mail (double opt-in). Measurement and advertising cookies stay off until the visitor agrees.
 8. **Placeholders look like placeholders:** `X XXX Kč`, `[ověřit]`, `[doplnit]`, `[SPRÁVCE]`.
@@ -44,7 +44,7 @@ The order of sections matches SPEC §7. Desktop is 1280 px wide with 56 px gutte
 
 ### Top bar and header
 
-- **Top bar:** "Čísla ze stránek fondů a brokerů · ověřeno k 10. 2026" and "Investování nese riziko ztráty." Ink band, 13 px (11 on the phone). The date is generated from the data's `asOf`.
+- **Top bar:** "Čísla ze stránek fondů a brokerů · ověřeno k 6. 2026" (the oldest date in the data) and "Investování nese riziko ztráty." Ink band, 13 px (11 on the phone). The date is generated from the data's `asOf`.
 - **Header:** desktop has the wordmark, three anchors (Jak počítáme, Odkud máme čísla, Časté dotazy) and the small button "Poslat mi srovnání". Phone has the wordmark and a hamburger button labelled "Menu". The phone page also has a sticky bottom bar with the same button after the first scroll (48 px button, 1.5 px top border).
 
 ### Hero
@@ -52,8 +52,8 @@ The order of sections matches SPEC §7. Desktop is 1280 px wide with 56 px gutte
 - h1: "Americké indexy z Česka: u koho je koupíte a za kolik?"
 - Lead: "Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik." (one line on the phone)
 - Callout with a left rule explaining ETF (the one use of the word).
-- Primary button "Spočítat, kolik mě to bude stát", and the link "nebo rovnou srovnání brokerů".
-- **Hero table** card with four European twins: Co koupíte, Roční poplatek, Typ (Acc / Dist). Facts that are not verified carry `[ověřit]`. One muted line under it: "CSPX: DEGIRO, Trading 212, XTB (ověřeno k 10. 2026). U ostatních fondů a brokerů ověřujeme. Americké VOO a QQQ u většiny brokerů nekoupíte." There are no broker counts in the table.
+- Primary button "Spočítat, kolik mě to bude stát". The link "nebo rovnou srovnání brokerů" was dropped in rev. 6.
+- **Hero table** card with four European twins: Co koupíte, Poplatek*, Typ (Acc / Dist). Rev. 6: a row is titled by the index ("S&P 500", "Nasdaq 100"), with manager, ticker and a plain description under it ("iShares CSPX, 500 největších firem"; note 0043). A footnote explains the asterisk: "* Roční poplatek fondu, počítaný z vašich peněz ve fondu." A fact that is not verified would carry `[ověřit]`; today all four rows are verified (CSPX, VUAA, CNDX, EQQQ). One muted line under it: "CSPX: DEGIRO, Fio e-Broker, Trading 212, XTB (ověřeno k 6. 2026). U ostatních fondů a brokerů ověřujeme. Americké VOO a QQQ u většiny brokerů nekoupíte." There are no broker counts in the table.
 - Mobile order: h1, lead, callout, table, button.
 
 ### Calculator
@@ -62,7 +62,7 @@ Dark band directly under the hero, so the first scroll answers "what does it cos
 
 - **Question:** "Kolik vás to bude stát?"
 - **Inputs:** monthly amount 500 to 20 000 Kč in steps of 500, default 3 000 Kč, shown right-aligned and large. Period chips 5 / 10 / 20 years, default 10. One investment a month.
-- **Result:** "Za 10 let vás koupitelné ETF (CSPX) bude stát X XXX Kč", then three parts: roční poplatek fondu, převod korun na dolary, poplatky brokera. Then "Počítáme s výnosem 6 % ročně. Je to příklad, ne slib. Fond CSPX počítáme v dolarech. Nepočítáme české daně ani inflaci."
+- **Result:** "Za 10 let vás fond (CSPX) může u ověřených brokerů stát i X XXX Kč" (note 0037), then three parts: roční poplatek fondu, převod korun na cizí měnu, poplatky brokera. Then "Počítáme s výnosem 6 % ročně. Je to příklad, ne slib. Nepočítáme české daně ani inflaci." The boards show the real result of the calculator at 3 000 Kč, 10 years, 6 %: 30 778 Kč (1 748 + 13 434 + 15 596), value after 10 years 456 642 Kč, saving 28 302 Kč.
 - **Illustrative line:** "Ilustrativní hodnota po 10 letech: X XXX Kč, z toho poplatky X XXX Kč · 6 % ročně, příklad, ne slib." Net of fees, small, under the result.
 - **Green saving box:** "Při vašem nastavení · Správným brokerem si u stejného fondu ponecháte až X XXX Kč · Odhad, bez českých daní a inflace." Button "Ukázat, u kterého brokera to koupím", which goes to the e-mail form. The amount is the spread between brokers that offer the chosen fund.
 - **Hide rule:** the box and its button show only when at least two brokers have verified prices. Otherwise the calculator ends with the illustrative line and the form follows.
@@ -108,8 +108,8 @@ Light card (on the phone its own card below the calculator). "Chcete vidět, kde
 
 - **Header:** wordmark and the button "Stáhnout PDF · 6 stran". Desktop has a left "Na stránce" contents (1 Fondy vedle sebe, 2 Daně v Česku, 3 Kde fond koupit, 4 Jak počítáme). On the phone the contents become a card.
 - **Result strip:** dark band with the visitor's setup (3 000 Kč měsíčně · 10 let) and the same headline number as the calculator.
-- **1 · Fondy vedle sebe:** five European twins with Typ and Roční poplatek (CSPX, VUAA, VUSA, CSNDX, EQQQ). "Acc = fond výnosy sám reinvestuje. Dist = výnosy vyplácí." Unverified fees are `[ověřit]`.
-- **U kterého brokera?** A fund picker (CSPX selected), then five brokers (DEGIRO, Fio, IBKR, Trading 212, XTB) with Koupíte?, Poplatky brokera and Za 10 let celkem. Cells without a source stay `[ověřit]` and are left out of the spread.
+- **1 · Fondy vedle sebe:** five European twins with Typ and Roční poplatek (CSPX, VUAA, VUSA, CNDX, EQQQ). "Acc = fond výnosy sám reinvestuje. Dist = výnosy vyplácí." All five fees are verified; an unverified fee would be `[ověřit]`.
+- **U kterého brokera?** A fund picker (CSPX selected), then five brokers (DEGIRO, Fio, IBKR, Trading 212, XTB) with Koupíte?, Poplatky brokera a převod and Za 10 let celkem. The boards show CSPX with the real prices (DEGIRO 14 416 Kč, Fio 30 778 Kč, Trading 212 2 476 Kč, XTB 4 176 Kč); IBKR has nothing verified and stays `[ověřit]`. Cells without a source stay `[ověřit]` and are left out of the spread.
 - **Assumption and summary:** "3 000 Kč měsíčně · 10 let · 6 % ročně · jedna investice měsíčně · příklad, ne slib. Částky se řídí kalkulačkou." Then "Mezi ověřenými brokery se výsledek liší až o X XXX Kč. Nejnižší možné poplatky s vaším nastavením: X XXX Kč za 10 let." and "Odhad. Bez českých daní a inflace."
 - **2 · Daně v Česku:** three short items (prodej po letech, dividendy ze zahraničí, přiznání), each with a source link. Text is filled in only from a verified source.
 - **3 · Kde fond koupit:** broker table: poplatek za nákup, převod korun, česky, source link. To be merged with the broker table above once prices are verified.
@@ -148,7 +148,7 @@ Ad creatives, not part of the app.
 
 ## Open points
 
-1. **Data to verify:** fees of VUAA, VUSA, CSNDX and EQQQ (CSNDX 0,33 % and EQQQ 0,30 % are from memory); availability of 5 funds x 5 brokers (verified so far: CSPX at DEGIRO, Trading 212, XTB; Fio and IBKR open); broker prices; the USD or EUR listing per broker; tax text from Finanční správa; the calculator formula as a tested pure function.
+1. **Data to verify:** everything about IBKR; the "Česky" column for every broker; broker prices for VUAA, VUSA, CNDX and EQQQ (only DEGIRO has VUAA and CNDX priced, VUSA and EQQQ none); the fund fees and the availability of the five funds at DEGIRO, Fio, Trading 212 and XTB are verified; tax text from Finanční správa; the calculator formula as a tested pure function.
 2. **Legal text** (privacy policy, cookies, controller, retention periods) must be written and reviewed by someone qualified before launch.
 3. **Not drawn:** the main e-mail with the comparison link, PDF pages 2, 3, 5 and 6, desktop versions of 404, unsubscribe and the confirmation pages, FAQ answers, StackedBar, the test-project notice.
 4. **Copy conflicts with SPEC §25.** The wireframes say "ETF" in the share title, ad copy and the calculator result, "broker" in many places, "S&P 500" and "Nasdaq 100" in the lead. `pnpm copy:check` bans some of these. Which side moves is David's call (note 0035).
