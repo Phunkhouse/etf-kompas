@@ -1,6 +1,6 @@
 # Design
 
-Design source of truth for ETF Kompas (SPEC §24). The wireframes are at revision 5. Wireframe B is the layout direction chosen by David.
+Design source of truth for ETF Kompas (SPEC §24). The wireframes are at revision 6. Wireframe B is the layout direction chosen by David.
 
 ## Files
 
@@ -22,7 +22,7 @@ The older canvas (https://claude.ai/artifact/8PaM6Y6wAcy6nZbQhtaDoi) shows revis
 
 ## Images
 
-Exports of the rev. 5 artboards (content height, 2x, 256-colour PNG).
+Exports of the rev. 6 artboards (content height, 2x, 256-colour PNG).
 
 | Screen                                | Image                                                                                                                                                                                                                                                      |
 | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

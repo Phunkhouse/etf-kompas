@@ -29,7 +29,7 @@ def frame(fid,label,w,x,y):
 def li(items): return ''.join(f'<li>{i}</li>' for i in items)
 NOTES=f'''
 <div class="note n1" style="left:0;top:0;width:860px"><span class="k">ROZHODNUTÍ · rev. 4</span><h2>Co už platí</h2><ol>{li([
- '<b>Hák:</b> americké indexy, evropské ETF. Americké VOO a QQQ u většiny brokerů z Česka nekoupíte, proto srovnáváme evropské dvojníky (S&amp;P 500: CSPX, VUAA, VUSA · Nasdaq 100: CSNDX, EQQQ).',
+ '<b>Hák:</b> americké indexy, evropské ETF. Americké VOO a QQQ u většiny brokerů z Česka nekoupíte, proto srovnáváme evropské dvojníky (S&amp;P 500: CSPX, VUAA, VUSA · Nasdaq 100: CNDX, EQQQ).',
  '<b>Nadpis:</b> „Americké indexy z Česka: u koho je koupíte a za kolik?“ Otázka není <i>jestli</i>, ale <i>u koho</i> a <i>za kolik</i>.',
  '<b>Hero tabulka:</b> bez sloupce „Koupíte z ČR?“ (všechny řádky jsou pro ČR). Sloupec Typ (Acc / Dist). Dostupnost jedním řádkem pod tabulkou.',
  '<b>Kalkulačka:</b> „Kolik vás to bude stát?“ Hlavní číslo = cena fondu, který koupíte. 6 % ročně jako příklad, bez českých daní a inflace.',
@@ -37,20 +37,21 @@ NOTES=f'''
  '<b>Srovnání:</b> tabulka fondů + „U kterého brokera?“ s výběrem fondu, poplatky brokera a Za 10 let celkem. Čísla podle nastavení z kalkulačky, na webu i v e-mailu.',
  '<b>Nikdy „nejlevnější“</b> bez ověřených cen všech brokerů. Zvýraznění neznamená nejlevnější.',
  '<b>Daňové texty</b> (3letý časový test, Acc fondy) jen z ověřeného zdroje, později.'])}</ol></div>
-<div class="note n2" style="left:920px;top:0;width:660px"><span class="k">VERZE</span><h2>Co se změnilo</h2>
+<div class="note n2" style="left:920px;top:0;width:1000px"><span class="k">VERZE</span><h2>Co se změnilo</h2>
 <div class="ver"><b>rev. 1</b><span>Původní wireframy: americký vs. evropský fond, kalkulačka s rozdílem v Kč.</span></div>
 <div class="ver"><b>rev. 2</b><span>Zvýraznění = koupíte z ČR, ne nejlevnější. Skutečné poplatky, „Ne“ jen se zdrojem, [ověřit] jinak. Kalkulačka počítá cenu koupitelného ETF.</span></div>
 <div class="ver"><b>rev. 3</b><span>Evropské dvojníky místo VOO a QQQ. Nový nadpis, hero tabulka s Typem, srovnání fondů × brokerů, pozitivní zpráva v kalkulačce, texty reklam. Animace hero tabulky je mimo desku, překreslí se podle nové tabulky.</span></div>
 <div class="ver"><b>rev. 4</b><span>Zelený box „ponecháte si až X XXX Kč“ s tlačítkem v kalkulačce (web i mobil). Štítek „návrh“ je pryč ze stránky, pravidlo zobrazení je v poznámce. Kalkulačka počítá CSPX v dolarech. Nová sekce „Menu a doplňkové stránky“: otevřené mobilní menu s hamburgerem, cookies (lišta, nastavení), zásady zpracování, 404, odhlášení. Patička má 4 odkazy. Druhá řada: chyby formuláře, potvrzení tipů, kalkulačka při načítání a chybě, PDF, favicon, sdílený náhled.</span></div>
-<div class="ver now"><b>rev. 5</b><span>A/B test hlavní stránky: varianta a a b mají stejné rozložení (hero s tabulkou) a liší se jen nadpisem. a = „Americké indexy z Česka: u koho je koupíte a za kolik?“, b = „U stejného fondu můžete zbytečně zaplatit až X XXX Kč. Kde?“ (dole pod landingem). Hero s kalkulačkou jako první (dřívější G5) je pryč. Reklamy A a B vedou na obě varianty.</span></div>
+<div class="ver"><b>rev. 5</b><span>A/B test hlavní stránky: varianta a a b mají stejné rozložení (hero s tabulkou) a liší se jen nadpisem. a = „Americké indexy z Česka: u koho je koupíte a za kolik?“, b = „U stejného fondu můžete zbytečně zaplatit až X XXX Kč. Kde?“ (dole pod landingem). Hero s kalkulačkou jako první (dřívější G5) je pryč. Reklamy A a B vedou na obě varianty.</span></div>
+<div class="ver now"><b>rev. 6</b><span>Podle kontroly hotového webu: sloupec „Poplatek*“ s poznámkou, řádek tabulky se jmenuje podle indexu (S&amp;P 500, Nasdaq 100) a pod ním je správce, značka a popis, odkaz „nebo rovnou srovnání brokerů“ je pryč. Místo zástupných údajů ([ověřit], X XXX Kč) jsou ověřená data a výsledek skutečné kalkulačky (3 000 Kč měsíčně, 10 let, 6 %, CSPX). Zůstává [ověřit] jen tam, kde data opravdu chybí (IBKR, „Česky“).</span></div>
 </div>
-<div class="note n3" style="left:1640px;top:0;width:700px"><span class="k">OTEVŘENÉ</span><h2>Co chybí ověřit</h2><ul>{li([
- 'Poplatky VUAA, VUSA, CSNDX, EQQQ ze stránek správců (CSNDX 0,33 % a EQQQ 0,30 % jsou z paměti).',
- 'Dostupnost každého fondu u DEGIRO, Fio, IBKR, Trading 212, XTB. Ověřeno jen CSPX u DEGIRO, Trading 212, XTB.',
- 'Ceny brokerů (nákup, převod měny, správa účtu) pro „Za 10 let celkem“ a větu „až o X XXX Kč“.',
- 'Fio: QQQ je ve výpisu ETF, VOO nenalezeno, přístup k nákupu neověřen. IBKR: zatím neověřeno.',
+<div class="note n3" style="left:1980px;top:0;width:700px"><span class="k">OTEVŘENÉ</span><h2>Co chybí ověřit</h2><ul>{li([
+ 'IBKR: nic není ověřeno (dostupnost fondů, poplatky, ceny). Ostatní brokeři mají ověřené poplatky a ceny jen pro CSPX; VUAA má cenu jen u DEGIRO, CNDX také.',
+ 'Sloupec „Česky“ (podpora v češtině) u všech brokerů: v datech zatím není.',
+ 'Fio: QQQ je ve výpisu ETF, VOO nenalezeno, přístup k nákupu neověřen.',
+ 'Ceny brokerů se hlídají: poplatky brokerů starší než 45 dní se neukážou.',
  'Obsah okénka Acc / Dist a texty o daních jen z ověřeného zdroje.'])}</ul></div>
-<div class="note n6" style="left:3740px;top:0;width:900px"><span class="k">AUDIT · NOTE K NÁVRHU, NENÍ TEXT STRÁNKY</span><h2>Co na webu chybělo</h2><ul>{li([
+<div class="note n6" style="left:4080px;top:0;width:900px"><span class="k">AUDIT · NOTE K NÁVRHU, NENÍ TEXT STRÁNKY</span><h2>Co na webu chybělo</h2><ul>{li([
  '<b>Menu na mobilu:</b> tlačítko „Menu“ bez ikony a bez otevřeného stavu. Teď hamburger s textem (44 px) na landingu i po odeslání a nová obrazovka s otevřeným menu a odkazy.',
  '<b>Zásady zpracování:</b> odkazy vedly nikam. Teď stránka se sedmi oddíly (správce, údaje, účel a základ, doba, příjemci, práva, cookies). Text je zástupný, nechte ho zkontrolovat právníkem.',
  '<b>Cookies:</b> chyběla lišta i nastavení. Teď lišta s tlačítky Přijmout i Odmítnout stejně výrazně, odkaz Nastavit, a nastavení se třemi kategoriemi (měření a reklama vypnuté, dokud nesouhlasíte). Volbu jde změnit přes patičku.',
@@ -59,13 +60,13 @@ NOTES=f'''
  '<b>Stavy a soubory (druhá řada níže):</b> chyby formuláře (špatný e-mail, odeslání se nepovedlo; souhlas je nepovinný, takže chyba souhlasu není), potvrzovací e-mail a stránka po potvrzení tipů, nefunkční odkaz, kalkulačka při načítání a při chybě (bez částky, nikdy odhad naslepo), PDF na A4 (strany 1 a 4) a favicon se sdíleným náhledem.',
  '<b>Pohyb:</b> živé ukázky všech animovaných míst na jedné desce (spodní řada), včetně pravidel a časů.',
  '<b>Text na sdílení (k ověření):</b> titulek „ETF Kompas: americké indexy z Česka, u koho je koupíte“, popis „Srovnání evropských ETF na S&amp;P 500 a Nasdaq 100: poplatky fondů a brokerů v korunách. Česky, na jedné stránce.“ Zbývá jen skutečné PNG z těchto návrhů při stavbě.'])}</ul></div>
-<div class="note n5" style="left:2980px;top:0;width:700px"><span class="k">POZNÁMKA K NÁVRHU · NENÍ TEXT STRÁNKY</span><h2>Kdy se zelený box zobrazí</h2><ul>{li([
+<div class="note n5" style="left:3320px;top:0;width:700px"><span class="k">POZNÁMKA K NÁVRHU · NENÍ TEXT STRÁNKY</span><h2>Kdy se zelený box zobrazí</h2><ul>{li([
  '<b>Zobrazit jen</b>, když jsou ověřené ceny alespoň u dvou brokerů, kteří nabízejí zvolený fond. Částka je rozdíl mezi nejlevnějším a nejdražším z nich.',
  '<b>Jinak box zmizí</b> včetně tlačítka. Stránka ukáže jen náklady, ilustrativní hodnotu a formulář. Žádné „až 0 Kč“ a žádné vymyšlené číslo.',
  '<b>Zůstává maximem:</b> „až X XXX Kč“, „při vašem nastavení“, „Odhad, bez českých daní a inflace“. Nikdy „nejlevnější“ bez ověřených cen všech brokerů.',
- '<b>Měna:</b> kalkulačka počítá CSPX v dolarech (kotace USD), proto řádek „převod korun na dolary“. U fondu v eurech by se změnil na „eura“. [ověřit kotaci u každého brokera]',
+ '<b>Měna:</b> kalkulačka počítá u každého brokera jeho nejlevnější kotaci fondu (u CSPX eura u DEGIRO a Fia, dolary u Trading 212 a XTB), proto řádek „převod korun na cizí měnu“ (rev. 6).',
  'Do zveřejnění cen brokerů je box jen v návrhu. Wireframe ukazuje stav „zobrazeno“.'])}</ul></div>
-<div class="note n4" style="left:2400px;top:0;width:520px"><span class="k">LEGENDA</span><h2>Jak číst desku</h2><div class="lg"><span class="pill ver">[ověřit]</span><span>zatím neověřeno, před spuštěním doplnit zdroj</span></div><div class="lg"><span class="x">X XXX Kč</span><span>zástupné číslo, počítá se z kalkulačky</span></div><div class="lg"><span class="pill yes">Ano</span><span>ověřeno k 10. 2026</span></div><p>Posouvejte tažením, zoom kolečkem s Ctrl nebo ikonami dole.</p></div>
+<div class="note n4" style="left:2740px;top:0;width:520px"><span class="k">LEGENDA</span><h2>Jak číst desku</h2><div class="lg"><span class="pill ver">[ověřit]</span><span>zatím neověřeno, před spuštěním doplnit zdroj</span></div><div class="lg"><span class="x">X XXX Kč</span><span>zástupné číslo, počítá se z kalkulačky</span></div><div class="lg"><span class="pill yes">Ano</span><span>ověřeno k 10. 2026</span></div><p>Posouvejte tažením, zoom kolečkem s Ctrl nebo ikonami dole.</p></div>
 '''
 SECLBL='<div class="sec" style="left:7500px;top:'+str(Y0+3600)+'px;width:2640px">Stavy, PDF a sdílení</div><div class="sec" style="left:7500px;top:'+str(Y0+7880)+'px;width:2640px">Pohyb</div>'+''.join(f'<div class="sec" style="left:{x}px;top:{Y0-110}px;width:{w}px">{n}</div>' for _,n,x,w in SECT)
 FRAMES=''.join(frame(f,l,w,x,y) for f,l,w,x,y,_ in FR)
@@ -92,7 +93,7 @@ page=f'''<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="
 #bar i{{width:1px;height:20px;background:var(--line);margin:0 4px}}#z{{font:500 12px 'IBM Plex Mono';min-width:46px;text-align:center;color:var(--mute)}}
 #ttl{{position:fixed;left:16px;top:14px;font:500 12px 'IBM Plex Mono';letter-spacing:.06em;color:var(--mute);background:var(--ui);border:1px solid var(--line);border-radius:8px;padding:6px 10px}}
 </style></head><body>
-<div id="ttl">ETF KOMPAS · WIREFRAME BOARD · REV. 4</div>
+<div id="ttl">ETF KOMPAS · WIREFRAME BOARD · REV. 6</div>
 <div id="vp"><div id="cv">{NOTES}{SECLBL}{FRAMES}</div></div>
 <div id="bar"><button data-go="all">Vše</button><button data-go="0,0,4700,780">Rozhodnutí</button><button data-go="0,{Y0-130},1750,3650">Landing</button><button data-go="1910,{Y0-130},1750,1200">Po odeslání</button><button data-go="3820,{Y0-130},1750,3650">Srovnání</button><button data-go="5730,{Y0-130},1455,1800">Reklamy</button><button data-go="7500,{Y0-130},2640,3750">Doplňkové</button><button data-go="7500,{Y0+3580},2640,4150">Stavy a PDF</button><button data-go="7500,{Y0+7860},1280,2600">Pohyb</button><i></i><button id="zo">−</button><span id="z">100%</span><button id="zi">+</button><button id="z1">100 %</button></div>
 <script>

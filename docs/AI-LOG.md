@@ -817,3 +817,29 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 **Mistakes and corrections**
 
 - **I missed it in my own review.** The button was left-aligned already in the drawing comparison I made and in the screenshot I read for this PR; I looked at the text, not at where it sat. The earlier fix in #58 (vertical padding for the wrapped label) did not centre it either. A button whose label can wrap needs its alignment tested, not only its height.
+
+### Design update: the boards follow the review and the real data (rev. 6, PR 2)
+
+**Prompt (summary):** David: "Also update the design with the data we have now", with the review of the drawings versus the built page; then "#62 landed, start PR 2". Earlier answer: update both design artifacts too.
+
+**Produced:** `docs/design/wireframes/apply_rev6.py` (one step in the chain, `make_rev6.sh`) patches the boards: hero table with "Poplatek*", the footnote, the index as the row title with the description under it, no "nebo rovnou srovnání brokerů", real fees and types (CSPX, VUAA, CNDX, EQQQ; the old VUSA and CSNDX rows and the 0,33 % are gone), the calculator result from the real calculator (30 778 Kč, 1 748 + 13 434 + 15 596, value 456 642 Kč, saving 28 302 Kč), the sentence "může u ověřených brokerů stát i", the headline of variant b with 28 302 Kč, the comparison page with real broker prices and fees, the PDF page with the real availability, and the date "6. 2026". Design Study and Board texts updated (`build_study.py`, `mkboard.py`), `wireframe-b.md`, READMEs. 11 PNGs re-exported.
+
+**Mistakes and corrections**
+
+- **My first run wrote a headline with no-break spaces everywhere** (I replaced every space in "zaplatit až 28 302 Kč" with a no-break space, and "zbytečně" ended up alone on a line). Found by looking at the exported image; fixed to put them only inside the amount.
+- **The headline of rev. 5 uses no-break spaces, and my text match failed on it** until I looked at the bytes. The script asserts one match per replacement, so it stopped instead of writing a half-changed board.
+- **The Design Study and the Board still said the calculator counts CSPX in dollars and the CSNDX fee is "from memory" at 0,33 %.** Both statements were stale since the data work; I found them only because I searched the generator scripts for the old strings, not the boards. Fixed (the verified CNDX fee is 0,30 %).
+- **The PNG export script needs Python Playwright and Pillow, which are not installed here.** I exported with Node (the repo's Playwright) and `sharp` (already in `node_modules`), outside the repo, and only copied the 11 images whose boards changed. The renderers differ slightly (the motion image is 118 px shorter), so the other 22 PNGs are not regenerated; `export_images.py` is unchanged.
+- **Left as it was:** the card texts of "Za co platíte" and the FAQ in the boards still differ from the built copy (David said the built version is better there); the uppercase calculator label wraps with an orphan "STÁT I" on the phone board; "Česky" stays `[ověřit]` because the data has no verified value.
+- **Republished the two Claude artifacts** (Design Study, now version 16; Wireframe Board, version 11) from the rebuilt files, as David asked. The Board still said "REV. 4" in its corner label although it had been at rev. 5 since the last PR: a stale label I found while republishing, fixed to "REV. 6". I republished before the PR was reviewed (the PR text said "after review"); if review changes the boards they need publishing again.
+- **The "Co se změnilo" note on the Board overflowed into the "Landing page" heading** after I added the rev. 6 line (1089 px tall against 890 px of room). David noticed it on the live artifact; I had checked the exported PNGs, not the Board canvas, where the notes have fixed positions. Fixed by widening the note to 1000 px and moving the four notes to its right by 340 px; I measured every note afterwards (all end above 890 px). A check that boards still fit belongs after any text added to a fixed-position note.
+
+### The amount in the variant b headline is red (added to PR 2 of rev. 6)
+
+**Prompt (summary):** David: "I would use red for the number here. Maybe some shade of what we have in calc, but working on light background. What do you think?"; I proposed the existing `cost-strong` (#c23a1b); he said "yes, go ahead, put it on #63".
+
+**Produced:** the b headline in `copy.ts` is split into the text before and after the amount; `HeroB` renders the amount in its own `<span>` in `--color-cost-strong` (4.8:1 on the paper background; the pair is already in `contrast-pairs.ts`). Tests first (one component test failed, one e2e test for the colours); 518 unit/component and 125 e2e pass, JS unchanged. The two b boards and their PNGs show the red amount; both Claude artifacts republished.
+
+**Mistakes and corrections**
+
+- None found in the change itself. Not checked: how the red amount reads in an actual ad, and whether the red suggests a warning more than David intends (I said it fits "zbytečně zaplatit", but that is my reading, not a test).

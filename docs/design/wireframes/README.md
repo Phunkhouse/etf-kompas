@@ -1,6 +1,6 @@
 # Wireframes
 
-Source files of the rev. 5 wireframes. Two finished HTML documents, built from the same artboards:
+Source files of the rev. 6 wireframes. Two finished HTML documents, built from the same artboards:
 
 | File                           | What it is                                                                                                                                                                    |
 | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -24,13 +24,14 @@ Open either in a browser. They need network access only for IBM Plex from Google
 | `gen_motion_rev4.py`                                                  | The live motion artboard (inline CSS and JS, loops, reduced-motion switch)                              |
 | `bd.py`, `mkboard.py`, `build_study.py`, `doc.css`, `doc.js`          | Build the two HTML documents from the artboards                                                         |
 | `export_images.py`                                                    | PNG export of the artboards to `../images/`                                                             |
-| `make_rev5.sh`                                                        | The whole chain from `artboards-v2/` to the two HTML files                                              |
+| `apply_rev6.py`                                                       | Rev. 6: the design review and the data we have now (real rows, fees, calculator result, broker prices, date) |
+| `make_rev6.sh`                                                        | The whole chain from `artboards-v2/` to the two HTML files                                              |
 
 ## Rebuild
 
 ```sh
 cd docs/design/wireframes
-sh make_rev5.sh
+sh make_rev6.sh
 CHROMIUM=/path/to/chromium python3 export_images.py artboards-v4 ../images
 ```
 

@@ -37,8 +37,11 @@ export const heroCopy = {
   // The b headline names the saving between brokers at the starting setting.
   headline: {
     a: 'Americké indexy z Česka: u koho je koupíte a za kolik?',
-    b: (amount: string) =>
-      `U stejného fondu můžete zbytečně zaplatit až ${amount}. Kde?`,
+    // The amount comes between the two parts, in its own element (in red).
+    b: {
+      before: 'U stejného fondu můžete zbytečně zaplatit až ',
+      after: '. Kde?',
+    },
   },
   lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.',
   cta: 'Spočítat, kolik mě to bude stát',

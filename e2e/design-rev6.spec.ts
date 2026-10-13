@@ -74,6 +74,18 @@ test.describe('saving box button', () => {
   })
 })
 
+test.describe('hero b headline', () => {
+  test('has the amount in the red for light backgrounds, the rest in ink', async ({
+    page,
+  }) => {
+    await page.goto('/?v=b')
+    const h1 = page.getByRole('heading', { level: 1 })
+    await expect(h1).toHaveCSS('color', 'rgb(22, 21, 15)')
+    await expect(h1.locator('span')).toHaveCSS('color', 'rgb(194, 58, 27)')
+    await expect(h1.locator('span')).toContainText('Kč')
+  })
+})
+
 test.describe('footer', () => {
   test('starts with the logo @smoke', async ({ page }) => {
     await page.goto('/')

@@ -85,8 +85,14 @@ export function HeroB({
         <div className={styles.grid}>
           <div className={styles.intro}>
             <h1 id="hero-headline" className={styles.headline}>
-              {nbsp(
-                showB ? text.headline.b(formatKc(savingKc)) : text.headline.a,
+              {showB ? (
+                <>
+                  {nbsp(text.headline.b.before)}
+                  <span className={styles.amount}>{formatKc(savingKc)}</span>
+                  {nbsp(text.headline.b.after)}
+                </>
+              ) : (
+                nbsp(text.headline.a)
               )}
             </h1>
             <p className={styles.lead}>{nbsp(text.lead)}</p>
