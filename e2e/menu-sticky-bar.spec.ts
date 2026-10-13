@@ -80,6 +80,24 @@ test.describe('on a phone (375 x 667)', () => {
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
   })
 
+  test('opening and closing the menu keeps the scroll position of the page', async ({
+    page,
+  }) => {
+    await page.goto('/')
+    // the header is not sticky: the Menu button can be reached only near the top, so
+    // scroll a little and click where the button is (a click by element would scroll
+    // the page to the button first and hide what is tested)
+    await page.evaluate(() => window.scrollTo(0, 20))
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(20)
+    const box = await page.getByRole('button', { name: 'Menu' }).boundingBox()
+    await page.mouse.click(box!.x + box!.width / 2, box!.y + box!.height / 2)
+    await expect(page.getByRole('dialog', { name: 'Menu' })).toBeVisible()
+    expect(await page.evaluate(() => window.scrollY)).toBe(20)
+    await page.keyboard.press('Escape')
+    await expect(page.getByRole('dialog')).toBeHidden()
+    expect(await page.evaluate(() => window.scrollY)).toBe(20)
+  })
+
   test('a link in the menu closes it and lands on its section', async ({
     page,
   }) => {

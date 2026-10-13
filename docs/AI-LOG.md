@@ -973,3 +973,15 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **I did not write that the copy was "reviewed" in the plain sense.** David's words were that he changed things while building and will check once more before going live; PHASES.md and the README say exactly that, and the legal text as unreviewed by a lawyer.
 - **I listed a phone menu defect that does not exist.** I "reproduced" it by scrolling the page to 1 200 px and clicking the Menu button with Playwright, and the page ended at 0. But the header is not sticky, so at 1 200 px the button is off screen, and Playwright's click scrolls the element into view first: the jump was the test tool, not the page. A person cannot tap the button there. David noticed none of it; I found it when I started the fix and measured with real mouse clicks at the button's position (scroll 0, 20 and 40 px): the scroll position is kept, before and after closing. I removed the bullet from the README and told David. The lesson: a reproduction must use the input a user has; "the tool did something" is not "the page does something".
 - **`pnpm data:validate` (strict) fails with 56 `TODO_VERIFY` values.** It is the Phase 6 deploy gate and was always meant to fail until the data is complete, but it is a number David should see now: the deploy needs those fields filled or removed.
+
+### Phone menu: a guard test instead of a fix
+
+**Prompt (summary):** David: "Well let's do it now" (fix the phone menu bug I had listed).
+
+**Produced:** no fix, because there is no bug. One new e2e test: opening and closing the menu keeps the scroll position (the page is scrolled 20 px and the button is clicked at its coordinates, not by element). It passes.
+
+**Mistakes and corrections**
+
+- **The bug I reported does not exist** (details in the entry "Closing Phase 3" above). I found out when I started on a fix and asked why the scroll reset: Playwright's element click scrolls the button into view first, and the header is not sticky, so the page can never be 1 200 px down with the button in reach. The known-gaps bullet is removed in PR 72.
+- **The test is a guard, not a regression test:** it passed before and after because nothing changed in the code. I wrote it so that the next change to the menu cannot break the scroll without notice, and so that the test does not hide the problem again: it clicks by position.
+- **A small real thing I noticed on the way:** when the header is scrolled partly out of view (about 40 px), the panel starts at the top of the screen, so the logo and the Menu button in the panel are a few pixels away from where they were in the header. It is the clamp in `show()`; not a jump of the page, and not changed.
