@@ -947,3 +947,15 @@ Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in h
 - **The JS grew by 0.7 KB** (146.7 to 147.4 KB, 150 KB budget): the new strings and the second block of markup. Not reduced; the margin is now 2.6 KB.
 - **Board and built page differ in one detail:** the board's phone line is left-aligned like the built page, but the draft David approved showed it centred. I followed the built footnote above it.
 - **The amount in the headline on the live page is now 28 293 Kč**, not 28 302 Kč (the daily ČNB rate changed); the boards show the amount of 2026-10-12 and the design study says the numbers are from that data.
+
+### 5-second test (one person) and a more visible "Zdarma, bez registrace"
+
+**Prompt (summary):** David ran the reduced 5-second test with one person (his partner, not named) and sent her answers; I read them, showed a mockup of four versions of the line, he chose option B, I wrote the test first and he approved ("approved, implement it").
+
+**Produced:** the line "Zdarma, bez registrace" is now 16 px semibold in ink (it was a muted 14 px caption). Boards, four PNGs and `wireframe-b.md` show the same; note 0051 says so; new note 0052 records the test: what she understood (what she gets), what she did not (that it is free), and that n=1 is a pilot that does not meet SPEC §22 (2 of 3). Tests first (2 e2e failed); 524 unit/component and 129 e2e pass; JS unchanged at 147.4 KB.
+
+**Mistakes and corrections**
+
+- **The line I added a few hours earlier was too quiet, and I did not test that it would be seen.** My own test only checked that it existed, was muted, and fit the screen; the first person who looked did not notice it. I changed that approved test (14 px muted to 16 px semibold ink), which is the point of the test. Lesson: "present and in the right place" is not "noticed"; the 5-second test is where that shows.
+- **I wrote her answers into a note word for word, in Czech, with no name**, as David wished; the note says who she is only as "David's partner, who does not invest".
+- **Not tested:** whether the new line is noticed. The pilot needs a second round with the new hero.

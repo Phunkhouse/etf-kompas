@@ -75,15 +75,17 @@ test.describe('saving box button', () => {
 })
 
 test.describe('"Zdarma, bez registrace" under the hero button', () => {
-  test('is muted text, centred under the button on a phone and left-aligned on desktop @smoke', async ({
+  test('is dark, semibold 16 px text, centred under the button on a phone and left-aligned on desktop @smoke', async ({
     page,
     isMobile,
   }) => {
     await page.goto('/')
     const line = page.getByText('Zdarma, bez registrace')
     await expect(line).toBeVisible()
-    await expect(line).toHaveCSS('color', 'rgb(107, 102, 90)')
-    await expect(line).toHaveCSS('font-size', '14px')
+    // as visible as the offer next to the button, not a caption (5-second test, 2026-10-13)
+    await expect(line).toHaveCSS('color', 'rgb(22, 21, 15)')
+    await expect(line).toHaveCSS('font-size', '16px')
+    await expect(line).toHaveCSS('font-weight', '600')
     await expect(line).toHaveCSS('text-align', isMobile ? 'center' : 'start')
   })
 })
