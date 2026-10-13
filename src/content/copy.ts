@@ -248,6 +248,32 @@ export const calculatorCopy = {
   },
 }
 
+// The phone menu (wireframe B, "Menu, cookies, legal, errors"). Its own section
+// because the menu is a client component: it takes only these strings.
+export const menuCopy = {
+  button: 'Menu',
+  close: 'Zavřít',
+  pagesLabel: 'Stránky',
+  legalLabel: 'Právní',
+  pages: [
+    { label: 'Jak počítáme', href: '#jak-pocitame' },
+    { label: 'Odkud máme čísla', href: '#odkud-mame-cisla' },
+    { label: 'Časté dotazy', href: '#caste-dotazy' },
+  ],
+  // The pages arrive in C2b; Kontakt goes to the controller section of the policy.
+  legal: [
+    { label: 'Zásady zpracování', href: '/zasady' },
+    { label: 'Cookies', href: '/zasady#cookies' },
+    { label: 'Kontakt', href: '/zasady#kdo-zpracovava' },
+  ],
+  cta: { label: 'Poslat mi srovnání', href: '#formular' },
+}
+
+// The bar at the bottom of a phone, once the hero button has scrolled away.
+export const stickyBarCopy = {
+  cta: 'Poslat mi srovnání',
+}
+
 // The whole copy in one object, for the copy checker and its tests only. App
 // code imports the section it needs, so a client bundle takes only that section
 // and not every string on the page.
@@ -260,4 +286,6 @@ export const copy = {
   emailPreview: emailPreviewCopy,
   leadForm: leadFormCopy,
   calculator: calculatorCopy,
+  menu: menuCopy,
+  stickyBar: stickyBarCopy,
 }

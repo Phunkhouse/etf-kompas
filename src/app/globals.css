@@ -11,3 +11,8 @@ body {
   outline: var(--focus-width) solid var(--color-focus);
   outline-offset: var(--focus-offset);
 }
+
+/* No scrolling behind the open phone menu. */
+body:has(dialog[open]) {
+  overflow: hidden;
+}

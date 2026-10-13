@@ -33,6 +33,17 @@ describe('HeroB', () => {
     ).toBeTruthy()
   })
 
+  it('has the button in a block with the id the sticky bar watches', () => {
+    const { container } = render(
+      <HeroB twins={twins} note={note()} dataAsOf={null} />,
+    )
+    const block = container.querySelector('#hero-cta')
+    expect(block).not.toBeNull()
+    expect(block!.querySelector('a[href="#spocitat"]')?.textContent).toMatch(
+      /Spočítat, kolik mě to bude stát/,
+    )
+  })
+
   it('has the lead, the table and a button that jumps to the calculator', () => {
     render(<HeroB twins={twins} note={note()} dataAsOf={null} />)
     expect(

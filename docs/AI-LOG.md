@@ -649,3 +649,21 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Not a mistake in this PR, but the cause of the problem:** I wrote `copy.ts` as one object and every client component imported all of it, which I did not check until C1 added a lot of text and the route grew although the sections were static. The JS budget test caught the effect, not the cause.
 - No tests changed besides the new guard; this was a refactor covered by the existing tests, and I did not write the failing test first because there was no new behaviour to test. The guard test was written with the change, not before it.
 - Limit: the split does not remove strings that a client component imports but never uses within its own section (for example `calculatorCopy` has a failure text that renders only on error). Splitting further would need a separate module per component.
+
+### The phone menu and the sticky bar (C2a)
+
+**Prompt (summary):** David's five yes answers to the C2 plan, then "approved, implement C2a".
+
+**Produced:** `MobileMenu` (a "Menu" button and a full-height panel built on the browser's own modal `<dialog>`, so focus trap, Esc and the inert page come from the browser; JavaScript only opens and closes it), `StickyBar` (shown on phones once the hero button has scrolled out, hidden while the form is in view, hidden at the top so it cannot cover the hero button), `menuCopy` and `stickyBarCopy` sections, and an `id="hero-cta"` on the hero button's block. The footer has extra room at the bottom on phones. Tests first: 19 failed before; 467 unit/component and 90 e2e pass after. JS: ours 14.5 KB, route 147.0 KB (+1.7 KB for both pieces).
+
+**Mistakes and corrections**
+
+- **Two of my own approved e2e tests were wrong, not the component.** One looked for the sticky bar as "the last link named Poslat mi srovnání", which on the page is the preview section's visible button. The other scrolled to a spot where the form was already in view, where the bar hides on purpose. I measured the page (hero button ends at about 690 px, the form starts at about 1620 px) and used a scroll position of 900 px, and the first test now finds the bar by its own attribute.
+- The menu's links to `/zasady`, `/zasady#cookies` and `/zasady#kdo-zpracovava` point at pages that arrive in C2b, so they 404 until then.
+- Limit: without JavaScript a phone has no working menu button; the page is one scroll, so the header anchors are only a convenience.
+
+**Follow-up on the menu (found by David after C2a):** the logo and the button jumped up by the height of the "Čísla ze stránek…" bar whenever the menu opened or closed, because the panel covered that bar. The drawing shows the menu without the bar, but the jump is worse than the difference from the drawing, so the panel now starts where the header starts (its top is set when it opens) and the bar stays visible. "Zavřít" also comes first in the panel, so the browser's first focus goes to it and not to the logo; the row is reversed in CSS, so the logo stays on the left. Two e2e tests were added first and failed (the logo and button stay in place; the panel starts below the bar).
+
+- **My first version of the second test was wrong:** it checked "what is on top at the bar's centre", but a modal dialog's dimmed backdrop makes the browser report the dialog for every point outside the panel. It now compares positions.
+- **My mistake behind the bug:** I built the panel from the drawing and only checked it opened; I never compared the header's position before and after. A screenshot pair, or a test of the logo's position, would have caught it in C2a.
+- Limit: if the page is scrolled when the menu opens, the header is off-screen and the panel starts at the top of the screen, so the logo moves. The header is not sticky, so the menu button is only visible near the top of the page.

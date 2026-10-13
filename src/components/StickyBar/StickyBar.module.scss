@@ -1,0 +1,21 @@
+@use 'styles/utilities' as *;
+
+// Phones only. The footer has extra room at the bottom so the bar never covers it.
+.bar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-sticky, 10);
+  padding: var(--space-3) var(--space-4);
+  border-top: var(--border-width-strong) solid var(--color-ink);
+  background: var(--color-paper);
+
+  &[hidden] {
+    display: none;
+  }
+
+  @include from('md') {
+    display: none;
+  }
+}
