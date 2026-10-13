@@ -60,10 +60,10 @@ test.describe('hero b table', () => {
     }
   })
 
-  test('the muted line ends with "Jen cena a dostupnost, ne výnosy."', async ({
+  test('the muted line ends with "Jen cena a dostupnost, ne výnosy." (variant a; b adds the setting of its amount)', async ({
     page,
   }) => {
-    await page.goto('/?v=b')
+    await page.goto('/?v=a')
     await expect(page.getByTestId('hero-note')).toContainText(
       /Jen cena a dostupnost, ne výnosy\.$/,
     )

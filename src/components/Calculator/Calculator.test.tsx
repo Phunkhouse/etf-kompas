@@ -7,6 +7,7 @@ import { calculatorData, type CalculatorData } from '@/server/calculator-data'
 import type { ChosenRates } from '@/server/cnb'
 import { fundFeeKc } from '@/server/cost'
 import { bundledData } from '@/server/data/bundled'
+import { heroSavingKc } from '@/server/hero-variant'
 import { Calculator } from './Calculator'
 
 const RATES: ChosenRates = {
@@ -262,5 +263,16 @@ describe('Calculator: failure', () => {
     expect(container.textContent).not.toMatch(/\d\sKč/)
     await userEvent.click(screen.getByRole('button', { name: 'Zkusit znovu' }))
     expect(onRetry).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('Calculator: the honest number of variant b', () => {
+  it('shows, at its starting setting, the same saving the b headline names', () => {
+    const all = calculatorData(bundledData, RATES, 'cspx')!
+    render(<Calculator data={all} />)
+    const box = screen.getByText(/ponecháte až/).textContent!
+    expect(box.replace(/\s/g, ' ')).toContain(
+      formatKc(heroSavingKc(all)!).replace(/\s/g, ' '),
+    )
   })
 })

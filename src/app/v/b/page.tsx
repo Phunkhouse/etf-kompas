@@ -1,9 +1,9 @@
 import { LandingPage } from '../../landing-page'
 
 // Variant b. Visitors reach it as `/?v=b`; the URL /v/b works too (note 0028).
-// Variant b has its own headline only when the saving box hide rule is met (note
-// 0041), which needs two brokers with verified prices. Until the b headline is
-// built, this page shows variant a, and says so in data-variant.
+// Variant b has its own headline only when there is a saving to name (two brokers
+// with verified prices, note 0041); otherwise this page shows variant a, and says
+// so in data-variant.
 export default function VariantB() {
-  return <LandingPage variant="a" />
+  return <LandingPage requested="b" />
 }
