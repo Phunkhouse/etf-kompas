@@ -93,7 +93,7 @@ page=f'''<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="
 #bar i{{width:1px;height:20px;background:var(--line);margin:0 4px}}#z{{font:500 12px 'IBM Plex Mono';min-width:46px;text-align:center;color:var(--mute)}}
 #ttl{{position:fixed;left:16px;top:14px;font:500 12px 'IBM Plex Mono';letter-spacing:.06em;color:var(--mute);background:var(--ui);border:1px solid var(--line);border-radius:8px;padding:6px 10px}}
 </style></head><body>
-<div id="ttl">ETF KOMPAS · WIREFRAME BOARD · REV. 4</div>
+<div id="ttl">ETF KOMPAS · WIREFRAME BOARD · REV. 6</div>
 <div id="vp"><div id="cv">{NOTES}{SECLBL}{FRAMES}</div></div>
 <div id="bar"><button data-go="all">Vše</button><button data-go="0,0,4700,780">Rozhodnutí</button><button data-go="0,{Y0-130},1750,3650">Landing</button><button data-go="1910,{Y0-130},1750,1200">Po odeslání</button><button data-go="3820,{Y0-130},1750,3650">Srovnání</button><button data-go="5730,{Y0-130},1455,1800">Reklamy</button><button data-go="7500,{Y0-130},2640,3750">Doplňkové</button><button data-go="7500,{Y0+3580},2640,4150">Stavy a PDF</button><button data-go="7500,{Y0+7860},1280,2600">Pohyb</button><i></i><button id="zo">−</button><span id="z">100%</span><button id="zi">+</button><button id="z1">100 %</button></div>
 <script>
