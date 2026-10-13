@@ -56,9 +56,9 @@ describe('calculatorData', () => {
     expect(data.brokers.every((b) => b.name.length > 0)).toBe(true)
   })
 
-  it('passes pricing data only for brokers that have fees (DEGIRO today)', () => {
+  it('passes pricing data only for brokers that have fees (DEGIRO and Trading 212 today)', () => {
     const data = calculatorData(bundledData, RATES, 'cspx')!
-    expect(data.pricing.map((b) => b.id)).toEqual(['degiro'])
+    expect(data.pricing.map((b) => b.id)).toEqual(['degiro', 'trading212'])
   })
 
   it('passes only the chosen fund: no other fund in availability or listings', () => {
@@ -134,8 +134,13 @@ describe('calculatorData', () => {
         data.rates,
         INPUT,
       )
-      expect(prices.pricedBrokers).toEqual([])
-      expect(prices.headline).toBeNull()
+      // DEGIRO needs the euro rate for its fees and has no price without it;
+      // Trading 212 charges nothing in a currency that needs a rate, so it does
+      expect(prices.pricedBrokers.map((p) => p.brokerId)).toEqual([
+        'trading212',
+      ])
+      expect(prices.headline?.brokerId).toBe('trading212')
+      expect(prices.spreadKc).toBeNull()
     })
   })
 

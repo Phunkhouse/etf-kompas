@@ -16,7 +16,9 @@ const RATES: ChosenRates = {
 
 // Real DEGIRO data: the only broker with verified fees today.
 function oneBroker(): CalculatorData {
-  return calculatorData(bundledData, RATES, 'cspx')!
+  const data = calculatorData(bundledData, RATES, 'cspx')!
+  // the real data has more priced brokers now; these tests are about one of them
+  return { ...data, pricing: data.pricing.filter((b) => b.id === 'degiro') }
 }
 
 // A second priced broker: a copy of DEGIRO with dearer orders, so the spread
@@ -37,7 +39,9 @@ function twoBrokers(dearer = true): CalculatorData {
 
 // No exchange rates: DEGIRO cannot be priced, so only the fund fee is known.
 function noBrokerPriced(): CalculatorData {
-  return calculatorData(bundledData, {}, 'cspx')!
+  const data = calculatorData(bundledData, {}, 'cspx')!
+  // no broker with a price at all (Trading 212 needs no rate, so it would be priced)
+  return { ...data, pricing: [] }
 }
 
 // The calculator's own numbers, for comparing against what is on screen.

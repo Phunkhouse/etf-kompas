@@ -475,6 +475,68 @@
         "verifiedOn": "2026-10-12",
         "evidence": "sha256:56cd45bdcbe5a58251cbf71f9445d011114ff74203eb470dc13545d0cd9a24b1 (trading212-eqqq-search-2026-10-12.png); instrument search 2026-10-12: \"Invesco EQQQ Nasdaq-100 (Dist)\", EQQQ on LSE, MIL and SIX"
       }
+    },
+    "fees": {
+      "fx": {
+        "USD": {
+          "value": 0.15,
+          "sourceUrl": "https://www.trading212.com/cs/terms/invest",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:08f595561e6c5075438cc310ffe1d5ed6f25689cd0d642e4ecdd0afc85de2cf7 (trading-212-fees-cz.png, Trading 212 \"Podmínky a poplatky\", Invest, captured 2026-10-13) and sha256:50c608f14cacc027d1e38c9d523b6c9da6b19dbc6b9d8bd666b1868b021945b4 (trading-212-fees.pdf, Costs & Charges Disclosure, no date of its own); \"FX poplatek 0,15 %\", applies whenever funds are converted from one currency to another (page, and PDF p. 2). Korunas are held in the account (the page lists an interest rate for CZK), so a deposit in korunas buying a dollar ETF is one conversion"
+        },
+        "EUR": {
+          "value": 0.15,
+          "sourceUrl": "https://www.trading212.com/cs/terms/invest",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:08f595561e6c5075438cc310ffe1d5ed6f25689cd0d642e4ecdd0afc85de2cf7 (trading-212-fees-cz.png, Trading 212 \"Podmínky a poplatky\", Invest, captured 2026-10-13) and sha256:50c608f14cacc027d1e38c9d523b6c9da6b19dbc6b9d8bd666b1868b021945b4 (trading-212-fees.pdf, Costs & Charges Disclosure, no date of its own); \"FX poplatek 0,15 %\" for any conversion from one currency to another (page, and PDF p. 2)"
+        }
+      },
+      "purchase": [
+        {
+          "value": {
+            "venues": null,
+            "currency": "CZK",
+            "fixed": 0,
+            "percent": 0
+          },
+          "sourceUrl": "https://www.trading212.com/cs/terms/invest",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:08f595561e6c5075438cc310ffe1d5ed6f25689cd0d642e4ecdd0afc85de2cf7 (trading-212-fees-cz.png, Trading 212 \"Podmínky a poplatky\", Invest, captured 2026-10-13) and sha256:50c608f14cacc027d1e38c9d523b6c9da6b19dbc6b9d8bd666b1868b021945b4 (trading-212-fees.pdf, Costs & Charges Disclosure, no date of its own); \"Obchodní provize: Bezplatně\" (page); \"Trading 212 does not charge fees on ETF trades\" (PDF p. 7). Zero in every currency, so the rule is written in CZK and needs no exchange rate"
+        }
+      ],
+      "custody": {
+        "value": {
+          "currency": "CZK",
+          "annualFixed": 0,
+          "annualPercent": 0
+        },
+        "sourceUrl": "https://www.trading212.com/cs/terms/invest",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:08f595561e6c5075438cc310ffe1d5ed6f25689cd0d642e4ecdd0afc85de2cf7 (trading-212-fees-cz.png, Trading 212 \"Podmínky a poplatky\", Invest, captured 2026-10-13) and sha256:50c608f14cacc027d1e38c9d523b6c9da6b19dbc6b9d8bd666b1868b021945b4 (trading-212-fees.pdf, Costs & Charges Disclosure, no date of its own); \"Poplatek za úschovu: Bezplatně\" (page); \"does not charge you for opening, closing, or maintaining your Invest account\" (PDF p. 2)"
+      },
+      "listings": {
+        "cspx": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "LSE"
+            },
+            "sourceUrl": "https://www.trading212.com",
+            "asOf": "2026-10-13",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-13",
+            "evidence": "sha256:26d529cc1f55bdd1c19b1a0069cfdef98661948f3b8355ae4b102acb20b7f56e (trading212-cspx-search-2026-10-11.png): \"iShares Core S&P 500 (Acc)\", CSPX · LSE, price in USD ($841.26)"
+          }
+        ]
+      }
     }
   },
   {

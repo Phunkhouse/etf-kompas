@@ -328,6 +328,15 @@ describe('the real data files', () => {
     expect(degiro.result.parts).toEqual({ fund: 1748, fx: 0, broker: 12655 })
     // the dollar listing would cost 15 617 Kč (1 214 Kč more, the conversion)
     expect(prices.headline?.brokerId).toBe('degiro')
-    expect(prices.spreadKc).toBeNull() // only one broker is priced so far
+    // Trading 212 is priced too: dollar listing in London, no commission, no
+    // custody, 0.15 % to convert. Checked with an independent month-by-month loop:
+    // the fund fee part is 1 748 Kč, the conversion about 729 Kč, in all 2 476 Kč.
+    const t212 = prices.pricedBrokers.find((p) => p.brokerId === 'trading212')!
+    expect(t212.listing).toEqual({ currency: 'USD', venue: 'LSE' })
+    expect(t212.result.totalKc).toBe(2476)
+    expect(t212.result.parts.broker).toBe(0)
+    expect(t212.result.parts.fund + t212.result.parts.fx).toBe(2476)
+    // the spread between the dearest and the cheapest priced broker
+    expect(prices.spreadKc).toBe(14403 - 2476)
   })
 })
