@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,
+  // Put the page's CSS (about 9 KB) in the HTML instead of three render-blocking
+  // files, so the first paint does not wait for them (Lighthouse LCP, note 0042).
+  experimental: { inlineCss: true },
   sassOptions: { loadPaths: ['src'] },
   // Lets a phone on the home network open `pnpm dev` via the Mac's IP (dev only, SPEC §12a).
   // Each `*` matches one label of the hostname, so this covers any 192.168.x.y address.
