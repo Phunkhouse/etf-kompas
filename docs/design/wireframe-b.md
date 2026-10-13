@@ -52,7 +52,7 @@ The order of sections matches SPEC §7. Desktop is 1280 px wide with 56 px gutte
 - h1: "Americké indexy z Česka: u koho je koupíte a za kolik?"
 - Lead: "Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik." (one line on the phone)
 - Callout with a left rule explaining ETF (the one use of the word).
-- Primary button "Spočítat, kolik mě to bude stát". The link "nebo rovnou srovnání brokerů" was dropped in rev. 6.
+- Primary button "Spočítat, kolik mě to bude stát", with the muted line "Zdarma, bez registrace" under it (centred on a phone, left-aligned on desktop; 14 px; decided 2026-10-13 before the 5-second test). The link "nebo rovnou srovnání brokerů" was dropped in rev. 6.
 - **Hero table** card with four European twins: Co koupíte, Poplatek*, Typ (Acc / Dist). Rev. 6: a row is titled by the index ("S&P 500", "Nasdaq 100"), with manager, ticker and a plain description under it ("iShares CSPX, 500 největších firem"; note 0043). A footnote explains the asterisk: "* Roční poplatek fondu, počítaný z vašich peněz ve fondu." A fact that is not verified would carry `[ověřit]`; today all four rows are verified (CSPX, VUAA, CNDX, EQQQ). One muted line under it: "CSPX: DEGIRO, Fio e-Broker, Trading 212, XTB (ověřeno k 6. 2026). U ostatních fondů a brokerů ověřujeme. Americké VOO a QQQ u většiny brokerů nekoupíte." There are no broker counts in the table.
 - Mobile order: h1, lead, callout, table, button.
 

@@ -109,6 +109,11 @@ describe.each(['a', 'b'] as const)(
       }
     })
 
+    it('says "Zdarma, bez registrace" once, under the hero button', () => {
+      render(<Landing variant={variant} dataAsOf={null} calculator={data} />)
+      expect(screen.getAllByText('Zdarma, bez registrace')).toHaveLength(1)
+    })
+
     it('has nothing left of the calculator-first hero', () => {
       render(<Landing variant={variant} dataAsOf={null} calculator={data} />)
       expect(

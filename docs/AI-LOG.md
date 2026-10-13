@@ -879,3 +879,17 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 
 - **Meta's tool is described from my understanding, not from its documentation or screens.** The README says so in the text, and the fee of the tool itself is not claimed. This should be checked when the first ad is set up.
 - **No decision note** on the assignment method yet: David chose fix 1 but gave no reason, so none is written.
+
+### "Zdarma, bez registrace" under the hero button
+
+**Prompt (summary):** David asked for the line before the 5-second test (agreed in the D plan); I mocked up two placements (under the button, inside the button) and a desktop view; he chose "Option A, write the tests", then "approved, implement it".
+
+**Produced:** `heroCopy.ctaNote` rendered as a muted, centred line under the hero button (left-aligned on desktop); the boards and four PNGs show it; `wireframe-b.md` notes it. Tests first (3 component tests failed, 5 e2e tests failed); 521 unit/component and 127 e2e pass, JS unchanged (146.7 KB).
+
+**Mistakes and corrections**
+
+- **The mockup used 13 px, which is not a type token.** The project allows only tokens, so the built line is 14 px (`--font-size-sm`), one pixel larger than the version David approved visually; the e2e test was changed from 13 to 14 px before the implementation and the boards say 14 px. Said in the PR text.
+- **The first mockup crop cut off the line** in option A (my crop ended at the artboard's sticky bar); I rendered it again with a taller viewport before sending, but the first image I looked at was wrong and I should have checked the crop before sending the first time.
+- **Not tested:** whether the line helps the 5-second test; that is the point of the test.
+
+Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in his words ("more converting"); the one-sentence reason is thin, so the note says that conversion is a hope, not a measurement, and flags the "bez registrace" against "an e-mail is needed" wording for the copy review.

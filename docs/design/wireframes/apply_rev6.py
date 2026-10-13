@@ -109,6 +109,13 @@ def landing(f, mobile, variant_b):
                 'zaplatit až <span style="color:#C23A1B">' + SAVING_B.replace(' ', '\u00a0') + '</span>. Kde?')
     s = hero_rows_mobile(s) if mobile else hero_rows_desktop(s)
     s = calc_block(s, mobile)
+    # "Zdarma, bez registrace" under the hero button (2026-10-13, option A), the same text as the built page
+    btn = '<a class="btn" href="#calc">Spočítat, kolik mě to bude stát</a>'
+    if mobile:
+        s = one(s, btn, btn + '<p style="font-size:14px;color:#6B665A;text-align:center;margin-top:-6px">Zdarma, bez registrace</p>')
+    else:
+        old = '<div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">' + btn + '</div>'
+        s = one(s, old, '<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">' + btn + '<p style="font-size:14px;color:#6B665A">Zdarma, bez registrace</p></div>')
     write(f, dates(s))
     print('ok', f)
 
