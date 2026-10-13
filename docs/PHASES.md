@@ -17,12 +17,12 @@ Short version of [SPEC.md](SPEC.md) §14, §20 and §22. If this file and the sp
 | 5   | Tracking and consent   | Wed 14.10. | GA4 and Meta dataset, real-phone test events  |
 | 6   | Deploy and polish      | Wed to Thu | Open the live link inside Instagram/Messenger |
 
-## Status on 2026-10-13 (evening)
+## Status on 2026-10-13 (night)
 
-- **Done:** phases 0, 1, 1b and 2.
-- **Phase 3 (page): built, two steps left for David.** All sections of SPEC §7 are in, with the calculator, the hero variants (note 0041), the form, the menu, the footer and the privacy and 404 pages. The e-mail form has no storage yet: it says so on the page (Phase 4). Checked: hero fit at 375x667, Lighthouse (performance 96-97, accessibility 100, CLS 0, applied LCP about 0.8 s), JS budget (146.7 KB of 150 KB), `copy:check`, the design review against the drawings (rev. 6). **Open:** the 5-second test with three non-investors, and the Czech copy review.
+- **Done:** phases 0, 1, 1b, 2 and 3.
+- **Phase 3 (page): done, with three honest caveats.** All sections of SPEC §7 are in, with the calculator, the hero variants (note 0041), the form, the menu, the footer and the privacy and 404 pages. The e-mail form has no storage yet: it says so on the page (Phase 4). Checked: hero fit at 375x667, Lighthouse (performance 96-97, accessibility 100, CLS 0, applied LCP about 0.8 s), JS budget (147.4 KB of 150 KB), `copy:check`, the design review against the drawings (rev. 6), and decision notes 0042 to 0052. The caveats: (1) the **5-second test** was run with one person, not three (note 0052): she understood what the page offers, but did not notice that it is free, so the line was made more visible and has not been tested again; (2) the **Czech copy** was reviewed by David during the build, not in a separate pass, and gets one final check before the page goes live; (3) the **A/B test** is designed, not run (README).
 - **Phases 4, 5 and 6: not started.** Phase 4 needs David's Supabase (EU), Resend and test-domain accounts.
-- **Data still open:** IBKR (everything), the "Česky" column for every broker, prices of VUAA, VUSA, CNDX and EQQQ at all brokers except DEGIRO for VUAA and CNDX. Fee records go stale after 45 days (the EQQQ KIID on 24 Oct).
+- **Data still open:** the "Česky" column for every broker; prices of VUAA and CNDX (only DEGIRO has them), of VUSA and EQQQ (none); Fio at VOO and QQQ. Interactive Brokers is priced for CSPX (Fixed plan). `pnpm data:validate` (strict, the deploy gate of Phase 6) fails with 56 `TODO_VERIFY` values until they are filled or the fields leave the data. Fee records go stale after 45 days (XTB about 14 Nov, Trading 212, Fio and IBKR about 27 Nov; the EQQQ KIID on 24 Oct).
 
 ## Phase 0: Scaffold (done)
 
