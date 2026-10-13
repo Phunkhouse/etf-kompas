@@ -137,10 +137,10 @@ def landing(f, mobile, variant_b):
     # "Zdarma, bez registrace" under the hero button (2026-10-13, option A), the same text as the built page
     btn = '<a class="btn" href="#calc">Spočítat, kolik mě to bude stát</a>'
     if mobile:
-        s = one(s, btn, btn + '<p style="font-size:14px;color:#6B665A;text-align:center;margin-top:-6px">Zdarma, bez registrace</p>')
+        s = one(s, btn, btn + '<p style="font-size:16px;font-weight:600;color:#16150F;text-align:center;margin-top:-6px">Zdarma, bez registrace</p>')
     else:
         old = '<div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">' + btn + '</div>'
-        s = one(s, old, '<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">' + btn + '<p style="font-size:14px;color:#6B665A">Zdarma, bez registrace</p></div>')
+        s = one(s, old, '<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">' + btn + '<p style="font-size:16px;font-weight:600;color:#16150F">Zdarma, bez registrace</p></div>')
     write(f, dates(s))
     print('ok', f)
 

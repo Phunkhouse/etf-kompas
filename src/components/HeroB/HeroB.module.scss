@@ -56,8 +56,10 @@
 
 .ctaNote {
   margin: var(--space-2) 0 0;
-  color: var(--color-muted);
-  font-size: var(--font-size-sm);
+  // as visible as the offer next to the button, not a caption (5-second test, note 0051)
+  color: var(--color-ink);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   text-align: center;
 
   @include from('md') {
