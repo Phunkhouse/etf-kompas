@@ -120,6 +120,7 @@ export const trustBlockCopy = {
       title: 'Jak počítáme',
       paragraphs: [
         'Počítáme poplatek fondu, převod korun a poplatky brokera.',
+        'Provizi brokera počítáme u každé měsíční investice zvlášť. Pevná částka za objednávku proto nejvíc zdraží malé měsíční vklady.',
         'Nepočítáme české daně, inflaci ani rozdíl mezi nákupní a prodejní cenou.',
         'Jedna investice měsíčně. Je to příklad, ne slib.',
       ],
