@@ -85,7 +85,7 @@ Vitest (`src/server/*.test.ts`, node) unless it says E2E. Ports are faked in mem
 **Results page, PDF, small pages (component and route tests)**
 
 - P-1 a valid token renders the visitor's amount and years, and the totals equal `cost.ts` and `broker-pricing.ts` for the same inputs (the same numbers as the calculator).
-- P-2 expired, unknown and malformed tokens render the same generic message and the "Poslat odkaz znovu" form, with HTTP status 200 or 404 (decided: 404, to keep it out of caches), never the lead's data.
+- P-2 expired, unknown and malformed tokens render the same generic message and the "Poslat odkaz znovu" form, with HTTP status 404 (decided: 404, to keep it out of caches), never the lead's data.
 - P-3 headers on every token page: `X-Robots-Tag: noindex`, `<meta robots noindex>`, `Cache-Control: private`.
 - P-4 the PDF has 6 pages, the same totals as the page, `[ověřit]` wherever the page has it, and no figure that is `TODO_VERIFY`.
 - P-5 confirm: a valid link sets `consent_confirmed_at`, a second use shows the confirmed page again without changing the date, an expired or altered link shows "Tento odkaz už nefunguje" with a way back.
