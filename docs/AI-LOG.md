@@ -995,3 +995,14 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Mistakes and corrections**
 
 - None yet. Open: the folder `supabase/migrations/` is not in SPEC §13; I used the Supabase convention and am asking David (a decision note needs his reason). `events` is left for Phase 5.
+
+### Phase 4 plan and test cases
+
+**Prompt (summary):** David: "#74 landed, proceed to phase 4 plan and test cases".
+
+**Produced:** `docs/PHASE-4-PLAN.md`: five PRs, eight decisions, about 40 test cases. David approved all eight decisions as proposed and answered the open questions (404 for expired tokens, `delete-lead.ts` in Phase 6; for a deleted lead who resubmits he asked for my suggestion, which is now S-7).
+
+**Mistakes and corrections**
+
+- **My first commit left out this entry and the P-2 wording**: a `sed -i` that works on Linux failed on macOS and the `&&` chain after it was skipped, while the commit below it ran. Fixed in a second commit.
+- S-7 and the 404 choice are my suggestions that David accepted without giving reasons, so they are not decision notes yet.
