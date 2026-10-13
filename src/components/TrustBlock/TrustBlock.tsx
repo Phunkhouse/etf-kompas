@@ -1,10 +1,10 @@
 import { Section } from '@/components/Section'
 import { Tag } from '@/components/Tag'
-import { copy } from '@/content/copy'
+import { trustBlockCopy } from '@/content/copy'
 import { nbsp } from '@/lib/typography'
 import styles from './TrustBlock.module.scss'
 
-const text = copy.trustBlock
+const text = trustBlockCopy
 
 // "Proč nám věřit": three short items. Each has the id the header link points to.
 // Static content, no client JavaScript.

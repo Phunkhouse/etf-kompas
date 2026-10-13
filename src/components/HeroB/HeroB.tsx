@@ -2,7 +2,7 @@ import { ButtonLink } from '@/components/Button'
 import { Callout } from '@/components/Callout'
 import { Container } from '@/components/Container'
 import { HeroTable } from '@/components/HeroTable'
-import { copy } from '@/content/copy'
+import { heroCopy } from '@/content/copy'
 import { formatMonthYear } from '@/lib/format'
 import { nbsp } from '@/lib/typography'
 import type { HeroNote, HeroTwin } from '@/server/hero'
@@ -15,7 +15,7 @@ type HeroBProps = {
   dataAsOf: string | null
 }
 
-const text = copy.hero
+const text = heroCopy
 
 // "VOO a QQQ" from the tickers in the data.
 function joinTickers(tickers: string[]): string {

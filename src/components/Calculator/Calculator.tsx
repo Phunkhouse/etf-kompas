@@ -6,7 +6,7 @@ import { Chip } from '@/components/Chip'
 import { NumberDisplay } from '@/components/NumberDisplay'
 import { Slider } from '@/components/Slider'
 import { Tag } from '@/components/Tag'
-import { copy } from '@/content/copy'
+import { calculatorCopy } from '@/content/copy'
 import { formatKc, formatPercent } from '@/lib/format'
 import { nbsp } from '@/lib/typography'
 import { priceBrokers } from '@/server/broker-pricing'
@@ -40,7 +40,7 @@ export function Calculator({
 }: CalculatorProps) {
   const [monthly, setMonthly] = useState(3000)
   const [years, setYears] = useState(10)
-  const text = copy.calculator
+  const text = calculatorCopy
 
   const heading = (
     <Tag as={headingAs} id={headingId}>

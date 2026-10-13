@@ -1,11 +1,11 @@
 import { Section } from '@/components/Section'
 import { Tag } from '@/components/Tag'
-import { copy } from '@/content/copy'
+import { faqCopy } from '@/content/copy'
 import { nbsp } from '@/lib/typography'
 import type { OriginalsFacts } from '@/server/hero'
 import styles from './Faq.module.scss'
 
-const text = copy.faq
+const text = faqCopy
 
 type FaqProps = {
   // What the data says about the American funds; the answer is chosen from it.

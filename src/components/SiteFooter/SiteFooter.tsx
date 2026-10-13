@@ -1,5 +1,5 @@
 import { Container } from '@/components/Container'
-import { copy } from '@/content/copy'
+import { shellCopy } from '@/content/copy'
 import { controllerLabel } from '@/config/site'
 import { nbsp } from '@/lib/typography'
 import styles from './SiteFooter.module.scss'
@@ -7,7 +7,7 @@ import styles from './SiteFooter.module.scss'
 // Risk line, controller, the two policy names and the test-project notice.
 // "Zásady zpracování" and "Cookies" are plain text until those pages exist.
 export function SiteFooter() {
-  const { footer } = copy.shell
+  const { footer } = shellCopy
   return (
     <footer className={styles.footer}>
       <Container>
