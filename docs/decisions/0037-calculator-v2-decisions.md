@@ -30,3 +30,4 @@ Wireframe rev. 4 (note 0035) changes the result of the calculator: it is the cos
 - Today no broker has all its values verified, so the calculator starts in the fund-fee-only state.
 - A headline that is the highest verified cost should say so in its wording; that is a copy question for David.
 - David accepted these proposals on 2026-10-12 and gave no further reason.
+- Update 2026-10-13: the headline wording is now "Za 10 let vás fond (CSPX) může u ověřených brokerů stát i X XXX Kč. Z toho jde na:". David did not like "nejvýš" (it "don't fit really well here") and "až" is already used for the saving. The amount is still the highest verified cost. SPEC §3 and `docs/METHODOLOGY-V2.md` still quote "nejvýš" (docs sync, D3).

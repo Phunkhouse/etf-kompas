@@ -102,14 +102,16 @@ describe('Calculator: inputs', () => {
 })
 
 describe('Calculator: a broker is priced', () => {
-  it('says the cost at the dearest verified broker, "u ověřených brokerů nejvýš"', () => {
+  it('says the cost at the dearest verified broker, "u ověřených brokerů může stát i"', () => {
     const data = oneBroker()
     render(<Calculator data={data} />)
     const total = expected(data).headline!.result.totalKc
     const sentence = screen.getByText(/u ověřených brokerů/).textContent!
     expect(sentence.replace(/\s/g, ' ')).toContain('Za 10 let')
     expect(sentence).toContain('CSPX')
-    expect(sentence).toContain('nejvýš')
+    expect(sentence).toContain('může u ověřených brokerů stát i')
+    expect(sentence).not.toContain('nejvýš')
+    expect(sentence).not.toContain('koupitelný')
     expect(sentence.replace(/\s/g, ' ')).toContain(
       formatKc(total).replace(/\s/g, ' '),
     )
@@ -193,7 +195,7 @@ describe('Calculator: no broker is priced yet', () => {
         .getByText(/roční poplatek fondu/)
         .parentElement!.textContent!.replace(/\s/g, ' '),
     ).toContain(formatKc(fundFee).replace(/\s/g, ' '))
-    expect(screen.queryByText(/nejvýš/)).toBeNull()
+    expect(screen.queryByText(/může u ověřených brokerů stát i/)).toBeNull()
     expect(screen.queryByText(/poplatky brokera/)).toBeNull()
     expect(screen.queryByText(/převod korun/)).toBeNull()
   })
@@ -228,6 +230,17 @@ describe('Calculator: the saving box', () => {
       formatKc(spread).replace(/\s/g, ' '),
     )
     expect(screen.getByText(/Odhad, bez českých daní a inflace/)).toBeTruthy()
+  })
+
+  it('puts the amount of the saving box in its own element, so it can be coloured', () => {
+    const data = twoBrokers()
+    render(<Calculator data={data} />)
+    const box = screen.getByText(/ponecháte až/)
+    const amount = box.querySelector('strong')
+    expect(amount).not.toBeNull()
+    expect(amount!.textContent!.replace(/\s/g, ' ')).toBe(
+      formatKc(expected(data).spreadKc!).replace(/\s/g, ' '),
+    )
   })
 
   it('has a button that goes to the e-mail form', () => {

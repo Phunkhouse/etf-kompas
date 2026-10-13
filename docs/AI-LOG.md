@@ -781,3 +781,39 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **One applied run in three spiked to 2.7 s** on `/`; I did not find the cause. Playwright with the same throttling gave 350-400 ms in three of three runs, so I treat it as noise, not proven.
 - **`/?v=b` and `/zasady` were measured with the default (simulated) mode only.**
 - **I asked for a reason David had already given.** He said "yes" to keeping `inlineCss` after I had listed the performance gain; I treated that as no reason and waited. He pointed out the reason was the performance gain I had named. Note 0042 is written with it.
+
+### Design review: the built site follows the drawings (rev. 6, PR 1)
+
+**Prompt (summary):** David compared drawings and built page and listed what he likes better in the drawings: the header, the hero table (column "Poplatek*", the index as the row title with the description under it, no "nebo rovnou srovnání brokerů"), the green saving box, the "Za co platíte" cards and the logo in the footer. Then "Approved" after the tests.
+
+**Produced:** header with a thin line and a 28 px logo; the table column "Poplatek*" with the footnote under the table; rows titled "S&P 500" / "Nasdaq 100" with "iShares CSPX, 500 největších firem" under them; the hero link removed; saving box with the label in capitals, a white heading and the amount in green; cards with the number on the left; the light logo in the footer. Decision note 0043 (David's reason: better readability while the description keeps more information). Tests first (10 failed); 517 unit/component and 123 e2e pass; JS unchanged (146.7 KB).
+
+**Mistakes and corrections**
+
+- **My comparison page was only half checked.** I sent David the side-by-side file after looking closely at two pairs; the review he did found the differences I had not listed (header, green box, cards, footer logo). I said which pairs I had not looked at, but I should have looked at all of them before sending.
+- **I guessed that the green box had no label** from a crop that started below it; the label was already built, only its style (capitals, small mono) differed.
+- **One approved e2e test broke:** `home.spec.ts` looked for "the" ETF Kompas logo, and the footer now has a second one. It is now limited to the banner; the assertion is as strong as before.
+- **Removed an approved e2e test** ("the hero link lands on the form") together with the link. The form stays reachable from the saving box button and the sticky bar.
+- **Open:** the footnote text "* Roční poplatek fondu, počítaný z vašich peněz ve fondu." is mine, for the copy review. SPEC §25 rule 3 and the glossary still say the plain description comes first (docs sync, D3). The design boards and PNGs are still the old ones (PR 2).
+
+### The cost sentence says "může stát i" (added to PR 1 of rev. 6)
+
+**Prompt (summary):** David wanted "Za 10 let vás fond (CSPX) u ověřených brokerů bude stát až 30 778 Kč" instead of "koupitelný fond … nejvýš"; I advised keeping "nejvýš" (it marks a ceiling, and "až" is the saving's word); he proposed "klidně" and said he did not like "nejvýš"; I advised against "klidně" (slang, can read as "easily") and proposed "může stát i"; he chose it.
+
+**Produced:** the sentence in `copy.ts` is now "Za 10 let vás fond (CSPX) může u ověřených brokerů stát i X Kč. Z toho jde na:". Tests first (one failed), then the copy; note 0037 has an update line.
+
+**Mistakes and corrections**
+
+- **I argued for my own wording twice before accepting that the user's ear for his own audience decides copy.** The reason I gave (a ceiling must sound like one) still holds, but "může stát i" says the same thing in words he likes. Not wrong, only slower than it needed to be.
+- **The "fund-only state does not say it" test now checks the new phrase,** so it is weaker in one way: it passed before the change too. It is kept for the case where the sentence leaks into the fund-only state.
+- **SPEC §3 and METHODOLOGY-V2 still say "nejvýš"**: left for the docs sync (D3).
+
+### Centred text in the saving box button (added to PR 1 of rev. 6)
+
+**Prompt (summary):** David: "The button text should be centered" (screenshot of the box on a phone, label on two lines, left-aligned).
+
+**Produced:** `justify-content: center` and `text-align: center` on the button; an e2e test first (it failed with `start`).
+
+**Mistakes and corrections**
+
+- **I missed it in my own review.** The button was left-aligned already in the drawing comparison I made and in the screenshot I read for this PR; I looked at the text, not at where it sat. The earlier fix in #58 (vertical padding for the wrapped label) did not centre it either. A button whose label can wrap needs its alignment tested, not only its height.

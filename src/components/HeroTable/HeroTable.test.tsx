@@ -28,7 +28,7 @@ describe('HeroTable', () => {
       within(table)
         .getAllByRole('columnheader')
         .map((cell) => cell.textContent),
-    ).toEqual(['Co koupíte', 'Roční poplatek', 'Typ'])
+    ).toEqual(['Co koupíte', 'Poplatek*', 'Typ'])
   })
 
   it('has one row for each twin, four in all', () => {
@@ -37,18 +37,42 @@ describe('HeroTable', () => {
     expect(screen.getAllByRole('row')).toHaveLength(5)
   })
 
-  it('shows each fund with its plain name first, then the technical name, ticker and manager', () => {
+  it('titles each row with the index and describes it under the title: manager and ticker, then what it holds', () => {
     render(<HeroTable twins={twins} dataAsOf={null} />)
-    const cspx = screen.getByRole('row', { name: /značka CSPX/ })
-    expect(cspx.textContent).toContain('Evropský fond na 500 největších firem')
-    expect(cspx.textContent).toContain(
-      'odborně S&P 500, značka CSPX, správce iShares',
+    const cspx = screen.getByRole('row', { name: /iShares CSPX/ })
+    expect(cspx.textContent).toContain('S&P 500')
+    expect(cspx.textContent).toContain('iShares CSPX, 500 největších firem')
+    const vuaa = screen.getByRole('row', { name: /Vanguard VUAA/ })
+    expect(vuaa.textContent).toContain('S&P 500')
+    expect(vuaa.textContent).toContain('Vanguard VUAA, 500 největších firem')
+    const cndx = screen.getByRole('row', { name: /iShares CNDX/ })
+    expect(cndx.textContent).toContain('Nasdaq 100')
+    expect(cndx.textContent).toContain(
+      'iShares CNDX, 100 technologických firem',
     )
-    const eqqq = screen.getByRole('row', { name: /značka EQQQ/ })
+    const eqqq = screen.getByRole('row', { name: /Invesco EQQQ/ })
+    expect(eqqq.textContent).toContain('Nasdaq 100')
     expect(eqqq.textContent).toContain(
-      'Evropský fond na 100 technologických firem',
+      'Invesco EQQQ, 100 technologických firem',
     )
-    expect(eqqq.textContent).toContain('správce Invesco')
+  })
+
+  it('puts the index first and the description after it', () => {
+    render(<HeroTable twins={twins} dataAsOf={null} />)
+    const text = screen.getByRole('row', { name: /iShares CSPX/ }).textContent!
+    expect(text.indexOf('S&P 500')).toBeLessThan(text.indexOf('iShares CSPX'))
+  })
+
+  it('no longer says "odborně", "značka" or "správce" in a row', () => {
+    render(<HeroTable twins={twins} dataAsOf={null} />)
+    expect(screen.queryByText(/odborně|značka|správce/)).toBeNull()
+  })
+
+  it('explains the asterisk of the fee column under the table, without needing a date', () => {
+    render(<HeroTable twins={twins} dataAsOf={null} />)
+    expect(screen.getByText(/^\* Roční poplatek fondu/).textContent).toMatch(
+      /^\* Roční poplatek fondu/,
+    )
   })
 
   it('shows the fees from the data with a decimal comma', () => {
@@ -61,16 +85,16 @@ describe('HeroTable', () => {
 
   it('shows the type as Acc or Dist', () => {
     render(<HeroTable twins={twins} dataAsOf={null} />)
-    const cspx = screen.getByRole('row', { name: /značka CSPX/ })
+    const cspx = screen.getByRole('row', { name: /iShares CSPX/ })
     expect(within(cspx).getByText('Acc')).toBeTruthy()
-    const eqqq = screen.getByRole('row', { name: /značka EQQQ/ })
+    const eqqq = screen.getByRole('row', { name: /Invesco EQQQ/ })
     expect(within(eqqq).getByText('Dist')).toBeTruthy()
     expect(within(eqqq).queryByText('Acc')).toBeNull()
   })
 
   it('shows [ověřit] for an unverified fee and for an unverified type', () => {
     render(<HeroTable twins={[twin('cspx', null, null)]} dataAsOf={null} />)
-    const cspx = screen.getByRole('row', { name: /značka CSPX/ })
+    const cspx = screen.getByRole('row', { name: /iShares CSPX/ })
     expect(within(cspx).getAllByText('[ověřit]')).toHaveLength(2)
     expect(within(cspx).queryByText('Acc')).toBeNull()
     expect(within(cspx).queryByText('Dist')).toBeNull()

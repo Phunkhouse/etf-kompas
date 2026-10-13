@@ -38,17 +38,6 @@ test.describe('with JavaScript', () => {
     ).not.toBeChecked()
   })
 
-  test('the hero link "nebo rovnou srovnání brokerů" lands on the form', async ({
-    page,
-  }) => {
-    await page.goto('/?v=b')
-    await page
-      .getByRole('link', { name: 'nebo rovnou srovnání brokerů' })
-      .click()
-    await expect(page).toHaveURL(/#formular$/)
-    await expect(page.getByRole('textbox', field)).toBeInViewport()
-  })
-
   test('hero a has the form too', async ({ page }) => {
     await page.goto('/?v=a')
     await expect(page.getByRole('textbox', field)).toBeAttached()

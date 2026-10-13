@@ -15,18 +15,22 @@
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-5);
+  display: grid;
+  grid-template-columns: var(--space-8) 1fr;
+  column-gap: var(--space-3);
+  row-gap: var(--space-1);
+  align-items: start;
+  padding: var(--space-4) var(--space-5);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
   counter-increment: cost;
 
-  // The big number is drawn by the counter, so it is not part of the text.
+  // The big number is drawn by the counter, so it is not part of the text. It
+  // stands to the left of the title and the text, which keeps the card flat.
   &::before {
     content: counter(cost);
+    grid-row: 1 / span 2;
     font-size: var(--font-size-3xl);
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-none);
@@ -34,7 +38,7 @@
 }
 
 .title {
-  margin: var(--space-3) 0 0;
+  margin: 0;
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
 }
