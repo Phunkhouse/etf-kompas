@@ -868,3 +868,14 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **My list said the sticky bar "appears after the first scroll", copying SPEC §7.** The component shows it when the hero button is out of view and hides it again while the form is in view; I read `StickyBar.tsx` before writing note 0050 and corrected the title and text. David's reason stands as he gave it.
 - **The staleness date I first wrote for Trading 212 was a day off** (28 November instead of 27 November): 45 days from 13 October. Recomputed.
 - **Not invented, but close:** the "alternatives considered" of 0047 and 0048. 0047 says the agent rejected estimating the commission (that is what happened); 0048 says "Not recorded". Both reasons are labelled as agent-drafted.
+
+### README: how the A/B test would be run (designed, not run)
+
+**Prompt (summary):** David asked whether fix 1 (Meta's own A/B test) can be tested for free; I said I could not verify Meta's pricing or screens and that a real test needs ad spend; he said "put it in the README as designed, not run".
+
+**Produced:** a README subsection under the three hypotheses: status (nothing spent, not run), the two URLs and `data-variant`, who splits the traffic, the UTM links, the option not chosen (fix 2) and what would be needed first.
+
+**Mistakes and corrections**
+
+- **Meta's tool is described from my understanding, not from its documentation or screens.** The README says so in the text, and the fee of the tool itself is not claimed. This should be checked when the first ad is set up.
+- **No decision note** on the assignment method yet: David chose fix 1 but gave no reason, so none is written.
