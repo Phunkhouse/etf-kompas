@@ -780,4 +780,4 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **The spec did not say which LCP it meant**, and the default simulated figure (~2.65 s, even on `/zasady`) can never meet 2.0 s. I noticed only after measuring; David chose applied throttling.
 - **One applied run in three spiked to 2.7 s** on `/`; I did not find the cause. Playwright with the same throttling gave 350-400 ms in three of three runs, so I treat it as noise, not proven.
 - **`/?v=b` and `/zasady` were measured with the default (simulated) mode only.**
-- Decision note for `inlineCss` is not written yet: David has not given his reason.
+- **I asked for a reason David had already given.** He said "yes" to keeping `inlineCss` after I had listed the performance gain; I treated that as no reason and waited. He pointed out the reason was the performance gain I had named. Note 0042 is written with it.
