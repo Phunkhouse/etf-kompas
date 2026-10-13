@@ -409,39 +409,39 @@
         "asOf": "2026-10-13",
         "verifiedBy": "David",
         "verifiedOn": "2026-10-13",
-        "evidence": "sha256:8cc233d6187418992cdc14de6c01c8fabc2f87499a6b2f0bff017c119bf79969 (ibkr-cspx-search-2026-10-13.png); Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the page shows a time but no date): quote page \"CSPX  ISHARES CORE S&P 500  LSEETF\", price USD 842.33 (ask 842.30, bid 842.22), Buy and Sell buttons. David's search for \"cspx\" under Stocks/ETF listed CSPX (LSEETF), CSPXN (MEXI) and CSPXJ (EBS, a different fund); only the LSE line is for this fund. The screenshot does not show which IBKR entity the account belongs to."
+        "evidence": "sha256:8cc233d6187418992cdc14de6c01c8fabc2f87499a6b2f0bff017c119bf79969 (ibkr-cspx-quote-2026-10-13.png): quote page \"CSPX  ISHARES CORE S&P 500  LSEETF\", price USD 842.33 (ask 842.30, bid 842.22), Buy and Sell buttons; sha256:0ef574f38c303344ff3be92e494d9174e4359a520f20ab363603cb308cd660da (ibkr-cspx-search-2026-10-13.png): search \"cspx\" lists CSPX ISHARES CORE S&P 500 (LSEETF), CSPXN ISHARES CORE S&P 500 (MEXI) and CSPXJ ISHARES CORE MSCI PACIF X-JP (EBS, another fund); sha256:99d4729558a74321883fca16a47c1dccdb76124b3c30f030c64bf0dd2ecda983 (ibkr-sxr8-search-2026-10-13.png): search \"sxr8\" lists SXR8 ISHARES CORE S&P 500 (IBIS2, Germany). Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the pages show no date). The searches show no currency and the screenshots do not show which IBKR entity the account belongs to."
       },
       "vuaa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:91dcdc06842b1cd2577f96f247b2cac52b81d81698bf415c4ccf9f6860e219a5 (ibkr-vuaa-search-2026-10-13.png): search \"vuaa\" lists VUAA VANG S&P500 USDA on BVME.ETF (Italy) and on LSEETF, and VUAAN VANG S&P500 USDA on MEXI. The name is abbreviated and no ISIN is shown: the ticker VUAA with the name \"VANG S&P500 USDA\" is taken to be the Vanguard S&P 500 UCITS ETF (USD) Accumulating. Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the pages show no date). The searches show no currency and the screenshots do not show which IBKR entity the account belongs to."
       },
       "cndx": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:24103c3f9f1ea9c1876cbd89108e3ae31f61fceab8b5fee405f188933c2d2302 (ibkr-cndx-search-2026-10-13.png): search \"cndx\" lists CNDX ISHARES NASDAQ 100 USD ACC (LSEETF), also CNDXN (MEXI), SXRV (IBIS2), CNX1 (LSEETF) and IS.FF701 (TASE) under the same name, and an unrelated CNDX GLOBAL X S&P/TSX 60 IDX ETF (TSE); sha256:7cad324d333d3203ae146f726757f5b1bab24b4c9cd89178e54bcfeda46ce400 (ibkr-sxrv-search-2026-10-13.png): search \"sxrv\" lists SXRV ISHARES NASDAQ 100 USD ACC (IBIS2, Germany). Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the pages show no date). The searches show no currency and the screenshots do not show which IBKR entity the account belongs to."
       },
       "vusa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:2f7f9f43b52f85c70b397dbe4c4aed68b30ebbc7ebd0790eada3a39d27299fd9 (ibkr-vusa-search-2026-10-13.png): search \"vusa\" lists VUSA VANG S&P500 USDD on LSEETF, on AEB (Amsterdam) and on EBS (Switzerland). The name is abbreviated and no ISIN is shown: the ticker VUSA with \"VANG S&P500 USDD\" is taken to be the Vanguard S&P 500 UCITS ETF (USD) Distributing. Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the pages show no date). The searches show no currency and the screenshots do not show which IBKR entity the account belongs to."
       },
       "eqqq": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:4fc0ed1cebf361eda49cd987a0cd0914ba75bb54d36e7d6bacda265228b0b4d9 (ibkr-eqqq-search-2026-10-13.png): search \"eqqq\" lists EQQQ INVESCO NASDAQ-100 DIST on LSEETF, EBS and BVME.ETF, and an unrelated EQQQ PROSHRS ULTRA QQQ EQU WEIGHT (NASDAQ). The ticker EQQQ with \"INVESCO NASDAQ-100 DIST\" is taken to be the Invesco EQQQ NASDAQ-100 UCITS ETF. Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the pages show no date). The searches show no currency and the screenshots do not show which IBKR entity the account belongs to."
       }
     }
   },

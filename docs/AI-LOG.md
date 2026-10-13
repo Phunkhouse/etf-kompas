@@ -894,7 +894,7 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 
 Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in his words ("more converting"); the one-sentence reason is thin, so the note says that conversion is a hope, not a measurement, and flags the "bez registrace" against "an e-mail is needed" wording for the copy review.
 
-### Data: IBKR availability of CSPX
+### Data: IBKR availability of the five funds
 
 **Prompt (summary):** David got access to Interactive Brokers and sent a quote screenshot of CSPX, then the search popup; he saved the quote page as `ibkr-cspx-search-2026-10-13.png` and said the date is the file name's, the account is his own, and search shows only the single LSE line.
 
@@ -906,3 +906,9 @@ Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in h
 - **Two screenshots arrived in the chat but only one was saved to disk** (the quote page, not the search popup). The record says what the popup showed from David's description, and the evidence hash covers only the quote page. The search popup should be saved too if it is meant as evidence.
 - **The screenshot does not show which IBKR entity the account belongs to**; David said it is his own account. The record says the screenshot does not show it.
 - **Side effect I did not expect:** the hero line now names five brokers ("CSPX: DEGIRO, Fio e-Broker, Interactive Brokers, Trading 212, XTB") and the sentence "U ostatních fondů a brokerů ověřujeme." disappeared, because the rule says every broker is now verified for CSPX. The line is longer, which is the opposite of what David wants; it is the next change.
+
+**Update (same PR):** David saved searches for SXR8, SXRV, VUAA, VUSA, CNDX and EQQQ; the availability of all five funds is now recorded, each with the SHA-256 of its search screenshot.
+
+- **A saved file was overwritten.** David saved the CSPX search popup under the name `ibkr-cspx-search-2026-10-13.png`, which replaced the quote page I had hashed (`8cc233d6...`); my first record in this PR then pointed to a file that no longer existed in the evidence folder. I found it when I listed the folder before writing the new records. The chat copy of the quote page (`images/36.png`) has exactly the same SHA-256, so I copied it into the evidence folder as `ibkr-cspx-quote-2026-10-13.png` and cite both files. Lesson for the evidence folder: one name per file, and I should hash a file right when it arrives.
+- **The searches show the exchange but no currency** and no ISIN. The records say so; the identity of VUAA, VUSA, CNDX and EQQQ rests on the ticker and the abbreviated name ("VANG S&P500 USDA", "VANG S&P500 USDD", "INVESCO NASDAQ-100 DIST"), as it did for Fio. The euro listing of CSPX (SXR8 on IBIS2) is therefore not recorded as a listing yet: I need its quote page with a price in euro.
+- VOO and QQQ at IBKR are not searched yet.
