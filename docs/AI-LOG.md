@@ -754,3 +754,17 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **The request arrived cut off, and I guessed its end.** I wrote what I took it to mean and said so; David should confirm the wording or tell me what the line was meant to say (for example, a specific line about Fio's 3,95 EUR per order, or about the conversion rate).
 - **My text anchor missed once more** because the copy file had been re-indented by the earlier split; the first run did not change the file and I noticed only because the new test still failed. The same slip as in C2b: a script that edits by matching text should print how many places it changed.
 - **The line is a fact about the model, not a claim about any broker:** the calculator charges the purchase fee on each monthly investment, one order a month (SPEC §21, METHODOLOGY-V2 §3).
+
+### Variant b of the hero headline (E2)
+
+**Prompt (summary):** David: "yes, start the E2 tests", then "approved, implement E2" (design rev. 5, decision note 0041).
+
+**Produced:** `?v=b` now shows "U stejného fondu můžete zbytečně zaplatit až 28 302 Kč. Kde?" and, under the table, "Částka v nadpisu: 3 000 Kč měsíčně, 10 let, odhad bez českých daní a inflace." The amount is `heroSavingKc` (highest cost minus lowest among priced brokers at the starting setting) and is the same number the green saving box shows. `chooseHeroVariant` gives b only when b is asked for and the saving is above 0; everything else (`/`, `?v=a`, unknown values, no saving) gives a. `data-variant` says which headline was really shown. The starting setting (3 000 Kč, 10 years, 6 %) lives in one file shared by the calculator and the headline. Tests first: 20 failed before; 511 unit/component and 117 e2e pass after. JS unchanged (146.7 KB).
+
+**Mistakes and corrections**
+
+- **Two earlier tests contradicted the new rule and had to change.** An E1 component test rendered variant b with no amount and expected `data-variant="b"`; it now supplies an amount. An E1 e2e test said the muted line must end with "Jen cena a dostupnost, ne výnosy." on `?v=b`, where the setting sentence now follows; it now checks variant a. Both are changes to approved tests; the assertions are as strong as before.
+- **The earlier plan for a dev-only preview of b was dropped:** with two or more priced brokers, b is served on the real page, so there was nothing to preview. I said so before writing the tests.
+- **The stand-in hero-fit test (pasting the long headline into the h1) is removed.** It was the test that was flaky in CI (#57); the real `/?v=b` page now takes its place in the fit loop.
+- **Something worth saying plainly:** the amount in the headline is 28 302 Kč only because Fio's 3,95 EUR per order and 2,77 % conversion make it the dearest broker. The headline is true to the data, and its size is a result of that one broker's fees, so it moves with every fee update (fee records go stale after 45 days). Not tested here: how it reads as an ad; the hypothesis test of note 0041 is still to be run.
+- Not done: `track()` with `variant` on every event (Phase 5). Landing pages record the variant shown in `data-variant` for it.

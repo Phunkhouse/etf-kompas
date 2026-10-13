@@ -33,8 +33,13 @@ export const shellCopy = {
 // Both heroes have the rev. 4 headline; they differ by layout: variant a is
 // the calculator-first hero (ad A), b the table-first hero (ad B).
 export const heroCopy = {
-  // One layout for both A/B variants (note 0041); variant a's headline is this one.
-  headline: 'Americké indexy z Česka: u koho je koupíte a za kolik?',
+  // One layout for both A/B variants (note 0041): they differ only in the h1.
+  // The b headline names the saving between brokers at the starting setting.
+  headline: {
+    a: 'Americké indexy z Česka: u koho je koupíte a za kolik?',
+    b: (amount: string) =>
+      `U stejného fondu můžete zbytečně zaplatit až ${amount}. Kde?`,
+  },
   lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.',
   cta: 'Spočítat, kolik mě to bude stát',
   // Under the button: goes to the e-mail form (the comparison is behind it).
@@ -96,6 +101,9 @@ export const heroCopy = {
     others: 'U ostatních fondů a brokerů ověřujeme.',
     // The page shows no returns (note 0039).
     priceOnly: 'Jen cena a dostupnost, ne výnosy.',
+    // Under the table in variant b: which setting the amount in the headline is for.
+    headlineSetting: (monthly: string, years: number) =>
+      `Částka v nadpisu: ${monthly} měsíčně, ${years} let, odhad bez českých daní a inflace.`,
     originalsMostlyNo: (tickers: string) =>
       `Americké ${tickers} u většiny brokerů nekoupíte.`,
     originalsChecking: (tickers: string) =>

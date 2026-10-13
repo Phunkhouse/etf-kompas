@@ -26,47 +26,8 @@ for (const path of ['/', '/?v=a', '/?v=b']) {
   })
 }
 
-// The b headline is longer and has the amount in it. The real data cannot serve it
-// yet (it needs two priced brokers), so its text is put into the h1 here.
-// The text must be changed only after React has hydrated the page: before that,
-// React sees a page that differs from its own and rebuilds it, which puts the
-// original text back and detaches the button (this failed in CI, where the page
-// hydrates more slowly than on a laptop).
-test('the hero still fits with the longer b headline', async ({ page }) => {
-  await page.goto('/')
-  // the calculator's slider is a client component: it is hydrated once React has
-  // attached its props to the element
-  await page.waitForFunction(() => {
-    const slider = document.querySelector('input[type="range"]')
-    return (
-      slider !== null &&
-      Object.keys(slider).some((key) => key.startsWith('__reactProps'))
-    )
-  })
-  // let React finish its pass (two frames), without a fixed sleep
-  await page.evaluate(
-    () =>
-      new Promise<void>((resolve) =>
-        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
-      ),
-  )
-  const longer =
-    'U stejného fondu můžete zbytečně zaplatit až 3\u00a0210\u00a0Kč. Kde?'
-  await page.evaluate((text) => {
-    document.querySelector('h1')!.textContent = text
-  }, longer)
-  // the change must stay: a rebuild would put the original headline back
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    longer.replace(/\u00a0/g, ' '),
-  )
-  const button = page.getByRole('link', {
-    name: /Spočítat, kolik mě to bude stát/,
-  })
-  await expect(button).toBeVisible()
-  const box = await button.boundingBox()
-  expect(box).not.toBeNull()
-  expect(box!.y + box!.height).toBeLessThanOrEqual(667)
-})
+// The b headline is longer and has the amount in it; `/?v=b` above is the real
+// page with it (the loop covers `/?v=b`), so no stand-in text is needed.
 
 // Rev. 4 draws the phone headline at 30 px and the desktop one at 54 px
 // (note 0039, decision 5). The phone size must still keep the button in view.

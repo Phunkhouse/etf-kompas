@@ -3,7 +3,8 @@ import { Callout } from '@/components/Callout'
 import { Container } from '@/components/Container'
 import { HeroTable } from '@/components/HeroTable'
 import { heroCopy } from '@/content/copy'
-import { formatMonthYear } from '@/lib/format'
+import { DEFAULT_MONTHLY, DEFAULT_YEARS } from '@/lib/calculator-defaults'
+import { formatKc, formatMonthYear } from '@/lib/format'
 import { nbsp } from '@/lib/typography'
 import type { HeroNote, HeroTwin } from '@/server/hero'
 import styles from './HeroB.module.scss'
@@ -13,6 +14,9 @@ type HeroBProps = {
   // left out when the data has no note
   note?: HeroNote
   dataAsOf: string | null
+  // The A/B headline (note 0041). b needs `savingKc`.
+  variant?: 'a' | 'b'
+  savingKc?: number | null
 }
 
 const text = heroCopy
@@ -24,7 +28,11 @@ function joinTickers(tickers: string[]): string {
 
 // The muted line under the table. It is chosen from the data, so it never says
 // more than the data shows (SPEC §18, note 0029).
-function noteText(note: HeroNote, dataAsOf: string | null): string {
+function noteText(
+  note: HeroNote,
+  dataAsOf: string | null,
+  showSetting: boolean,
+): string {
   const lines = text.note
   const parts: string[] = []
   if (note.sellers.length === 0) {
@@ -47,12 +55,24 @@ function noteText(note: HeroNote, dataAsOf: string | null): string {
     )
   }
   parts.push(lines.priceOnly)
+  // Variant b: say which setting the amount in the headline is for.
+  if (showSetting) {
+    parts.push(lines.headlineSetting(formatKc(DEFAULT_MONTHLY), DEFAULT_YEARS))
+  }
   return parts.join(' ')
 }
 
 // Hero b (ad B): the table first, then the call to action. On a phone the order
 // is headline, lead, table, button, muted line, then the ETF explanation.
-export function HeroB({ twins, note, dataAsOf }: HeroBProps) {
+export function HeroB({
+  twins,
+  note,
+  dataAsOf,
+  variant = 'a',
+  savingKc = null,
+}: HeroBProps) {
+  // Variant b needs an amount to name; without one the page says variant a.
+  const showB = variant === 'b' && savingKc !== null && savingKc > 0
   // Said only when the data shows it: a majority of brokers verified as not
   // selling the originals, and at least one verified seller of the twin.
   const calloutOriginals =
@@ -65,7 +85,9 @@ export function HeroB({ twins, note, dataAsOf }: HeroBProps) {
         <div className={styles.grid}>
           <div className={styles.intro}>
             <h1 id="hero-headline" className={styles.headline}>
-              {nbsp(text.headline)}
+              {nbsp(
+                showB ? text.headline.b(formatKc(savingKc)) : text.headline.a,
+              )}
             </h1>
             <p className={styles.lead}>{nbsp(text.lead)}</p>
           </div>
@@ -82,7 +104,7 @@ export function HeroB({ twins, note, dataAsOf }: HeroBProps) {
           </div>
           {note ? (
             <p className={styles.footnote} data-testid="hero-note">
-              {nbsp(noteText(note, dataAsOf))}
+              {nbsp(noteText(note, dataAsOf, showB))}
             </p>
           ) : null}
           <div className={styles.callout}>

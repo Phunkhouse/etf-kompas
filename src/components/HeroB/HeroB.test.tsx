@@ -23,6 +23,134 @@ function note(over: Partial<HeroNote> = {}): HeroNote {
 
 const mutedLine = () => screen.getByTestId('hero-note').textContent ?? ''
 
+const B_LINE =
+  'Částka v nadpisu: 3 000 Kč měsíčně, 10 let, odhad bez českých daní a inflace.'
+const flatText = (text: string | null) => (text ?? '').replace(/\s/g, ' ')
+
+describe('HeroB: the two headlines (note 0041)', () => {
+  it('shows the neutral question in variant a, and no amount sentence', () => {
+    render(<HeroB twins={twins} note={note()} dataAsOf={null} variant="a" />)
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(
+      'Americké indexy z Česka: u koho je koupíte a za kolik?',
+    )
+    expect(flatText(screen.getByTestId('hero-note').textContent)).not.toContain(
+      'Částka v nadpisu',
+    )
+  })
+
+  it('is variant a when no variant is given', () => {
+    render(<HeroB twins={twins} note={note()} dataAsOf={null} />)
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain(
+      'Americké indexy z Česka',
+    )
+  })
+
+  it('shows the saving in variant b: "U stejného fondu můžete zbytečně zaplatit až X Kč. Kde?"', () => {
+    render(
+      <HeroB
+        twins={twins}
+        note={note()}
+        dataAsOf={null}
+        variant="b"
+        savingKc={28302}
+      />,
+    )
+    const h1 = screen.getByRole('heading', { level: 1 })
+    expect(flatText(h1.textContent)).toBe(
+      'U stejného fondu můžete zbytečně zaplatit až 28 302 Kč. Kde?',
+    )
+  })
+
+  it('keeps the amount and "Kč" on one line with non-breaking spaces', () => {
+    render(
+      <HeroB
+        twins={twins}
+        note={note()}
+        dataAsOf={null}
+        variant="b"
+        savingKc={28302}
+      />,
+    )
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain(
+      '28 302 Kč',
+    )
+  })
+
+  it('says under the table which setting the amount is for, only in variant b', () => {
+    const { unmount } = render(
+      <HeroB
+        twins={twins}
+        note={note()}
+        dataAsOf={null}
+        variant="b"
+        savingKc={28302}
+      />,
+    )
+    expect(flatText(screen.getByTestId('hero-note').textContent)).toContain(
+      B_LINE,
+    )
+    unmount()
+    render(<HeroB twins={twins} note={note()} dataAsOf={null} variant="a" />)
+    expect(flatText(screen.getByTestId('hero-note').textContent)).not.toContain(
+      B_LINE,
+    )
+  })
+
+  it('has the same table, button and callout in both variants', () => {
+    const { unmount } = render(
+      <HeroB
+        twins={twins}
+        note={note()}
+        dataAsOf={null}
+        variant="b"
+        savingKc={28302}
+      />,
+    )
+    expect(screen.getByRole('table', { name: 'Cena fondů' })).toBeTruthy()
+    expect(
+      screen.getByRole('link', { name: 'Spočítat, kolik mě to bude stát' }),
+    ).toBeTruthy()
+    expect(screen.getByRole('note')).toBeTruthy()
+    unmount()
+    render(<HeroB twins={twins} note={note()} dataAsOf={null} variant="a" />)
+    expect(screen.getByRole('table', { name: 'Cena fondů' })).toBeTruthy()
+  })
+
+  it('never shows the placeholder "X XXX": variant b without an amount falls back to a', () => {
+    const { container } = render(
+      <HeroB
+        twins={twins}
+        note={note()}
+        dataAsOf={null}
+        variant="b"
+        savingKc={null}
+      />,
+    )
+    expect(container.textContent).not.toMatch(/X\s*XXX/)
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain(
+      'Americké indexy z Česka',
+    )
+    expect(flatText(screen.getByTestId('hero-note').textContent)).not.toContain(
+      'Částka v nadpisu',
+    )
+  })
+
+  it('does not name a saving of 0 Kč or less either', () => {
+    render(
+      <HeroB
+        twins={twins}
+        note={note()}
+        dataAsOf={null}
+        variant="b"
+        savingKc={0}
+      />,
+    )
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain(
+      'Americké indexy z Česka',
+    )
+  })
+})
+
 describe('HeroB', () => {
   it('has the headline as h1 and names the section after it', () => {
     render(<HeroB twins={twins} note={note()} dataAsOf={null} />)

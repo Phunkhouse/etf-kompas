@@ -23,6 +23,8 @@ type LandingProps = {
   note?: HeroNote
   // What the FAQ answer about the American funds is chosen from.
   faqFacts?: OriginalsFacts
+  // The amount the b headline names; without it the page shows variant a.
+  savingKc?: number | null
   // The calculator band: left out when undefined, the failure state when null.
   calculator?: CalculatorData | null
 }
@@ -35,14 +37,24 @@ export function Landing({
   twins = [],
   note,
   faqFacts,
+  savingKc = null,
   calculator,
 }: LandingProps) {
+  // The variant the page really shows: b only with an amount to name.
+  const shown: Variant =
+    variant === 'b' && savingKc !== null && savingKc > 0 ? 'b' : 'a'
   return (
     <>
       <SourceBar dataAsOf={dataAsOf} />
       <SiteHeader />
-      <main data-variant={variant}>
-        <HeroB twins={twins} note={note} dataAsOf={dataAsOf} />
+      <main data-variant={shown}>
+        <HeroB
+          twins={twins}
+          note={note}
+          dataAsOf={dataAsOf}
+          variant={shown}
+          savingKc={savingKc}
+        />
         {calculator !== undefined ? (
           <CalculatorSection data={calculator} />
         ) : null}

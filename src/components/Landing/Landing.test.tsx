@@ -121,7 +121,8 @@ describe.each(['a', 'b'] as const)(
     })
 
     it('marks the page with the variant it shows, for the tracking that comes later', () => {
-      render(<Landing variant={variant} dataAsOf={null} />)
+      // variant b is shown only with an amount to name (note 0041)
+      render(<Landing variant={variant} dataAsOf={null} savingKc={28302} />)
       expect(screen.getByRole('main').getAttribute('data-variant')).toBe(
         variant,
       )
@@ -202,5 +203,56 @@ describe('Landing, the trust block and the FAQ', () => {
     expect(
       screen.getByText(/U 3 z 5 brokerů máme ověřeno/).textContent,
     ).toContain('VOO a QQQ nenabízí')
+  })
+})
+
+describe('Landing, variant b (note 0041)', () => {
+  it('shows the b headline with the saving, and marks the page b', () => {
+    render(
+      <Landing
+        variant="b"
+        dataAsOf={null}
+        twins={twins}
+        note={note}
+        savingKc={28302}
+      />,
+    )
+    expect(
+      (screen.getByRole('heading', { level: 1 }).textContent ?? '').replace(
+        /\s/g,
+        ' ',
+      ),
+    ).toBe('U stejného fondu můžete zbytečně zaplatit až 28 302 Kč. Kde?')
+    expect(screen.getByRole('main').getAttribute('data-variant')).toBe('b')
+  })
+
+  it('says a, in the headline and in data-variant, when b has no amount to name', () => {
+    render(<Landing variant="b" dataAsOf={null} twins={twins} note={note} />)
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain(
+      'Americké indexy z Česka',
+    )
+    expect(screen.getByRole('main').getAttribute('data-variant')).toBe('a')
+  })
+
+  it('has the same sections in a and b', () => {
+    const data = calculatorData(bundledData, RATES, 'cspx')
+    const names = (variant: 'a' | 'b') => {
+      const { unmount } = render(
+        <Landing
+          variant={variant}
+          dataAsOf={null}
+          twins={twins}
+          note={note}
+          savingKc={28302}
+          calculator={data}
+        />,
+      )
+      const regions = screen
+        .getAllByRole('region')
+        .map((r) => r.getAttribute('aria-labelledby'))
+      unmount()
+      return regions
+    }
+    expect(names('b')).toEqual(names('a'))
   })
 })

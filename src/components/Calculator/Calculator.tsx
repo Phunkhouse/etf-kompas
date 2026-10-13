@@ -9,6 +9,11 @@ import { Tag } from '@/components/Tag'
 import { calculatorCopy } from '@/content/copy'
 import { formatKc, formatPercent } from '@/lib/format'
 import { nbsp } from '@/lib/typography'
+import {
+  DEFAULT_MONTHLY,
+  DEFAULT_YEARS,
+  GROSS_RETURN,
+} from '@/lib/calculator-defaults'
 import { priceBrokers } from '@/server/broker-pricing'
 import type { CalculatorData } from '@/server/calculator-data'
 import { fundFeeKc } from '@/server/cost'
@@ -18,8 +23,6 @@ const HORIZONS = [5, 10, 20]
 const MONTHLY_MIN = 500
 const MONTHLY_MAX = 20000
 const MONTHLY_STEP = 500
-// The same for every fund, so only the costs differ (SPEC §17.3).
-const GROSS_RETURN = 6
 
 type CalculatorProps = {
   // null when the numbers are not available: the calculator then shows no amount.
@@ -38,8 +41,8 @@ export function Calculator({
   headingAs = 'h3',
   headingId,
 }: CalculatorProps) {
-  const [monthly, setMonthly] = useState(3000)
-  const [years, setYears] = useState(10)
+  const [monthly, setMonthly] = useState(DEFAULT_MONTHLY)
+  const [years, setYears] = useState(DEFAULT_YEARS)
   const text = calculatorCopy
 
   const heading = (
