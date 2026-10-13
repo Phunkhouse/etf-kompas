@@ -388,12 +388,12 @@
     },
     "availability": {
       "voo": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": false,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:dec2ef2f13f1b18870d2b84b062d850b8bd97f472a84b45bc8474def70ca8113 (ibkr-voo-search-2026-10-13.png): search \"voo\" lists VOO VANGUARD S&P 500 ETF on ARCA and on MEXI; sha256:f619757fa41488f15024e039b95d9b6730c1297386349e66263d8244a5b0d653 (ibkr-voo-detail-2026-10-13.png): quote page VOO VANGUARD S&P 500 ETF ARCA, USD 714.97, with a red \"NT\" badge and a \"Notice\" button next to Buy and Sell; sha256:bb8dcce4e25ad4e4865c855a747c3846820063094bbb05dac6e0ad722e6c2edf (ibkr-notice.png, the notice of the VOO page, opened by David): \"We are sorry but you cannot trade this product based upon your classification as a \\\"Retail\\\" client under MiFID regulations ... you cannot trade this product because it does not have a Key Information Document (KID) or does not have one in a language approved for your country.\" Interactive Brokers client portal, David's own account, 2026-10-13 (the date is from the file names; the pages show no date). The screenshot does not show which IBKR entity the account belongs to."
       },
       "qqq": {
         "value": "TODO_VERIFY",
