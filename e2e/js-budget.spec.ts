@@ -18,22 +18,22 @@ async function scriptBytes(browser: Browser, path: string): Promise<number> {
 
 const kb = (bytes: number) => `${(bytes / 1024).toFixed(1)} KB`
 
-// What the page's own code adds on top of an empty page (the 404 page has no
-// calculator, no table and no client components of ours). This is the part we
-// control; the framework's share is measured by the same run.
+// What the page's own code adds on top of an empty page. This is the part we
+// control. The empty page is a fixed size, measured on 2026-10-11 with Next's own
+// 404 page (Next 16.4): it cannot be measured any more, because our 404 page has
+// the header with the menu in it. Measure it again when Next is upgraded.
+const EMPTY_PAGE = 132.5 * 1024
 const OWN_CODE_CEILING = 20 * 1024
 
 test('the page code adds little on top of the framework', async ({
   browser,
 }) => {
-  const baseline = await scriptBytes(browser, '/_not-found')
-  expect(baseline).toBeGreaterThan(0)
   for (const path of ['/', '/?v=b']) {
     const total = await scriptBytes(browser, path)
     console.log(
-      `JS ${path}: ${kb(total)} (empty page ${kb(baseline)}, ours ${kb(total - baseline)})`,
+      `JS ${path}: ${kb(total)} (empty page ${kb(EMPTY_PAGE)}, ours ${kb(total - EMPTY_PAGE)})`,
     )
-    expect(total - baseline).toBeLessThanOrEqual(OWN_CODE_CEILING)
+    expect(total - EMPTY_PAGE).toBeLessThanOrEqual(OWN_CODE_CEILING)
   }
 })
 

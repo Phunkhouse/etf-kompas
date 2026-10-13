@@ -56,6 +56,10 @@
   color: var(--color-muted);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-base);
+
+  a {
+    color: inherit;
+  }
 }
 
 .tips {

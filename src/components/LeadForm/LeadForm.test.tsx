@@ -52,14 +52,18 @@ describe('LeadForm: the form as drawn', () => {
     expect(button.getAttribute('type')).toBe('submit')
   })
 
-  it('has the legal line with the controller placeholder, and no link to a privacy page yet', () => {
+  it('has the legal line with the controller placeholder, and the policy as a link', () => {
     renderForm()
     expect(
       flat(screen.getByText(/Pošleme vám srovnání\. Správce:/).textContent),
     ).toBe(
       'Pošleme vám srovnání. Správce: [SPRÁVCE]. Zásady zpracování osobních údajů.',
     )
-    expect(screen.queryByRole('link', { name: /Zásady zpracování/ })).toBeNull()
+    expect(
+      screen
+        .getByRole('link', { name: 'Zásady zpracování osobních údajů' })
+        .getAttribute('href'),
+    ).toBe('/zasady')
   })
 
   it('has the optional tips checkbox, unticked', () => {
