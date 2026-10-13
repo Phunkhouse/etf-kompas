@@ -508,7 +508,7 @@ A phase is done only when every line is true. **Every phase also ends with at le
 
 **Phase 3: page**
 - Hero fits 375x667 including the primary CTA with no scrolling (Playwright geometry assertion at that viewport: the button's bottom edge is above 667 px, note 0031; a pixel screenshot would differ between machines).
-- Lighthouse mobile (throttled, lab): performance >= 90, accessibility >= 95; LCP < 2.0 s, CLS < 0.05; route JS: our code adds <= 20 KB gzipped over an empty Next page and the whole route is <= 150 KB gzipped (note 0034).
+- Lighthouse mobile (lab, applied throttling, `--throttling-method=devtools`): performance >= 90, accessibility >= 95; LCP < 2.0 s, CLS < 0.05. The default "simulated" LCP that PageSpeed shows stays near 2.6 s even on an almost empty page, so it is not the gate; route JS: our code adds <= 20 KB gzipped over an empty Next page and the whole route is <= 150 KB gzipped (note 0034).
 - The form works **without JavaScript** (native POST to a server action) and shows the success state.
 - `?v=a` and `?v=b` render the same layout with different h1; an unknown value falls back to `a`; `b` is not served unless the saving box hide rule is met.
 - The hero fits 375x667 for both headlines, including the sentence under the table.
