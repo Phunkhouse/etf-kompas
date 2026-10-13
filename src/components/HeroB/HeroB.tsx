@@ -21,45 +21,16 @@ type HeroBProps = {
 
 const text = heroCopy
 
-// "VOO a QQQ" from the tickers in the data.
-function joinTickers(tickers: string[]): string {
-  return tickers.join(' a ')
-}
-
-// The muted line under the table. It is chosen from the data, so it never says
-// more than the data shows (SPEC §18, note 0029).
-function noteText(
-  note: HeroNote,
-  dataAsOf: string | null,
-  showSetting: boolean,
-): string {
+// The short line under the table: how many known brokers sell the first twin and when
+// that was verified. Chosen from the data, so it never says more than the data shows
+// (SPEC §18, note 0029).
+function shortLine(note: HeroNote, dataAsOf: string | null): string {
   const lines = text.note
-  const parts: string[] = []
-  if (note.sellers.length === 0) {
-    parts.push(lines.noSellers(note.ticker))
-  } else {
-    const names = note.sellers.join(', ')
-    parts.push(
-      dataAsOf
-        ? lines.sellers(note.ticker, names, formatMonthYear(dataAsOf))
-        : lines.sellersNoDate(note.ticker, names),
-    )
-  }
-  if (note.othersUnverified) parts.push(lines.others)
-  const originals = joinTickers(note.originals.tickers)
-  if (note.originals.tickers.length > 0) {
-    parts.push(
-      note.originals.mostlyNo
-        ? lines.originalsMostlyNo(originals)
-        : lines.originalsChecking(originals),
-    )
-  }
-  parts.push(lines.priceOnly)
-  // Variant b: say which setting the amount in the headline is for.
-  if (showSetting) {
-    parts.push(lines.headlineSetting(formatKc(DEFAULT_MONTHLY), DEFAULT_YEARS))
-  }
-  return parts.join(' ')
+  if (note.sellers.length === 0) return lines.noSellers(note.ticker)
+  const known = lines.known(note.ticker, note.sellers.length)
+  return dataAsOf
+    ? `${known} · ${lines.verifiedOn(formatMonthYear(dataAsOf))}`
+    : known
 }
 
 // Hero b (ad B): the table first, then the call to action. On a phone the order
@@ -75,6 +46,10 @@ export function HeroB({
   const showB = variant === 'b' && savingKc !== null && savingKc > 0
   // Said only when the data shows it: a majority of brokers verified as not
   // selling the originals, and at least one verified seller of the twin.
+  // Variant b: which setting the amount in the headline is for.
+  const setting = showB
+    ? text.note.headlineSetting(formatKc(DEFAULT_MONTHLY), DEFAULT_YEARS)
+    : null
   const calloutOriginals =
     note && note.originals.mostlyNo && note.sellers.length > 0
       ? text.callout.originals(note.originals.tickers.join(', '))
@@ -108,7 +83,16 @@ export function HeroB({
           </div>
           {note ? (
             <p className={styles.footnote} data-testid="hero-note">
-              {nbsp(noteText(note, dataAsOf, showB))}
+              {nbsp(shortLine(note, dataAsOf))}
+              {note.sellers.length > 0 ? (
+                <span className={styles.wide}>
+                  {' · '}
+                  {nbsp(text.note.priceOnlyShort)}
+                </span>
+              ) : null}
+              {setting ? (
+                <span className={styles.wideBlock}>{nbsp(setting)}</span>
+              ) : null}
             </p>
           ) : null}
           <div className={styles.callout}>
@@ -118,6 +102,19 @@ export function HeroB({
               {calloutOriginals ? nbsp(calloutOriginals) : null}
             </Callout>
           </div>
+          {note && note.sellers.length > 0 ? (
+            <p className={styles.detail} data-testid="hero-detail">
+              {nbsp(
+                [
+                  text.note.names(note.sellers.join(', ')),
+                  text.note.priceOnly,
+                  setting,
+                ]
+                  .filter(Boolean)
+                  .join(' '),
+              )}
+            </p>
+          ) : null}
         </div>
       </Container>
     </section>

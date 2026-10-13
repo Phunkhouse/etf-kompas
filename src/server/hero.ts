@@ -20,8 +20,6 @@ export type HeroNote = {
   ticker: string
   // brokers verified as selling the fund, in the order of the data
   sellers: string[]
-  // true while some broker is neither verified as selling it nor as not selling it
-  othersUnverified: boolean
   originals: {
     tickers: string[]
     // every original fund is verified as not sold by more than half of the brokers
@@ -91,7 +89,6 @@ export function heroNote(
     fundId: firstFundId,
     ticker: first.ticker,
     sellers,
-    othersUnverified: states.some((state) => state === null),
     originals: { tickers: originals.map((etf) => etf.ticker), mostlyNo },
   }
 }

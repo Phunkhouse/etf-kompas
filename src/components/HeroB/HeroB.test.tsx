@@ -15,7 +15,6 @@ function note(over: Partial<HeroNote> = {}): HeroNote {
     fundId: 'cspx',
     ticker: 'CSPX',
     sellers: ['DEGIRO', 'Trading 212', 'XTB'],
-    othersUnverified: true,
     originals: { tickers: ['VOO', 'QQQ'], mostlyNo: true },
     ...over,
   }
@@ -276,77 +275,95 @@ describe('HeroB', () => {
     })
   })
 
-  describe('the muted line under the table', () => {
-    it('names where the first twin is sold, with the month it was verified', () => {
+  describe('the short line under the table and the note under the callout', () => {
+    const detail = () =>
+      (screen.getByTestId('hero-detail').textContent ?? '').replace(/\s/g, ' ')
+
+    it('says how many known brokers there are and when they were verified, not who', () => {
       render(<HeroB twins={twins} note={note()} dataAsOf="2026-10-12" />)
       const text = mutedLine().replace(/\s/g, ' ')
-      expect(text).toContain('CSPX: DEGIRO, Trading 212, XTB')
+      expect(text).toContain('CSPX: 3 známí brokeři')
       expect(text).toContain('ověřeno k 10. 2026')
+      expect(text).not.toContain('DEGIRO')
+      expect(text).not.toContain('Trading 212')
     })
 
-    it('says the others are being verified only while they are', () => {
-      const { unmount } = render(
-        <HeroB twins={twins} note={note()} dataAsOf={null} />,
-      )
-      expect(mutedLine()).toContain('U ostatních fondů a brokerů ověřujeme.')
-      unmount()
-      render(
-        <HeroB
-          twins={twins}
-          note={note({ othersUnverified: false })}
-          dataAsOf={null}
-        />,
-      )
-      expect(mutedLine()).not.toContain('U ostatních')
+    it('counts in Czech: 1 broker, 3 brokeři, 5 brokerů', () => {
+      const names = ['DEGIRO', 'Fio e-Broker', 'IBKR', 'Trading 212', 'XTB']
+      const line = (count: number) => {
+        const { unmount } = render(
+          <HeroB
+            twins={twins}
+            note={note({ sellers: names.slice(0, count) })}
+            dataAsOf={null}
+          />,
+        )
+        const text = mutedLine().replace(/\s/g, ' ')
+        unmount()
+        return text
+      }
+      expect(line(1)).toContain('CSPX: 1 známý broker')
+      expect(line(3)).toContain('CSPX: 3 známí brokeři')
+      expect(line(5)).toContain('CSPX: 5 známých brokerů')
     })
 
-    it('says the originals are mostly not sold only when the data shows a majority', () => {
-      const { unmount } = render(
-        <HeroB twins={twins} note={note()} dataAsOf={null} />,
-      )
+    it('leaves the date out without one', () => {
+      render(<HeroB twins={twins} note={note()} dataAsOf={null} />)
+      expect(mutedLine()).not.toContain('ověřeno')
+    })
+
+    it('has no sentence about the American funds, the callout says it', () => {
+      render(<HeroB twins={twins} note={note()} dataAsOf="2026-10-12" />)
+      for (const text of [mutedLine(), detail()]) {
+        expect(text).not.toContain('nekoupíte')
+        expect(text).not.toContain('VOO')
+        expect(text).not.toContain('U ostatních')
+      }
+    })
+
+    it('names the brokers in a note under the callout, after it', () => {
+      render(<HeroB twins={twins} note={note()} dataAsOf={null} />)
+      expect(detail()).toContain('Brokeři: DEGIRO, Trading 212, XTB.')
+      expect(
+        screen
+          .getByRole('note')
+          .compareDocumentPosition(screen.getByTestId('hero-detail')) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+      ).toBeTruthy()
+    })
+
+    it('says this is price and availability only, no returns, in both places', () => {
+      render(<HeroB twins={twins} note={note()} dataAsOf={null} />)
+      expect(detail()).toContain('Jen cena a dostupnost, ne výnosy.')
+      // wide screens show it in the short line instead of the note
       expect(mutedLine().replace(/\s/g, ' ')).toContain(
-        'Americké VOO a QQQ u většiny brokerů nekoupíte.',
+        'jen cena a dostupnost, ne výnosy',
       )
-      unmount()
-      render(
+    })
+
+    it('has the setting of the amount in the note too, only in variant b', () => {
+      const { unmount } = render(
         <HeroB
           twins={twins}
-          note={note({
-            originals: { tickers: ['VOO', 'QQQ'], mostlyNo: false },
-          })}
+          note={note()}
           dataAsOf={null}
+          variant="b"
+          savingKc={28302}
         />,
       )
-      const text = mutedLine().replace(/\s/g, ' ')
-      expect(text).not.toContain('u většiny brokerů')
-      expect(text).toContain('VOO a QQQ')
-      expect(text).toContain('ověřujeme')
-    })
-
-    it('does not claim a seller it does not have', () => {
-      render(
-        <HeroB twins={twins} note={note({ sellers: [] })} dataAsOf={null} />,
-      )
-      const text = mutedLine()
-      expect(text).not.toContain('CSPX:')
-      expect(text).toContain('CSPX')
-      expect(text).toContain('ověřujeme')
-    })
-
-    it('ends with the line that this is price and availability only, no returns', () => {
-      const { unmount } = render(
-        <HeroB twins={twins} note={note()} dataAsOf={null} />,
-      )
-      expect(mutedLine().replace(/\s/g, ' ')).toMatch(
-        /Jen cena a dostupnost, ne výnosy\.$/,
-      )
+      expect(detail()).toContain(B_LINE)
       unmount()
+      render(<HeroB twins={twins} note={note()} dataAsOf={null} variant="a" />)
+      expect(detail()).not.toContain('Částka v nadpisu')
+    })
+
+    it('does not claim a seller it does not have, and has no names note', () => {
       render(
         <HeroB twins={twins} note={note({ sellers: [] })} dataAsOf={null} />,
       )
-      expect(mutedLine().replace(/\s/g, ' ')).toMatch(
-        /Jen cena a dostupnost, ne výnosy\.$/,
-      )
+      expect(mutedLine()).toContain('U kterých brokerů koupíte CSPX')
+      expect(mutedLine()).toContain('zatím ověřujeme')
+      expect(screen.queryByTestId('hero-detail')).toBeNull()
     })
 
     it('never says "nejlevnější"', () => {

@@ -75,6 +75,35 @@
   }
 }
 
+.wide {
+  display: none;
+
+  @include from('md') {
+    display: inline;
+  }
+}
+
+.wideBlock {
+  display: none;
+
+  @include from('md') {
+    display: block;
+    margin-top: var(--space-1);
+  }
+}
+
+// Under the callout, on a phone only: who the brokers are. Wide screens have the
+// short line instead.
+.detail {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+
+  @include from('md') {
+    display: none;
+  }
+}
+
 .callout {
   margin-top: var(--space-2);
 
