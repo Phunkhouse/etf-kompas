@@ -961,3 +961,15 @@ Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in h
 - **Not tested:** whether the new line is noticed. The pilot needs a second round with the new hero.
 
 Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: David confirmed the reasons I had drafted from the evidence in the records, without changes (2026-10-13). The reasons are still the agent's wording; the note line says so.
+
+### Closing Phase 3
+
+**Prompt (summary):** David: the copy review was done on the go and there will be one final check before it goes live, "take it as checked"; notes 0047 and 0048 were confirmed. I wrote the closing PR: PHASES.md status and the README's known gaps.
+
+**Produced:** PHASES.md says Phase 3 is done with three caveats (the one-person 5-second test, the copy reviewed on the go, the A/B test not run); the README has a "Known gaps" section.
+
+**Mistakes and corrections**
+
+- **I did not write that the copy was "reviewed" in the plain sense.** David's words were that he changed things while building and will check once more before going live; PHASES.md and the README say exactly that, and the legal text as unreviewed by a lawyer.
+- **I listed a phone menu defect that does not exist.** I "reproduced" it by scrolling the page to 1 200 px and clicking the Menu button with Playwright, and the page ended at 0. But the header is not sticky, so at 1 200 px the button is off screen, and Playwright's click scrolls the element into view first: the jump was the test tool, not the page. A person cannot tap the button there. David noticed none of it; I found it when I started the fix and measured with real mouse clicks at the button's position (scroll 0, 20 and 40 px): the scroll position is kept, before and after closing. I removed the bullet from the README and told David. The lesson: a reproduction must use the input a user has; "the tool did something" is not "the page does something".
+- **`pnpm data:validate` (strict) fails with 56 `TODO_VERIFY` values.** It is the Phase 6 deploy gate and was always meant to fail until the data is complete, but it is a number David should see now: the deploy needs those fields filled or removed.

@@ -29,6 +29,20 @@ Order of running: 2, then 1, then 3, because test 2 needs only copy and test 1 n
 - **What was not chosen.** Assigning the variant ourselves from the click id (`fbclid`) in a small `proxy.ts`. It would give one method for every platform and a split we can verify, but it uses the id before any consent, which nobody has reviewed legally. It stays an option if the platforms' own tools cannot be used.
 - **What would be needed first.** A budget (about 3,200 visitors per variant for 8 % against 10 %, see above), the tracking of Phase 5 with `variant` on every event, and the lead flow of Phase 4.
 
+## Known gaps (end of Phase 3, 2026-10-13)
+
+What is not done or not right yet, so nobody has to find it:
+
+- **Not live.** The e-mail form stores and sends nothing (Phase 4), there is no tracking or cookie consent (Phase 5), and nothing is deployed (Phase 6). The site is `noindex`.
+- **The 5-second test was run with one person**, not the three the spec asks for (note 0052). She understood what the page offers and did not notice that it is free; the line was then made bolder and has not been tested again.
+- **The Czech copy** was reviewed by the author while building, not in a separate pass. One final check is planned before it goes live. The legal text (privacy policy, controller) is placeholder text and has not been seen by a lawyer.
+- **The A/B test is designed, not run** (see above). The way the traffic is split is chosen (Meta's own test) but not set up.
+- **Data.** Prices are complete only for CSPX (five brokers). VUAA and CNDX are priced at DEGIRO only, VUSA and EQQQ at none. The "Česky" (Czech support) column is empty. The deploy gate `pnpm data:validate` fails today with 56 `TODO_VERIFY` values, on purpose. Broker fee records go stale after 45 days.
+- **Two data records rest on soft evidence:** the Fio conversion rate comes from a demo-account screen (note 0047), and the Interactive Brokers conversion fee from a footnote that says "typically" and "at its discretion"; whether an account can hold CZK is not shown.
+- **"Ověřeno k 6. 2026"** in the top bar is the oldest date among all the numbers (the VOO factsheet), not the date of what the page shows most prominently.
+- **Performance** was measured under applied throttling on `/` only; the other pages were measured only in the default, pessimistic mode (note 0042).
+- **The hero lead is hidden on phones** to keep the button above the fold (note 0031), and the component is still named `HeroB` from the time when there were two heroes.
+
 ## Stack
 
 Next.js (App Router, TypeScript strict), SCSS Modules, pnpm, Node 24. Deploy target: Vercel.
