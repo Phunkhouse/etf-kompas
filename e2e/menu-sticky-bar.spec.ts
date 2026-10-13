@@ -22,6 +22,55 @@ test.describe('on a phone (375 x 667)', () => {
     await expect(dialog).toBeHidden()
   })
 
+  test('the logo and the button stay where they are when the menu opens and closes', async ({
+    page,
+  }) => {
+    await page.goto('/')
+    const centre = async (locator: ReturnType<typeof page.locator>) => {
+      const box = await locator.boundingBox()
+      return box && { x: box.x, y: box.y + box.height / 2 }
+    }
+    const logo = page
+      .getByRole('banner')
+      .getByRole('img', { name: 'ETF Kompas' })
+    const menuButton = page.getByRole('button', { name: 'Menu' })
+    const logoBefore = await centre(logo)
+    const buttonBefore = await centre(menuButton)
+
+    await menuButton.click()
+    const dialog = page.getByRole('dialog', { name: 'Menu' })
+    const logoOpen = await centre(
+      dialog.getByRole('img', { name: 'ETF Kompas' }),
+    )
+    const buttonOpen = await centre(
+      dialog.getByRole('button', { name: 'Zavřít' }),
+    )
+    // the logo is on the same line and at the same left edge, the button on the same line
+    expect(Math.abs(logoOpen!.y - logoBefore!.y)).toBeLessThanOrEqual(1.5)
+    expect(Math.abs(logoOpen!.x - logoBefore!.x)).toBeLessThanOrEqual(1.5)
+    expect(Math.abs(buttonOpen!.y - buttonBefore!.y)).toBeLessThanOrEqual(1.5)
+
+    await dialog.getByRole('button', { name: 'Zavřít' }).click()
+    expect(await centre(logo)).toEqual(logoBefore)
+    expect(await centre(menuButton)).toEqual(buttonBefore)
+  })
+
+  test('the source bar above the header is not covered: the panel starts below it', async ({
+    page,
+  }) => {
+    await page.goto('/')
+    const bar = page.getByText(/Čísla ze stránek fondů a brokerů/)
+    const barBox = await bar.boundingBox()
+    await page.getByRole('button', { name: 'Menu' }).click()
+    const dialog = page.getByRole('dialog', { name: 'Menu' })
+    await expect(dialog).toBeVisible()
+    const panel = await dialog.boundingBox()
+    // the bar did not move, and the panel begins at or below the bottom of the bar
+    expect(await bar.boundingBox()).toEqual(barBox)
+    expect(panel!.y).toBeGreaterThanOrEqual(barBox!.y + barBox!.height - 8)
+    expect(panel!.y).toBeGreaterThan(0)
+  })
+
   test('the page behind does not scroll while the menu is open', async ({
     page,
   }) => {

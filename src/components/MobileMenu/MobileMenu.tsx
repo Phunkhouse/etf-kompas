@@ -16,7 +16,14 @@ export function MobileMenu() {
   const id = useId()
 
   const show = () => {
-    dialog.current?.showModal()
+    const panel = dialog.current
+    if (!panel) return
+    // The panel starts where the header starts, so the bar above it stays visible
+    // and the logo and the button do not move when it opens.
+    const header = panel.closest('header')
+    const top = Math.max(0, header?.getBoundingClientRect().top ?? 0)
+    panel.style.setProperty('--menu-top', `${top}px`)
+    panel.showModal()
     setOpen(true)
   }
   // close() fires the "close" event, which sets the state (so Esc works too)
@@ -42,12 +49,14 @@ export function MobileMenu() {
         className={styles.panel}
         onClose={() => setOpen(false)}
       >
+        {/* The close button comes first, so the browser focuses it, not the logo.
+            The row is reversed in CSS: the logo stays on the left. */}
         <div className={styles.top}>
-          <Wordmark href="/" />
           <button type="button" className={styles.button} onClick={hide}>
             <span className={styles.cross} aria-hidden="true" />
             {menuCopy.close}
           </button>
+          <Wordmark href="/" />
         </div>
         <nav aria-label={menuCopy.pagesLabel} className={styles.pages}>
           {menuCopy.pages.map((page) => (

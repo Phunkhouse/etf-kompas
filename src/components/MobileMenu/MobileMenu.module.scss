@@ -59,9 +59,11 @@
 
 // The panel fills the screen. A closed <dialog> is not displayed by the browser.
 .panel {
+  // starts at the header (set when it opens), so the source bar stays visible
+  inset: var(--menu-top, 0px) 0 0;
   width: 100%;
   max-width: none;
-  height: 100%;
+  height: auto;
   max-height: none;
   margin: 0;
   padding: 0;
@@ -77,6 +79,7 @@
 
 .top {
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
   justify-content: space-between;
   min-height: var(--touch-target);
