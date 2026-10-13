@@ -17,6 +17,13 @@ Short version of [SPEC.md](SPEC.md) §14, §20 and §22. If this file and the sp
 | 5   | Tracking and consent   | Wed 14.10. | GA4 and Meta dataset, real-phone test events  |
 | 6   | Deploy and polish      | Wed to Thu | Open the live link inside Instagram/Messenger |
 
+## Status on 2026-10-13 (evening)
+
+- **Done:** phases 0, 1, 1b and 2.
+- **Phase 3 (page): built, two steps left for David.** All sections of SPEC §7 are in, with the calculator, the hero variants (note 0041), the form, the menu, the footer and the privacy and 404 pages. The e-mail form has no storage yet: it says so on the page (Phase 4). Checked: hero fit at 375x667, Lighthouse (performance 96-97, accessibility 100, CLS 0, applied LCP about 0.8 s), JS budget (146.7 KB of 150 KB), `copy:check`, the design review against the drawings (rev. 6). **Open:** the 5-second test with three non-investors, and the Czech copy review.
+- **Phases 4, 5 and 6: not started.** Phase 4 needs David's Supabase (EU), Resend and test-domain accounts.
+- **Data still open:** IBKR (everything), the "Česky" column for every broker, prices of VUAA, VUSA, CNDX and EQQQ at all brokers except DEGIRO for VUAA and CNDX. Fee records go stale after 45 days (the EQQQ KIID on 24 Oct).
+
 ## Phase 0: Scaffold (done)
 
 - Next.js, TypeScript strict, SCSS Modules, pnpm, Node 24
@@ -49,7 +56,7 @@ Short version of [SPEC.md](SPEC.md) §14, §20 and §22. If this file and the sp
 
 ## Phase 3: Page
 
-- Sections per SPEC §7, layout from wireframe B revision 4 (`docs/design/`), copy from §25
+- Sections per SPEC §7, layout from wireframe B revision 6 (`docs/design/`), copy from §25
 - Calculator in the fund-fee-only state until a broker is priced; saving box only with two priced brokers
 - Hero fits 375x667 including the primary CTA, no scrolling (geometry test, note 0031)
 - Lighthouse mobile: performance >= 90, accessibility >= 95, LCP < 2.0 s, CLS < 0.05, route JS: our code adds <= 20 KB over an empty page and the route is <= 150 KB gzipped

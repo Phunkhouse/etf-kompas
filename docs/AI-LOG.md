@@ -843,3 +843,16 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 **Mistakes and corrections**
 
 - None found in the change itself. Not checked: how the red amount reads in an actual ad, and whether the red suggests a warning more than David intends (I said it fits "zbytečně zaplatit", but that is my reading, not a test).
+
+### Docs sync: SPEC, METHODOLOGY-V2 and PHASES (D3)
+
+**Prompt (summary):** David: "start D3" (the plan he approved: sync SPEC §7, §20 and §22 and PHASES.md with what was built and decided, and list the decision notes that are still missing).
+
+**Produced:** SPEC status line (draft v4, rev. 6, notes up to 0043); §3.1 cost sentence ("může u ověřených brokerů stát i", note 0037); §7 (rev. 6, "brokerů" in the top bar, "Poplatek*", row title rule of note 0043, no second link under the button); §20 and §22 (rev. 4 references); §25 (glossary "cizí měnu", the table-row rule of note 0043, the two headlines of note 0041); METHODOLOGY-V2 (headline wording, row label "převod korun na cizí měnu"); PHASES.md (a status block and the wireframe revision). Only things that were already built or decided; no new decision.
+
+**Mistakes and corrections**
+
+- **My first scripted edit stopped half way** (one text anchor did not match: the spec says "A dark top bar", I had written "a dark"). The first three replacements were already written; I looked at the diff before running the rest and did not re-run the first ones. The usual lesson, again: scripts that edit by matching text should report what they changed.
+- **Not changed, on purpose:** the spec's schedule (§20). The Tuesday target of the lead flow was missed (it needs David's accounts); moving Phases 4 to 6 is a plan change for David to decide, so PHASES.md only states the status.
+- **Left as they are:** the "original starting set" of microcopy in §25 (old CTA, old table columns), which is marked as original and is not the source any more.
+- **Decision notes still missing** are listed in the PR description and in the chat, because each needs David's reason.

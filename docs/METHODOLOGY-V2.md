@@ -177,7 +177,7 @@ Then, for each column (`B` is the column letter in the formulas):
 5. **Exchange rates:** the Czech National Bank rate on a stated date, a sourced record.
 6. The saving box is **hidden when the spread is 0 Kč**; **one order a month** (a free first order is entered as `fixed = 0`).
 7. **No priced broker:** the calculator shows only the fund-fee part ("roční poplatek fondu") with the rest as `[ověřit]` and no total. DEGIRO is priced first, because its schedule is on file.
-8. **Headline wording** for now: "u ověřených brokerů vás to bude stát nejvýš X XXX Kč" (a copy change to the wireframe, for the copy review).
-9. **Which listing is priced.** A broker may sell a fund in several listings (DEGIRO sells CSPX on the London Stock Exchange in dollars and on Euronext Amsterdam in euros; in euros the conversion from korunas is free, and the purchase fee is the same €2 plus €1 handling). The calculator prices the **cheapest listing the broker offers**, says so on the "Jak počítáme" page, and the row label follows the listing ("převod korun na eura" or "na dolary"). Pricing only the dollar listing would overstate DEGIRO's cost.
+8. **Headline wording** for now: "Za 10 let vás fond (CSPX) může u ověřených brokerů stát i X XXX Kč" (decided 2026-10-13, note 0037; the amount is still the highest verified cost).
+9. **Which listing is priced.** A broker may sell a fund in several listings (DEGIRO sells CSPX on the London Stock Exchange in dollars and on Euronext Amsterdam in euros; in euros the conversion from korunas is free, and the purchase fee is the same €2 plus €1 handling). The calculator prices the **cheapest listing the broker offers**, says so on the "Jak počítáme" page, and the row label is "převod korun na cizí měnu", because the listing (euro or dollar) differs from broker to broker. Pricing only the dollar listing would overstate DEGIRO's cost.
 
 **Still open:** nothing in this section.

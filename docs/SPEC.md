@@ -1,6 +1,6 @@
 # SPEC: ETF landing page for Czech mobile traffic (Clientelo test project)
 
-Status: draft v3, 2026-10-12 (synced with wireframe rev. 4 and the decision notes up to 0039; audience v2 and plain-language rules merged). Audience of this document: the developer (reviewer) and the Claude Code agents doing the implementation.
+Status: draft v4, 2026-10-13 (synced with wireframe rev. 6 and the decision notes up to 0043; audience v2 and plain-language rules merged). Audience of this document: the developer (reviewer) and the Claude Code agents doing the implementation.
 
 ---
 
@@ -58,7 +58,7 @@ Segmenting data captured on page (not in the form): the calculator's amount and 
 
 Everything below is visible with no email:
 1. **Calculator:** monthly amount and horizon (default 10 years). The fund is the European twin of the S&P 500 that the visitor can buy (CSPX); there is no fund selector on the landing page (the comparison page has a fund picker).
-2. **Headline result** in Kč over the horizon, split into fund fee, conversion of korunas and broker fees (purchase commission and custody). Because brokers differ, the headline is the cost at the verified broker with the **highest** cost, worded as "u ověřených brokerů ... nejvýš X" (note 0037). The green saving box "až X" is the spread between brokers and appears only when at least two brokers have verified prices. The page never says "nejlevnější" (wireframe rule 1).
+2. **Headline result** in Kč over the horizon, split into fund fee, conversion of korunas and broker fees (purchase commission and custody). Because brokers differ, the headline is the cost at the verified broker with the **highest** cost, worded as "může u ověřených brokerů stát i X" (note 0037, updated 2026-10-13). The green saving box "až X" is the spread between brokers and appears only when at least two brokers have verified prices. The page never says "nejlevnější" (wireframe rule 1).
 3. **Hero table** of four European twins: name, annual fee and type (Acc or Dist). Unverified facts carry the amber `[ověřit]`; one muted line says where the first twin is sold and that the US originals VOO and QQQ cannot be bought at most brokers. **No past-performance figures anywhere**, in the ungated part, in ads or in the comparison (decided 2026-10-12, note 0039). This keeps the public surface cost-focused and reduces regulatory exposure.
 
 ### 3.2 What the email buys (the gated part): "ETF Kompas 2026"
@@ -145,10 +145,10 @@ Compliance for both: no guaranteed return, no "get rich" language, risk statemen
 
 ## 7. Page structure (mobile-first, and why)
 
-The layout is fixed by **wireframe B at revision 4** (`docs/design/`: the Wireframe Board and the Design Study, with the text spec `wireframe-b.md`). The order below is fixed; the exact composition follows the wireframe.
+The layout is fixed by **wireframe B at revision 6** (`docs/design/`: the Wireframe Board and the Design Study, with the text spec `wireframe-b.md`). The order below is fixed; the exact composition follows the wireframe.
 
-1. **Top bar and header.** A dark top bar ("Čísla ze stránek fondů a firem · ověřeno k {date}", with the date generated from the data) and a header with the wordmark, three anchors (Jak počítáme, Odkud máme čísla, Časté dotazy) and the small button; on a phone a hamburger menu instead.
-2. **Hero (above the fold, 375x667 must show the whole hero including the primary button):** headline matching the ad, one line under it (the phone layout may hide it, note 0031), the four-twin table (Co koupíte, Roční poplatek, Typ), the primary button to the calculator, and the callout with the one-line explanation of "ETF" (the only use of the word in body copy). No logo carousel, no stock photo.
+1. **Top bar and header.** A dark top bar ("Čísla ze stránek fondů a brokerů · ověřeno k {date}", with the date generated from the data: the oldest `asOf` among the numbers shown) and a header with the wordmark, three anchors (Jak počítáme, Odkud máme čísla, Časté dotazy) and the small button; on a phone a hamburger menu instead.
+2. **Hero (above the fold, 375x667 must show the whole hero including the primary button):** headline matching the ad, one line under it (the phone layout may hide it, note 0031), the four-twin table (Co koupíte, Poplatek*, Typ; a row is titled by the index and describes the fund under it, note 0043; a footnote explains the asterisk), the primary button to the calculator (no second link under it), and the callout with the one-line explanation of "ETF" (the only use of the word in body copy). No logo carousel, no stock photo.
 3. **Calculator and live result** (dark band directly under the hero), the interactive proof, personalised in Kč, with the saving box when the hide rule allows it.
 4. **E-mail form** directly under the result (the ask, section 3.3).
 5. **"Za co platíte, aniž to vidíte":** three numbered cards (fund fee, conversion of korunas, tax on profits), one plain sentence each.
@@ -157,7 +157,7 @@ The layout is fixed by **wireframe B at revision 4** (`docs/design/`: the Wirefr
 8. **Short FAQ (4 items):** Můžu si americký fond koupit z Česka? · Je to zdarma? · Co uděláte s mým e-mailem? · Radíte mi, co koupit?
 9. **Footer:** risk and not-advice text, controller, four links (Jak počítáme, Zásady zpracování, Cookies, Kontakt) and the test-project notice (§17.15).
 
-A sticky bottom button bar appears after the first scroll on a phone and jumps to the form. Every other page and state (menu, cookies, privacy, 404, unsubscribe, double opt-in, form errors, comparison page, PDF, favicon, share image) is drawn in rev. 4 and listed in `docs/design/wireframe-b.md`.
+A sticky bottom button bar appears after the first scroll on a phone and jumps to the form. Every other page and state (menu, cookies, privacy, 404, unsubscribe, double opt-in, form errors, comparison page, PDF, favicon, share image) is drawn in rev. 6 and listed in `docs/design/wireframe-b.md`.
 
 Rationale in one sentence: the hero table already proves there is something worth knowing before any interaction, the calculator turns it into the visitor's own number, and the ask sits at the point of maximum curiosity; everything after it exists only to catch visitors who did not convert immediately (proof, preview, objections).
 
@@ -442,7 +442,7 @@ Re-planned on 2026-10-12 (Monday). Hard deadline: Fri 2026-10-16. Target for the
 |---|---|---|
 | Sat 10.10. to Sun 11.10. (done) | scaffold, CI, data validator, design foundation, calculator v1, shell, hero variants, `copy:check`, first sourced data | verified data, `/styleguide` review |
 | Mon 12.10. | calculator v2 (broker fees, DEGIRO priced, daily rate), spec sync | verify the data batches in `docs/DATA-NEEDS.md`; create Supabase (EU), Resend and the test domain |
-| Tue 13.10. (target) | hero rev. 4, calculator UI, page sections, form, lead flow and results page | review Czech copy; 5-second test |
+| Tue 13.10. (target) | hero rev. 6, calculator UI, page sections, form, lead flow and results page | review Czech copy; 5-second test |
 | Wed 14.10. | consent and tracking, comparison page and PDF, menu, 404, opt-in and unsubscribe pages, deploy | GA4 and Meta dataset; network tab and test events on a real phone |
 | Thu 15.10. | in-app browser test, README, polish | open the deployed link inside Instagram/Messenger |
 | Fri 16.10. | buffer and submission | final review |
@@ -528,13 +528,13 @@ A phase is done only when every line is true. **Every phase also ends with at le
 - Playwright asserts **zero** non-essential third-party requests before consent.
 - After consent the event sequence `page_view, calc_start, calc_result, gate_view, form_focus, lead` is observed in order; `lead` appears **exactly once** per submission with a stable `event_id` shared by browser and server-side calls.
 - UTM, `fbclid`, variant and `in_app_browser` are stored with the session and the lead.
-- The cookie bar and settings follow rev. 4 ("Přijmout vše" and "Odmítnout vše" equally prominent; measurement and advertising off until agreed).
+- The cookie bar and settings follow the wireframes ("Přijmout vše" and "Odmítnout vše" equally prominent; measurement and advertising off until agreed).
 - First-party events are written even when consent for third parties is denied (aggregate, cookieless, no PII), subject to legal sign-off.
 
 **Phase 6: deploy and polish**
 - Deployed on Vercel with a `noindex` header verified by `curl -I`.
 - Manual in-app-browser checklist (§23) completed and recorded in a decision note in `docs/decisions/`.
-- 404 page, privacy policy page, favicon and share image as drawn in rev. 4.
+- 404 page, privacy policy page, favicon and share image as drawn in the wireframes.
 - README complete per §16, all known gaps listed.
 
 ---
@@ -555,7 +555,7 @@ Most ad clicks open in a webview where downloads, storage and some inputs behave
 
 ## 24. Design source of truth, tokens and design system
 
-**Wireframe B at revision 4** (layout direction chosen by David: typography, contrast, layout) is the source of truth for every screen and state. It is stored in `docs/design/`: the exported images (`images/`, one per screen and state), the text spec `wireframe-b.md`, the design guide `DESIGN-GUIDE.md` and the Wireframe Board and Design Study sources in `wireframes/` (note 0035). Agents read the text more reliably than the images, and the reviewer gets measurable criteria. If the text spec and the Design Study disagree, the Design Study wins and the text spec is fixed.
+**Wireframe B at revision 6** (layout direction chosen by David: typography, contrast, layout) is the source of truth for every screen and state. It is stored in `docs/design/`: the exported images (`images/`, one per screen and state), the text spec `wireframe-b.md`, the design guide `DESIGN-GUIDE.md` and the Wireframe Board and Design Study sources in `wireframes/` (note 0035). Agents read the text more reliably than the images, and the reviewer gets measurable criteria. If the text spec and the Design Study disagree, the Design Study wins and the text spec is fixed.
 
 **Order of work (Phase 1b, before the page):** tokens, then primitives, then `/styleguide`, then David's design review, then the page. The wireframe is annotated with token names once they exist.
 
@@ -596,7 +596,7 @@ Most ad clicks open in a webview where downloads, storage and some inputs behave
 | UCITS, domicil, fond sídlí v Irsku | evropská verze, fond sídlí v Evropě |
 | S&P 500 | 500 největších amerických firem |
 | Nasdaq 100 | 100 největších technologických firem |
-| kurzový rozdíl, FX poplatek | převod korun na dolary |
+| kurzový rozdíl, FX poplatek | převod korun na cizí měnu |
 | srážková daň z dividend | daň, kterou stáhne USA / daň ze zisků |
 | ilustrativní předpoklad | příklad, ne slib |
 | Metodika | Jak počítáme |
@@ -604,11 +604,11 @@ Most ad clicks open in a webview where downloads, storage and some inputs behave
 | ETF Kompas (deliverable in body copy) | srovnání 5 fondů |
 | gate, odemknout | not used in public text |
 
-**"broker" is allowed** (decided 2026-10-12, note 0039): rev. 4 uses it throughout, and the audience meets the word on the broker apps. "S&P 500" and "Nasdaq 100" are allowed in the hero lead and in table rows with a plain name (note 0026); elsewhere the plain description comes first.
+**"broker" is allowed** (decided 2026-10-12, note 0039): rev. 4 uses it throughout, and the audience meets the word on the broker apps. "S&P 500" and "Nasdaq 100" are allowed in the hero lead and in table rows with a `plainName` (note 0026). In the hero table the row title is the index and the detail line gives the manager, ticker and a plain description ("500 největších firem"; note 0043, decided 2026-10-13: better readability, the description keeps more information); elsewhere the plain description comes first.
 
 **Enforcement (`pnpm copy:check`, part of `pnpm check`):** `scripts/check-copy.ts` loads `src/content/copy.ts` and fails if (a) any "Do not use" term appears (word-boundary match; TER and UCITS case-sensitive), (b) "ETF" appears more than once across the landing-page copy, (c) a headline string contains an abbreviation (two or more capital letters), or (d) a ticker appears outside a table row that has `plainName`. Legal pages (privacy policy, cookie text) are exempt. A unit test covers the checker itself.
 
-**Headlines:** the hero headline of rev. 4 is "Americké indexy z Česka: u koho je koupíte a za kolik?" (hero b) and the ad headline for hero a is in `wireframe-b.md`. The app copy follows the wireframe copy (note 0017) within the rules above; the older headline bank (for example "Kolik vás fond doopravdy stojí?") is no longer the source.
+**Headlines:** the landing page has one layout and two h1 (note 0041). Variant a: "Americké indexy z Česka: u koho je koupíte a za kolik?". Variant b, served only when two or more brokers are priced: "U stejného fondu můžete zbytečně zaplatit až X Kč. Kde?", the amount in the cost red. The ad headlines are in `wireframe-b.md`. The app copy follows the wireframe copy (note 0017) within the rules above; the older headline bank (for example "Kolik vás fond doopravdy stojí?") is no longer the source.
 
 **Microcopy (the current strings are in `src/content/copy.ts`; the wireframe copy in `wireframe-b.md` is the working draft; this is the original starting set)**
 - Primary CTA: "Spočítat moje poplatky" · Gate button: "Poslat mi srovnání"
