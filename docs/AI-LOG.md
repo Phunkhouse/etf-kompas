@@ -856,3 +856,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Not changed, on purpose:** the spec's schedule (§20). The Tuesday target of the lead flow was missed (it needs David's accounts); moving Phases 4 to 6 is a plan change for David to decide, so PHASES.md only states the status.
 - **Left as they are:** the "original starting set" of microcopy in §25 (old CTA, old table columns), which is marked as original and is not the source any more.
 - **Decision notes still missing** are listed in the PR description and in the chat, because each needs David's reason.
+
+### Decision notes 0044 to 0050
+
+**Prompt (summary):** David answered my list of missing notes with a reason for six of them and "draft a reason" for two (Fio data, Trading 212 and XTB data); for the A/B assignment question he wrote "not sure what you are asking".
+
+**Produced:** notes 0044 (design review), 0045 (red amount), 0046 ("cizí měnu"), 0049 (native dialog and details) and 0050 (sticky bar) with David's reasons in his words. Notes 0047 (Fio) and 0048 (Trading 212 and XTB) have status `proposed` and say in a line at the top that the reason is drafted by the agent from the evidence in the records, for David to confirm. No note on the A/B assignment yet.
+
+**Mistakes and corrections**
+
+- **My list said the sticky bar "appears after the first scroll", copying SPEC §7.** The component shows it when the hero button is out of view and hides it again while the form is in view; I read `StickyBar.tsx` before writing note 0050 and corrected the title and text. David's reason stands as he gave it.
+- **The staleness date I first wrote for Trading 212 was a day off** (28 November instead of 27 November): 45 days from 13 October. Recomputed.
+- **Not invented, but close:** the "alternatives considered" of 0047 and 0048. 0047 says the agent rejected estimating the commission (that is what happened); 0048 says "Not recorded". Both reasons are labelled as agent-drafted.
