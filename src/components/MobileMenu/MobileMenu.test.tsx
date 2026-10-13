@@ -112,6 +112,34 @@ describe('MobileMenu: the panel', () => {
   })
 })
 
+describe('MobileMenu: on another page (base "/")', () => {
+  it('points the page links and the main button at the landing page, and leaves the legal links as they are', async () => {
+    render(<MobileMenu base="/" />)
+    const dialog = await openMenu()
+    const pages = within(
+      within(dialog).getByRole('navigation', { name: 'Stránky' }),
+    ).getAllByRole('link')
+    expect(pages.map((l) => l.getAttribute('href'))).toEqual([
+      '/#jak-pocitame',
+      '/#odkud-mame-cisla',
+      '/#caste-dotazy',
+    ])
+    expect(
+      within(dialog)
+        .getByRole('link', { name: 'Poslat mi srovnání' })
+        .getAttribute('href'),
+    ).toBe('/#formular')
+    const legal = within(
+      within(dialog).getByRole('navigation', { name: 'Právní' }),
+    ).getAllByRole('link')
+    expect(legal.map((l) => l.getAttribute('href'))).toEqual([
+      '/zasady',
+      '/zasady#cookies',
+      '/zasady#kdo-zpracovava',
+    ])
+  })
+})
+
 describe('MobileMenu: closing', () => {
   it('closes with the "Zavřít" button', async () => {
     render(<MobileMenu />)

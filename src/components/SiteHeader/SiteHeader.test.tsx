@@ -17,6 +17,19 @@ describe('SiteHeader', () => {
     expect(nav.querySelectorAll('a')).toHaveLength(3)
   })
 
+  it('points its links at the landing page when it is not on it (base "/")', () => {
+    render(<SiteHeader base="/" />)
+    const nav = screen.getByRole('navigation', { name: 'Hlavní nabídka' })
+    expect(
+      [...nav.querySelectorAll('a')].map((a) => a.getAttribute('href')),
+    ).toEqual(['/#jak-pocitame', '/#odkud-mame-cisla', '/#caste-dotazy'])
+    expect(
+      screen
+        .getByRole('link', { name: /Poslat mi srovnání/ })
+        .getAttribute('href'),
+    ).toBe('/#formular')
+  })
+
   it('has the "Menu" button for phones', () => {
     render(<SiteHeader />)
     expect(screen.getByRole('button', { name: 'Menu' })).toBeTruthy()

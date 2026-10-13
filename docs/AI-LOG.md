@@ -691,3 +691,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **My test depended on timing and I did not see it, because it never failed locally.** I ran it once or twice on a fast machine, then wrote it down as passing. For a test that changes the DOM, a run under slowed scripts should have been part of writing it.
 - Not found by `--repeat-each` on my machine (40 passes); only the slowed-scripts reproduction showed it.
 - Other tests act right after loading a page, but they use Playwright's own waits, or they work without JavaScript, so they do not rely on hydration having finished.
+
+### The footer links, the privacy page and the 404 (C2b)
+
+**Prompt (summary):** David's five yes answers to the C2 plan, then "approved, implement C2b".
+
+**Produced:** four footer links (Jak počítáme, Zásady zpracování, Cookies, Kontakt), the privacy page `/zasady` (the wireframe's own seven sections with seven `[doplnit]` markers, a contents list, noindex), a real 404 page, the form's legal line now linking to the policy, and a `base` prop on the header and the menu so they work on pages other than the landing page. Tests first: 18 failed before; 484 unit/component and 104 e2e pass after, including that the pages set no cookies at all.
+
+**Mistakes and corrections**
+
+- **My edit helper emptied `copy.ts`.** It opened the file for writing before computing the new text, so when one of my anchors did not match (the form's legal line had a different shape after the split), the file was left with 0 bytes. I restored it from git and fixed the helper to compute first. No work was lost because the file was committed.
+- **The 404 page broke the JavaScript budget twice.** (1) I used `next/link` in it, and because the root 404 page ships inside every route, the whole site grew by about 11 KB (146.7 to 158.4 KB); a plain link fixes it. (2) The budget test measured "an empty page" using Next's own 404, which is no longer empty now that our 404 has the header and menu; it reported "ours 0.0 KB". The test now uses a fixed empty-page size of 132.5 KB (measured on 2026-10-11 with Next 16.4), to be measured again at the next Next upgrade. This changed an approved test.
+- **Left as drawn, flagged for David:** section 7 of the policy says the cookie settings are reachable through the footer link, but until Phase 5 that link leads to the same section. The privacy text has not been reviewed by a qualified person (decision B7, note 0039). Today the pages set no cookies, which the policy relies on; a test checks it and will fail on purpose when Phase 5 adds consent.

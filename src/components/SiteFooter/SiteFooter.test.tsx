@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { SiteFooter } from './SiteFooter'
 
@@ -14,11 +14,22 @@ describe('SiteFooter', () => {
     expect(screen.getByText(/Správce: \[SPRÁVCE\]/)).toBeTruthy()
   })
 
-  it('names the two policies but does not link them yet', () => {
+  it('has four links, in this order, to the method, the policy, the cookies and the contact', () => {
     render(<SiteFooter />)
-    expect(screen.getByText('Zásady zpracování')).toBeTruthy()
-    expect(screen.getByText('Cookies')).toBeTruthy()
-    expect(screen.queryAllByRole('link')).toHaveLength(0)
+    const nav = screen.getByRole('navigation', { name: 'Patička' })
+    const links = within(nav).getAllByRole('link')
+    expect(links.map((l) => l.textContent)).toEqual([
+      'Jak počítáme',
+      'Zásady zpracování',
+      'Cookies',
+      'Kontakt',
+    ])
+    expect(links.map((l) => l.getAttribute('href'))).toEqual([
+      '/#jak-pocitame',
+      '/zasady',
+      '/zasady#cookies',
+      '/zasady#kdo-zpracovava',
+    ])
   })
 
   it('carries the test-project notice', () => {

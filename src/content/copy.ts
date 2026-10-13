@@ -19,8 +19,11 @@ export const shellCopy = {
   footer: {
     risk: 'Investování nese riziko ztráty. Minulé výnosy nezaručují budoucí. Obsah je obecná informace, ne investiční ani daňové poradenství.',
     controller: (controller: string) => `Správce: ${controller}`,
+    navLabel: 'Patička',
+    method: 'Jak počítáme',
     privacy: 'Zásady zpracování',
     cookies: 'Cookies',
+    contact: 'Kontakt',
     // Draft for David's copy review (SPEC §17.15).
     testNotice:
       'Zkušební projekt vytvořený jako ukázka. Není to nabídka investiční služby.',
@@ -206,8 +209,10 @@ export const leadFormCopy = {
     strong: 'Odeslání se nepovedlo.',
     text: ' Zkuste to prosím znovu za chvíli. Váš e-mail i nastavení kalkulačky zůstaly vyplněné.',
   },
-  legal: (controller: string) =>
-    `Pošleme vám srovnání. Správce: ${controller}. Zásady zpracování osobních údajů.`,
+  // The last words are a link to the privacy page.
+  legalBefore: (controller: string) =>
+    `Pošleme vám srovnání. Správce: ${controller}. `,
+  legalLink: 'Zásady zpracování osobních údajů',
   tips: 'Chci občas dostat tip k investování (nepovinné)',
   // Before Phase 4 nothing is stored or sent, and the page says so.
   notice: 'Zkušební provoz: váš e-mail jsme nikam neuložili ani neodeslali.',
@@ -248,6 +253,66 @@ export const calculatorCopy = {
   },
 }
 
+// The privacy policy page (wireframe B, "Menu, cookies, legal, errors"). It is the
+// wireframe's own text with "[doplnit]" where the text is not decided yet; it has
+// not been reviewed by a qualified person (SPEC §19, note 0039). The `legal` key
+// is exempt from the copy checker.
+export const legalCopy = {
+  privacy: {
+    label: 'Právní',
+    title: 'Zásady zpracování osobních údajů',
+    validFrom: 'Platí od',
+    contents: 'Obsah',
+    sections: [
+      {
+        id: 'kdo-zpracovava',
+        title: 'Kdo údaje zpracovává',
+        text: (controller: string) =>
+          `Správcem je ${controller}. Napsat nám můžete na [doplnit].`,
+      },
+      {
+        id: 'jake-udaje',
+        title: 'Jaké údaje zpracováváme',
+        text: 'Váš e-mail, nastavení kalkulačky (měsíční částka a počet let) a technické údaje o návštěvě, ty jen když povolíte cookies.',
+      },
+      {
+        id: 'proc-a-zaklad',
+        title: 'Proč a na jakém základě',
+        text: 'Zaslání srovnání, o které jste požádali (e-mail, nastavení). Nepovinné tipy k investování jen s vaším souhlasem. Měření a reklama jen s vaším souhlasem. Právní základ u každého účelu: [doplnit].',
+      },
+      {
+        id: 'jak-dlouho',
+        title: 'Jak dlouho',
+        text: 'E-mail uchováváme do odhlášení, nejdéle [doplnit] měsíců. Souhlas můžete kdykoli odvolat, odkaz je v každém e-mailu.',
+      },
+      {
+        id: 'komu-predavame',
+        title: 'Komu údaje předáváme',
+        text: 'Zpracovatelům, které potřebujeme: služba pro rozesílání e-mailů [doplnit], hosting [doplnit], měření návštěvnosti [doplnit]. Každý z nich má smlouvu o zpracování.',
+      },
+      {
+        id: 'vase-prava',
+        title: 'Vaše práva',
+        text: 'Můžete požádat o přístup k údajům, opravu, výmaz, omezení zpracování a vznést námitku. Máte právo podat stížnost u Úřadu pro ochranu osobních údajů.',
+      },
+      {
+        id: 'cookies',
+        title: 'Cookies',
+        text: 'Přehled, co a proč používáme, a nastavení najdete přes odkaz Cookies v patičce.',
+      },
+    ],
+  },
+}
+
+// The 404 page (wireframe B, "404").
+export const notFoundCopy = {
+  label: '404',
+  title: 'Tuhle stránku jsme nenašli',
+  text: 'Odkaz je možná starý nebo v něm je překlep. Cenu fondů a kalkulačku najdete na úvodní stránce.',
+  back: 'Zpět na úvod',
+  method: 'Jak počítáme',
+}
+
 // The phone menu (wireframe B, "Menu, cookies, legal, errors"). Its own section
 // because the menu is a client component: it takes only these strings.
 export const menuCopy = {
@@ -286,6 +351,8 @@ export const copy = {
   emailPreview: emailPreviewCopy,
   leadForm: leadFormCopy,
   calculator: calculatorCopy,
+  legal: legalCopy,
+  notFound: notFoundCopy,
   menu: menuCopy,
   stickyBar: stickyBarCopy,
 }

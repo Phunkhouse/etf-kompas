@@ -70,7 +70,10 @@ export function LeadForm({ action, initialState }: LeadFormProps) {
           error={state.status === 'invalid' ? nbsp(text.invalid) : undefined}
         />
         <SubmitButton retry={state.status === 'error'} />
-        <p className={styles.legal}>{nbsp(text.legal(site.controller.name))}</p>
+        <p className={styles.legal}>
+          {nbsp(text.legalBefore(site.controller.name))}
+          <a href="/zasady">{nbsp(text.legalLink)}</a>.
+        </p>
         <label className={styles.tips}>
           <input type="checkbox" name="tips" className={styles.checkbox} />
           <span>{nbsp(text.tips)}</span>

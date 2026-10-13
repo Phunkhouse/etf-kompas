@@ -1,0 +1,110 @@
+@use 'styles/utilities' as *;
+
+.page {
+  display: grid;
+  gap: var(--space-8);
+  padding-block: var(--space-8) var(--space-14);
+
+  @include from('md') {
+    grid-template-columns: 16rem 1fr;
+    gap: var(--space-14);
+    padding-block: var(--space-12) var(--space-16);
+  }
+}
+
+// A card on a phone, a list at the left on wide screens.
+.contents {
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+
+  @include from('md') {
+    align-self: start;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: item;
+
+  li {
+    counter-increment: item;
+    border-bottom: var(--border-width) solid var(--color-border);
+  }
+
+  a {
+    display: block;
+    padding: var(--space-3) 0;
+    color: var(--color-ink);
+    text-decoration: none;
+
+    &::before {
+      content: counter(item) ' \00b7  ';
+    }
+  }
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 46rem;
+  counter-reset: part;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+
+  @include from('md') {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+.valid {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.section {
+  counter-increment: part;
+  scroll-margin-top: var(--space-6);
+}
+
+.heading {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+
+  &::before {
+    content: counter(part) ' \00b7  ';
+  }
+}
+
+.text {
+  margin: 0;
+  color: var(--color-ink-soft);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-base);
+}
+
+// A gap in the text: amber, like the "[ověřit]" pill.
+.gap {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-pill-ver-bg);
+  color: var(--color-pill-ver-ink);
+  font-size: var(--font-size-base);
+}

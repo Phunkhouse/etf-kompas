@@ -10,7 +10,7 @@ import styles from './MobileMenu.module.scss'
 // The phone menu: a "Menu" button and a full-height panel. The panel is the
 // browser's own modal <dialog>, which traps focus, closes on Esc and makes the
 // page behind inert; the JavaScript only opens and closes it.
-export function MobileMenu() {
+export function MobileMenu({ base = '' }: { base?: string }) {
   const dialog = useRef<HTMLDialogElement>(null)
   const [open, setOpen] = useState(false)
   const id = useId()
@@ -60,7 +60,7 @@ export function MobileMenu() {
         </div>
         <nav aria-label={menuCopy.pagesLabel} className={styles.pages}>
           {menuCopy.pages.map((page) => (
-            <a key={page.href} href={page.href} onClick={hide}>
+            <a key={page.href} href={`${base}${page.href}`} onClick={hide}>
               {nbsp(page.label)}
             </a>
           ))}
@@ -73,7 +73,11 @@ export function MobileMenu() {
           ))}
         </nav>
         <div className={styles.cta}>
-          <ButtonLink href={menuCopy.cta.href} fullWidth onClick={hide}>
+          <ButtonLink
+            href={`${base}${menuCopy.cta.href}`}
+            fullWidth
+            onClick={hide}
+          >
             {nbsp(menuCopy.cta.label)}
           </ButtonLink>
         </div>
