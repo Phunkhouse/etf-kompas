@@ -891,3 +891,5 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **The mockup used 13 px, which is not a type token.** The project allows only tokens, so the built line is 14 px (`--font-size-sm`), one pixel larger than the version David approved visually; the e2e test was changed from 13 to 14 px before the implementation and the boards say 14 px. Said in the PR text.
 - **The first mockup crop cut off the line** in option A (my crop ended at the artboard's sticky bar); I rendered it again with a taller viewport before sending, but the first image I looked at was wrong and I should have checked the crop before sending the first time.
 - **Not tested:** whether the line helps the 5-second test; that is the point of the test.
+
+Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in his words ("more converting"); the one-sentence reason is thin, so the note says that conversion is a hope, not a measurement, and flags the "bez registrace" against "an e-mail is needed" wording for the copy review.
