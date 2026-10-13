@@ -234,7 +234,7 @@ export const calculatorCopy = {
   years: (years: number) => `${years} let`,
   // The dearest of the brokers with verified prices (note 0037).
   total: (years: number, ticker: string, amount: string) =>
-    `Za ${years} let vás koupitelný fond (${ticker}) u ověřených brokerů bude stát nejvýš ${amount}. Z toho jde na:`,
+    `Za ${years} let vás fond (${ticker}) může u ověřených brokerů stát i ${amount}. Z toho jde na:`,
   // Only the fund fee is known while no broker has verified prices.
   fundOnly: (years: number, ticker: string, amount: string) =>
     `Za ${years} let vás poplatek fondu (${ticker}) bude stát ${amount}.`,

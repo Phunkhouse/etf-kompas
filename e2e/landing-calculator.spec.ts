@@ -42,7 +42,9 @@ test.describe('landing page calculator', () => {
     await page.goto('/?v=b')
     const section = page.locator('#spocitat')
     await expect(section.getByText(/u ověřených brokerů/)).toBeVisible()
-    await expect(section.getByText(/nejvýš/)).toBeVisible()
+    await expect(
+      section.getByText(/může u ověřených brokerů stát i/),
+    ).toBeVisible()
     // DEGIRO and Trading 212 are priced, so the hide rule is met
     await expect(section.getByText(/ponecháte až/)).toBeVisible()
     await expect(

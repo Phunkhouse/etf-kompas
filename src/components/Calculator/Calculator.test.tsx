@@ -102,14 +102,16 @@ describe('Calculator: inputs', () => {
 })
 
 describe('Calculator: a broker is priced', () => {
-  it('says the cost at the dearest verified broker, "u ověřených brokerů nejvýš"', () => {
+  it('says the cost at the dearest verified broker, "u ověřených brokerů může stát i"', () => {
     const data = oneBroker()
     render(<Calculator data={data} />)
     const total = expected(data).headline!.result.totalKc
     const sentence = screen.getByText(/u ověřených brokerů/).textContent!
     expect(sentence.replace(/\s/g, ' ')).toContain('Za 10 let')
     expect(sentence).toContain('CSPX')
-    expect(sentence).toContain('nejvýš')
+    expect(sentence).toContain('může u ověřených brokerů stát i')
+    expect(sentence).not.toContain('nejvýš')
+    expect(sentence).not.toContain('koupitelný')
     expect(sentence.replace(/\s/g, ' ')).toContain(
       formatKc(total).replace(/\s/g, ' '),
     )
@@ -193,7 +195,7 @@ describe('Calculator: no broker is priced yet', () => {
         .getByText(/roční poplatek fondu/)
         .parentElement!.textContent!.replace(/\s/g, ' '),
     ).toContain(formatKc(fundFee).replace(/\s/g, ' '))
-    expect(screen.queryByText(/nejvýš/)).toBeNull()
+    expect(screen.queryByText(/může u ověřených brokerů stát i/)).toBeNull()
     expect(screen.queryByText(/poplatky brokera/)).toBeNull()
     expect(screen.queryByText(/převod korun/)).toBeNull()
   })

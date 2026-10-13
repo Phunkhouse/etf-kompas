@@ -795,3 +795,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **One approved e2e test broke:** `home.spec.ts` looked for "the" ETF Kompas logo, and the footer now has a second one. It is now limited to the banner; the assertion is as strong as before.
 - **Removed an approved e2e test** ("the hero link lands on the form") together with the link. The form stays reachable from the saving box button and the sticky bar.
 - **Open:** the footnote text "* Roční poplatek fondu, počítaný z vašich peněz ve fondu." is mine, for the copy review. SPEC §25 rule 3 and the glossary still say the plain description comes first (docs sync, D3). The design boards and PNGs are still the old ones (PR 2).
+
+### The cost sentence says "může stát i" (added to PR 1 of rev. 6)
+
+**Prompt (summary):** David wanted "Za 10 let vás fond (CSPX) u ověřených brokerů bude stát až 30 778 Kč" instead of "koupitelný fond … nejvýš"; I advised keeping "nejvýš" (it marks a ceiling, and "až" is the saving's word); he proposed "klidně" and said he did not like "nejvýš"; I advised against "klidně" (slang, can read as "easily") and proposed "může stát i"; he chose it.
+
+**Produced:** the sentence in `copy.ts` is now "Za 10 let vás fond (CSPX) může u ověřených brokerů stát i X Kč. Z toho jde na:". Tests first (one failed), then the copy; note 0037 has an update line.
+
+**Mistakes and corrections**
+
+- **I argued for my own wording twice before accepting that the user's ear for his own audience decides copy.** The reason I gave (a ceiling must sound like one) still holds, but "může stát i" says the same thing in words he likes. Not wrong, only slower than it needed to be.
+- **The "fund-only state does not say it" test now checks the new phrase,** so it is weaker in one way: it passed before the change too. It is kept for the case where the sentence leaks into the fund-only state.
+- **SPEC §3 and METHODOLOGY-V2 still say "nejvýš"**: left for the docs sync (D3).
