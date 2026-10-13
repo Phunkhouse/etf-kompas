@@ -667,3 +667,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **My first version of the second test was wrong:** it checked "what is on top at the bar's centre", but a modal dialog's dimmed backdrop makes the browser report the dialog for every point outside the panel. It now compares positions.
 - **My mistake behind the bug:** I built the panel from the drawing and only checked it opened; I never compared the header's position before and after. A screenshot pair, or a test of the logo's position, would have caught it in C2a.
 - Limit: if the page is scrolled when the menu opens, the header is off-screen and the panel starts at the top of the screen, so the logo moves. The header is not sticky, so the menu button is only visible near the top of the page.
+
+### The cost number ran under the form (found by David)
+
+**Prompt (summary):** David sent a screenshot at about 1068 px: the big number "14 416 Kč" was cropped by the form card.
+
+**Produced:** the number's font size is now `min(design size, 17 % of its own column)` (a container query unit), so it can never be wider than its column. Below 1100 px the form drops below the calculator (inputs and result stay side by side), since three columns on a tablet made the labels wrap and cut the e-mail placeholder. Test first: `e2e/number-fit.spec.ts` checks the number at 12 widths from 375 to 1920 px, at 3 000 Kč a month for 10 years and at 20 000 Kč for 20 years; 9 of 12 failed before, all 12 pass after. 467 unit/component and 104 e2e tests pass.
+
+**Mistakes and corrections**
+
+- **The number overflowed its column at every desktop width, not only 1068 px.** At 1280 px it ended exactly at the edge of the form, so it looked fine; my test showed it was already too wide there. I built the calculator at the design's 80 px size and checked it only at 1280 px and on a phone. I should have run a wider set of widths when I built the form as a third column.
+- **My first wording of the fix cap was too small for long amounts:** I checked the cap with the default number and the largest one the slider can give (20 000 Kč, 20 years) before settling on 17 %.
+- Not drawn: the tablet layout (768 to 1099 px); the form below the calculator is my choice, and the number is smaller than the 80 px design at 1280 px (about 70 px).

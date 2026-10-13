@@ -8,17 +8,25 @@
   white-space: nowrap;
 }
 
+// The number is as big as the design says (--max), but never wider than its own
+// column: its font size is also capped at 17 % of the column's width, so a long
+// amount such as "120 000 Kč" cannot run under the neighbour (a container query
+// unit: this element is the container).
+.number {
+  container-type: inline-size;
+}
+
 .lg {
-  font-size: var(--font-size-display-sm);
+  --max: var(--font-size-display-sm);
 }
 
 .md {
-  font-size: var(--font-size-2xl);
+  --max: var(--font-size-2xl);
 }
 
 @media (min-width: 768px) {
   .lg {
-    font-size: var(--font-size-display);
+    --max: var(--font-size-display);
   }
 }
 
@@ -40,6 +48,7 @@
 
 .swap {
   display: block;
+  font-size: min(var(--max), 17cqi);
   animation: swap-in var(--duration-swap) var(--ease-out);
 
   @media (prefers-reduced-motion: reduce) {
