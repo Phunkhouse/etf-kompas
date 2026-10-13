@@ -833,3 +833,13 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Left as it was:** the card texts of "Za co platíte" and the FAQ in the boards still differ from the built copy (David said the built version is better there); the uppercase calculator label wraps with an orphan "STÁT I" on the phone board; "Česky" stays `[ověřit]` because the data has no verified value.
 - **Republished the two Claude artifacts** (Design Study, now version 16; Wireframe Board, version 11) from the rebuilt files, as David asked. The Board still said "REV. 4" in its corner label although it had been at rev. 5 since the last PR: a stale label I found while republishing, fixed to "REV. 6". I republished before the PR was reviewed (the PR text said "after review"); if review changes the boards they need publishing again.
 - **The "Co se změnilo" note on the Board overflowed into the "Landing page" heading** after I added the rev. 6 line (1089 px tall against 890 px of room). David noticed it on the live artifact; I had checked the exported PNGs, not the Board canvas, where the notes have fixed positions. Fixed by widening the note to 1000 px and moving the four notes to its right by 340 px; I measured every note afterwards (all end above 890 px). A check that boards still fit belongs after any text added to a fixed-position note.
+
+### The amount in the variant b headline is red (added to PR 2 of rev. 6)
+
+**Prompt (summary):** David: "I would use red for the number here. Maybe some shade of what we have in calc, but working on light background. What do you think?"; I proposed the existing `cost-strong` (#c23a1b); he said "yes, go ahead, put it on #63".
+
+**Produced:** the b headline in `copy.ts` is split into the text before and after the amount; `HeroB` renders the amount in its own `<span>` in `--color-cost-strong` (4.8:1 on the paper background; the pair is already in `contrast-pairs.ts`). Tests first (one component test failed, one e2e test for the colours); 518 unit/component and 125 e2e pass, JS unchanged. The two b boards and their PNGs show the red amount; both Claude artifacts republished.
+
+**Mistakes and corrections**
+
+- None found in the change itself. Not checked: how the red amount reads in an actual ad, and whether the red suggests a warning more than David intends (I said it fits "zbytečně zaplatit", but that is my reading, not a test).

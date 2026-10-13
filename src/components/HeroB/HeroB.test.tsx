@@ -45,6 +45,28 @@ describe('HeroB: the two headlines (note 0041)', () => {
     )
   })
 
+  it('puts the amount of variant b in its own element, and variant a has none', () => {
+    const { unmount } = render(
+      <HeroB
+        twins={twins}
+        note={note()}
+        dataAsOf={null}
+        variant="b"
+        savingKc={28302}
+      />,
+    )
+    const amount = screen
+      .getByRole('heading', { level: 1 })
+      .querySelector('span')
+    expect(amount).not.toBeNull()
+    expect(flatText(amount!.textContent)).toBe('28 302 Kč')
+    unmount()
+    render(<HeroB twins={twins} note={note()} dataAsOf={null} variant="a" />)
+    expect(
+      screen.getByRole('heading', { level: 1 }).querySelector('span'),
+    ).toBeNull()
+  })
+
   it('shows the saving in variant b: "U stejného fondu můžete zbytečně zaplatit až X Kč. Kde?"', () => {
     render(
       <HeroB

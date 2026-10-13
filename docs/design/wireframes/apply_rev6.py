@@ -104,7 +104,9 @@ def landing(f, mobile, variant_b):
     s = read(f)
     if variant_b:
         # the headline of rev5 uses no-break spaces
-        s = one(s, 'zaplatit až X\u00a0XXX\u00a0Kč. Kde?', 'zaplatit až ' + SAVING_B.replace(' ', '\u00a0') + '. Kde?')
+        # the amount is red (the cost red for light backgrounds, #C23A1B), the rest ink
+        s = one(s, 'zaplatit až X\u00a0XXX\u00a0Kč. Kde?',
+                'zaplatit až <span style="color:#C23A1B">' + SAVING_B.replace(' ', '\u00a0') + '</span>. Kde?')
     s = hero_rows_mobile(s) if mobile else hero_rows_desktop(s)
     s = calc_block(s, mobile)
     write(f, dates(s))

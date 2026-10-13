@@ -78,10 +78,10 @@ Light card (on the phone its own card below the calculator). "Chcete vidět, kde
 
 `?v=a` and `?v=b` render the same page. Only the h1 differs. This tests headline framing, hypothesis 2 in SPEC §11 (metric: visit to `calc_start`; guard metrics: bounce and lead quality). Decision: note 0041.
 
-| Variant                                | h1                                                            | Images                                                                                                     |
-| -------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `a` (default, also for an unknown `v`) | "Americké indexy z Česka: u koho je koupíte a za kolik?"      | [landing-desktop.png](images/landing-desktop.png), [landing-mobile.png](images/landing-mobile.png)         |
-| `b`                                    | "U stejného fondu můžete zbytečně zaplatit až X XXX Kč. Kde?" | [hero-b-desktop.png](images/hero-b-desktop.png), [hero-b-mobile.png](images/hero-b-mobile.png) (hero only) |
+| Variant                                | h1                                                                                                         | Images                                                                                                     |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `a` (default, also for an unknown `v`) | "Americké indexy z Česka: u koho je koupíte a za kolik?"                                                   | [landing-desktop.png](images/landing-desktop.png), [landing-mobile.png](images/landing-mobile.png)         |
+| `b`                                    | "U stejného fondu můžete zbytečně zaplatit až X XXX Kč. Kde?" (the amount in the cost red #C23A1B, rev. 6) | [hero-b-desktop.png](images/hero-b-desktop.png), [hero-b-mobile.png](images/hero-b-mobile.png) (hero only) |
 
 - Layout, lead, table, calculator, form and buttons are identical. The non-breaking spaces keep "X XXX Kč" on one line.
 - **Honest number:** the amount is the saving box maximum for the default setting (3 000 Kč a month, 10 years). Variant `b` adds one sentence to the line under the table: "Částka v nadpisu: 3 000 Kč měsíčně, 10 let, odhad bez českých daní a inflace."

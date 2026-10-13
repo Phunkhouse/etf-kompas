@@ -99,3 +99,8 @@
     font-size: var(--font-size-lg);
   }
 }
+
+// The amount in the variant b headline: the cost red for light backgrounds.
+.amount {
+  color: var(--color-cost-strong);
+}
