@@ -34,8 +34,8 @@ describe('landingData (the real data files)', () => {
     const { faqFacts } = landingData(await loadData())
     expect(faqFacts.tickers).toEqual(['VOO', 'QQQ'])
     expect(faqFacts.total).toBe(5)
-    // DEGIRO, Trading 212 and XTB are verified as not selling them
-    expect(faqFacts.verifiedNo).toBe(3)
+    // DEGIRO, IBKR (a notice: no KID for retail clients), Trading 212 and XTB are verified as not selling them
+    expect(faqFacts.verifiedNo).toBe(4)
     expect(faqFacts.europeanSold).toBe(true)
   })
 

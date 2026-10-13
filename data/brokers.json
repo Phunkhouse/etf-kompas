@@ -388,60 +388,148 @@
     },
     "availability": {
       "voo": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": false,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:dec2ef2f13f1b18870d2b84b062d850b8bd97f472a84b45bc8474def70ca8113 (ibkr-voo-search-2026-10-13.png): search \"voo\" lists VOO VANGUARD S&P 500 ETF on ARCA and on MEXI; sha256:f619757fa41488f15024e039b95d9b6730c1297386349e66263d8244a5b0d653 (ibkr-voo-detail-2026-10-13.png): quote page VOO VANGUARD S&P 500 ETF ARCA, USD 714.97, with a red \"NT\" badge and a \"Notice\" button next to Buy and Sell; sha256:bb8dcce4e25ad4e4865c855a747c3846820063094bbb05dac6e0ad722e6c2edf (ibkr-voo-notice.png, the notice of the VOO page, opened by David): \"We are sorry but you cannot trade this product based upon your classification as a \\\"Retail\\\" client under MiFID regulations ... you cannot trade this product because it does not have a Key Information Document (KID) or does not have one in a language approved for your country.\" Interactive Brokers client portal, David's own account, 2026-10-13 (the date is from the file names; the pages show no date). The screenshot does not show which IBKR entity the account belongs to."
       },
       "qqq": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": false,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:fade8233204ad1db8f56d07ae75d4c04f60b567a984f9e2792801e5c292a7470 (ibkr-qqq-search-2026-10-13.png): search \"qqq\" lists QQQ INVESCO QQQ TRUST SERIES 1 on NASDAQ and on MEXI, and other funds with similar tickers; sha256:09141f408d7e6a658c73e75b218fbeabff0a130c6bcfac37d750581bec089b52 (ibkr-qqq-detail-2026-10-13.png): quote page QQQ INVESCO QQQ TRUST SERIES 1 NASDAQ, USD 740.99, with a red \"NT\" badge and a \"Notice\" button next to Buy and Sell; sha256:061b99c983ea664efc34d45b640f26594ff8518f520300151eb7b59d6ede870d (ibkr-qqq-notice.png, the notice of the QQQ page, opened by David): \"We are sorry but you cannot trade this product based upon your classification as a \\\"Retail\\\" client under MiFID regulations ... you cannot trade this product because it does not have a Key Information Document (KID) or does not have one in a language approved for your country.\" Interactive Brokers client portal, David's own account, 2026-10-13 (the date is from the file names; the pages show no date). The screenshot does not show which IBKR entity the account belongs to."
       },
       "cspx": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:8cc233d6187418992cdc14de6c01c8fabc2f87499a6b2f0bff017c119bf79969 (ibkr-cspx-quote-2026-10-13.png): quote page \"CSPX  ISHARES CORE S&P 500  LSEETF\", price USD 842.33 (ask 842.30, bid 842.22), Buy and Sell buttons; sha256:0ef574f38c303344ff3be92e494d9174e4359a520f20ab363603cb308cd660da (ibkr-cspx-search-2026-10-13.png): search \"cspx\" lists CSPX ISHARES CORE S&P 500 (LSEETF), CSPXN ISHARES CORE S&P 500 (MEXI) and CSPXJ ISHARES CORE MSCI PACIF X-JP (EBS, another fund); sha256:99d4729558a74321883fca16a47c1dccdb76124b3c30f030c64bf0dd2ecda983 (ibkr-sxr8-search-2026-10-13.png): search \"sxr8\" lists SXR8 ISHARES CORE S&P 500 (IBIS2, Germany). Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the pages show no date). The searches show no currency and the screenshots do not show which IBKR entity the account belongs to."
       },
       "vuaa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:91dcdc06842b1cd2577f96f247b2cac52b81d81698bf415c4ccf9f6860e219a5 (ibkr-vuaa-search-2026-10-13.png): search \"vuaa\" lists VUAA VANG S&P500 USDA on BVME.ETF (Italy) and on LSEETF, and VUAAN VANG S&P500 USDA on MEXI. The name is abbreviated and no ISIN is shown: the ticker VUAA with the name \"VANG S&P500 USDA\" is taken to be the Vanguard S&P 500 UCITS ETF (USD) Accumulating. Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the pages show no date). The searches show no currency and the screenshots do not show which IBKR entity the account belongs to."
       },
       "cndx": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:24103c3f9f1ea9c1876cbd89108e3ae31f61fceab8b5fee405f188933c2d2302 (ibkr-cndx-search-2026-10-13.png): search \"cndx\" lists CNDX ISHARES NASDAQ 100 USD ACC (LSEETF), also CNDXN (MEXI), SXRV (IBIS2), CNX1 (LSEETF) and IS.FF701 (TASE) under the same name, and an unrelated CNDX GLOBAL X S&P/TSX 60 IDX ETF (TSE); sha256:7cad324d333d3203ae146f726757f5b1bab24b4c9cd89178e54bcfeda46ce400 (ibkr-sxrv-search-2026-10-13.png): search \"sxrv\" lists SXRV ISHARES NASDAQ 100 USD ACC (IBIS2, Germany). Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the pages show no date). The searches show no currency and the screenshots do not show which IBKR entity the account belongs to."
       },
       "vusa": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:2f7f9f43b52f85c70b397dbe4c4aed68b30ebbc7ebd0790eada3a39d27299fd9 (ibkr-vusa-search-2026-10-13.png): search \"vusa\" lists VUSA VANG S&P500 USDD on LSEETF, on AEB (Amsterdam) and on EBS (Switzerland). The name is abbreviated and no ISIN is shown: the ticker VUSA with \"VANG S&P500 USDD\" is taken to be the Vanguard S&P 500 UCITS ETF (USD) Distributing. Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the pages show no date). The searches show no currency and the screenshots do not show which IBKR entity the account belongs to."
       },
       "eqqq": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
+        "value": true,
+        "sourceUrl": "https://www.interactivebrokers.com",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:4fc0ed1cebf361eda49cd987a0cd0914ba75bb54d36e7d6bacda265228b0b4d9 (ibkr-eqqq-search-2026-10-13.png): search \"eqqq\" lists EQQQ INVESCO NASDAQ-100 DIST on LSEETF, EBS and BVME.ETF, and an unrelated EQQQ PROSHRS ULTRA QQQ EQU WEIGHT (NASDAQ). The ticker EQQQ with \"INVESCO NASDAQ-100 DIST\" is taken to be the Invesco EQQQ NASDAQ-100 UCITS ETF. Interactive Brokers client portal, David's own account, captured 2026-10-13 (the date is from the file name; the pages show no date). The searches show no currency and the screenshots do not show which IBKR entity the account belongs to."
+      }
+    },
+    "fees": {
+      "fx": {
+        "EUR": {
+          "value": 0.03,
+          "sourceUrl": "https://www.interactivebrokers.ie/en/pricing/commissions-spot-currencies.php",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:651b36b2cb7483b193da7ce8f33e8d93f59287b549c332f7c39a0605673c1c6c (ibkr-fees-coversion-fee.png, IBKR \"Spot Currencies\" commissions page); footnote: \"For currency trades executed under the auto currency conversion service, IB will typically add or subtract (at its discretion) 0.03% to the exchange rate that would otherwise apply. Please note that IB does not separately charge a commission on these auto-conversion trades.\"; the page header says \"Trade with low 0.03% FX rates\". The 0,03 % is what the agent uses for a purchase that converts cash automatically; \"typically\" and \"at its discretion\" are IBKR's words. A manual currency order is priced differently (0.20 basis points of the trade value, minimum USD 2.00) and is not used. The pages do not show whether David's account can hold CZK or which base currency it has. Captured by David 2026-10-13 (the date is the day he saved the files); the pages show no date. The site is the Irish one (interactivebrokers.ie); the screenshots do not show which entity David's account belongs to."
+        },
+        "USD": {
+          "value": 0.03,
+          "sourceUrl": "https://www.interactivebrokers.ie/en/pricing/commissions-spot-currencies.php",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:651b36b2cb7483b193da7ce8f33e8d93f59287b549c332f7c39a0605673c1c6c (ibkr-fees-coversion-fee.png, IBKR \"Spot Currencies\" commissions page); footnote: \"For currency trades executed under the auto currency conversion service, IB will typically add or subtract (at its discretion) 0.03% to the exchange rate that would otherwise apply. Please note that IB does not separately charge a commission on these auto-conversion trades.\"; the page header says \"Trade with low 0.03% FX rates\". The 0,03 % is what the agent uses for a purchase that converts cash automatically; \"typically\" and \"at its discretion\" are IBKR's words. A manual currency order is priced differently (0.20 basis points of the trade value, minimum USD 2.00) and is not used. The pages do not show whether David's account can hold CZK or which base currency it has. Captured by David 2026-10-13 (the date is the day he saved the files); the pages show no date. The site is the Irish one (interactivebrokers.ie); the screenshots do not show which entity David's account belongs to."
+        }
+      },
+      "purchase": [
+        {
+          "value": {
+            "venues": ["IBIS2"],
+            "currency": "EUR",
+            "fixed": 0,
+            "percent": 0.05,
+            "min": 3
+          },
+          "sourceUrl": "https://www.interactivebrokers.ie/en/pricing/commissions-stocks.php?region=europe",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:61e7ed1d137e5440c82116062e008b43eec9188631f38edc1e41d1a1c595d13f (ibkr-fees-commision.png, IBKR \"Stocks, ETFs, Warrants and Structured Products\" commissions, Europe): table GERMANY, plan \"Fixed - IB SmartRouting\": 0.05% of Trade Value, minimum per order (shares) EUR 3.00, maximum None, Third Party Fees None. David chose the Fixed plan (2026-10-13); the Tiered plan (EUR 1.25 minimum, plus exchange, clearing and regulatory fees whose amounts are not in the files) is not used. The exchange IBIS2 of the SXR8 listing is taken to be covered by the Germany table (the search shows the German flag). Captured by David 2026-10-13 (the date is the day he saved the files); the pages show no date. The site is the Irish one (interactivebrokers.ie); the screenshots do not show which entity David's account belongs to."
+        },
+        {
+          "value": {
+            "venues": ["LSE"],
+            "currency": "USD",
+            "fixed": 0,
+            "percent": 0.05,
+            "min": 4
+          },
+          "sourceUrl": "https://www.interactivebrokers.ie/en/pricing/commissions-stocks.php?region=europe",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:6bdf822a5f8e70f7159cd79b7d7787404d321fb0db5381ff3991a580cb50871a (ibkr-fees-commision-uk-usd-denominated.png, same page): table UNITED KINGDOM, tab USD Denominated, plan \"Fixed - IB SmartRouting\": 0.05% of Trade Value, minimum per order (shares) USD 4.00, maximum None, Third Party Fees None. The Fixed plan was chosen by David; the Tiered plan is not used. Captured by David 2026-10-13 (the date is the day he saved the files); the pages show no date. The site is the Irish one (interactivebrokers.ie); the screenshots do not show which entity David's account belongs to."
+        }
+      ],
+      "custody": {
+        "value": {
+          "currency": "CZK",
+          "annualFixed": 0,
+          "annualPercent": 0
+        },
+        "sourceUrl": "https://interactivebrokers.ie/lib/cstools/faq/content/51679208",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:114dd1f9df3068c4c512246d6c8f61b106c1a275f3b15d2793f7974a30a0e701 (ibkr-fees-account.png, IBKR FAQ \"Is there a fee to open or maintain an account with Interactive Brokers?\"): \"There are no fees to open an account with IBKR. There are no custodian, trading platform or monthly activity fees for clients except for ISA and TBSZ accounts along with accounts holding positions or actively trading on the B3.\" The \"other fees\" page (sha256:68fc3023def839dd31cf400f4293d42611598a8d2e277cf1d9b6638231b714f0, ibkr-fees-other.png) lists no custody fee for these funds; the currency page adds \"IBKR charges no custody fees. Custody fees may be charged by third parties.\" Third-party custody fees are not priced. Captured by David 2026-10-13 (the date is the day he saved the files); the pages show no date. The site is the Irish one (interactivebrokers.ie); the screenshots do not show which entity David's account belongs to."
+      },
+      "listings": {
+        "cspx": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "LSE"
+            },
+            "sourceUrl": "https://www.interactivebrokers.com",
+            "asOf": "2026-10-13",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-13",
+            "evidence": "sha256:8cc233d6187418992cdc14de6c01c8fabc2f87499a6b2f0bff017c119bf79969 (ibkr-cspx-quote-2026-10-13.png): quote page CSPX ISHARES CORE S&P 500, exchange LSEETF, price in USD (842.33). The venue is recorded as LSE, the name used for the same listing at Trading 212 and XTB. Captured by David 2026-10-13 (the date is the day he saved the files); the pages show no date. The site is the Irish one (interactivebrokers.ie); the screenshots do not show which entity David's account belongs to."
+          },
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "IBIS2"
+            },
+            "sourceUrl": "https://www.interactivebrokers.com",
+            "asOf": "2026-10-13",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-13",
+            "evidence": "sha256:e28197332b7c5130171789662e57570511d3003978088b64b3bd18aa9cc1401f (ibkr-sxr8-detail-2026-10-13.png): quote page SXR8 ISHARES CORE S&P 500, exchange IBIS2, price in EUR (752.50). The fund is the same as CSPX by name (\"ISHARES CORE S&P 500\"); no ISIN is shown. The SXR8 search (ibkr-sxr8-search-2026-10-13.png, sha256:99d4729558a74321883fca16a47c1dccdb76124b3c30f030c64bf0dd2ecda983) lists it on IBIS2, Germany. Captured by David 2026-10-13 (the date is the day he saved the files); the pages show no date. The site is the Irish one (interactivebrokers.ie); the screenshots do not show which entity David's account belongs to."
+          }
+        ]
       }
     }
   },

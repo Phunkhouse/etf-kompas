@@ -893,3 +893,43 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **Not tested:** whether the line helps the 5-second test; that is the point of the test.
 
 Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in his words ("more converting"); the one-sentence reason is thin, so the note says that conversion is a hope, not a measurement, and flags the "bez registrace" against "an e-mail is needed" wording for the copy review.
+
+### Data: IBKR availability of the five funds
+
+**Prompt (summary):** David got access to Interactive Brokers and sent a quote screenshot of CSPX, then the search popup; he saved the quote page as `ibkr-cspx-search-2026-10-13.png` and said the date is the file name's, the account is his own, and search shows only the single LSE line.
+
+**Produced:** `availability.cspx` of IBKR (`true`, source `https://www.interactivebrokers.com`, SHA-256 of the saved file, the quoted page text) and one entry in `sources.json`. IBKR now counts as a seller of CSPX, so the hero line names five brokers. IBKR is still not priced: commission, conversion and account fees are missing, and so is the CSPX listing record (it lives with the fees).
+
+**Mistakes and corrections**
+
+- **My first record failed the validator** (the source URL was not in `sources.json`). The draft check caught it before commit; I added the source entry.
+- **Two screenshots arrived in the chat but only one was saved to disk** (the quote page, not the search popup). The record says what the popup showed from David's description, and the evidence hash covers only the quote page. The search popup should be saved too if it is meant as evidence.
+- **The screenshot does not show which IBKR entity the account belongs to**; David said it is his own account. The record says the screenshot does not show it.
+- **Side effect I did not expect:** the hero line now names five brokers ("CSPX: DEGIRO, Fio e-Broker, Interactive Brokers, Trading 212, XTB") and the sentence "U ostatních fondů a brokerů ověřujeme." disappeared, because the rule says every broker is now verified for CSPX. The line is longer, which is the opposite of what David wants; it is the next change.
+
+**Update (same PR):** David saved searches for SXR8, SXRV, VUAA, VUSA, CNDX and EQQQ; the availability of all five funds is now recorded, each with the SHA-256 of its search screenshot.
+
+- **A saved file was overwritten.** David saved the CSPX search popup under the name `ibkr-cspx-search-2026-10-13.png`, which replaced the quote page I had hashed (`8cc233d6...`); my first record in this PR then pointed to a file that no longer existed in the evidence folder. I found it when I listed the folder before writing the new records. The chat copy of the quote page (`images/36.png`) has exactly the same SHA-256, so I copied it into the evidence folder as `ibkr-cspx-quote-2026-10-13.png` and cite both files. Lesson for the evidence folder: one name per file, and I should hash a file right when it arrives.
+- **The searches show the exchange but no currency** and no ISIN. The records say so; the identity of VUAA, VUSA, CNDX and EQQQ rests on the ticker and the abbreviated name ("VANG S&P500 USDA", "VANG S&P500 USDD", "INVESCO NASDAQ-100 DIST"), as it did for Fio. The euro listing of CSPX (SXR8 on IBIS2) is therefore not recorded as a listing yet: I need its quote page with a price in euro.
+- VOO and QQQ at IBKR are not searched yet.
+
+**Update 2 (same PR): VOO at IBKR.** David saved the quote pages of VOO and QQQ and the notice of the VOO page (`ibkr-notice.png`). The notice says a "Retail" client under MiFID cannot trade the product because it has no KID in an approved language, so `availability.voo` of IBKR is `false`, with the search, the quote page and the notice cited together (three SHA-256).
+
+- **I read the red "NT" badge and the "Notice" button as a restriction before I could read the text** and said so as "my reading, not verified"; I wrote no record until the notice text was in the file. The text confirmed the reading for VOO.
+- **QQQ is not recorded.** Its quote page has the same badge and button, but the notice text of QQQ is not in a file (the notice file shows only the VOO page). I did not infer QQQ from VOO. The FAQ count "U 3 z 5 brokerů" needs both VOO and QQQ to be `false`, so it does not change yet.
+- **The notice file has no date or fund in its name** (`ibkr-notice.png`); the record names it as the VOO notice. A name with date and fund would be clearer.
+
+**Update 3 (same PR): QQQ at IBKR.** David saved the QQQ notice (`ibkr-qqq-notice.png`): the same text as for VOO (a retail client under MiFID cannot trade a product with no KID in an approved language). `availability.qqq` of IBKR is `false`, citing the search, the quote page and the notice. The FAQ now says "U 4 z 5 brokerů".
+
+- **An approved test changed with the data:** `landing-data.test.ts` expected 3 brokers verified as not selling VOO and QQQ; it now expects 4 and names IBKR in the comment. The assertion is as strong as before. The same kind of change as in #58 (a test that counts data).
+- **David renamed the VOO notice file** (`ibkr-notice.png` to `ibkr-voo-notice.png`; the SHA-256 is the same). My first VOO record named the old file, so I corrected the name in the record. Renaming evidence after it is cited is the same trap as the overwritten CSPX file; the hash stays the proof, and I check the folder before every record.
+
+**Update 4 (same PR): IBKR is priced.** David chose the Fixed plan and gave the URLs of the commission, currency and account pages; the files are the full-page screenshots in `evidence/fees` and the SXR8 quote page. The records: commission 0,05 % with a minimum of EUR 3.00 (Germany table, IB SmartRouting Fixed) for the IBIS2 listing and USD 4.00 for the LSE listing, custody 0 (the FAQ sentence), conversion 0,03 % (the auto-conversion footnote), and two CSPX listings (LSE in USD, IBIS2 in EUR). Tests first (3 failed): the list of brokers with fees, the euro listing being picked with the 3 EUR minimum, and the custody statement.
+
+**Mistakes and corrections**
+
+- **My first test assumed the broker part is just the sum of the fees** (120 orders of 3 EUR = 8 771 Kč); the calculator's broker part also contains the return lost on the money paid in fees, so it was 11 833 Kč. I rewrote the test to compare with Fio's flat 3,95 EUR on the same euro rate (a ratio of 3 to 3,95) and to check that it is above the plain sum. The assertion is stronger than a guessed number.
+- **The conversion rate rests on a footnote with soft words** ("typically", "at its discretion") and on the account being able to convert automatically. The pages do not show whether David's account can hold CZK or which base currency it has; I wrote this into the record and asked David. IBKR's manual currency order (0.20 basis points, minimum USD 2.00) is not used.
+- **The IBIS2 exchange is taken to be covered by the Germany table**, because the search shows the German flag; the commission page does not name IBIS2. The record says so.
+- **"Custody" is taken from a general FAQ sentence**, not from a table; third-party custody fees are not priced and the record says so.
+- **The venue of the LSE listing is named "LSE"**, as at Trading 212 and XTB, while IBKR shows "LSEETF".

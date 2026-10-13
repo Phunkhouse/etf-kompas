@@ -56,14 +56,54 @@ describe('calculatorData', () => {
     expect(data.brokers.every((b) => b.name.length > 0)).toBe(true)
   })
 
-  it('passes pricing data only for brokers that have fees (DEGIRO, Fio, Trading 212 and XTB today)', () => {
+  it('passes pricing data only for brokers that have fees (DEGIRO, Fio, Interactive Brokers, Trading 212 and XTB today)', () => {
     const data = calculatorData(bundledData, RATES, 'cspx')!
     expect(data.pricing.map((b) => b.id)).toEqual([
       'degiro',
       'fio',
+      'ibkr',
       'trading212',
       'xtb',
     ])
+  })
+
+  it('prices Interactive Brokers at its euro listing, where the EUR 3.00 minimum applies to every order', () => {
+    const data = calculatorData(bundledData, RATES, 'cspx')!
+    const prices = priceBrokers(
+      data.pricing,
+      'cspx',
+      data.ter,
+      data.rates,
+      INPUT,
+    )
+    const ibkr = prices.pricedBrokers.find((p) => p.brokerId === 'ibkr')!
+    expect(ibkr).toBeDefined()
+    // the euro line (3,00 EUR) is cheaper than the dollar line (4,00 USD)
+    expect(ibkr.listing).toEqual({ currency: 'EUR', venue: 'IBIS2' })
+    // 0,05 % of an order of about 123 EUR is far below the minimum, so every one of the
+    // 120 orders costs 3 EUR. Fio charges a flat 3,95 EUR on the same euro rate, so the
+    // two broker parts (which include the return lost on the fees) must be in the
+    // ratio 3 to 3,95.
+    const fio = prices.pricedBrokers.find((p) => p.brokerId === 'fio')!
+    const expected = (fio.result.parts.broker * 3) / 3.95
+    expect(Math.abs(ibkr.result.parts.broker - expected)).toBeLessThan(
+      expected * 0.01,
+    )
+    // and more than the plain sum of the fees, 120 x 3 EUR
+    expect(ibkr.result.parts.broker).toBeGreaterThan(
+      Math.round(120 * 3 * 24.365),
+    )
+    // the conversion is the 0,03 % of the automatic currency conversion
+    expect(ibkr.result.parts.fx).toBeGreaterThan(0)
+    expect(ibkr.result.parts.fx).toBeLessThan(500)
+  })
+
+  it('has no custody fee at Interactive Brokers (a statement on its FAQ page)', () => {
+    const data = calculatorData(bundledData, RATES, 'cspx')!
+    const ibkr = data.pricing.find((b) => b.id === 'ibkr')!
+    expect(ibkr.fees!.custody).toMatchObject({
+      value: { annualFixed: 0, annualPercent: 0 },
+    })
   })
 
   it('passes only the chosen fund: no other fund in availability or listings', () => {
