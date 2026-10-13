@@ -40,7 +40,6 @@ What is not done or not right yet, so nobody has to find it:
 - **Data.** Prices are complete only for CSPX (five brokers). VUAA and CNDX are priced at DEGIRO only, VUSA and EQQQ at none. The "Česky" (Czech support) column is empty. The deploy gate `pnpm data:validate` fails today with 56 `TODO_VERIFY` values, on purpose. Broker fee records go stale after 45 days.
 - **Two data records rest on soft evidence:** the Fio conversion rate comes from a demo-account screen (note 0047), and the Interactive Brokers conversion fee from a footnote that says "typically" and "at its discretion"; whether an account can hold CZK is not shown.
 - **"Ověřeno k 6. 2026"** in the top bar is the oldest date among all the numbers (the VOO factsheet), not the date of what the page shows most prominently.
-- **The phone menu throws the page back to the top** if it is opened while the page is scrolled, and closing it does not return.
 - **Performance** was measured under applied throttling on `/` only; the other pages were measured only in the default, pessimistic mode (note 0042).
 - **The hero lead is hidden on phones** to keep the button above the fold (note 0031), and the component is still named `HeroB` from the time when there were two heroes.
 
