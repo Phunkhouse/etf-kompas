@@ -959,3 +959,5 @@ Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in h
 - **The line I added a few hours earlier was too quiet, and I did not test that it would be seen.** My own test only checked that it existed, was muted, and fit the screen; the first person who looked did not notice it. I changed that approved test (14 px muted to 16 px semibold ink), which is the point of the test. Lesson: "present and in the right place" is not "noticed"; the 5-second test is where that shows.
 - **I wrote her answers into a note word for word, in Czech, with no name**, as David wished; the note says who she is only as "David's partner, who does not invest".
 - **Not tested:** whether the new line is noticed. The pilot needs a second round with the new hero.
+
+Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: David confirmed the reasons I had drafted from the evidence in the records, without changes (2026-10-13). The reasons are still the agent's wording; the note line says so.
