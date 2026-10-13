@@ -679,3 +679,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **The number overflowed its column at every desktop width, not only 1068 px.** At 1280 px it ended exactly at the edge of the form, so it looked fine; my test showed it was already too wide there. I built the calculator at the design's 80 px size and checked it only at 1280 px and on a phone. I should have run a wider set of widths when I built the form as a third column.
 - **My first wording of the fix cap was too small for long amounts:** I checked the cap with the default number and the largest one the slider can give (20 000 Kč, 20 years) before settling on 17 %.
 - Not drawn: the tablet layout (768 to 1099 px); the form below the calculator is my choice, and the number is smaller than the 80 px design at 1280 px (about 70 px).
+
+### A flaky e2e test that failed only in CI
+
+**Prompt (summary):** David: "e2e test is failing in ci" (the test "the hero still fits with the longer b headline" got a null box for the button).
+
+**Cause and fix:** the test, which I wrote for E1, swapped the h1's text right after the page loaded. In CI the page hydrates more slowly than on my laptop, so React had not finished: it saw a page that differed from its own, rebuilt it, put the original headline back and detached the button. I reproduced it by slowing the page's scripts (the old code failed, the h1 was reverted), then fixed the test to wait until the calculator's slider is hydrated, give React two animation frames, change the text, and check that the change stays before measuring. The same scenario now passes 5 of 5 under slow scripts, and the real spec passes 15 repeats in a row.
+
+**Mistakes and corrections**
+
+- **My test depended on timing and I did not see it, because it never failed locally.** I ran it once or twice on a fast machine, then wrote it down as passing. For a test that changes the DOM, a run under slowed scripts should have been part of writing it.
+- Not found by `--repeat-each` on my machine (40 passes); only the slowed-scripts reproduction showed it.
+- Other tests act right after loading a page, but they use Playwright's own waits, or they work without JavaScript, so they do not rely on hydration having finished.
