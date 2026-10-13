@@ -17,6 +17,11 @@ describe('SiteHeader', () => {
     expect(nav.querySelectorAll('a')).toHaveLength(3)
   })
 
+  it('has the "Menu" button for phones', () => {
+    render(<SiteHeader />)
+    expect(screen.getByRole('button', { name: 'Menu' })).toBeTruthy()
+  })
+
   it('has a call to action that jumps to the e-mail form', () => {
     render(<SiteHeader />)
     expect(

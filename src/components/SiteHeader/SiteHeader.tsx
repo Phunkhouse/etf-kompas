@@ -1,13 +1,13 @@
 import { ButtonLink } from '@/components/Button'
 import { Container } from '@/components/Container'
+import { MobileMenu } from '@/components/MobileMenu'
 import { Wordmark } from '@/components/Wordmark'
 import { shellCopy } from '@/content/copy'
 import { nbsp } from '@/lib/typography'
 import styles from './SiteHeader.module.scss'
 
 // Logo, and on wide screens the section links and a small call to action.
-// The links and the button point at sections that the next page PRs add. The
-// mobile "Menu" chip is left out until its contents are designed.
+// On phones the "Menu" button opens the panel with the same links.
 export function SiteHeader() {
   const { nav } = shellCopy
   return (
@@ -20,6 +20,7 @@ export function SiteHeader() {
             <a href="#odkud-mame-cisla">{nbsp(nav.sources)}</a>
             <a href="#caste-dotazy">{nbsp(nav.faq)}</a>
           </nav>
+          <MobileMenu />
           <div className={styles.cta}>
             <ButtonLink href="#formular" size="sm">
               {nbsp(shellCopy.cta)}

@@ -6,6 +6,7 @@ import { HiddenCosts } from '@/components/HiddenCosts'
 import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SourceBar } from '@/components/SourceBar'
+import { StickyBar } from '@/components/StickyBar'
 import { TrustBlock } from '@/components/TrustBlock'
 import type { HeroNote, HeroTwin, OriginalsFacts } from '@/server/hero'
 import type { CalculatorData } from '@/server/calculator-data'
@@ -51,6 +52,7 @@ export function Landing({
         <Faq facts={faqFacts} />
       </main>
       <SiteFooter />
+      <StickyBar />
     </>
   )
 }

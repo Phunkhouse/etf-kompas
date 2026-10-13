@@ -72,7 +72,7 @@ export function HeroB({ twins, note, dataAsOf }: HeroBProps) {
           <div className={styles.table}>
             <HeroTable twins={twins} dataAsOf={dataAsOf} />
           </div>
-          <div className={styles.cta}>
+          <div id="hero-cta" className={styles.cta}>
             <ButtonLink href="#spocitat" fullWidth>
               {nbsp(text.cta)}
             </ButtonLink>
