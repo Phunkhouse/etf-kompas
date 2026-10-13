@@ -140,6 +140,8 @@
 .savingButton {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   min-height: var(--touch-target);
   // vertical padding too: on a narrow column the label wraps onto two lines
   padding: var(--space-2) var(--space-5);

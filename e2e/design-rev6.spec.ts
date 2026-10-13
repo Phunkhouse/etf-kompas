@@ -61,6 +61,19 @@ test.describe('green saving box', () => {
   })
 })
 
+test.describe('saving box button', () => {
+  test('centres its text, also when the label wraps onto two lines', async ({
+    page,
+  }) => {
+    await page.goto('/')
+    const button = page.getByRole('link', {
+      name: 'Ukázat, u kterého brokera to koupím',
+    })
+    await expect(button).toHaveCSS('text-align', 'center')
+    await expect(button).toHaveCSS('justify-content', 'center')
+  })
+})
+
 test.describe('footer', () => {
   test('starts with the logo @smoke', async ({ page }) => {
     await page.goto('/')

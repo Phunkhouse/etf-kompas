@@ -807,3 +807,13 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **I argued for my own wording twice before accepting that the user's ear for his own audience decides copy.** The reason I gave (a ceiling must sound like one) still holds, but "může stát i" says the same thing in words he likes. Not wrong, only slower than it needed to be.
 - **The "fund-only state does not say it" test now checks the new phrase,** so it is weaker in one way: it passed before the change too. It is kept for the case where the sentence leaks into the fund-only state.
 - **SPEC §3 and METHODOLOGY-V2 still say "nejvýš"**: left for the docs sync (D3).
+
+### Centred text in the saving box button (added to PR 1 of rev. 6)
+
+**Prompt (summary):** David: "The button text should be centered" (screenshot of the box on a phone, label on two lines, left-aligned).
+
+**Produced:** `justify-content: center` and `text-align: center` on the button; an e2e test first (it failed with `start`).
+
+**Mistakes and corrections**
+
+- **I missed it in my own review.** The button was left-aligned already in the drawing comparison I made and in the screenshot I read for this PR; I looked at the text, not at where it sat. The earlier fix in #58 (vertical padding for the wrapped label) did not centre it either. A button whose label can wrap needs its alignment tested, not only its height.
