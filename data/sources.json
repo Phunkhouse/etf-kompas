@@ -118,5 +118,20 @@
     "url": "https://www.interactivebrokers.com",
     "title": "Interactive Brokers client portal, instrument search and quote (logged-in account)",
     "publisher": "Interactive Brokers"
+  },
+  {
+    "url": "https://www.interactivebrokers.ie/en/pricing/commissions-stocks.php?region=europe",
+    "title": "Interactive Brokers Ireland: commissions for stocks, ETFs, warrants and structured products (Europe)",
+    "publisher": "Interactive Brokers"
+  },
+  {
+    "url": "https://www.interactivebrokers.ie/en/pricing/commissions-spot-currencies.php",
+    "title": "Interactive Brokers Ireland: spot currency commissions",
+    "publisher": "Interactive Brokers"
+  },
+  {
+    "url": "https://interactivebrokers.ie/lib/cstools/faq/content/51679208",
+    "title": "Interactive Brokers Ireland FAQ: fees to open or maintain an account",
+    "publisher": "Interactive Brokers"
   }
 ]

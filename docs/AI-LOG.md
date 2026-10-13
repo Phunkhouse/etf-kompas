@@ -923,3 +923,13 @@ Note 0051 ("Zdarma, bez registrace") was added to PR 67 with David's reason in h
 
 - **An approved test changed with the data:** `landing-data.test.ts` expected 3 brokers verified as not selling VOO and QQQ; it now expects 4 and names IBKR in the comment. The assertion is as strong as before. The same kind of change as in #58 (a test that counts data).
 - **David renamed the VOO notice file** (`ibkr-notice.png` to `ibkr-voo-notice.png`; the SHA-256 is the same). My first VOO record named the old file, so I corrected the name in the record. Renaming evidence after it is cited is the same trap as the overwritten CSPX file; the hash stays the proof, and I check the folder before every record.
+
+**Update 4 (same PR): IBKR is priced.** David chose the Fixed plan and gave the URLs of the commission, currency and account pages; the files are the full-page screenshots in `evidence/fees` and the SXR8 quote page. The records: commission 0,05 % with a minimum of EUR 3.00 (Germany table, IB SmartRouting Fixed) for the IBIS2 listing and USD 4.00 for the LSE listing, custody 0 (the FAQ sentence), conversion 0,03 % (the auto-conversion footnote), and two CSPX listings (LSE in USD, IBIS2 in EUR). Tests first (3 failed): the list of brokers with fees, the euro listing being picked with the 3 EUR minimum, and the custody statement.
+
+**Mistakes and corrections**
+
+- **My first test assumed the broker part is just the sum of the fees** (120 orders of 3 EUR = 8 771 Kč); the calculator's broker part also contains the return lost on the money paid in fees, so it was 11 833 Kč. I rewrote the test to compare with Fio's flat 3,95 EUR on the same euro rate (a ratio of 3 to 3,95) and to check that it is above the plain sum. The assertion is stronger than a guessed number.
+- **The conversion rate rests on a footnote with soft words** ("typically", "at its discretion") and on the account being able to convert automatically. The pages do not show whether David's account can hold CZK or which base currency it has; I wrote this into the record and asked David. IBKR's manual currency order (0.20 basis points, minimum USD 2.00) is not used.
+- **The IBIS2 exchange is taken to be covered by the Germany table**, because the search shows the German flag; the commission page does not name IBIS2. The record says so.
+- **"Custody" is taken from a general FAQ sentence**, not from a table; third-party custody fees are not priced and the record says so.
+- **The venue of the LSE listing is named "LSE"**, as at Trading 212 and XTB, while IBKR shows "LSEETF".
