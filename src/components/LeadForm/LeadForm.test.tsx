@@ -188,20 +188,20 @@ describe('LeadForm: sending failed', () => {
   })
 })
 
-describe('LeadForm: a valid address, before Phase 4', () => {
-  const state: LeadFormState = { status: 'ok' }
+describe('LeadForm: a valid address', () => {
+  const state: LeadFormState = { status: 'ok', resultsPath: '/srovnani/abc' }
 
-  it('says plainly that nothing was stored or sent', () => {
+  it('says the address is stored', () => {
     renderForm({ initialState: state })
-    expect(flat(screen.getByText(/Zkušební provoz/).textContent)).toBe(
-      'Zkušební provoz: váš e-mail jsme nikam neuložili ani neodeslali.',
+    expect(flat(screen.getByRole('status').textContent)).toBe(
+      'Hotovo. Váš e-mail jsme uložili.',
     )
   })
 
   it('does not claim that anything was sent or is ready', () => {
     const { container } = renderForm({ initialState: state })
     expect(container.textContent).not.toMatch(
-      /Hotovo|Odkaz jsme poslali|připravené/,
+      /Odkaz jsme poslali|připravené|odeslali/,
     )
   })
 
@@ -211,5 +211,66 @@ describe('LeadForm: a valid address, before Phase 4', () => {
     expect(
       screen.queryByRole('button', { name: /Poslat mi srovnání|Zkusit znovu/ }),
     ).toBeNull()
+  })
+})
+
+describe('LeadForm: too many tries', () => {
+  const state: LeadFormState = { status: 'limited', retryAfterSeconds: 600 }
+
+  it('says so in a box and keeps the usual button', () => {
+    renderForm({ initialState: state })
+    expect(flat(screen.getByRole('alert').textContent)).toBe(
+      'Příliš mnoho pokusů. Zkuste to prosím později.',
+    )
+    expect(
+      screen.getByRole('button', { name: 'Poslat mi srovnání' }),
+    ).toBeTruthy()
+  })
+})
+
+describe('LeadForm: fields the visitor does not see', () => {
+  it('has the form id the calculator points to, and the variant', () => {
+    const { container } = render(<LeadForm action={idle} variant="b" />)
+    expect(container.querySelector('form')!.id).toBe('lead-form')
+    const variant = container.querySelector<HTMLInputElement>(
+      'input[name="variant"]',
+    )
+    expect(variant!.type).toBe('hidden')
+    expect(variant!.value).toBe('b')
+  })
+
+  it('has a honeypot that is hidden from assistive technology and not tabbable', () => {
+    const { container } = renderForm()
+    const trap = container.querySelector<HTMLInputElement>(
+      'input[name="website"]',
+    )!
+    expect(trap.tabIndex).toBe(-1)
+    expect(trap.closest('[aria-hidden="true"]')).not.toBeNull()
+    expect(trap.value).toBe('')
+  })
+
+  it('sends the time spent and the campaign fields from the address bar', async () => {
+    window.history.replaceState(
+      null,
+      '',
+      '/?utm_source=instagram&utm_campaign=jaro&fbclid=AbC',
+    )
+    const action = vi.fn<Action>(async () => ({ status: 'idle' }))
+    renderForm({ action })
+    await userEvent.type(
+      screen.getByRole('textbox', { name: 'Váš e-mail' }),
+      'jan@domena.cz',
+    )
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Poslat mi srovnání' }),
+    )
+    const data = action.mock.calls[0][1]
+    expect(data.get('utm_source')).toBe('instagram')
+    expect(data.get('utm_campaign')).toBe('jaro')
+    expect(data.get('fbclid')).toBe('AbC')
+    expect(data.get('utm_medium')).toBe('')
+    expect(Number(data.get('t'))).toBeGreaterThanOrEqual(0)
+    expect(data.get('website')).toBe('')
+    window.history.replaceState(null, '', '/')
   })
 })

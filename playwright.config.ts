@@ -21,5 +21,8 @@ export default defineConfig({
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    // The lead flow runs on the in-memory store, so e2e needs no secrets and
+    // writes to no real database (the store is refused on Vercel).
+    env: { LEAD_STORE: 'memory', LEAD_MIN_FILL_MS: '0' },
   },
 })

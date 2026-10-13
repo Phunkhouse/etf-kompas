@@ -85,3 +85,12 @@
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-base);
 }
+
+// Out of sight but still in the page, so a bot that fills every field fills this one.
+.trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

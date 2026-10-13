@@ -95,6 +95,9 @@ export function Calculator({
     <div className={styles.calculator}>
       <div className={styles.inputs}>
         {heading}
+        {/* The setting goes with the e-mail form (id "lead-form"); the server checks it. */}
+        <input type="hidden" name="monthly" value={monthly} form="lead-form" />
+        <input type="hidden" name="years" value={years} form="lead-form" />
         <Slider
           label={nbsp(text.monthlyLabel)}
           value={monthly}

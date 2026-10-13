@@ -1006,3 +1006,18 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 - **My first commit left out this entry and the P-2 wording**: a `sed -i` that works on Linux failed on macOS and the `&&` chain after it was skipped, while the commit below it ran. Fixed in a second commit.
 - S-7 and the 404 choice are my suggestions that David accepted without giving reasons, so they are not decision notes yet.
+
+### Phase 4, PR 1: store leads
+
+**Prompt (summary):** David approved the test cases ("Approved"); I implemented them.
+
+**Produced:** the lead rules in `src/server/leads.ts` (honeypot, time check, IP and e-mail limits, idempotency, tokens, reset of a deleted lead), a memory and a Supabase adapter (plain `fetch`), `src/config/env.ts`, `POST /api/lead` (429 with `Retry-After`), the form's new fields (calculator setting through `form="lead-form"`, honeypot, time, campaign fields), a test-only `/api/test-leads` route (404 unless `LEAD_STORE=memory`), unit, component and e2e tests. The approved tests passed unchanged on the first run; the extra tests for the adapter, env, form and e2e are mine.
+
+**Mistakes and corrections**
+
+- **My own time check dropped real leads silently.** The plan measured the time "since the form appeared". The first e2e run showed every fast submit turned into a fake success: it would also catch a visitor who jumps to the form from the sticky bar and lets the browser autofill it. Changed to the time since the page loaded (`performance.now()`), and `plan.md` says why. A test type-ahead is still faster than 2 s, so e2e lowers the limit with `LEAD_MIN_FILL_MS=0` (memory store only).
+- **A guard I wrote in the plan could not work.** "The memory store refuses `NODE_ENV=production`" fails in CI, which runs the e2e on a production build. The guard is now `VERCEL` being set (tested).
+- **The test route was frozen at build time.** With `cacheComponents` a `GET` without request data is prerendered, so the production-build e2e saw an empty store while the dev run passed. Fixed with `connection()`. The lesson is the same as before: the dev server passing is not the production build passing; I ran `CI=1 pnpm test:e2e`.
+- **The success text is deliberately small** ("Hotovo. Váš e-mail jsme uložili."): the link to the comparison is returned by the server but not shown, because the results page does not exist yet (PR 2).
+- **Not verified:** the Supabase adapter was tested only against a stubbed `fetch`. It has not talked to the real project yet; the request shapes (PostgREST upsert, the `rate_limit_hit` rpc, the `apikey` header for the new secret keys) are from my knowledge of the API, not from a run.
+- `pnpm test:e2e` JS budget: 148.0 KB of 150 KB (was 147.4 KB).

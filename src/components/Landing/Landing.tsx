@@ -56,7 +56,7 @@ export function Landing({
           savingKc={savingKc}
         />
         {calculator !== undefined ? (
-          <CalculatorSection data={calculator} />
+          <CalculatorSection data={calculator} variant={shown} />
         ) : null}
         <HiddenCosts />
         <EmailPreview />

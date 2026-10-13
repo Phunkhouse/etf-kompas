@@ -235,8 +235,17 @@ export const leadFormCopy = {
     `Pošleme vám srovnání. Správce: ${controller}. `,
   legalLink: 'Zásady zpracování osobních údajů',
   tips: 'Chci občas dostat tip k investování (nepovinné)',
-  // Before Phase 4 nothing is stored or sent, and the page says so.
-  notice: 'Zkušební provoz: váš e-mail jsme nikam neuložili ani neodeslali.',
+  // Too many tries from one address or one network (HTTP 429).
+  limited: {
+    strong: 'Příliš mnoho pokusů.',
+    text: ' Zkuste to prosím později.',
+  },
+  // The address is stored. The link to the comparison comes with the results
+  // page (Phase 4, next steps), so this does not promise it yet.
+  done: {
+    strong: 'Hotovo.',
+    text: ' Váš e-mail jsme uložili.',
+  },
 }
 
 export const calculatorCopy = {
