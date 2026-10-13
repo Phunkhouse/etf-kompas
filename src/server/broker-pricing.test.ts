@@ -327,7 +327,30 @@ describe('the real data files', () => {
     expect(degiro.result.totalKc).toBe(14403)
     expect(degiro.result.parts).toEqual({ fund: 1748, fx: 0, broker: 12655 })
     // the dollar listing would cost 15 617 Kč (1 214 Kč more, the conversion)
-    expect(prices.headline?.brokerId).toBe('degiro')
-    expect(prices.spreadKc).toBeNull() // only one broker is priced so far
+    // Fio is priced too and is now the dearest: XETRA in euros, 3,95 EUR an order,
+    // no custody, 2,766 % to convert korunas into euros. The loop gives 30 762 Kč:
+    // the fund fee 1 748 Kč, the conversion about 13 434 Kč, the commission about
+    // 15 581 Kč.
+    const fio = prices.pricedBrokers.find((p) => p.brokerId === 'fio')!
+    expect(fio.listing).toEqual({ currency: 'EUR', venue: 'XETRA' })
+    expect(fio.result.totalKc).toBe(30762)
+    expect(prices.headline?.brokerId).toBe('fio')
+    // Trading 212 is priced too: dollar listing in London, no commission, no
+    // custody, 0.15 % to convert. Checked with an independent month-by-month loop:
+    // the fund fee part is 1 748 Kč, the conversion about 729 Kč, in all 2 476 Kč.
+    const t212 = prices.pricedBrokers.find((p) => p.brokerId === 'trading212')!
+    expect(t212.listing).toEqual({ currency: 'USD', venue: 'LSE' })
+    expect(t212.result.totalKc).toBe(2476)
+    expect(t212.result.parts.broker).toBe(0)
+    expect(t212.result.parts.fund + t212.result.parts.fx).toBe(2476)
+    // XTB is priced too: dollar listing in London, no commission below EUR 100 000
+    // a month, no custody fee for a saver, 0,5 % to convert. The same loop gives
+    // 4 176 Kč: the fund fee 1 748 Kč and the conversion about 2 428 Kč.
+    const xtb = prices.pricedBrokers.find((p) => p.brokerId === 'xtb')!
+    expect(xtb.listing).toEqual({ currency: 'USD', venue: 'LSE' })
+    expect(xtb.result.totalKc).toBe(4176)
+    expect(xtb.result.parts.broker).toBe(0)
+    // the spread between the dearest and the cheapest priced broker
+    expect(prices.spreadKc).toBe(30762 - 2476)
   })
 })

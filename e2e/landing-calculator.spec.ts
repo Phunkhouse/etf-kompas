@@ -36,14 +36,20 @@ test.describe('landing page calculator', () => {
     await expect(result).not.toHaveText(before!)
   })
 
-  test('says the cost at the verified brokers, and shows no saving box with one', async ({
+  test('says the cost at the dearest verified broker, and shows the saving box now that two have prices', async ({
     page,
   }) => {
     await page.goto('/?v=b')
     const section = page.locator('#spocitat')
     await expect(section.getByText(/u ověřených brokerů/)).toBeVisible()
     await expect(section.getByText(/nejvýš/)).toBeVisible()
-    await expect(section.getByText(/ponecháte až/)).toHaveCount(0)
+    // DEGIRO and Trading 212 are priced, so the hide rule is met
+    await expect(section.getByText(/ponecháte až/)).toBeVisible()
+    await expect(
+      section.getByRole('link', {
+        name: 'Ukázat, u kterého brokera to koupím',
+      }),
+    ).toHaveAttribute('href', '#formular')
     await expect(section.getByText(/nejlevn/i)).toHaveCount(0)
   })
 

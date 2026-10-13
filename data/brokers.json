@@ -303,6 +303,60 @@
         "verifiedOn": "2026-10-12",
         "evidence": "sha256:00a6d33a416af85555b2aeb06143b011348baa01e98e02f8ef42a76ce9dc6933 (fio-eqqq-search-01-2026-10-12.png) and sha256:8d7136ecbba703fd7e8f3d6e5a658122d646f96f9f0e9192ae458b9bd2c68e93 (fio-eqqq-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"INVESCO NAS.-100 ETF (SRN : EQQQ)\" and purchase form: ticker EQQQ, market XETRA, price in EUR. The ISIN is not shown by Fio; EQQQ is linked to IE0032077012 (Dist) by the DEGIRO screenshot of the same ticker"
       }
+    },
+    "fees": {
+      "fx": {
+        "EUR": {
+          "value": 2.766,
+          "sourceUrl": "https://www.fio.cz/akcie-investice/dalsi-sluzby-fio/devizove-konverze",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:6ef0c0bcb5ef1c4c550b2ae48a1b178e484746d0cfb73e18319085336bf8e5f8 (fio-konverze.png, Fio \"Devizové konverze\", captured 2026-10-13) and sha256:053a20e0a1dbfb46d38b6f3c421ef7f2d56120896eaa0f2b2f4c41fbfc5352f8 (fio-e-broker-konverze.png, e-Broker \"Konverze deviz\", demo account, 2026-10-13); the page: \"Měnová konverze probíhá vždy za devizové kurzy ... v aplikaci e-Broker\", small amounts at the small-volume rate (the large-volume rate is for conversions above USD 10 000, 9:00 to 16:30); e-Broker EUR/CZK Prodej 25,08480, \"Vůči kurzu ECB - prodej +2,84442 %\". Korunas buy euros at the selling rate, so the euros received are 1 - 1/1,0284442 = 2,766 % fewer than at the reference rate. The percentage moves a little from day to day (the page shows 2,8 to 3,0 % on other currencies)"
+        }
+      },
+      "purchase": [
+        {
+          "value": {
+            "venues": ["XETRA"],
+            "currency": "EUR",
+            "fixed": 3.95,
+            "percent": 0
+          },
+          "sourceUrl": "https://www.fio.cz/akcie-investice/akcie/akcie-nemecko",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:1b707d1fb2d054f06a9007020dd392e15ff642ba4bb76273fd6741783b604034 (fio-poplatky-xetra.png, Fio \"Obchodování v Německu\", \"Nová struktura poplatků od února 2026\", captured 2026-10-13); order up to EUR 1 400 inclusive: 3,95 EUR; the EUR 1,98 rate up to EUR 500 is \"na účtech s DIP\" only, so the standard account is priced. The largest deposit the calculator takes (20 000 Kč, about EUR 800) is below EUR 1 400, so this tier applies to every setting"
+        }
+      ],
+      "custody": {
+        "value": {
+          "currency": "CZK",
+          "annualFixed": 0,
+          "annualPercent": 0
+        },
+        "sourceUrl": "https://www.fio.cz/akcie-investice/akcie/akcie-nemecko",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:1b707d1fb2d054f06a9007020dd392e15ff642ba4bb76273fd6741783b604034 (fio-poplatky-xetra.png): \"Poplatek za úschovu (safekeeping) je 0 Kč bez ohledu na výši vašeho majetku\"; and sha256:b447609fcc8a1d5b1ac0e04fa46fd15dd400c6bca95b50fae8d4df92f24e7c47 (fio-poplatky-1.pdf, Ceník finančních operací a služeb): \"Vedení účtu zdarma\""
+      },
+      "listings": {
+        "cspx": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "XETRA"
+            },
+            "sourceUrl": "https://www.fio.cz",
+            "asOf": "2026-10-13",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-13",
+            "evidence": "sha256:75c216b7a2c9bed82282dff56d0c4a7f3cd053eca733edca5b552e83ef80ffcb (fio-sxr8-search-01-2026-10-12.png) and sha256:39e043a76d282a9e5ed84011855f0eea9caea793e416bc8450b4cf94e0631e68 (fio-sxr8-search-02-2026-10-12.png): SXR8 on XETRA, price in EUR (the same inference as the availability record: the ticker SXR8 is taken to be iShares Core S&P 500)"
+          }
+        ]
+      }
     }
   },
   {
@@ -475,6 +529,68 @@
         "verifiedOn": "2026-10-12",
         "evidence": "sha256:56cd45bdcbe5a58251cbf71f9445d011114ff74203eb470dc13545d0cd9a24b1 (trading212-eqqq-search-2026-10-12.png); instrument search 2026-10-12: \"Invesco EQQQ Nasdaq-100 (Dist)\", EQQQ on LSE, MIL and SIX"
       }
+    },
+    "fees": {
+      "fx": {
+        "USD": {
+          "value": 0.15,
+          "sourceUrl": "https://www.trading212.com/cs/terms/invest",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:08f595561e6c5075438cc310ffe1d5ed6f25689cd0d642e4ecdd0afc85de2cf7 (trading-212-fees-cz.png, Trading 212 \"Podmínky a poplatky\", Invest, captured 2026-10-13) and sha256:50c608f14cacc027d1e38c9d523b6c9da6b19dbc6b9d8bd666b1868b021945b4 (trading-212-fees.pdf, Costs & Charges Disclosure, no date of its own); \"FX poplatek 0,15 %\", applies whenever funds are converted from one currency to another (page, and PDF p. 2). Korunas are held in the account (the page lists an interest rate for CZK), so a deposit in korunas buying a dollar ETF is one conversion"
+        },
+        "EUR": {
+          "value": 0.15,
+          "sourceUrl": "https://www.trading212.com/cs/terms/invest",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:08f595561e6c5075438cc310ffe1d5ed6f25689cd0d642e4ecdd0afc85de2cf7 (trading-212-fees-cz.png, Trading 212 \"Podmínky a poplatky\", Invest, captured 2026-10-13) and sha256:50c608f14cacc027d1e38c9d523b6c9da6b19dbc6b9d8bd666b1868b021945b4 (trading-212-fees.pdf, Costs & Charges Disclosure, no date of its own); \"FX poplatek 0,15 %\" for any conversion from one currency to another (page, and PDF p. 2)"
+        }
+      },
+      "purchase": [
+        {
+          "value": {
+            "venues": null,
+            "currency": "CZK",
+            "fixed": 0,
+            "percent": 0
+          },
+          "sourceUrl": "https://www.trading212.com/cs/terms/invest",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:08f595561e6c5075438cc310ffe1d5ed6f25689cd0d642e4ecdd0afc85de2cf7 (trading-212-fees-cz.png, Trading 212 \"Podmínky a poplatky\", Invest, captured 2026-10-13) and sha256:50c608f14cacc027d1e38c9d523b6c9da6b19dbc6b9d8bd666b1868b021945b4 (trading-212-fees.pdf, Costs & Charges Disclosure, no date of its own); \"Obchodní provize: Bezplatně\" (page); \"Trading 212 does not charge fees on ETF trades\" (PDF p. 7). Zero in every currency, so the rule is written in CZK and needs no exchange rate"
+        }
+      ],
+      "custody": {
+        "value": {
+          "currency": "CZK",
+          "annualFixed": 0,
+          "annualPercent": 0
+        },
+        "sourceUrl": "https://www.trading212.com/cs/terms/invest",
+        "asOf": "2026-10-13",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:08f595561e6c5075438cc310ffe1d5ed6f25689cd0d642e4ecdd0afc85de2cf7 (trading-212-fees-cz.png, Trading 212 \"Podmínky a poplatky\", Invest, captured 2026-10-13) and sha256:50c608f14cacc027d1e38c9d523b6c9da6b19dbc6b9d8bd666b1868b021945b4 (trading-212-fees.pdf, Costs & Charges Disclosure, no date of its own); \"Poplatek za úschovu: Bezplatně\" (page); \"does not charge you for opening, closing, or maintaining your Invest account\" (PDF p. 2)"
+      },
+      "listings": {
+        "cspx": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "LSE"
+            },
+            "sourceUrl": "https://www.trading212.com",
+            "asOf": "2026-10-13",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-13",
+            "evidence": "sha256:26d529cc1f55bdd1c19b1a0069cfdef98661948f3b8355ae4b102acb20b7f56e (trading212-cspx-search-2026-10-11.png): \"iShares Core S&P 500 (Acc)\", CSPX · LSE, price in USD ($841.26)"
+          }
+        ]
+      }
     }
   },
   {
@@ -560,6 +676,68 @@
         "verifiedBy": "David",
         "verifiedOn": "2026-10-12",
         "evidence": "sha256:761079da3d682c1f1b6ce067e2755749509142857625c2c056fa9b39500f6102 (xtb-eqqq-search-2026-10-12.png); instrument search 2026-10-12: \"EQQQ NASDAQ-100\", EQQQ.DE (Invesco, UCITS, DIST, EUR) and EQQQ.UK (DIST, GBP)"
+      }
+    },
+    "fees": {
+      "fx": {
+        "USD": {
+          "value": 0.5,
+          "sourceUrl": "https://xas-new-cdn.xtb.com/file/0104/79/93e25843-d67e-4f7c-a252-fa0955e5f9f3/tabulkapoplatkuaprovizi30092026.pdf",
+          "asOf": "2026-09-30",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:9b4c0e6d14cedae0d5333cbac67088c00bf21c10e598704b9ece7528d4e6eba2 (xtb-fees.pdf, \"Tabulka poplatků a provizí XTB ze dne 30. září 2026\") and sha256:03b8cce6be6255b4ef02f752fc0c8b0c65f6c4e0f5b9dc6797cca3d76f60a925 (xtb-fees-screenshot.png, https://www.xtb.com/cz/ucet-a-poplatky, captured 2026-10-13); section 2: \"všechny měnové konverze související s obchodováním ... podléhají 0,5% přirážce\" (footnote 2), and \"Poplatek za konverzi měn 0,5 %\" on the page. The account is in CZK (xtb screenshot of 2026-10-11 shows 0.00 CZK), so a dollar ETF is one conversion from korunas"
+        },
+        "EUR": {
+          "value": 0.5,
+          "sourceUrl": "https://xas-new-cdn.xtb.com/file/0104/79/93e25843-d67e-4f7c-a252-fa0955e5f9f3/tabulkapoplatkuaprovizi30092026.pdf",
+          "asOf": "2026-09-30",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:9b4c0e6d14cedae0d5333cbac67088c00bf21c10e598704b9ece7528d4e6eba2 (xtb-fees.pdf, \"Tabulka poplatků a provizí XTB ze dne 30. září 2026\") and sha256:03b8cce6be6255b4ef02f752fc0c8b0c65f6c4e0f5b9dc6797cca3d76f60a925 (xtb-fees-screenshot.png, https://www.xtb.com/cz/ucet-a-poplatky, captured 2026-10-13); section 2: 0,5 % on every conversion related to trading (footnote 2), and \"Poplatek za konverzi měn 0,5 %\" on the page"
+        }
+      },
+      "purchase": [
+        {
+          "value": {
+            "venues": null,
+            "currency": "CZK",
+            "fixed": 0,
+            "percent": 0
+          },
+          "sourceUrl": "https://xas-new-cdn.xtb.com/file/0104/79/93e25843-d67e-4f7c-a252-fa0955e5f9f3/tabulkapoplatkuaprovizi30092026.pdf",
+          "asOf": "2026-09-30",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-13",
+          "evidence": "sha256:9b4c0e6d14cedae0d5333cbac67088c00bf21c10e598704b9ece7528d4e6eba2 (xtb-fees.pdf, \"Tabulka poplatků a provizí XTB ze dne 30. září 2026\") and sha256:03b8cce6be6255b4ef02f752fc0c8b0c65f6c4e0f5b9dc6797cca3d76f60a925 (xtb-fees-screenshot.png, https://www.xtb.com/cz/ucet-a-poplatky, captured 2026-10-13); section 2: commission \"0 %, minimálně 0 EUR\" before a turnover of EUR 100 000 a month on all accounts, 0,2 % (minimum EUR 10) after it; the page says \"Zdarma\" up to EUR 100 000 a month. A saver puts in at most 20 000 Kč a month, far below the limit. Zero in every currency, so the rule is written in CZK"
+        }
+      ],
+      "custody": {
+        "value": {
+          "currency": "CZK",
+          "annualFixed": 0,
+          "annualPercent": 0
+        },
+        "sourceUrl": "https://xas-new-cdn.xtb.com/file/0104/79/93e25843-d67e-4f7c-a252-fa0955e5f9f3/tabulkapoplatkuaprovizi30092026.pdf",
+        "asOf": "2026-09-30",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-13",
+        "evidence": "sha256:9b4c0e6d14cedae0d5333cbac67088c00bf21c10e598704b9ece7528d4e6eba2 (xtb-fees.pdf, \"Tabulka poplatků a provizí XTB ze dne 30. září 2026\") and sha256:03b8cce6be6255b4ef02f752fc0c8b0c65f6c4e0f5b9dc6797cca3d76f60a925 (xtb-fees-screenshot.png, https://www.xtb.com/cz/ucet-a-poplatky, captured 2026-10-13); section 1: the monthly account fee of EUR 10 is charged only if there was no opened or closed position in 365 days and no deposit in 90 days, so never for a monthly saver; \"Poplatek za úschovu\" 0,02 % a year only on the part of the portfolio above EUR 250 000 (section 5), which the calculator reaches only at the very top of the slider and does not model"
+      },
+      "listings": {
+        "cspx": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "LSE"
+            },
+            "sourceUrl": "https://www.xtb.com/cz",
+            "asOf": "2026-09-30",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-13",
+            "evidence": "sha256:9e1e0794af40e82bd623c87b6337332239fd366c0bcaa58934bca4c07bc2c7fe (xtb-cspx-search-2026-10-11.png): CSPX.UK, \"iShares Core S&P 500 UCITS (Acc USD)\", price in USD (841.39). Listing evidence from 2026-10-11"
+          }
+        ]
       }
     }
   }
