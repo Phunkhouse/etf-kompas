@@ -64,6 +64,7 @@ export function HeroTable({ twins, dataAsOf }: HeroTableProps) {
         intro
         compact
       />
+      <p className={styles.footnote}>{nbsp(text.feeFootnote)}</p>
       {dataAsOf ? (
         <p className={styles.source}>
           {nbsp(text.source(formatMonthYear(dataAsOf)))}

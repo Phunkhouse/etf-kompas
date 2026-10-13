@@ -10,7 +10,7 @@ test.describe('hero b table', () => {
     })
     await expect(table.getByRole('columnheader')).toHaveText([
       'Co koupíte',
-      'Roční poplatek',
+      'Poplatek*',
       'Typ',
     ])
     // the header row and four funds
@@ -19,9 +19,9 @@ test.describe('hero b table', () => {
 
   test('shows Acc for CSPX and Dist for EQQQ @smoke', async ({ page }) => {
     await page.goto('/?v=b')
-    const cspx = page.getByRole('row', { name: /značka CSPX/ })
+    const cspx = page.getByRole('row', { name: /iShares CSPX/ })
     await expect(cspx.getByText('Acc')).toBeVisible()
-    const eqqq = page.getByRole('row', { name: /značka EQQQ/ })
+    const eqqq = page.getByRole('row', { name: /Invesco EQQQ/ })
     await expect(eqqq.getByText('Dist')).toBeVisible()
   })
 
@@ -35,14 +35,16 @@ test.describe('hero b table', () => {
     await expect(line).toContainText(/VOO a QQQ u většiny brokerů nekoupíte/)
   })
 
-  test('has the callout and the link to the form', async ({ page }) => {
+  test('has the callout and no second link under the button', async ({
+    page,
+  }) => {
     await page.goto('/?v=b')
     await expect(page.getByRole('note')).toContainText(
       /Americké fondy \(VOO, QQQ\) u většiny brokerů z Česka nekoupíte/,
     )
     await expect(
-      page.getByRole('link', { name: 'nebo rovnou srovnání brokerů' }),
-    ).toHaveAttribute('href', '#formular')
+      page.getByRole('link', { name: /nebo rovnou srovnání/ }),
+    ).toHaveCount(0)
   })
 
   test('the card header names the source and the top bar says brokers', async ({

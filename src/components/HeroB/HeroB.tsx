@@ -98,9 +98,6 @@ export function HeroB({
             <ButtonLink href="#spocitat" fullWidth>
               {nbsp(text.cta)}
             </ButtonLink>
-            <a href="#formular" className={styles.compare}>
-              {nbsp(text.compareLink)}
-            </a>
           </div>
           {note ? (
             <p className={styles.footnote} data-testid="hero-note">

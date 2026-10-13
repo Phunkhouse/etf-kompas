@@ -42,8 +42,6 @@ export const heroCopy = {
   },
   lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.',
   cta: 'Spočítat, kolik mě to bude stát',
-  // Under the button: goes to the e-mail form (the comparison is behind it).
-  compareLink: 'nebo rovnou srovnání brokerů',
   // The one use of "ETF" on the page (SPEC §25 rule 2).
   // The second sentence is shown only when the data supports it.
   callout: {
@@ -56,11 +54,13 @@ export const heroCopy = {
     caption: 'Cena fondů',
     columns: {
       what: 'Co koupíte',
-      fee: 'Roční poplatek',
+      fee: 'Poplatek*',
       type: 'Typ',
     },
     source: (date: string) =>
       `zdroj: stránky fondů a brokerů · ověřeno k ${date}`,
+    // Explains the asterisk of the fee column.
+    feeFootnote: '* Roční poplatek fondu, počítaný z vašich peněz ve fondu.',
     feeUnknown: '[ověřit]',
     // Acc: the fund reinvests its income; Dist: it pays it out.
     type: {
@@ -68,25 +68,25 @@ export const heroCopy = {
       distributing: 'Dist',
       unverified: '[ověřit]',
     },
-    // A row's plainName comes first; the technical name, ticker and manager
-    // follow (SPEC §25 rule 3, decision note 0026). The rows follow the funds
+    // A row's plainName is the index (S&P 500, Nasdaq 100); the manager, ticker
+    // and a plain description follow in the detail (decision note 0043). The rows follow the funds
     // in data/etfs.json by id; the manager is in the fund's name there.
     rows: {
       cspx: {
-        plainName: 'Evropský fond na 500 největších firem',
-        detail: 'odborně S&P 500, značka CSPX, správce iShares',
+        plainName: 'S&P 500',
+        detail: 'iShares CSPX, 500 největších firem',
       },
       vuaa: {
-        plainName: 'Evropský fond na 500 největších firem',
-        detail: 'odborně S&P 500, značka VUAA, správce Vanguard',
+        plainName: 'S&P 500',
+        detail: 'Vanguard VUAA, 500 největších firem',
       },
       cndx: {
-        plainName: 'Evropský fond na 100 technologických firem',
-        detail: 'odborně Nasdaq 100, značka CNDX, správce iShares',
+        plainName: 'Nasdaq 100',
+        detail: 'iShares CNDX, 100 technologických firem',
       },
       eqqq: {
-        plainName: 'Evropský fond na 100 technologických firem',
-        detail: 'odborně Nasdaq 100, značka EQQQ, správce Invesco',
+        plainName: 'Nasdaq 100',
+        detail: 'Invesco EQQQ, 100 technologických firem',
       },
     },
   },
@@ -251,8 +251,8 @@ export const calculatorCopy = {
     `Počítáme s výnosem ${rate} ročně. Je to příklad, ne slib. Nepočítáme české daně ani inflaci.`,
   saving: {
     lead: 'Při vašem nastavení',
-    text: (amount: string) =>
-      `Správným brokerem si u stejného fondu ponecháte až ${amount}`,
+    // The amount follows in its own element, in green.
+    textBefore: 'Správným brokerem si u stejného fondu ponecháte až ',
     note: 'Odhad, bez českých daní a inflace.',
     button: 'Ukázat, u kterého brokera to koupím',
   },

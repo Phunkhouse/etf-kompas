@@ -163,7 +163,10 @@ export function Calculator({
           <div className={styles.saving}>
             <p className={styles.savingLead}>{nbsp(text.saving.lead)}</p>
             <p className={styles.savingText}>
-              {nbsp(text.saving.text(formatKc(prices.spreadKc)))}
+              {nbsp(text.saving.textBefore)}
+              <strong className={styles.savingAmount}>
+                {formatKc(prices.spreadKc)}
+              </strong>
             </p>
             <p className={styles.savingNote}>{nbsp(text.saving.note)}</p>
             <a href="#formular" className={styles.savingButton}>

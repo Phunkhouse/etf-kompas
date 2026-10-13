@@ -230,6 +230,17 @@ describe('Calculator: the saving box', () => {
     expect(screen.getByText(/Odhad, bez českých daní a inflace/)).toBeTruthy()
   })
 
+  it('puts the amount of the saving box in its own element, so it can be coloured', () => {
+    const data = twoBrokers()
+    render(<Calculator data={data} />)
+    const box = screen.getByText(/ponecháte až/)
+    const amount = box.querySelector('strong')
+    expect(amount).not.toBeNull()
+    expect(amount!.textContent!.replace(/\s/g, ' ')).toBe(
+      formatKc(expected(data).spreadKc!).replace(/\s/g, ' '),
+    )
+  })
+
   it('has a button that goes to the e-mail form', () => {
     render(<Calculator data={twoBrokers()} />)
     const button = screen.getByRole('link', {

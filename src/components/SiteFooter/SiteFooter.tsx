@@ -1,3 +1,4 @@
+import { Wordmark } from '@/components/Wordmark'
 import { Container } from '@/components/Container'
 import { shellCopy } from '@/content/copy'
 import { controllerLabel } from '@/config/site'
@@ -19,6 +20,7 @@ export function SiteFooter() {
     <footer className={styles.footer}>
       <Container>
         <div className={styles.inner}>
+          <Wordmark tone="dark" />
           <p className={styles.risk}>{nbsp(footer.risk)}</p>
           <p className={styles.small}>
             {nbsp(footer.controller(controllerLabel()))}

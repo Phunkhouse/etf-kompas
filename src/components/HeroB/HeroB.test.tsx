@@ -192,13 +192,12 @@ describe('HeroB', () => {
     )
   })
 
-  it('has a link "nebo rovnou srovnání brokerů" that goes to the e-mail form', () => {
+  it('has no link "nebo rovnou srovnání brokerů" under the button', () => {
     render(<HeroB twins={twins} note={note()} dataAsOf={null} />)
     expect(
-      screen
-        .getByRole('link', { name: 'nebo rovnou srovnání brokerů' })
-        .getAttribute('href'),
-    ).toBe('#formular')
+      screen.queryByRole('link', { name: /nebo rovnou srovnání/ }),
+    ).toBeNull()
+    expect(screen.getAllByRole('link')).toHaveLength(1) // only the button
   })
 
   describe('the callout', () => {

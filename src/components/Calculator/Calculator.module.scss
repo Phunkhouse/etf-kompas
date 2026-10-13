@@ -113,12 +113,19 @@
 .savingLead {
   margin: 0;
   color: var(--color-saving-soft);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--tracking-tag);
+  text-transform: uppercase;
+}
+
+.savingAmount {
+  color: var(--color-saving-fg);
 }
 
 .savingText {
   margin: 0;
-  color: var(--color-saving-fg);
+  color: var(--color-paper);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);

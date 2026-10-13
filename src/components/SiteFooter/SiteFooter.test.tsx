@@ -9,6 +9,14 @@ describe('SiteFooter', () => {
     expect(screen.getByText(/Investování nese riziko ztráty\./)).toBeTruthy()
   })
 
+  it('has the light logo at the top, on the dark background', () => {
+    render(<SiteFooter />)
+    const logo = within(screen.getByRole('contentinfo')).getByRole('img', {
+      name: 'ETF Kompas',
+    })
+    expect(logo.getAttribute('src')).toContain('etf-kompas-logo-dark.svg')
+  })
+
   it('shows the controller as a placeholder from the site config', () => {
     render(<SiteFooter />)
     expect(screen.getByText(/Správce: \[SPRÁVCE\]/)).toBeTruthy()
