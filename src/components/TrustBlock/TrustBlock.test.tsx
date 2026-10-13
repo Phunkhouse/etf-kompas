@@ -53,6 +53,14 @@ describe('TrustBlock: "Proč nám věřit"', () => {
     expect(text).toContain('Jedna investice měsíčně. Je to příklad, ne slib.')
   })
 
+  it('explains that the commission is charged on every monthly investment, so a fixed fee weighs most on small deposits', () => {
+    const { container } = render(<TrustBlock />)
+    const text = flat(container.querySelector('#jak-pocitame')!.textContent)
+    expect(text).toContain(
+      'Provizi brokera počítáme u každé měsíční investice zvlášť. Pevná částka za objednávku proto nejvíc zdraží malé měsíční vklady.',
+    )
+  })
+
   it('says it sells nothing and gives no advice', () => {
     const { container } = render(<TrustBlock />)
     expect(

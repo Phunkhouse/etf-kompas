@@ -742,3 +742,15 @@ How the AI agent (Claude Code) was used, what it produced, and where it was wron
 - **My first estimate used the wrong direction of the percentage.** The page says the selling rate is 2,84 % above the reference rate; the euros the client receives are 1 - 1/1,0284442 = 2,766 % fewer, which is what the model's "fee" has to be. Using 2,84 % directly would have overstated Fio by about 700 Kč.
 - **The page's claims got bigger overnight.** With Fio priced, "nejvýš X" jumped from 14 416 to 30 778 Kč and the saving box from 11 940 to 28 302 Kč. The numbers follow the documents, but they rest on four assumptions worth stating: orders are monthly and each pays 3,95 EUR (about 3,2 % of a 3 000 Kč deposit); the standard account, not the DIP account (1,98 EUR); the conversion happens at the small-volume selling rate, not the large-volume one (above USD 10 000); and the ticker SXR8 is the CSPX fund (the accepted inference).
 - Fio's conversion percentage varies a little from day to day (the page shows 2,8 to 3,0 % across currencies); the record is the day it was captured, and fee records go stale after 45 days.
+
+### A line about the commission in "Jak počítáme"
+
+**Prompt (summary):** David, after Fio was priced: "add a line to the 'Jak počítáme' text explaining that the commission" (the request was cut off; I read it as: the commission is charged on every monthly purchase).
+
+**Produced:** one sentence pair in the trust block: "Provizi brokera počítáme u každé měsíční investice zvlášť. Pevná částka za objednávku proto nejvíc zdraží malé měsíční vklady." It is general on purpose and names no broker, so it does not go stale when the data changes. Test first (it failed), then the copy; 485 unit/component and 116 e2e tests pass, JS unchanged.
+
+**Mistakes and corrections**
+
+- **The request arrived cut off, and I guessed its end.** I wrote what I took it to mean and said so; David should confirm the wording or tell me what the line was meant to say (for example, a specific line about Fio's 3,95 EUR per order, or about the conversion rate).
+- **My text anchor missed once more** because the copy file had been re-indented by the earlier split; the first run did not change the file and I noticed only because the new test still failed. The same slip as in C2b: a script that edits by matching text should print how many places it changed.
+- **The line is a fact about the model, not a claim about any broker:** the calculator charges the purchase fee on each monthly investment, one order a month (SPEC §21, METHODOLOGY-V2 §3).
