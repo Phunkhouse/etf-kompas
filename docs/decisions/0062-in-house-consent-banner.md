@@ -1,7 +1,7 @@
 # 0062. The consent banner is built in-house
 
 Date: 2026-10-14
-Status: proposed
+Status: accepted
 Phase: 5
 
 Note: the reason is David's ("JS budget concern, move to inhouse solution after exploring other options"). Context, alternatives and consequences are written by the agent from the exploration in the session.

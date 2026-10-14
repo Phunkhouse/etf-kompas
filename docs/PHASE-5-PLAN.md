@@ -1,6 +1,6 @@
 # Phase 5 plan: tracking and consent
 
-Status: **proposed, not approved.** Source: SPEC §9, §17.12, §22 (Phase 5), §23 and `docs/design/wireframe-b.md` (cookies). Written 2026-10-14.
+Status: **approved by David on 2026-10-14.** Source: SPEC §9, §17.12, §22 (Phase 5), §23 and `docs/design/wireframe-b.md` (cookies). Written 2026-10-14.
 
 ## Answers from David (2026-10-14)
 
