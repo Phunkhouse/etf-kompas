@@ -10,6 +10,7 @@ const comparison: Comparison = {
   setup: { monthly: 3000, years: 10, grossReturn: 6 },
   asOf: null,
   headlineFundId: 'cspx',
+  taxes: { sale: [], dividends: [] },
   funds: ['cspx', 'cndx'].map((fundId) => ({
     fundId,
     ticker: fundId.toUpperCase(),

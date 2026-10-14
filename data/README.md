@@ -1,6 +1,6 @@
 # Data
 
-`etfs.json`, `brokers.json` and `sources.json` are the only source of numbers for the page (SPEC §5, §18).
+`etfs.json`, `brokers.json`, `tax.json` and `sources.json` are the only source of numbers and tax statements for the page (SPEC §5, §18, note 0072).
 
 ## Rules
 

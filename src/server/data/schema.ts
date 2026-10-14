@@ -82,6 +82,23 @@ export const ratesSchema = z.object({
   USD: sourced(z.number().positive()),
 })
 
+// The few Czech tax statements the page may make (docs/TAX-SOURCES.md). Each one is
+// a sourced record; the sentence built from it lives in copy.ts (taxCopy).
+export const taxSchema = z.object({
+  // years after which a sale is exempt (§ 4 odst. 1 písm. u ZDP)
+  timeTestYears: sourced(z.number().int().positive()),
+  // a year's sales up to this amount (in Kč) are exempt (písm. t)
+  annualLimitKc: sourced(z.number().int().positive()),
+  // the time test and the amount limit cannot be combined
+  exemptionsExclusive: sourced(z.boolean()),
+  // neither exemption holds for securities kept in business assets
+  businessAssetsExcluded: sourced(z.boolean()),
+  // a security of a foreign issuer counts as a security (Pokyn GFŘ-D-59)
+  foreignIssuerSecurities: sourced(z.boolean()),
+  // a share of a fund's profit is capital income (§ 8 odst. 1 písm. a)
+  dividendsCapitalIncome: sourced(z.boolean()),
+})
+
 const isin = z.string().regex(/^[A-Z]{2}[A-Z0-9]{9}[0-9]$/)
 
 export const etfSchema = z.object({
@@ -121,10 +138,12 @@ export const dataSchema = z.object({
   brokers: z.array(brokerSchema),
   sources: z.array(sourceSchema),
   rates: ratesSchema.optional(),
+  tax: taxSchema.optional(),
 })
 
 export type Etf = z.infer<typeof etfSchema>
 export type Broker = z.infer<typeof brokerSchema>
+export type Tax = z.infer<typeof taxSchema>
 export type Source = z.infer<typeof sourceSchema>
 export type Currency = z.infer<typeof currencySchema>
 export type DataSet = z.infer<typeof dataSchema>

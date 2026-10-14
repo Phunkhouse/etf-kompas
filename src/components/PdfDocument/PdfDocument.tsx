@@ -369,7 +369,7 @@ function PageBody({ page, model }: { page: PdfPage; model: PdfModel }) {
                   {row.label}
                 </Text>
                 <View style={{ width: '70%' }}>
-                  {row.text === null ? (
+                  {row.sentences === null ? (
                     <>
                       <Text>{row.hint}</Text>
                       <View style={{ marginTop: 4 }}>
@@ -377,7 +377,17 @@ function PageBody({ page, model }: { page: PdfPage; model: PdfModel }) {
                       </View>
                     </>
                   ) : (
-                    <Text>{row.text}</Text>
+                    row.sentences.map((sentence) => (
+                      <View key={sentence.text} style={{ marginBottom: 4 }}>
+                        <Text>{sentence.text}</Text>
+                        {sentence.source ? (
+                          <Text style={s.small}>
+                            {pdfCopy.taxes.source}: {sentence.source.label},{' '}
+                            {sentence.source.url}
+                          </Text>
+                        ) : null}
+                      </View>
+                    ))
                   )}
                 </View>
               </View>

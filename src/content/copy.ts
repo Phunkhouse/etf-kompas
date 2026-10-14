@@ -198,6 +198,35 @@ export const faqCopy = {
   },
 }
 
+// Czech tax statements (docs/TAX-SOURCES.md). Every sentence is built from a sourced
+// record in data/tax.json and shown only when that record is verified; until then
+// the reader sees `unverified`. The citation labels are ours, the links and dates
+// come from the record. General information, not tax advice.
+export const taxCopy = {
+  unverified: '[ověřit zdroj]',
+  source: 'Zdroj',
+  sale: {
+    timeTest: (years: number) =>
+      `Když cenný papír prodáte po víc než ${years} letech od nákupu, příjem z prodeje je od daně z příjmů osvobozený.`,
+    annualLimit: (limit: string) =>
+      `Druhá možnost: když za celý rok prodáte cenné papíry nejvýš za ${limit}, daň z příjmů z nich neplatíte, ať je držíte jak dlouho chcete. Počítá se součet prodejních cen, ne zisk.`,
+    exclusive: 'Obě možnosti nejde spojit, použijete jen jednu z nich.',
+    business: 'Neplatí pro cenné papíry, které patří do vašeho podnikání.',
+    foreign: 'Platí i pro cenné papíry vydané v zahraničí.',
+  },
+  dividends:
+    'Podíl na zisku, který vám fond vyplatí, patří mezi příjmy z kapitálového majetku.',
+  citations: {
+    timeTestYears: 'Zákon č. 586/1992 Sb., § 4 odst. 1 písm. u)',
+    annualLimitKc: 'Zákon č. 586/1992 Sb., § 4 odst. 1 písm. t)',
+    exemptionsExclusive:
+      'Finanční správa, Ostatní příjmy (k zákonu č. 586/1992 Sb.)',
+    businessAssetsExcluded: 'Zákon č. 586/1992 Sb., § 4 odst. 1 písm. t) a u)',
+    foreignIssuerSecurities: 'Pokyn GFŘ-D-59 k zákonu č. 586/1992 Sb.',
+    dividendsCapitalIncome: 'Zákon č. 586/1992 Sb., § 8 odst. 1 písm. a)',
+  },
+}
+
 // "Za co platíte, aniž to vidíte": three plain cards. No figures here, on
 // purpose: every number on the page comes from the data (SPEC §18).
 export const hiddenCostsCopy = {
@@ -458,19 +487,12 @@ export const resultsCopy = {
   },
   taxes: {
     heading: '2 · Daně v Česku',
+    // `sale` and `dividends` are built from data/tax.json (taxCopy); `return` has no
+    // verified text yet.
     items: [
-      {
-        label: 'Prodej po letech',
-        text: '[Text se doplní podle ověřeného podkladu: kdy je zisk z prodeje osvobozen.]',
-      },
-      {
-        label: 'Dividendy ze zahraničí',
-        text: '[Text se doplní podle ověřeného podkladu: co stáhne zahraničí a co dopočítáte u nás.]',
-      },
-      {
-        label: 'Přiznání',
-        text: '[Text se doplní podle ověřeného podkladu: co a kam uvést.]',
-      },
+      { id: 'sale', label: 'Prodej po letech' },
+      { id: 'dividends', label: 'Dividendy ze zahraničí' },
+      { id: 'return', label: 'Přiznání' },
     ],
     note: 'Obecná informace, ne daňové poradenství.',
   },
@@ -565,23 +587,28 @@ export const pdfCopy = {
     lead: 'Jedna strana o tom, co se děje s výnosem. Text vychází jen z ověřeného podkladu (Finanční správa), který u každé věty uvedeme.',
     rows: [
       {
+        id: 'reinvesting',
         label: 'Fond, který výnosy reinvestuje',
         hint: 'Co to znamená pro daň v Česku.',
       },
       {
+        id: 'distributing',
         label: 'Fond, který výnosy vyplácí',
         hint: 'Jak se zdaňují vyplacené výnosy.',
       },
       {
+        id: 'timeTest',
         label: 'Časový test',
         hint: 'Za jakých podmínek je prodej osvobozen.',
       },
       {
+        id: 'foreignTax',
         label: 'Daň z dividend v zahraničí',
         hint: 'Co stáhne zahraničí a co se dá započítat.',
       },
     ],
     unverified: '[ověřit zdroj]',
+    source: 'Zdroj',
     note: 'Nejde o daňové poradenství. Před rozhodnutím se poraďte s poradcem.',
   },
   where: {

@@ -1,0 +1,50 @@
+{
+  "timeTestYears": {
+    "value": 3,
+    "sourceUrl": "https://www.zakonyprolidi.cz/cs/1992-586",
+    "asOf": "2026-10-14",
+    "verifiedBy": "David",
+    "verifiedOn": "2026-10-14",
+    "evidence": "§ 4 odst. 1 písm. u): příjem z úplatného převodu cenného papíru je osvobozen, přesáhne-li doba mezi nabytím a převodem 3 roky. SHA-256 of the saved page 0ffbdceb36d722097f981043dd055d405ea4fb07a219d8aafcd95bc74c7ba7a9 (captured 2026-10-14, aktuální znění 01.08.2026 až 31.12.2026, verze 157)"
+  },
+  "annualLimitKc": {
+    "value": 100000,
+    "sourceUrl": "https://www.zakonyprolidi.cz/cs/1992-586",
+    "asOf": "2026-10-14",
+    "verifiedBy": "David",
+    "verifiedOn": "2026-10-14",
+    "evidence": "§ 4 odst. 1 písm. t): příjmy z úplatného převodu cenných papírů jsou osvobozeny, pokud jejich úhrn za zdaňovací období nepřesáhne 100000 Kč. SHA-256 of the saved page 0ffbdceb36d722097f981043dd055d405ea4fb07a219d8aafcd95bc74c7ba7a9 (captured 2026-10-14, aktuální znění 01.08.2026 až 31.12.2026, verze 157)"
+  },
+  "exemptionsExclusive": {
+    "value": true,
+    "sourceUrl": "https://financnisprava.gov.cz/cs/dane/dane/dan-z-prijmu/fyzicke-osoby/ostatni",
+    "asOf": "2026-10-14",
+    "verifiedBy": "David",
+    "verifiedOn": "2026-10-14",
+    "evidence": "Stránka „Ostatní“: osvobození z titulu výše příjmu a časového testu nelze kombinovat; shodně Pokyn D-59, bod 20 k § 4 odst. 1. SHA-256 of the saved page 74f52767610e986cb50e793608738a638751308351dfe2f999382aa494156853 (captured 2026-10-14)"
+  },
+  "businessAssetsExcluded": {
+    "value": true,
+    "sourceUrl": "https://www.zakonyprolidi.cz/cs/1992-586",
+    "asOf": "2026-10-14",
+    "verifiedBy": "David",
+    "verifiedOn": "2026-10-14",
+    "evidence": "§ 4 odst. 1 písm. t) a u): osvobození se nevztahuje na cenné papíry zahrnuté do obchodního majetku (do 3 let od ukončení činnosti). SHA-256 of the saved page 0ffbdceb36d722097f981043dd055d405ea4fb07a219d8aafcd95bc74c7ba7a9 (captured 2026-10-14, aktuální znění 01.08.2026 až 31.12.2026, verze 157)"
+  },
+  "foreignIssuerSecurities": {
+    "value": true,
+    "sourceUrl": "https://financnisprava.gov.cz/assets/cs/prilohy/d-sprava-dani-a-poplatku/Pokyn_GFR-D-59.pdf",
+    "asOf": "2026-10-14",
+    "verifiedBy": "David",
+    "verifiedOn": "2026-10-14",
+    "evidence": "Pokyn GFŘ-D-59, k § 4 odst. 1, bod 19: za cenné papíry pro účely osvobození se považují i cenné papíry, jejichž emitentem je cizozemec (pokyn cituje dřívější písmena w) a x), dnes t) a u)). SHA-256 of the saved PDF 964e4a7e40c9929a13cedadf081966f75576e5551e37a72be97fc969ce075a26 (captured 2026-10-14)"
+  },
+  "dividendsCapitalIncome": {
+    "value": true,
+    "sourceUrl": "https://www.zakonyprolidi.cz/cs/1992-586",
+    "asOf": "2026-10-14",
+    "verifiedBy": "David",
+    "verifiedOn": "2026-10-14",
+    "evidence": "§ 8 odst. 1 písm. a): podíly na zisku obchodní korporace nebo podílového fondu, je-li v něm podíl představován cenným papírem, jsou příjmem z kapitálového majetku. SHA-256 of the saved page 0ffbdceb36d722097f981043dd055d405ea4fb07a219d8aafcd95bc74c7ba7a9 (captured 2026-10-14, aktuální znění 01.08.2026 až 31.12.2026, verze 157)"
+  }
+}

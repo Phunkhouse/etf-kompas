@@ -12,6 +12,7 @@ import type { ChosenRates } from './cnb'
 import { comparison } from './comparison'
 import { dataSchema, TODO_VERIFY, type Broker } from './data/schema'
 import { hasSource } from './data/verified'
+import { taxStatements, type TaxSentence } from './tax-statements'
 
 const text = pdfCopy
 const FOOTER_TEST_NOTICE = shellCopy.footer.testNotice
@@ -85,7 +86,8 @@ export type PdfPage =
       label: string
       title: string
       lead: string
-      rows: { label: string; hint: string; text: string | null }[]
+      // `sentences` is null until a row has a verified sentence
+      rows: { label: string; hint: string; sentences: TaxSentence[] | null }[]
       note: string
     }
   | {
@@ -406,14 +408,24 @@ export function pdfModel(
     }),
   }
 
-  // Page 4: taxes. No verified text yet: every row says where it will come from.
+  // Page 4: taxes. A row has sentences once its records are verified; until then it
+  // says where the text will come from.
+  const taxes = taxStatements(raw)
+  const taxRowSentences: Record<string, TaxSentence[]> = {
+    distributing: taxes.dividends,
+    timeTest: taxes.sale,
+  }
   const page4: PdfPage = {
     kind: 'taxes',
     number: 4,
     label: text.taxes.label,
     title: text.taxes.title,
     lead: text.taxes.lead,
-    rows: text.taxes.rows.map((row) => ({ ...row, text: null })),
+    rows: text.taxes.rows.map(({ label, hint, id }) => {
+      const sentences = taxRowSentences[id] ?? []
+      const shown = sentences.some((sentence) => sentence.source !== null)
+      return { label, hint, sentences: shown ? sentences : null }
+    }),
     note: text.taxes.note,
   }
 
