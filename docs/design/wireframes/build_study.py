@@ -206,7 +206,7 @@ N_LANDING = [
 N_CALC = [
     ('Question', '„Kolik vás to bude stát?“'),
     ('Inputs', 'Monthly amount 500 to 20 000 Kč in steps of 500, default 3 000 Kč, shown right-aligned and large. Period chips 5 / 10 / 20 years, default 10. One investment a month.'),
-    ('Result', '„Za 10 let vás fond (CSPX) může u ověřených brokerů stát i 30 778 Kč“ (rev. 6; the amount is the real calculator result at the dearest verified broker), then the three parts: roční poplatek fondu, převod korun na cizí měnu, poplatky brokera. Then „Počítáme s výnosem 6 % ročně. Je to příklad, ne slib. Nepočítáme české daně ani inflaci.“'),
+    ('Result', '„Za 10 let vás fond (CSPX) může u ověřených brokerů stát i 30 769 Kč“ (rev. 6, data of 2026-10-14; the amount is the real calculator result at the dearest verified broker), then the three parts: roční poplatek fondu, převod korun na cizí měnu, poplatky brokera. Then „Počítáme s výnosem 6 % ročně. Je to příklad, ne slib. Nepočítáme české daně ani inflaci.“'),
     ('Illustrative line', '„Ilustrativní hodnota po 10 letech: X XXX Kč, z toho poplatky X XXX Kč · 6 % ročně, příklad, ne slib.“ Net of fees, same assumption for every fund, small, under the result.'),
     ('Green saving box', '„Při vašem nastavení · Správným brokerem si u stejného fondu ponecháte až X XXX Kč · Odhad, bez českých daní a inflace.“ Button „Ukázat, u kterého brokera to koupím“, which goes to the e-mail form. The amount is the spread between brokers that offer the chosen fund.'),
     ('Hide rule', 'The box and its button show only when at least two brokers have verified prices. Otherwise the calculator ends with the illustrative line and the form follows. Never „až 0 Kč“ and never an invented number.'),
@@ -264,10 +264,10 @@ N_ADS = [
 ]
 VERIFY = [
     ('Fees', 'VUAA, VUSA, CNDX, EQQQ', 'Verified (rev. 6): factsheets and KIDs of the issuers, date and link per number. The earlier „CSNDX 0,33 %“ was from memory; the verified CNDX fee is 0,30 %.'),
-    ('Availability', '5 funds × 5 brokers', 'Broker search or price list. Verified so far: CSPX at DEGIRO, Trading 212, XTB. Fio and IBKR: open.'),
-    ('Fio and IBKR for US funds', 'QQQ, VOO', 'Fio lists QQQ (under its old name) in its ETF directory and not VOO; order access is unverified. IBKR: unverified. Wording stays „u většiny brokerů nekoupíte“.'),
-    ('Broker prices', 'Order fee, currency conversion, custody', 'Price list per broker, with date. Needed for „Za 10 let celkem“ and the saving box.'),
-    ('Currency listing', 'CSPX and the others', 'USD or EUR line per broker; each broker is priced at its cheapest listing (verified for CSPX; the others follow).'),
+    ('Availability', '5 funds × 5 brokers', 'Broker search or price list. Verified for all five funds at all five brokers (2026-10-14).'),
+    ('Fio and IBKR for US funds', 'QQQ, VOO', 'Fio lists QQQ (under its old name) in its ETF directory and not VOO; order access is unverified. IBKR: verified as not sold (2026-10-13). Wording stays „u většiny brokerů nekoupíte“.'),
+    ('Broker prices', 'Order fee, currency conversion, custody', 'Price list per broker, with date. Verified for all five brokers (2026-10-14); needed for „Za 10 let celkem“ and the saving box.'),
+    ('Currency listing', 'CSPX and the others', 'USD or EUR line per broker; each broker is priced at its cheapest listing (verified for all five funds on 2026-10-14; listings in GBP, GBX and CHF are not recorded because the model has only CZK, EUR and USD).'),
     ('Tax text', 'Acc / Dist, 3-year test, foreign withholding', 'Only from a verified source (Finanční správa), with a link per statement.'),
     ('Legal text', 'Privacy policy, cookies, controller', 'Written and reviewed by someone qualified. Consent flow and retention periods decided.'),
     ('Calculator formula', 'Fund fee, FX, broker fees, rounding', 'Pure function with tests, every rate from a dated data file.'),
