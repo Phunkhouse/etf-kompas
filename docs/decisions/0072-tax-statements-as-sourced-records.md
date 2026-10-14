@@ -1,7 +1,7 @@
 # 0072. Tax statements are sourced records, shown only when verified
 
 Date: 2026-10-14
-Status: proposed
+Status: accepted
 Phase: 6
 
 Note: the reason is David's ("we want to fill as much as possible with data and knowledge we have at our disposal", 2026-10-14). The context, the alternative and the consequences are written by the agent.
