@@ -258,17 +258,48 @@ describe('pdfModel: page 3, what the price is made of', () => {
 
 describe('pdfModel: page 4, the taxes', () => {
   it('has the four rows of the drawing, each [ověřit zdroj] until there is verified text', () => {
-    const page4 = page(build(), 'taxes')
+    const data = raw()
+    delete data.tax
+    const page4 = page(build(data), 'taxes')
     expect(page4.rows.map((r) => r.label)).toEqual([
       'Fond, který výnosy reinvestuje',
       'Fond, který výnosy vyplácí',
       'Časový test',
       'Daň z dividend v zahraničí',
     ])
-    for (const row of page4.rows) expect(row.text).toBeNull()
+    for (const row of page4.rows) expect(row.sentences).toBeNull()
     expect(page4.note).toBe(
       'Nejde o daňové poradenství. Před rozhodnutím se poraďte s poradcem.',
     )
+  })
+})
+
+describe('pdfModel: page 4 with verified tax records', () => {
+  it('fills the time-test and distributing rows with sourced sentences, and leaves the others', () => {
+    const data = raw()
+    const law = 'https://www.zakonyprolidi.cz/cs/1992-586'
+    const record = (value: unknown) => ({
+      value,
+      sourceUrl: law,
+      asOf: '2026-10-14',
+      verifiedBy: 'David',
+      verifiedOn: '2026-10-15',
+      evidence: 'sha256:abc',
+    })
+    data.tax = {
+      timeTestYears: record(3),
+      annualLimitKc: record(100000),
+      exemptionsExclusive: record(true),
+      businessAssetsExcluded: record(true),
+      foreignIssuerSecurities: record(true),
+      dividendsCapitalIncome: record(true),
+    }
+    const rows = page(build(data), 'taxes').rows
+    const byLabel = Object.fromEntries(rows.map((r) => [r.label, r.sentences]))
+    expect(byLabel['Časový test']?.[0].source?.url).toBe(law)
+    expect(byLabel['Fond, který výnosy vyplácí']?.[0].source?.url).toBe(law)
+    expect(byLabel['Fond, který výnosy reinvestuje']).toBeNull()
+    expect(byLabel['Daň z dividend v zahraničí']).toBeNull()
   })
 })
 

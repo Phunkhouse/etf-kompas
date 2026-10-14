@@ -10,6 +10,10 @@ function build(overrides: Partial<Comparison> = {}): Comparison {
     setup: { monthly: 3000, years: 10, grossReturn: 6 },
     asOf: '2026-06-30',
     headlineFundId: 'cspx',
+    taxes: {
+      sale: [{ text: '[ověřit zdroj]', source: null }],
+      dividends: [{ text: '[ověřit zdroj]', source: null }],
+    },
     funds: [
       {
         fundId: 'cspx',
@@ -180,13 +184,42 @@ describe('ResultsPage', () => {
     expect(flat(strip.textContent)).toContain('2 000 Kč')
   })
 
-  it('says how long the link works and that tax text is still to be filled in', () => {
+  it('says how long the link works and shows [ověřit zdroj] for tax text without a verified source', () => {
     const { container } = render(
       <ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" token="x" />,
     )
     expect(container.textContent).toContain('Odkaz platí 30 dní.')
-    expect(container.textContent).toContain(
-      'Text se doplní podle ověřeného podkladu',
+    expect(container.textContent).toContain('[ověřit zdroj]')
+    expect(container.textContent).not.toContain('Text se doplní')
+  })
+
+  it('shows a verified tax sentence with a link to its source', () => {
+    render(
+      <ResultsPage
+        comparison={build({
+          taxes: {
+            sale: [
+              {
+                text: 'Příklad věty o daních.',
+                source: {
+                  label: 'Zákon č. 586/1992 Sb., § 4',
+                  url: 'https://example.com/zakon',
+                  asOf: '2026-10-14',
+                },
+              },
+            ],
+            dividends: [{ text: '[ověřit zdroj]', source: null }],
+          },
+        })}
+        pdfHref="/srovnani/x/pdf"
+        token="x"
+      />,
     )
+    expect(screen.getByText(/Příklad věty o daních/)).toBeTruthy()
+    expect(
+      screen
+        .getByRole('link', { name: /Zákon č\. 586\/1992/ })
+        .getAttribute('href'),
+    ).toBe('https://example.com/zakon')
   })
 })

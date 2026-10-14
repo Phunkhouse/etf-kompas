@@ -320,6 +320,88 @@ describe('validateData', () => {
 })
 
 describe('seed data files', () => {
+  describe('tax records', () => {
+    function withTax(tax: unknown) {
+      return { ...data(), tax }
+    }
+    const taxRecords = (overrides: Record<string, unknown> = {}) => ({
+      timeTestYears: record(3),
+      annualLimitKc: record(100000),
+      exemptionsExclusive: record(true),
+      businessAssetsExcluded: record(true),
+      foreignIssuerSecurities: record(true),
+      dividendsCapitalIncome: record(true),
+      ...overrides,
+    })
+
+    it('accepts a dataset with verified tax records', () => {
+      expect(run(withTax(taxRecords())).issues).toEqual([])
+    })
+
+    it('accepts a dataset without tax records', () => {
+      expect(run(data()).ok).toBe(true)
+    })
+
+    it('rejects a value of the wrong type', () => {
+      const result = run(withTax(taxRecords({ timeTestYears: record('3') })))
+      expect(result.ok).toBe(false)
+      expect(result.issues[0]).toMatchObject({ code: 'MALFORMED' })
+    })
+
+    it('reports an unverified tax record: a warning in draft, an error in strict', () => {
+      const todo = record(3, { verifiedBy: 'TODO_VERIFY' })
+      const input = withTax(taxRecords({ timeTestYears: todo }))
+      expect(run(input, 'draft').ok).toBe(true)
+      expect(run(input, 'draft').issues).toContainEqual(
+        expect.objectContaining({
+          code: 'TODO_VERIFY',
+          severity: 'warning',
+          path: 'tax.timeTestYears',
+        }),
+      )
+      expect(run(input, 'strict').ok).toBe(false)
+    })
+
+    it('reports a tax record without evidence, and one from an unknown source', () => {
+      const result = run(
+        withTax(
+          taxRecords({
+            annualLimitKc: record(100000, { evidence: null }),
+            foreignIssuerSecurities: record(true, {
+              sourceUrl: 'https://example.com/other',
+            }),
+          }),
+        ),
+      )
+      expect(result.issues).toContainEqual(
+        expect.objectContaining({
+          code: 'MISSING_SOURCE',
+          path: 'tax.annualLimitKc.evidence',
+        }),
+      )
+      expect(result.issues).toContainEqual(
+        expect.objectContaining({
+          code: 'UNKNOWN_SOURCE',
+          path: 'tax.foreignIssuerSecurities.sourceUrl',
+        }),
+      )
+    })
+
+    it('goes stale after 120 days, like the other records', () => {
+      const result = run(
+        withTax(
+          taxRecords({ timeTestYears: record(3, { asOf: '2026-05-01' }) }),
+        ),
+      )
+      expect(result.issues).toContainEqual(
+        expect.objectContaining({
+          code: 'STALE',
+          path: 'tax.timeTestYears.asOf',
+        }),
+      )
+    })
+  })
+
   // The real data files carry real dates, so they are checked on a fixed day:
   // the day the latest values were verified.
   const SEED_TODAY = '2026-10-14'

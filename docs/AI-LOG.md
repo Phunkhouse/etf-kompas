@@ -1470,3 +1470,18 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 - **The plan's checklist had items I had never planned to test and then said were done** in my own summaries (the cron "first run"; the rate limit on the live site; the exchange-rate fetch). They are left open, not ticked.
 - **My plan said the earliest stale date was 24 Oct for EQQQ and 28 Oct for VOO;** the validator says 25 Oct, and the VOO record no longer exists (note 0069). The plan keeps the old numbers in its first draft text and notes the correction at the line.
+
+### After Phase 6: tax statements from sourced records
+
+**Prompt (summary):** David gave two documents from outside (`tax-basis-sources.md` and an addendum) and asked whether they could fill the missing tax data; then: "fill as much as we can", leave the reviewer only what we could not find. Approved the plan with sourced records (reason in note 0072); the hidden-cost card stays blank.
+
+**Produced:** `data/tax.json` (six records, each with the SHA-256 of the page I read), four sources in `data/sources.json`, the schema and validator for `tax`, `src/server/tax-statements.ts`, `taxCopy` in `copy.ts`, the page and PDF wiring, `docs/TAX-SOURCES.md` rewritten to the open items only, note 0072. Tests first (approved): `tax-statements.test.ts` and the tax block of `validate.test.ts`.
+
+**Checked:** the provisions in the full law text (version 157), the "Ostatní" page, the press release and D-59 (extracted to text with PDFKit). `pnpm lint`, `copy:check`, `data:validate:draft`, `format:check`; all tests pass except the seed-data gate, which fails on purpose until David fills `verifiedBy` and `verifiedOn`.
+
+**Mistakes and corrections**
+
+- **My first verdict on the documents rested on summaries by a small model that read only the first 100 000 characters of the law.** I called § 38v, § 38w and D-59 "unverified" when I could simply read the full text, which I did later; they are right (§ 38w: 0,1 %, 10 %, 15 %; D-59 point 19).
+- **The addendum is wrong on § 10 odst. 4:** it is the tax base (income minus expenses), the expense for a thing is in § 10 odst. 5; there is no FIFO rule in § 10. The first document's FIFO claim has no source.
+- **I wrote "the plan is below" and did not write the plan,** so David approved a plan he could not see. I wrote it out in the next message and he confirmed.
+- **The Finanční správa page "Ostatní" is stale** (names písm. q) and the 40 million Kč cap); the law and the press release agree with each other, not with that page.

@@ -12,6 +12,7 @@ import { oldestAsOf } from './data/freshness'
 import { dataSchema } from './data/schema'
 import { TODO_VERIFY } from './data/todo'
 import { hasSource } from './data/verified'
+import { taxStatements, type TaxStatements } from './tax-statements'
 
 // The twins in the order of the comparison page (note 0036); the first one is the
 // fund the calculator and its headline use.
@@ -55,6 +56,7 @@ export type Comparison = {
   headlineFundId: string
   funds: ComparisonFund[]
   byFund: Record<string, ComparisonForFund>
+  taxes: TaxStatements
 }
 
 type Sourced = {
@@ -133,6 +135,7 @@ export function comparison(
     setup: input,
     asOf: oldestAsOf(raw),
     headlineFundId: FUNDS[0],
+    taxes: taxStatements(raw),
     funds,
     byFund,
   }

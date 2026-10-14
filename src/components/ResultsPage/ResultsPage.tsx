@@ -7,7 +7,7 @@ import { ResendCard } from '@/components/ResendCard'
 import { Pill } from '@/components/Pill'
 import { Table, TableLabel, type TableColumn } from '@/components/Table'
 import { Tag } from '@/components/Tag'
-import { resultsCopy } from '@/content/copy'
+import { resultsCopy, taxCopy } from '@/content/copy'
 import { formatKc, formatPercent } from '@/lib/format'
 import { nbsp } from '@/lib/typography'
 import type { Comparison } from '@/server/comparison'
@@ -150,7 +150,28 @@ export function ResultsPage({
                 {text.taxes.items.map((item) => (
                   <li key={item.label} className={styles.card}>
                     <Tag as="p">{item.label}</Tag>
-                    <p className={styles.cardText}>{nbsp(item.text)}</p>
+                    {(
+                      comparison.taxes[item.id as 'sale' | 'dividends'] ?? [
+                        { text: taxCopy.unverified, source: null },
+                      ]
+                    ).map((sentence) => (
+                      <p key={sentence.text} className={styles.cardText}>
+                        {nbsp(sentence.text)}
+                        {sentence.source ? (
+                          <>
+                            {' '}
+                            <a
+                              className={styles.source}
+                              href={sentence.source.url}
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              {nbsp(sentence.source.label)}
+                            </a>
+                          </>
+                        ) : null}
+                      </p>
+                    ))}
                   </li>
                 ))}
               </ul>

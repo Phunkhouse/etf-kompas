@@ -168,6 +168,7 @@ export function validateData(
   walk(parsed.data.etfs, ['etfs'])
   walk(parsed.data.brokers, ['brokers'])
   walk(parsed.data.rates, ['rates'])
+  walk(parsed.data.tax, ['tax'])
 
   return { ok: issues.every((i) => i.severity !== 'error'), issues }
 }
