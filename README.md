@@ -186,7 +186,7 @@ Order of running: 2, then 1, then 3, because test 2 needs only copy and test 1 n
 3. **Vercel Hobby is a non-commercial plan.** A real launch needs Pro or another host.
 4. **The data goes stale and a build stops with it.** Every record has a date; the strict check fails a build on a stale one (the first on 2026-10-25), and the monthly refresh job of SPEC §18 is not built.
 5. **Two vendor integrations are unverified:** Meta Test Events were not run on the deployed address, and the server-side Meta call is built but not enabled (no token, no Graph version).
-6. **Test e-mail setup.** E-mail goes from the author's test domain; the production switch (a real domain, `live` mode) is a checklist in [docs/DEPLOY.md](docs/DEPLOY.md).
+6. **E-mail is in `sandbox` mode on purpose.** The e-mail with the links goes only to an allowlist of reviewers' addresses (`EMAIL_SANDBOX_ALLOWLIST` in Vercel), so no stranger receives mail and no real person's address can reach a project with a placeholder controller and unreviewed legal text. Everyone else still gets the results page and the PDF, and the page says nothing about an e-mail. A reviewer whose address is not on the list sees no e-mail; the owner adds it and redeploys. The e-mail comes from the author's test domain; the production switch (a real domain, `live` mode) is a checklist in [docs/DEPLOY.md](docs/DEPLOY.md).
 
 **All known gaps (end of Phase 6, 2026-10-14)**
 
