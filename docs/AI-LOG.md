@@ -1214,3 +1214,17 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **A destructive slip with git:** while measuring the budget I ran `git stash` and `git switch main` in a command that I wrote carelessly. Nothing was lost (the tracked changes came back with `git stash pop`, the new files were never stashed), but I should not have put a stash in a measuring command. I checked the branch and `git status` before going on.
 - **My measuring script gave different numbers on each run** (it summed sizes asynchronously and closed too early), so I measured with the project's own budget test instead.
 - **A test bug:** the helper `setup(capi = CONFIG)` replaced `undefined` with the default, so "not configured" was not tested; found by the test failing, fixed with an explicit `null`.
+
+### Phase 6, PR 1: data model without unused unverified fields
+
+**Prompt (summary):** David approved the Phase 6 plan and answered "yes drop, but verify if something isn't essential" for the 51 `TODO_VERIFY` values.
+
+**Produced:** `docs/PHASE-6-PLAN.md`; the 51 values removed from `data/*.json`; `data/rates.json` deleted; schema: `replication`, `fundSizeEur`, returns and the version 1 broker fees removed, five fund fields optional; `verified()` in `hero.ts` and `comparison.ts` accept a missing record; `needs.ts`, `data-gaps.ts`, tests and docs follow; note 0066. `pnpm data:validate` strict: 0 errors; `pnpm data:gaps` still 138 of 138.
+
+**Checked:** each field grepped in `src/` before removal. **Not verified:** whether Fio sells VOO and QQQ (left absent, not guessed).
+
+**Mistakes and corrections**
+
+- **My first dump of `etfs.json` printed the whole file** (I printed the first five elements of a list as if they were keys). Nothing wrong in the repo, but it flooded the context; I used ids only afterwards.
+- **My first reading of the data was wrong:** I took `etfs.json` for an object with an `etfs` key, so the fund list in my plan was incomplete until I read the ids (7 funds, not 5).
+- **I chose "optional, keep verified values" for dividend yield, withholding rate and others instead of dropping them,** which is narrower than David's "drop". Reported in the note so he can overrule it.

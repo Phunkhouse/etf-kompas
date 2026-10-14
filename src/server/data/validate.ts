@@ -21,7 +21,6 @@ export type ValidationResult = { ok: boolean; issues: Issue[] }
 
 export const MAX_AGE_DAYS = 120
 export const MAX_AGE_DAYS_BROKER_FEE = 45
-const BROKER_FEE_KEYS = new Set(['fxFeePct', 'custodyFeePct'])
 const META_FIELDS = [
   'sourceUrl',
   'asOf',
@@ -94,12 +93,7 @@ export function validateData(
     issues.push({ code, severity, path, message })
   }
 
-  function checkRecord(
-    record: Sourced,
-    path: string,
-    key: string,
-    isFee: boolean,
-  ) {
+  function checkRecord(record: Sourced, path: string, isFee: boolean) {
     const isPlaceholder =
       record.value === TODO_VERIFY ||
       META_FIELDS.some((field) => record[field] === TODO_VERIFY)
@@ -144,10 +138,7 @@ export function validateData(
       } else if (asOfTime > todayTime!) {
         add('FUTURE_DATE', `${path}.asOf`, 'asOf is in the future')
       } else {
-        const limit =
-          BROKER_FEE_KEYS.has(key) || isFee
-            ? MAX_AGE_DAYS_BROKER_FEE
-            : MAX_AGE_DAYS
+        const limit = isFee ? MAX_AGE_DAYS_BROKER_FEE : MAX_AGE_DAYS
         const ageDays = Math.round((todayTime! - asOfTime) / DAY_MS)
         if (ageDays > limit) {
           add(
@@ -164,7 +155,7 @@ export function validateData(
     if (isSourced(node)) {
       // broker fees (version 2) and exchange rates go stale as fast as fees
       const isFee = path[0] === 'rates' || path.includes('fees')
-      checkRecord(node, formatPath(path), String(path[path.length - 1]), isFee)
+      checkRecord(node, formatPath(path), isFee)
     } else if (Array.isArray(node)) {
       node.forEach((child, index) => walk(child, [...path, index]))
     } else if (typeof node === 'object' && node !== null) {

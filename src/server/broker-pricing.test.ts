@@ -45,8 +45,6 @@ function broker(over: Over = {}): Broker {
   return {
     id: over.id ?? 'b',
     name: over.id ?? 'b',
-    fxFeePct: todo,
-    custodyFeePct: todo,
     czSupport: todo,
     availability: {
       cspx: over.sells === 'todo' ? todo : sourced(over.sells ?? true),

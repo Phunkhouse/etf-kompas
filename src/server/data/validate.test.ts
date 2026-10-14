@@ -49,8 +49,6 @@ function broker(overrides: Record<string, unknown> = {}) {
   return {
     id: 'test-broker',
     name: 'Test Broker',
-    fxFeePct: record(0.5),
-    custodyFeePct: record(0),
     czSupport: record(true),
     availability: { 'test-etf': record(true) },
     ...overrides,
@@ -183,12 +181,22 @@ describe('validateData', () => {
 
     it('uses a 45-day limit for broker fees', () => {
       const brokerAged = (asOf: string) =>
-        data({ brokers: [broker({ fxFeePct: record(0.5, { asOf }) })] })
+        data({
+          brokers: [
+            broker({
+              fees: {
+                fx: { EUR: record(0.5, { asOf }) },
+                purchase: [],
+                listings: {},
+              },
+            }),
+          ],
+        })
       // 2026-08-25 is 46 days before, 2026-08-26 is exactly 45
       expect(run(brokerAged('2026-08-25')).issues).toContainEqual(
         expect.objectContaining({
           code: 'STALE',
-          path: 'brokers[0].fxFeePct.asOf',
+          path: 'brokers[0].fees.fx.EUR.asOf',
         }),
       )
       expect(run(brokerAged('2026-08-26')).ok).toBe(true)
@@ -304,15 +312,15 @@ describe('seed data files', () => {
   // the day the latest values were verified.
   const SEED_TODAY = '2026-10-14'
 
-  it('passes draft mode but not strict mode (some values are still TODO_VERIFY)', async () => {
+  // The deploy gate (SPEC §19): no TODO_VERIFY is left in the data (note 0066).
+  it('passes strict mode, and so draft mode too', async () => {
     const { loadData } = await import('./load')
     const input = await loadData()
-    expect(validateData(input, { today: SEED_TODAY, mode: 'draft' }).ok).toBe(
-      true,
-    )
-    expect(validateData(input, { today: SEED_TODAY, mode: 'strict' }).ok).toBe(
-      false,
-    )
+    for (const mode of ['strict', 'draft'] as const) {
+      expect(validateData(input, { today: SEED_TODAY, mode }).issues).toEqual(
+        [],
+      )
+    }
   })
 
   // The fund set of note 0036: the five European twins, plus VOO and QQQ, which

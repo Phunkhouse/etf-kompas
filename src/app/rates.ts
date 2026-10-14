@@ -1,11 +1,10 @@
 import { cacheLife } from 'next/cache'
 import { chooseRates, fetchCnbRates, type ChosenRates } from '@/server/cnb'
-import { bundledData } from '@/server/data/bundled'
-import { ratesSchema } from '@/server/data/schema'
 
 // The exchange rates the calculator uses: the Czech National Bank's daily file,
-// fetched by the server and cached, with the verified record in data/rates.json
-// as the fallback (docs/METHODOLOGY-V2.md). About two small requests a day for
+// fetched by the server and cached. There is no stored fallback: a record would be
+// too old to use within days (note 0066), so without the bank's answer there is no
+// price and the page shows the fund fee only. About two small requests a day for
 // the whole site, not one per visitor.
 export async function getRates(): Promise<ChosenRates> {
   'use cache'
@@ -18,5 +17,5 @@ export async function getRates(): Promise<ChosenRates> {
       : { stale: 60, revalidate: 300, expire: 604800 },
   )
   const today = new Date().toISOString().slice(0, 10)
-  return chooseRates(fetched, ratesSchema.parse(bundledData.rates), today)
+  return chooseRates(fetched, undefined, today)
 }

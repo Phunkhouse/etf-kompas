@@ -35,7 +35,8 @@ type Sourced = {
   evidence: string | null
 }
 
-function verified(record: Sourced): unknown {
+function verified(record: Sourced | undefined): unknown {
+  if (!record) return null
   return record.value !== TODO_VERIFY && hasSource(record) ? record.value : null
 }
 

@@ -90,28 +90,24 @@ export const etfSchema = z.object({
   region: z.enum(['us-listed', 'ucits']),
   indexGroup: z.string().min(1),
   name: sourced(z.string().min(1)),
-  indexName: sourced(z.string().min(1)),
   isin: sourced(isin),
-  domicile: sourced(z.string().min(1)),
-  replication: sourced(z.string().min(1)),
-  distribution: sourced(z.string().min(1)),
+  // Not shown by any screen, so optional: a fund without it is valid (note 0066).
+  indexName: sourced(z.string().min(1)).optional(),
+  domicile: sourced(z.string().min(1)).optional(),
+  // The original US funds (VOO, QQQ) have none; the twins need it (`pnpm data:gaps`).
+  distribution: sourced(z.string().min(1)).optional(),
   // Percentages are plain numbers: 0.07 means 0.07 %.
   ter: sourced(z.number().min(0)),
-  fundSizeEur: sourced(z.number().int().min(0)),
-  dividendYieldPct: sourced(z.number().min(0)),
-  withholdingRate: sourced(z.number().min(0).max(100)),
-  return5yPct: sourced(z.number()),
-  return10yPct: sourced(z.number()),
+  dividendYieldPct: sourced(z.number().min(0)).optional(),
+  withholdingRate: sourced(z.number().min(0).max(100)).optional(),
 })
 
 export const brokerSchema = z.object({
   id: z.string().min(1),
   // Plain label (our choice of who to list), not a verified fact.
   name: z.string().min(1),
-  fxFeePct: sourced(z.number().min(0)),
-  custodyFeePct: sourced(z.number().min(0)),
   czSupport: sourced(z.boolean()),
-  // Keyed by ETF id.
+  // Keyed by ETF id. A fund that is missing is unknown, not "no".
   availability: z.record(z.string(), sourced(z.boolean())),
   // Version 2 of the calculator. Optional while the data is being filled in.
   fees: brokerFeesSchema.optional(),
