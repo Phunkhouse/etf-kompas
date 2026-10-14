@@ -195,10 +195,10 @@ describe('LeadForm: a valid address', () => {
     email: { status: 'skipped', address: 'jan@domena.cz' },
   }
 
-  it('says the address is stored', () => {
+  it('says the comparison is ready (the sentence of the drawing)', () => {
     renderForm({ initialState: state })
     expect(flat(screen.getByRole('status').textContent)).toBe(
-      'Hotovo. Váš e-mail jsme uložili.',
+      'Hotovo. Srovnání je připravené.',
     )
   })
 

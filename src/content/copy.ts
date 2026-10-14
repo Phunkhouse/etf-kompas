@@ -240,11 +240,11 @@ export const leadFormCopy = {
     strong: 'Příliš mnoho pokusů.',
     text: ' Zkuste to prosím později.',
   },
-  // The address is stored and the comparison is open now. It does not say that an
-  // e-mail was sent: that comes with the e-mails (Phase 4, PR 4).
+  // The sentence of the drawing: the comparison is ready, and its links are on the page.
+  // Nothing is said about an e-mail unless `sent` or `failed` below applies.
   done: {
     strong: 'Hotovo.',
-    text: ' Váš e-mail jsme uložili.',
+    text: ' Srovnání je připravené.',
     open: 'Otevřít srovnání',
     pdf: 'Stáhnout PDF · 6 stran',
     // Said only when the e-mail really went out (sandbox mode sends to the allowlist only).
