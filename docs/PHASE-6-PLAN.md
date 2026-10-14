@@ -87,7 +87,7 @@ Deploy itself is a Vercel project connected to the repo (needs you, see below); 
 ### Tracking on the live site (Phase 5 leftovers)
 
 - [ ] Network tab on a real phone: zero third-party requests before consent and after "Odmítnout vše".
-- [ ] GA4 DebugView and Meta Test Events show `page_view` ... `lead` with one shared `event_id`.
+- [x] GA4 DebugView (2026-10-14) and Meta Test Events (browser side, 2026-10-14) show the events after consent; the shared `event_id` with the server call is not checked (server side not enabled).
 - [ ] Meta Conversions API: documented as "built, not enabled" (token and Graph version missing); enabling is a later step.
 - [ ] Decision notes waiting on your "ok": vendors only after consent, no GA4 Measurement Protocol.
 
