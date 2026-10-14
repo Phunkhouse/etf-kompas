@@ -1160,3 +1160,5 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **A test mounted the inline script many times** and the document listeners piled up, so events were counted five times. A test-only artifact (the real page runs it once); the test now removes its listeners.
 
 **Open points for David:** (1) the bar shows the "Zásady zpracování" link on the phone too, the phone drawing has none; (2) "Anonymní statistiky" is the drawing's text, but GA4 is not strictly anonymous: a lawyer should look at it; (3) the choice cookie lives 180 days, `TODO_VERIFY` (legal); (4) on desktop the buttons are reversed in CSS to match the drawing, so the tab order differs from the visual order.
+
+**David's answers on PR #84 (2026-10-14):** the "Zásady zpracování" link stays on the phone bar, so the drawing was updated, not the page (`gen_pages_rev4.py`, `make_rev6.sh` rebuilt the artboards, the board and the study; the diff is that one link; `wireframe-b.md` says the PNG is stale until exported again). "Anonymní statistiky" and the 180-day lifetime go into the legal pack (`docs/LEGAL-PACK.md`). The reversed desktop button order is accepted.

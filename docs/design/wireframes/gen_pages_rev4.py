@@ -96,7 +96,7 @@ out['mm01menu']=doc('Menu – mobil',CM,'<div style="background:#F6F3EC;min-heig
 COOK_TXT='Nezbytné cookies používáme, aby web fungoval. Měření návštěvnosti a reklamní cookies zapneme jen s vaším souhlasem.'
 bar_m=('<div role="dialog" aria-label="Cookies" style="position:absolute;left:0;right:0;bottom:0;background:#16150F;color:#F6F3EC;padding:20px 16px 24px;display:flex;flex-direction:column;gap:12px;border-radius:14px 14px 0 0">'
  '<span class="tag" style="color:#B9B3A2">Cookies</span>'
- f'<p style="font-size:14px;line-height:1.45;color:#D9D4C5">{COOK_TXT}</p>'
+ f'<p style="font-size:14px;line-height:1.45;color:#D9D4C5">{COOK_TXT} <a href="#p" style="color:#F6F3EC">Zásady zpracování</a></p>'
  '<div style="display:flex;flex-direction:column;gap:8px">'
  '<a class="btn" href="#a" style="background:#F6F3EC;color:#16150F;min-height:52px">Přijmout vše</a>'
  '<a class="btn" href="#r" style="background:transparent;color:#F6F3EC;border:1.5px solid #F6F3EC;min-height:52px">Odmítnout vše</a>'
