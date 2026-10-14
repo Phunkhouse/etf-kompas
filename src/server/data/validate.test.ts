@@ -302,7 +302,7 @@ describe('validateData', () => {
 describe('seed data files', () => {
   // The real data files carry real dates, so they are checked on a fixed day:
   // the day the latest values were verified.
-  const SEED_TODAY = '2026-10-13'
+  const SEED_TODAY = '2026-10-14'
 
   it('passes draft mode but not strict mode (some values are still TODO_VERIFY)', async () => {
     const { loadData } = await import('./load')
