@@ -10,6 +10,7 @@ export async function GET() {
   if (!memory) return new Response('Not found', { status: 404 })
   return Response.json({
     leads: memory.leads(),
+    events: memory.eventRows(),
     tokens: memory.tokens(),
     // what the recording mailer "sent" (nothing leaves the machine)
     mails: memoryMail()?.mailer.sent() ?? [],

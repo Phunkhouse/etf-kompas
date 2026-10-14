@@ -8,7 +8,13 @@ import {
   sendOptIn,
   type MailDeps,
 } from './lead-mail'
-import type { LeadRecord, LeadStore, RateLimiter } from './lead-ports'
+import type {
+  EventStore,
+  LeadRecord,
+  LeadStore,
+  RateLimiter,
+} from './lead-ports'
+import { leadEvent, validSessionId } from './events'
 import { hitEmailLimit, hitIpLimit } from './rate-limits'
 import { newToken } from './tokens'
 
@@ -29,6 +35,8 @@ export type LeadInput = {
   utm_content?: unknown
   utm_term?: unknown
   fbclid?: unknown
+  // the visit's session id; the browser fills it only after the visitor agreed to measurement
+  sid?: unknown
 }
 
 export type Lead = { email: string; tips: boolean }
@@ -48,6 +56,8 @@ export type LeadFormState =
 export type LeadDeps = {
   store: LeadStore
   limiter: RateLimiter
+  // First-party events: the server writes `lead` itself (PR 2)
+  events?: EventStore
   now: () => Date
   secrets: { ipHash: string }
   // E-mail (PR 4): without it no e-mail goes out
@@ -156,6 +166,7 @@ function newLead(
     variant: input.variant === 'b' ? 'b' : 'a',
     calcMonthly: setup.monthly,
     calcYears: setup.years,
+    sessionId: validSessionId(input.sid),
     marketingConsent: tips,
     consentTextVersion: tips ? CONSENT_TEXT_VERSION : null,
     consentConfirmedAt: null,
@@ -227,6 +238,15 @@ export async function submitLead(
       ? mergeLead(existing, input, tips, setup, now)
       : newLead(input, email, tips, setup, now, crypto.randomUUID())
     await deps.store.save(lead)
+    // `lead` is counted once per person: a new address (or one that was deleted and
+    // comes back), never a repeat submit. A failed write never fails the lead.
+    if (deps.events && (!existing || existing.deletedAt !== null)) {
+      try {
+        await deps.events.add(leadEvent(lead, lead.sessionId, now))
+      } catch {
+        // the conversion is stored; only its first-party count is lost
+      }
+    }
     const token = await issueResultsToken(deps.store, lead.id, now)
 
     // The e-mails come after the lead is stored: a failure to send never fails the

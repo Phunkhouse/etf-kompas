@@ -2,6 +2,7 @@
 // It forgets everything on restart and is refused on Vercel, so it cannot hold
 // real leads by mistake. No imports from next or react.
 import type {
+  EventRecord,
   LeadRecord,
   MemoryLeadStore,
   RateLimiter,
@@ -14,6 +15,7 @@ export function createMemoryLeadStore(): MemoryLeadStore {
   }
   const leads = new Map<string, LeadRecord>()
   const tokens: TokenRecord[] = []
+  const events: EventRecord[] = []
   const windows = new Map<
     string,
     { key: string; windowStart: Date; hits: number }
@@ -58,6 +60,12 @@ export function createMemoryLeadStore(): MemoryLeadStore {
       },
     },
     limiter,
+    events: {
+      async add(event) {
+        events.push({ ...event })
+      },
+    },
+    eventRows: () => events.map((event) => ({ ...event })),
     leads: () => [...leads.values()].map((lead) => ({ ...lead })),
     tokens: () => tokens.map((token) => ({ ...token })),
     limiterWindows: () => [...windows.values()].map((row) => ({ ...row })),

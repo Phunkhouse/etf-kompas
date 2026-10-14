@@ -92,6 +92,7 @@ export function leadDeps(): LeadDeps {
   deps = {
     store: adapters.store,
     limiter: adapters.limiter,
+    events: adapters.events,
     now: () => new Date(),
     secrets: { ipHash: env.IP_HASH_SECRET },
     mail,

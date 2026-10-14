@@ -44,14 +44,14 @@ Banner and consent state are separate from the React bundle: the head script rea
 
 ### PR 2: `feat: track() and first-party events`
 
-- [ ] Test cases first, approved before implementing (event schema, session, in-app-browser detection, UTM and `fbclid`).
-- [ ] `track()` wrapper with `variant`, `utm_*`, `session_id`, `device`, `in_app_browser`.
-- [ ] `/api/event`: Zod, no PII, hashed or dropped IP, runs even when consent is denied.
-- [ ] Supabase tables and migration for sessions and events, RLS on.
-- [ ] Session and variant in a first-party cookie with a URL fallback (§23).
-- [ ] UTM, `fbclid`, variant and `in_app_browser` stored with the session and the lead.
-- [ ] Events: `page_view`, `calc_start`, `calc_result`, `gate_view`, `form_focus`, `lead`.
-- [ ] `?debug=1` prints events to the console.
+- [x] Test cases first, approved before implementing (event schema, session, in-app-browser detection, UTM and `fbclid`).
+- [x] The tracker (`src/lib/track-client.ts`, an inline script, decisions below) with `variant`, `utm_*`, `session_id`, `device`, `in_app_browser`.
+- [x] `/api/event`: Zod, no PII, hashed or dropped IP, runs even when consent is denied.
+- [x] Supabase tables and migration for sessions and events, RLS on.
+- [x] Session and variant in a first-party cookie with a URL fallback (§23).
+- [x] UTM, `fbclid`, variant and `in_app_browser` stored with the session and the lead.
+- [x] Events: `page_view`, `calc_start`, `calc_result`, `gate_view`, `form_focus`, `lead`.
+- [x] `?debug=1` prints events to the console.
 
 ### PR 3: `feat: GA4 and Meta after consent`
 
@@ -83,7 +83,7 @@ Banner and consent state are separate from the React bundle: the head script rea
 
 Optional events (`scroll_*`, `form_submit_attempt`, `kompas_download`, `results_open`), then the funnel dashboard (P1). Never cut: consent, the `lead` event, honest gaps.
 
-## PR 2: decisions and test cases (proposed 2026-10-14, waiting for David)
+## PR 2: decisions and test cases (approved by David 2026-10-14)
 
 Source: SPEC §9, §23, §26, the Phase 5 acceptance criteria. Test cases first: nothing below is implemented until David approves it.
 

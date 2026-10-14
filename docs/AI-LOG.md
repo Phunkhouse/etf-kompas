@@ -1162,3 +1162,19 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Open points for David:** (1) the bar shows the "Zásady zpracování" link on the phone too, the phone drawing has none; (2) "Anonymní statistiky" is the drawing's text, but GA4 is not strictly anonymous: a lawyer should look at it; (3) the choice cookie lives 180 days, `TODO_VERIFY` (legal); (4) on desktop the buttons are reversed in CSS to match the drawing, so the tab order differs from the visual order.
 
 **David's answers on PR #84 (2026-10-14):** the "Zásady zpracování" link stays on the phone bar, so the drawing was updated, not the page (`gen_pages_rev4.py`, `make_rev6.sh` rebuilt the artboards, the board and the study; the diff is that one link; `wireframe-b.md` says the PNG is stale until exported again). "Anonymní statistiky" and the 180-day lifetime go into the legal pack (`docs/LEGAL-PACK.md`). The reversed desktop button order is accepted.
+
+### Phase 5, PR 2: first-party events
+
+**Prompt (summary):** David: "Both merged, let's continue". I wrote the decisions and 26 test cases first (`docs/PHASE-5-PLAN.md`, "PR 2"); David approved all six decisions (session without cookie before consent, the session id on the lead only with measurement, the tracker as an inline script, the event rules, one `events` table, 120 events an hour).
+
+**Produced:** `supabase/migrations/0003_events.sql` (David runs it in the Supabase SQL editor), `src/server/events.ts` (Zod parser, `recordEvent`, the server-side `lead` event, session id check), the `EventStore` port with memory and Supabase adapters, `hitEventLimit`, `POST /api/event`, `eventEnv()` (events need no e-mail settings), `src/lib/track-client.ts` and `Tracker` (one inline script), `data-track` hooks on the calculator, a hidden `sid` field in the lead form, tests (unit, route, jsdom script, `e2e/tracking.spec.ts`), `E2E_PORT` in the Playwright config.
+
+**Checked:** `pnpm check` and `pnpm format:check` green; 179 Playwright tests green on a production build; JS budget 149.9 of 150 KB (it was 149.8: the new attributes and the `sid` field cost 0.1 KB; the margin is now 0.1 KB).
+
+**Mistakes and corrections**
+
+- **I put the `data-track` attributes on the wrong element first.** `Calculator.tsx` has two `styles.calculator` divs (the failure state and the real one) and my replace hit the first, so `calc_start` and `calc_result` never fired in the e2e run. The e2e test caught it; the jsdom test could not, because it uses its own stand-in page.
+- **My e2e walk moved faster than a person.** It scrolled past the result before the one second in view and focused the e-mail field before `gate_view`, so the order was wrong. The test now waits for each event before the next step, as a visitor reads before acting; no sleeps.
+- **A port clash.** A dev server of David's held port 3000 (and may be connected to the real Supabase), so Playwright could not start its own. I did not reuse or stop it; I added `E2E_PORT` to the config and ran on 3100.
+- **A lint error (`let` that is never reassigned)** in the tracker; found by `pnpm check`, fixed.
+- **Two things in the privacy text are now untrue:** the page says technical data is processed "only when you allow cookies", but events are counted before any choice. Not changed (the text is a placeholder); added to the legal pack as point 8.

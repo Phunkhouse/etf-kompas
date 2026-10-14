@@ -72,3 +72,39 @@ export function leadEnv(
   }
   return parsed.data
 }
+
+// What the first-party events need: only the store and the hashing secret, so they
+// work without the e-mail settings (SPEC §17.12).
+const eventEnvSchema = z.discriminatedUnion('LEAD_STORE', [
+  z.object({
+    LEAD_STORE: z.literal('memory'),
+    IP_HASH_SECRET: z
+      .string()
+      .min(32)
+      .default('memory-store-only-not-a-secret!!'),
+  }),
+  z.object({
+    LEAD_STORE: z.literal('supabase').default('supabase'),
+    SUPABASE_URL: z.url(),
+    SUPABASE_SECRET_KEY: z.string().min(1),
+    IP_HASH_SECRET: z.string().min(32),
+  }),
+])
+
+export type EventEnv = z.infer<typeof eventEnvSchema>
+
+export function eventEnv(
+  source: Record<string, string | undefined> = process.env,
+): EventEnv {
+  const parsed = eventEnvSchema.safeParse({
+    ...source,
+    LEAD_STORE: source.LEAD_STORE || 'supabase',
+  })
+  if (!parsed.success) {
+    const names = parsed.error.issues
+      .map((issue) => issue.path.join('.'))
+      .join(', ')
+    throw new Error(`Missing or invalid environment variables: ${names}`)
+  }
+  return parsed.data
+}

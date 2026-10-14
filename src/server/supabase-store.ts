@@ -3,6 +3,7 @@
 // stay on the server. No imports from next or react.
 import type {
   EmailStatus,
+  EventStore,
   LeadRecord,
   LeadStore,
   RateLimiter,
@@ -22,6 +23,7 @@ type Row = {
   variant: 'a' | 'b' | null
   calc_monthly_bucket: number | null
   calc_years: number | null
+  session_id: string | null
   marketing_consent: boolean
   consent_text_version: string | null
   consent_confirmed_at: string | null
@@ -56,6 +58,7 @@ function fromRow(row: Row): LeadRecord {
     variant: row.variant ?? 'a',
     calcMonthly: row.calc_monthly_bucket ?? 0,
     calcYears: row.calc_years ?? 0,
+    sessionId: row.session_id ?? null,
     marketingConsent: row.marketing_consent,
     consentTextVersion: row.consent_text_version,
     consentConfirmedAt: date(row.consent_confirmed_at),
@@ -80,6 +83,7 @@ function toRow(lead: LeadRecord): Row {
     variant: lead.variant,
     calc_monthly_bucket: lead.calcMonthly,
     calc_years: lead.calcYears,
+    session_id: lead.sessionId,
     marketing_consent: lead.marketingConsent,
     consent_text_version: lead.consentTextVersion,
     consent_confirmed_at: iso(lead.consentConfirmedAt),
@@ -95,6 +99,7 @@ export type SupabaseConfig = { url: string; secretKey: string }
 export function createSupabaseStore(config: SupabaseConfig): {
   store: LeadStore
   limiter: RateLimiter
+  events: EventStore
 } {
   const base = `${config.url.replace(/\/+$/, '')}/rest/v1`
   // The new secret keys (sb_secret_…) are not JWTs and go in `apikey` only.
@@ -198,5 +203,32 @@ export function createSupabaseStore(config: SupabaseConfig): {
     },
   }
 
-  return { store, limiter }
+  const events: EventStore = {
+    async add(event) {
+      await call('/events', {
+        method: 'POST',
+        body: {
+          id: event.id,
+          created_at: event.createdAt.toISOString(),
+          session_id: event.sessionId,
+          name: event.name,
+          variant: event.variant,
+          utm_source: event.utmSource,
+          utm_medium: event.utmMedium,
+          utm_campaign: event.utmCampaign,
+          utm_content: event.utmContent,
+          utm_term: event.utmTerm,
+          fbclid: event.fbclid,
+          device: event.device,
+          in_app_browser: event.inAppBrowser,
+          consent_measurement: event.consentMeasurement,
+          calc_monthly_bucket: event.calcMonthly,
+          calc_years: event.calcYears,
+        },
+        prefer: 'return=minimal',
+      })
+    },
+  }
+
+  return { store, limiter, events }
 }

@@ -20,6 +20,8 @@ export type LeadRecord = {
   consentTextVersion: string | null
   consentConfirmedAt: Date | null // double opt-in, set by the confirmation link
   optinSentAt: Date | null // when the opt-in e-mail last went out (once until confirmed or expired)
+  // The visit's session id, only when the visitor agreed to measurement
+  sessionId: string | null
   emailStatus: EmailStatus
   unsubscribedAt: Date | null
   deletedAt: Date | null
@@ -42,6 +44,40 @@ export type LeadStore = {
   findById(id: string): Promise<LeadRecord | null>
 }
 
+// First-party events (Phase 5, PR 2). Cookieless and aggregate: no IP, no user agent,
+// no e-mail. `sessionId` is null for the server-side `lead` of a visitor who did not
+// agree to measurement.
+export type EventName =
+  | 'page_view'
+  | 'calc_start'
+  | 'calc_result'
+  | 'gate_view'
+  | 'form_focus'
+  | 'lead'
+
+export type EventRecord = {
+  id: string
+  createdAt: Date
+  sessionId: string | null
+  name: EventName
+  variant: 'a' | 'b' | null
+  utmSource: string | null
+  utmMedium: string | null
+  utmCampaign: string | null
+  utmContent: string | null
+  utmTerm: string | null
+  fbclid: string | null // page_view only
+  device: 'phone' | 'desktop' | null
+  inAppBrowser: boolean | null
+  consentMeasurement: boolean
+  calcMonthly: number | null // calc_result only
+  calcYears: number | null // calc_result only
+}
+
+export type EventStore = {
+  add(event: EventRecord): Promise<void>
+}
+
 export type RateLimiter = {
   // Counts one hit in the window and says whether it is within the limit.
   hit(key: string, windowStart: Date, limit: number): Promise<boolean>
@@ -55,7 +91,9 @@ export type RateLimiter = {
 export type MemoryLeadStore = {
   store: LeadStore
   limiter: RateLimiter
+  events: EventStore
   leads(): LeadRecord[]
+  eventRows(): EventRecord[]
   tokens(): TokenRecord[]
   limiterWindows(): { key: string; windowStart: Date; hits: number }[]
   // Test only: makes every token of this address expired.
