@@ -1,0 +1,231 @@
+@use 'styles/utilities' as *;
+
+// The bar. Shown until a choice is stored: the cookie script sets data-consent on
+// <html> before paint, and then it is hidden. Fixed, so it never shifts the page.
+.bar {
+  --color-focus: var(--color-paper);
+
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-overlay);
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-8) var(--space-8);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--color-ink);
+  color: var(--color-inverse-soft);
+
+  :global(html[data-consent]) & {
+    display: none;
+  }
+
+  @include from('md') {
+    right: var(--space-6);
+    bottom: var(--space-6);
+    left: var(--space-6);
+    grid-template-columns: 1fr auto;
+    column-gap: var(--space-8);
+    padding: var(--space-6) var(--space-8);
+    border-radius: var(--radius-lg);
+  }
+}
+
+.barText {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-base);
+
+  @include from('md') {
+    grid-column: 1;
+    font-size: var(--font-size-base);
+  }
+}
+
+.policy,
+.link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.link {
+  min-height: var(--touch-target-min);
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+// Phone: three stacked rows, "Přijmout vše" first. Desktop: one row; the order is
+// reversed so "Nastavit" is on the left and "Přijmout vše" on the right, as drawn.
+.barActions {
+  display: grid;
+  gap: var(--space-3);
+
+  @include from('md') {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    grid-auto-flow: column;
+    align-items: center;
+    direction: rtl;
+
+    > * {
+      direction: ltr;
+    }
+  }
+}
+
+.dialog {
+  // The native dialog is centred by the browser; the phone sheet sits at the bottom.
+  width: 100%;
+  max-width: none;
+  max-height: calc(100dvh - 8rem);
+  margin: auto 0 0;
+  padding: var(--space-8);
+  overflow-y: auto;
+  border: 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--color-surface);
+  color: var(--color-ink);
+
+  &::backdrop {
+    background: rgb(22 21 15 / 55%);
+  }
+
+  @include from('md') {
+    max-width: 31.25rem;
+    margin: auto;
+    border-radius: var(--radius-lg);
+  }
+}
+
+.dialogHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.dialogTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--touch-target-min);
+  height: var(--touch-target-min);
+  margin: calc(var(--space-2) * -1) calc(var(--space-2) * -1) 0 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.cross {
+  position: relative;
+  width: 1.25rem;
+  height: 1.25rem;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: currentcolor;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+
+.intro {
+  margin: var(--space-2) 0 var(--space-4);
+  color: var(--color-ink-soft);
+}
+
+.category {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.categoryText {
+  display: grid;
+  gap: var(--space-2);
+  color: var(--color-ink-soft);
+}
+
+.categoryTitle {
+  color: var(--color-ink);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
+
+// 48 x 28 px, knob 22 px (DESIGN-GUIDE: Switch). Off: muted track. On: switch-on.
+.switch {
+  position: relative;
+  flex: none;
+  width: 3rem;
+  height: 1.75rem;
+  margin: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-muted);
+  cursor: pointer;
+  appearance: none;
+  transition: background-color var(--duration-fast);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-white);
+    transition: transform var(--duration-fast);
+  }
+
+  &:checked {
+    background: var(--color-switch-on);
+
+    &::before {
+      transform: translateX(20px);
+    }
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.dialogActions {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+
+  @include from('md') {
+    grid-auto-flow: column;
+    justify-content: end;
+    direction: rtl;
+
+    > * {
+      direction: ltr;
+    }
+  }
+}

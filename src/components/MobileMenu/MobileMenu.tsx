@@ -67,7 +67,12 @@ export function MobileMenu({ base = '' }: { base?: string }) {
         </nav>
         <nav aria-label={menuCopy.legalLabel} className={styles.legal}>
           {menuCopy.legal.map((link) => (
-            <a key={link.href} href={link.href} onClick={hide}>
+            <a
+              key={link.href}
+              href={link.href}
+              data-consent-action={link.opensCookies ? 'open' : undefined}
+              onClick={hide}
+            >
               {nbsp(link.label)}
             </a>
           ))}
