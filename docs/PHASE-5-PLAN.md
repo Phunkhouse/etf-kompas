@@ -55,11 +55,11 @@ Banner and consent state are separate from the React bundle: the head script rea
 
 ### PR 3: `feat: GA4 and Meta after consent`
 
-- [ ] Google Consent Mode v2: all denied by default, updated on the choice.
-- [ ] GA4 and the Pixel are injected on idle (`requestIdleCallback`) only after consent, each by its own category. Consent Mode v2: `default` denied and `update` granted at that moment, no `gtag` before consent.
-- [ ] Measure INP and TBT with and without consent.
-- [ ] Playwright: zero non-essential third-party requests before consent and after "Odmítnout vše".
-- [ ] Playwright: the order `page_view, calc_start, calc_result, gate_view, form_focus, lead`.
+- [x] Google Consent Mode v2: all denied by default, updated on the choice.
+- [x] GA4 and the Pixel are injected on idle (`requestIdleCallback`) only after consent, each by its own category. Consent Mode v2: `default` denied and `update` granted at that moment, no `gtag` before consent.
+- [ ] Measure INP and TBT with and without consent: not done in PR 3 (needs the real tags, see PR 5).
+- [x] Playwright: zero non-essential third-party requests before consent and after "Odmítnout vše".
+- [x] Playwright: the order `page_view, calc_start, calc_result, gate_view, form_focus` (the `lead` part comes in PR 4 with the shared `event_id`).
 
 ### PR 4: `feat: server-side lead event`
 
@@ -142,7 +142,7 @@ Playwright (`e2e/tracking.spec.ts`, mobile, memory store):
 - P-5 after "Přijmout vše", `kompas_sid` is set and the lead has the same `session_id`; after "Odmítnout vše" there is no `kompas_sid` and the lead has none.
 - P-6 JS budget test stays green (149.8 of 150 KB).
 
-## PR 3: decisions and test cases (proposed 2026-10-14, waiting for David)
+## PR 3: decisions and test cases (approved by David 2026-10-14)
 
 Source: SPEC §9, §12 (analytics), §17.12, the Phase 5 acceptance criteria. Test cases first: nothing below is implemented until David approves it. The accounts do not exist yet, so everything runs against stubs (a fake GA4 id and Pixel id, and the two vendor scripts answered by empty stub files in Playwright). The real behaviour of the two vendors is only proven at the end of the phase, in GA4 DebugView and Meta Test Events (PR 5).
 

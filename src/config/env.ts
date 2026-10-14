@@ -108,3 +108,28 @@ export function eventEnv(
   }
   return parsed.data
 }
+
+// The ad and measurement tags (Phase 5, PR 3). Both are optional and not secret: the
+// ids are visible on any page that uses the tags. They are read when the page is
+// built and written into the tracker script. A missing or malformed id means that
+// vendor is never loaded; the warning names the variable and never shows a value.
+export type TrackingIds = { ga4: string | null; pixel: string | null }
+
+const GA4_ID = /^G-[A-Z0-9]{4,20}$/
+const PIXEL_ID = /^\d{6,20}$/
+
+export function trackingEnv(
+  source: Record<string, string | undefined> = process.env,
+): TrackingIds {
+  const read = (name: string, pattern: RegExp): string | null => {
+    const value = source[name]?.trim()
+    if (!value) return null
+    if (pattern.test(value)) return value
+    console.warn(`${name} is not a valid id and is ignored.`)
+    return null
+  }
+  return {
+    ga4: read('GA4_MEASUREMENT_ID', GA4_ID),
+    pixel: read('META_PIXEL_ID', PIXEL_ID),
+  }
+}
