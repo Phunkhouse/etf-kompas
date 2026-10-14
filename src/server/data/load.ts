@@ -6,13 +6,12 @@ import { z } from 'zod'
 export async function loadData(dir = path.join(process.cwd(), 'data')) {
   const read = async (file: string): Promise<unknown> =>
     JSON.parse(await readFile(path.join(dir, file), 'utf8'))
-  const [etfs, brokers, sources, rates] = await Promise.all([
+  const [etfs, brokers, sources] = await Promise.all([
     read('etfs.json'),
     read('brokers.json'),
     read('sources.json'),
-    read('rates.json'),
   ])
-  return { etfs, brokers, sources, rates }
+  return { etfs, brokers, sources }
 }
 
 // The fund tickers, for the copy checker (SPEC §25 rule d).

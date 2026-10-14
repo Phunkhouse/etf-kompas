@@ -7,7 +7,7 @@ export type FundField = Exclude<
   keyof Etf,
   'id' | 'ticker' | 'region' | 'indexGroup'
 >
-export type BrokerField = 'fxFeePct' | 'custodyFeePct' | 'czSupport'
+export type BrokerField = 'czSupport'
 
 // A part of a broker's price in the calculator's model (METHODOLOGY-V2 §3): the
 // commission of one purchase, the custody fee, and the conversion fee of each
@@ -168,23 +168,15 @@ export const needs: Need[] = [
   },
 ]
 
-// Data that no rev. 4 screen shows. Not worth verifying now. (VTI, SCHD and VWCE
-// were removed from the data with note 0036.)
+// Data that no rev. 4 screen shows. Optional in the data model, verified where we
+// have it. (VTI, SCHD and VWCE were removed with note 0036; the unverified unused
+// fields, the version 1 broker fees and the stored exchange rate with note 0066.)
 export const unusedFundFields: FundField[] = [
-  'fundSizeEur',
-  'return5yPct',
-  'return10yPct',
+  'indexName',
+  'domicile',
   'dividendYieldPct',
   'withholdingRate',
-  'replication',
 ]
 export const unusedFundIds: string[] = []
-
-// The broker fields of the first calculator (version 1). The calculator now reads
-// `fees` (listings, purchase rules, conversion and custody fees), so nothing shows
-// these three any more. They are still in the schema, so the strict validation
-// (`pnpm data:validate`, the deploy gate) still asks for them; dropping them from
-// the data model needs a decision note.
-export const unusedBrokerFields: string[] = ['fxFeePct', 'custodyFeePct']
 
 export type { Broker }

@@ -33,19 +33,11 @@ function etf(
     region: 'ucits',
     indexGroup: 'sp500',
     name: fields.name ? sourced(fields.name as string) : todo,
-    indexName: todo,
     isin: todo,
-    domicile: todo,
-    replication: todo,
     distribution: fields.distribution
       ? sourced(fields.distribution as string)
       : todo,
     ter: fields.ter ? sourced(fields.ter as number) : todo,
-    fundSizeEur: todo,
-    dividendYieldPct: todo,
-    withholdingRate: todo,
-    return5yPct: todo,
-    return10yPct: todo,
   }
 }
 
@@ -53,8 +45,6 @@ function broker(id: string, availability: Broker['availability'] = {}): Broker {
   return {
     id,
     name: id,
-    fxFeePct: todo,
-    custodyFeePct: todo,
     czSupport: todo,
     availability,
   }
@@ -118,17 +108,17 @@ describe('computeGaps', () => {
 
   it('checks broker fields', () => {
     const x = broker('x')
-    x.fxFeePct = sourced(0.25)
+    x.czSupport = sourced(true)
     const need: Need = {
       kind: 'broker',
       screen: 'S',
       what: 'fees',
       brokerIds: ['x', 'y'],
-      fields: ['fxFeePct'],
+      fields: ['czSupport'],
     }
     const [gap] = computeGaps({ etfs: [], brokers: [x, broker('y')] }, [need])
     expect(gap).toMatchObject({ total: 2, verified: 1 })
-    expect(gap.missing).toEqual(['y.fxFeePct'])
+    expect(gap.missing).toEqual(['y.czSupport'])
   })
 
   it('reports a planned need as missing and not in the model', () => {

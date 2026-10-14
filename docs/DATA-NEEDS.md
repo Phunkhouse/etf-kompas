@@ -17,7 +17,7 @@ Derived from the rev. 4 text spec ([wireframe-b.md](design/wireframe-b.md), deci
 **What "verified" does not mean here:**
 
 - It means a value has a source and evidence, not that the listing is the cheapest one a broker offers. Listings in GBP, GBX and CHF are not recorded (the model has only CZK, EUR and USD), and for IBKR the Swiss listing of EQQQ in USD has no purchase rule (the commission is in CHF).
-- `pnpm data:validate` (strict, the deploy gate in Phase 6) still fails on 51 `TODO_VERIFY` values. They are fields no screen uses: `fxFeePct` and `custodyFeePct` of version 1 of every broker, fund size, returns, dividend yield, withholding rate and replication, `rates` in the data file (the page reads the Czech National Bank's rates), VOO and QQQ at Fio. Before the deploy they have to be filled in or dropped from the data model, which needs a decision note.
+- `pnpm data:validate` (strict, the deploy gate in Phase 6) passes since 2026-10-14: the unused fields without a verified value were dropped from the data model (note 0066). Fio's availability of VOO and QQQ is unknown and absent.
 - The tax cards on the comparison page and the table "Kde fond koupit" (with the "Česky" column) are not built yet, so those values are verified but not shown.
 
 ## Not worth verifying now

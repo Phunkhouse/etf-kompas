@@ -2,22 +2,6 @@
   {
     "id": "degiro",
     "name": "DEGIRO",
-    "fxFeePct": {
-      "value": 0.25,
-      "sourceUrl": "https://www.degiro.cz/data/pdf/cs/Prehled_poplatku.pdf",
-      "asOf": "2026-10-11",
-      "verifiedBy": "David",
-      "verifiedOn": "2026-10-11",
-      "evidence": "sha256:ab01346db9cda2c41d3c59ac13ed5ae04659c4afa956349fbea5fe8849596d94 (webfetch-1791721845066-lipc9g.pdf); Auto FX trader 0.25 %; the document says rates from 2026-01-01; EUR to CZK transfers are free (footnote 2)"
-    },
-    "custodyFeePct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
-    },
     "czSupport": {
       "value": true,
       "sourceUrl": "https://www.degiro.cz",
@@ -303,22 +287,6 @@
   {
     "id": "fio",
     "name": "Fio e-Broker",
-    "fxFeePct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
-    },
-    "custodyFeePct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
-    },
     "czSupport": {
       "value": true,
       "sourceUrl": "https://www.fio.cz",
@@ -328,22 +296,6 @@
       "evidence": "sha256:6e96a301910ff3226f01b9767b30dd4282678b91ee9088649958e042c3ff50f5 (fio-vuaa-search-01-2026-10-12.png): e-Broker demo account in Czech (\"Pokyny\", \"Moje zprávy\", \"Odhlášení\", \"Zdroj dat\"), language switch \"cz en sk\". Meaning of czSupport (David, 2026-10-14): the interface the visitor uses is available in Czech."
     },
     "availability": {
-      "voo": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
-      },
-      "qqq": {
-        "value": "TODO_VERIFY",
-        "sourceUrl": null,
-        "asOf": null,
-        "verifiedBy": null,
-        "verifiedOn": null,
-        "evidence": null
-      },
       "cspx": {
         "value": true,
         "sourceUrl": "https://www.fio.cz",
@@ -495,22 +447,6 @@
   {
     "id": "ibkr",
     "name": "Interactive Brokers",
-    "fxFeePct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
-    },
-    "custodyFeePct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
-    },
     "czSupport": {
       "value": false,
       "sourceUrl": "https://www.interactivebrokers.com",
@@ -771,22 +707,6 @@
   {
     "id": "trading212",
     "name": "Trading 212",
-    "fxFeePct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
-    },
-    "custodyFeePct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
-    },
     "czSupport": {
       "value": true,
       "sourceUrl": "https://www.trading212.com/cs/terms/invest",
@@ -993,22 +913,6 @@
   {
     "id": "xtb",
     "name": "XTB",
-    "fxFeePct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
-    },
-    "custodyFeePct": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
-    },
     "czSupport": {
       "value": true,
       "sourceUrl": "https://www.xtb.com/cz",

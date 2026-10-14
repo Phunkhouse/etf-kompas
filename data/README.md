@@ -9,7 +9,7 @@
 - `sourceUrl` must be an https URL listed in `sources.json`.
 - `evidence` is a web.archive.org link and/or the SHA-256 of the saved source PDF. Do not commit the PDFs.
 - Percentages are plain numbers: `0.07` means 0.07 %.
-- `asOf` may be at most 120 days old (45 days for broker fees `fxFeePct` and `custodyFeePct`).
+- `asOf` may be at most 120 days old (45 days for broker fees: everything under `fees`).
 - `asOf` is the date printed in a dated document that carries the data (factsheet, KID, index factsheet). For a source that stays in force or has no data date (treaty, fee overview, current prospectus, live page) it is the date we captured it and confirmed it is current; the document's own date goes in `evidence` (decision note 0024).
 - `domicile` of a UCITS fund is the country its KID or factsheet names. US prospectuses do not state one, so for a US-listed fund it is `US`, with the evidence that the prospectus registers the fund under the Investment Company Act of 1940 (decision note 0022).
 
