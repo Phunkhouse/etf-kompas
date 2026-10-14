@@ -37,3 +37,20 @@ jobs:
           require-lockfile: true
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:e2e
+
+  # The deploy gate (SPEC §19.5): the strict data check, no TODO_VERIFY, every value
+  # sourced and fresh. Only on main, so work in progress can still be reviewed (the
+  # `check` job runs the draft mode). It also fails when a record goes stale, which is
+  # the signal to refresh the data. Vercel runs the same check before every build.
+  data-gate:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/setup@f618924e009e490c5badb81bc821e794d0ced591 # v3.1.0
+        with:
+          runtime: node@24
+          cache: true
+          require-lockfile: true
+      - run: pnpm data:validate
