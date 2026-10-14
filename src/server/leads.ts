@@ -14,6 +14,7 @@ import type {
   LeadStore,
   RateLimiter,
 } from './lead-ports'
+import { sendLeadToMeta, type CapiConfig } from './capi'
 import { leadEvent, validSessionId } from './events'
 import { hitEmailLimit, hitIpLimit } from './rate-limits'
 import { newToken } from './tokens'
@@ -37,6 +38,10 @@ export type LeadInput = {
   fbclid?: unknown
   // the visit's session id; the browser fills it only after the visitor agreed to measurement
   sid?: unknown
+  // "1" only when the visitor agreed to advertising; the browser fills it at submit
+  ads?: unknown
+  // the Meta browser id (cookie _fbp), sent only with advertising consent
+  fbp?: unknown
 }
 
 export type Lead = { email: string; tips: boolean }
@@ -49,6 +54,9 @@ export type LeadFormState =
   | {
       status: 'ok'
       resultsPath: string
+      // The id the vendors dedupe the `lead` on (the id of the stored `lead` event).
+      // Only for a new lead; null for a repeat submit and for a bot.
+      eventId: string | null
       // what became of the e-mail with the link: only `sent` may be said to the visitor
       email: { status: 'sent' | 'skipped' | 'failed'; address: string }
     }
@@ -58,6 +66,10 @@ export type LeadDeps = {
   limiter: RateLimiter
   // First-party events: the server writes `lead` itself (PR 2)
   events?: EventStore
+  // The Meta Conversions API (only when fully configured) and the way to run a task
+  // after the answer has gone out (Next's `after`; in tests a collector).
+  capi?: CapiConfig
+  afterResponse?: (task: () => Promise<void>) => void
   now: () => Date
   secrets: { ipHash: string }
   // E-mail (PR 4): without it no e-mail goes out
@@ -67,7 +79,7 @@ export type LeadDeps = {
   minFillMs?: number
 }
 
-export type LeadRequest = { ip: string }
+export type LeadRequest = { ip: string; userAgent?: string | null }
 
 // The wording the visitor agreed to is versioned, so a later change is visible.
 export const CONSENT_TEXT_VERSION = '2026-10-tips-v1'
@@ -213,6 +225,7 @@ export async function submitLead(
       return {
         status: 'ok',
         resultsPath: `/srovnani/${newToken()}`,
+        eventId: null,
         email: { status: 'skipped', address: typed(input) },
       }
     }
@@ -240,12 +253,29 @@ export async function submitLead(
     await deps.store.save(lead)
     // `lead` is counted once per person: a new address (or one that was deleted and
     // comes back), never a repeat submit. A failed write never fails the lead.
-    if (deps.events && (!existing || existing.deletedAt !== null)) {
+    const isNew = !existing || existing.deletedAt !== null
+    const eventId = isNew ? crypto.randomUUID() : null
+    if (deps.events && eventId) {
       try {
-        await deps.events.add(leadEvent(lead, lead.sessionId, now))
+        await deps.events.add(leadEvent(lead, lead.sessionId, now, eventId))
       } catch {
         // the conversion is stored; only its first-party count is lost
       }
+    }
+    // The same conversion to Meta from the server, after the answer: only with
+    // advertising consent (the form sends ads=1), only when configured.
+    if (eventId && input.ads === '1' && deps.capi && deps.afterResponse) {
+      const capi = deps.capi
+      const lead_ = {
+        eventId,
+        email: lead.email,
+        time: now,
+        ip: request.ip,
+        userAgent: request.userAgent ?? null,
+        fbclid: lead.fbclid,
+        fbp: tracking(input.fbp),
+      }
+      deps.afterResponse(() => sendLeadToMeta(capi, lead_))
     }
     const token = await issueResultsToken(deps.store, lead.id, now)
 
@@ -265,6 +295,7 @@ export async function submitLead(
     return {
       status: 'ok',
       resultsPath: `/srovnani/${token}`,
+      eventId,
       email: { status: delivery, address: lead.email },
     }
   } catch {

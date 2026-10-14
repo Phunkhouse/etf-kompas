@@ -126,14 +126,16 @@ export async function recordEvent(
 }
 
 // The server's own `lead` event, written when a lead is stored for the first time.
-// The session id is passed only when the visitor agreed to measurement.
+// The session id is passed only when the visitor agreed to measurement. The id is the
+// one the vendors dedupe on (the `event_id`).
 export function leadEvent(
   lead: LeadRecord,
   sessionId: string | null,
   now: Date,
+  id: string,
 ): EventRecord {
   return {
-    id: crypto.randomUUID(),
+    id,
     createdAt: now,
     sessionId,
     name: 'lead',

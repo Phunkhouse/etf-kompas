@@ -59,6 +59,10 @@ export default defineConfig({
       // answered by stubs in e2e/ad-tags.spec.ts and nothing leaves the machine.
       GA4_MEASUREMENT_ID: 'G-TEST123456',
       META_PIXEL_ID: '1234567890',
+      // The server-side Lead goes to a stub route of ours, never to Meta (test-capi).
+      META_CAPI_TOKEN: 'test-token',
+      META_GRAPH_VERSION: 'v0.0',
+      META_GRAPH_BASE: `http://localhost:${port}/api/test-capi`,
     },
   },
 })

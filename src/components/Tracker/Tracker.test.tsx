@@ -33,7 +33,7 @@ function mount(url = '/?utm_source=ig&fbclid=abc') {
         <div data-track="result">výsledek</div>
       </div>
       <div id="formular">
-        <form id="lead-form"><input type="hidden" name="sid" /><input name="email" aria-label="e-mail" /></form>
+        <form id="lead-form"><input type="hidden" name="sid" /><input type="hidden" name="ads" /><input type="hidden" name="fbp" /><input name="email" aria-label="e-mail" /></form>
       </div>
     </main>`
   const view = render(<Tracker />, {
@@ -557,5 +557,111 @@ describe('Tracker with GA4 and the Pixel', () => {
       .dispatchEvent(new Event('input', { bubbles: true }))
     await flush()
     expect(names()).toEqual(['page_view', 'calc_start'])
+  })
+})
+
+// PR 4: the lead, cases B-L1 to B-L5 of docs/PHASE-5-PLAN.md.
+describe('Tracker: the lead', () => {
+  const ID = '3b1f1c0e-6a52-4c1c-9d5e-0f7a1b2c3d4e'
+  beforeEach(() => {
+    vi.stubEnv('GA4_MEASUREMENT_ID', GA)
+    vi.stubEnv('META_PIXEL_ID', PIXEL)
+  })
+  afterEach(() => {
+    vi.unstubAllEnvs()
+    delete win().dataLayer
+    delete win().fbq
+    document.head.innerHTML = ''
+  })
+
+  // What the form's success state does: it puts the id on #formular.
+  const showLead = async (id: string | null = ID) => {
+    const gate = document.querySelector('#formular')!
+    if (id) gate.setAttribute('data-lead-event-id', id)
+    await flush()
+  }
+  const leads = () => layer().filter((call) => call[1] === 'generate_lead')
+  const pixelLeads = () => metaCalls().filter((call) => call[1] === 'Lead')
+
+  it('B-L1 sends generate_lead and Lead with the id, once each', async () => {
+    mount()
+    consent(true, true)
+    await showLead()
+    await showLead()
+    document.querySelector('#formular')!.setAttribute('data-lead-event-id', ID)
+    await flush()
+    expect(leads()).toHaveLength(1)
+    expect(leads()[0][2]).toMatchObject({ event_id: ID, variant: 'b' })
+    expect(pixelLeads()).toEqual([['track', 'Lead', {}, { eventID: ID }]])
+  })
+
+  it('B-L2 only the vendors that are on get it', async () => {
+    mount()
+    await showLead()
+    expect(win().dataLayer).toBeUndefined()
+    expect(win().fbq).toBeUndefined()
+  })
+
+  it('B-L2 measurement only: GA4 and not the Pixel', async () => {
+    mount()
+    consent(true, false)
+    await showLead()
+    expect(leads()).toHaveLength(1)
+    expect(win().fbq).toBeUndefined()
+  })
+
+  it('B-L2 advertising only: the Pixel and not GA4', async () => {
+    mount()
+    consent(false, true)
+    await showLead()
+    expect(pixelLeads()).toHaveLength(1)
+    expect(win().dataLayer).toBeUndefined()
+  })
+
+  it('B-L3 no vendor event when the markup has no id', async () => {
+    mount()
+    consent(true, true)
+    await showLead(null)
+    expect(leads()).toHaveLength(0)
+    expect(pixelLeads()).toHaveLength(0)
+  })
+
+  it('B-L3 and none after consent is withdrawn', async () => {
+    mount()
+    consent(true, true)
+    await vi.advanceTimersByTimeAsync(1000)
+    consent(false, false)
+    await showLead()
+    expect(leads()).toHaveLength(0)
+    expect(pixelLeads()).toHaveLength(0)
+  })
+
+  it('B-L4 the browser never sends lead to the first-party endpoint', async () => {
+    mount()
+    consent(true, true)
+    await showLead()
+    await vi.advanceTimersByTimeAsync(1000)
+    expect(names()).not.toContain('lead')
+  })
+
+  it('B-L5 ads is 1 and fbp is passed only when advertising is agreed', async () => {
+    mount()
+    const form = document.querySelector<HTMLFormElement>('#lead-form')!
+    form.addEventListener('submit', (event) => event.preventDefault())
+    const field = (name: string) =>
+      (form.elements.namedItem(name) as HTMLInputElement).value
+    document.cookie = '_fbp=fb.1.1.2; Path=/'
+    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
+    expect(field('ads')).toBe('')
+    expect(field('fbp')).toBe('')
+    document.cookie = `${CONSENT_COOKIE}=v1-m1-a0-1760000000; Path=/`
+    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
+    expect(field('ads')).toBe('')
+    document.cookie = `${CONSENT_COOKIE}=v1-m1-a1-1760000000; Path=/`
+    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
+    expect(field('ads')).toBe('1')
+    expect(field('fbp')).toBe('fb.1.1.2')
+    expect(field('sid')).toMatch(/^[0-9a-f-]{36}$/)
+    document.cookie = '_fbp=; Max-Age=0; Path=/'
   })
 })

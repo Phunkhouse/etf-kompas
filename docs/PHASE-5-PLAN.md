@@ -63,12 +63,12 @@ Banner and consent state are separate from the React bundle: the head script rea
 
 ### PR 4: `feat: server-side lead event`
 
-- [ ] Test cases first, approved before implementing.
-- [ ] One `event_id` per submission, shared by the browser and the server.
-- [ ] Meta Conversions API and GA4 Measurement Protocol from the server; hashed data only with consent.
-- [ ] `lead` exactly once per submission (double click, resubmit, same e-mail twice).
-- [ ] A failed or slow send never blocks or fails the lead.
-- [ ] Privacy and cookie text match what actually runs (placeholder, needs a lawyer).
+- [x] Test cases first, approved before implementing.
+- [x] One `event_id` per submission, shared by the browser and the server.
+- [x] Meta Conversions API from the server; hashed data only with advertising consent. The GA4 Measurement Protocol is not built (it would double count, David agreed 2026-10-14).
+- [x] `lead` exactly once per submission (double click, resubmit, same e-mail twice).
+- [x] A failed or slow send never blocks or fails the lead.
+- [x] Privacy and cookie text match what actually runs (placeholder, needs a lawyer).
 
 ### PR 5: `docs: close Phase 5`
 
@@ -186,7 +186,7 @@ Playwright (`e2e/ad-tags.spec.ts`, mobile, fake ids set in the webServer environ
 - A-5 JS budget test stays green (149.9 of 150 KB; the inline script is not counted).
 - A-6 INP and TBT, measured by hand once with and without consent on a throttled run, written into the PR (no assertion).
 
-## PR 4: decisions and test cases (proposed 2026-10-14, waiting for David)
+## PR 4: decisions and test cases (approved by David 2026-10-14; decisions 2 and 3 to be revisited when the accounts exist)
 
 Source: SPEC §9 (`lead` also server-side), §17.12, the Phase 5 acceptance criteria, notes 0064 and 0065. Test cases first: nothing below is implemented until David approves it. As in PR 3 the accounts do not exist, so the Meta Conversions API (CAPI) is tested against a local stub route; whether Meta accepts the request is only proven at the end of the phase in Test Events.
 

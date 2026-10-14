@@ -72,7 +72,11 @@ export function LeadForm({
 
   if (state.status === 'ok') {
     return (
-      <div id="formular" className={styles.card}>
+      <div
+        id="formular"
+        className={styles.card}
+        data-lead-event-id={state.eventId ?? undefined}
+      >
         <p className={styles.notice} role="status">
           <strong>{text.done.strong}</strong>
           {nbsp(text.done.text)}
@@ -112,6 +116,9 @@ export function LeadForm({
         {/* The visit's session id: the tracker fills it at submit, and only after
             the visitor agreed to measurement. */}
         <input type="hidden" name="sid" defaultValue="" />
+        {/* "1" only when the visitor agreed to advertising; set by the tracker at submit */}
+        <input type="hidden" name="ads" defaultValue="" />
+        <input type="hidden" name="fbp" defaultValue="" />
         {CAMPAIGN_FIELDS.map((name) => (
           <input key={name} type="hidden" name={name} defaultValue="" />
         ))}

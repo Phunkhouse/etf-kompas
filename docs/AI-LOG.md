@@ -1197,3 +1197,20 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 - **My first e2e used two fixed sleeps** (`waitForTimeout`), against the project rule. Replaced by polling the stored first-party events, and the walk became a shared helper.
 - **I tagged the full-order test `@smoke`, which also runs on desktop.** There the form is in view at load, so `gate_view` comes before `calc_result`. The order is a phone order; the tag is removed.
+
+### Phase 5, PR 4: the lead for the vendors
+
+**Prompt (summary):** David approved the decisions and the test cases (the plan's "PR 4"), agreeing to no GA4 Measurement Protocol (it would double count) and to no default Graph API version, and said he will come back to both when the accounts exist.
+
+**Produced:** one `event_id` per new lead (the id of the stored `lead` event, returned in the form state and written as `data-lead-event-id` on the success state); the tracker forwards `generate_lead` to GA4 and `Lead` with `eventID` to the Pixel, each once, only for the vendors whose category is on; `src/server/capi.ts` (the Meta Conversions API request, hashed e-mail, after the response, 3-second timeout, no retry, logs without personal data); `metaServerEnv()` (needs `META_PIXEL_ID`, `META_CAPI_TOKEN`, `META_GRAPH_VERSION`, no default version); hidden `ads` and `fbp` fields filled at submit only with advertising consent; the test route `/api/test-capi`; tests (`capi.test.ts`, env, tracker B-L1 to B-L5, `LeadForm` F-1, `e2e/lead-event.spec.ts`).
+
+**Checked:** `pnpm check` and `pnpm format:check` green; 188 Playwright tests green on a production build. **JS budget: 149.97 of 150.00 KB, a margin of about 30 bytes** (the success attribute and three hidden fields cost 0.07 KB). The budget test now prints two decimals, because one decimal hid this.
+
+**Not verified:** whether Meta accepts the request (the `fbc` format, the version, the payload): Test Events at the end of the phase. The server call runs after the response with Next's `after`; this works on `next start`, and is unverified on Vercel.
+
+**Mistakes and corrections**
+
+- **I added a third hidden field (`fbp`) that the approved plan did not name** (it said "`fbp` when the browser sent it" without saying how). It is the only way the browser id reaches the server, but it cost bytes in a budget with 0.1 KB left. Reported here and in the PR instead of left silent.
+- **A destructive slip with git:** while measuring the budget I ran `git stash` and `git switch main` in a command that I wrote carelessly. Nothing was lost (the tracked changes came back with `git stash pop`, the new files were never stashed), but I should not have put a stash in a measuring command. I checked the branch and `git status` before going on.
+- **My measuring script gave different numbers on each run** (it summed sizes asynchronously and closed too early), so I measured with the project's own budget test instead.
+- **A test bug:** the helper `setup(capi = CONFIG)` replaced `undefined` with the default, so "not configured" was not tested; found by the test failing, fixed with an explicit `null`.
