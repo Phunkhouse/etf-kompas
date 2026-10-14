@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google'
 import { CookieConsent } from '@/components/CookieConsent'
+import { siteUrl } from '@/config/site-url'
 import { siteCopy } from '@/content/copy'
 import './reset.css'
 import './variables.scss'
@@ -22,12 +23,12 @@ const plexMono = IBM_Plex_Mono({
 
 // The address chats and social feeds need to turn the share image into a full link.
 // Set SITE_URL in the build environment (Vercel); the local default is only for dev.
-const siteUrl = process.env.SITE_URL ?? 'http://localhost:3000'
+// A bad value never stops the build (src/config/site-url.ts).
 
 // The whole site is out of search engines until the launch gate (SPEC §19.5): this tag
 // and the X-Robots-Tag header in next.config.ts say the same thing twice.
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: siteUrl(),
   title: siteCopy.title,
   description: siteCopy.description,
   robots: { index: false, follow: false },
