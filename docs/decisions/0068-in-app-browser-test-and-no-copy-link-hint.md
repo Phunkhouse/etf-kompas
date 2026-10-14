@@ -18,7 +18,8 @@ The hint is not built. The PDF opened inside both apps, so it is not needed now.
 
 - Both apps: the first screen fits; sliders and year chips work; the cookie bar works; the e-mail field is not focused on arrival; tapping it causes no zoom and no jump; "Otevřít srovnání" comes before the PDF; the PDF link opens in the app; the app's back button keeps the filled calculator; the unsubscribe link works.
 - E-mail links open in Safari by default on this phone, so no mail-app webview was tested.
-- Not reported: scrolling under the app bar, the footer "Cookies" link, the results page itself, the tips confirmation, "Přihlásit zpět", and the check of the stored `in_app_browser` flag.
+- The stored events (Supabase `events`) show `in_app_browser = true` and `device = phone` for the in-app visits and `false` for the others; events are written before consent too.
+- Not reported: scrolling under the app bar, the footer "Cookies" link, the results page itself, the tips confirmation and "Přihlásit zpět".
 
 ## Alternatives considered
 
@@ -28,4 +29,4 @@ The hint is not built. The PDF opened inside both apps, so it is not needed now.
 
 - One phone and one iOS version were tested. Android, older iOS and other apps (TikTok, Gmail's webview) are untested, and on those the PDF may not open; the README lists this as a known gap.
 - If a later test shows the PDF failing in a webview, the hint of SPEC §23 is the first fix.
-- The in-app browser checklist of SPEC §22 Phase 6 is met for this device; the stored `in_app_browser` flag is still to be confirmed with the Supabase query in the checklist.
+- The in-app browser checklist of SPEC §22 Phase 6 is met for this device; the stored `in_app_browser` flag is confirmed by the Supabase query.

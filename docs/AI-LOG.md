@@ -1319,7 +1319,7 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 **Produced:** the record of the test, decision note 0068, a README gap line. I wrote the checklist; the results are David's.
 
-**Checked:** nothing by me: it needs a real phone. **Not verified:** the stored `in_app_browser` flag (the Supabase query was not reported back), the tips confirmation, scrolling under the app bar, the footer "Cookies" link, the results page, "Přihlásit zpět". They are marked "not reported" in the record, not "ok".
+**Checked:** nothing by me: it needs a real phone. **Verified by David's query:** the stored `in_app_browser` and `device` values on the in-app rows (true and phone) and on the others (false). **Not verified:** the tips confirmation, scrolling under the app bar, the footer "Cookies" link, the results page, "Přihlásit zpět". They are marked "not reported" in the record, not "ok".
 
 **Mistakes and corrections**
 

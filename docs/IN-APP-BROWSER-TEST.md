@@ -80,7 +80,13 @@ Reported by David on 2026-10-14. A line he did not report is marked "not reporte
 | 12  | not reported | not reported | the tips confirmation                                                                 |
 | 13  | ok           | ok           | unsubscribe works; "Přihlásit zpět" not reported                                      |
 
-Events check (above): not reported yet.
+Events check (above), reported by David on 2026-10-14 from the Supabase table `events` (the 3 in-app visits between 15:47 and 15:55 UTC):
+
+- The rows of the in-app visits have `in_app_browser = true` and `device = phone`; the desktop rows and the earlier phone rows (normal browser) have `in_app_browser = false`. The flag works in the real apps.
+- Events are written before and without consent: the first `page_view` of an in-app visit has `consent_measurement = false`, and the later ones of the same visit have `true` after the cookie bar was accepted.
+- The server-side `lead` rows have no device and no in-app flag (they are written by the server) and carry the visit's consent: one `lead` for the in-app submit at 15:54:28 UTC.
+- On the phone the funnel runs in the order of the page: `page_view`, `calc_start`, `gate_view`, `form_focus`, `lead`; `calc_result` came after the `lead` in that visit because the result was in view for a second only after the visitor scrolled back to it (the rule of note about `calc_result` in `docs/PHASE-5-PLAN.md`).
+- Not checked: which of the in-app visits was Instagram and which Messenger (the table has no app name), and the addresses (the table has none).
 
 ## After the test
 
