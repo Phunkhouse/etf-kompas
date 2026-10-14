@@ -55,6 +55,10 @@ What is not done or not right yet, so nobody has to find it:
 - **The hero lead is hidden on phones** to keep the button above the fold (note 0031), and the component is still named `HeroB` from the time when there were two heroes.
 - **The design PNGs** in `docs/design/images/` still show older data and short broker names; the sources and the text spec are updated. Exporting needs IBM Plex installed locally.
 
+## Deploy
+
+Steps, the environment variables, the checks after the first deploy and the production switch are in [docs/DEPLOY.md](docs/DEPLOY.md). The site is `noindex` until the launch gate (SPEC §19.5).
+
 ## Stack
 
 Next.js (App Router, TypeScript strict), SCSS Modules, pnpm, Node 24. Deploy target: Vercel.

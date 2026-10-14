@@ -1298,3 +1298,17 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 - **My own mistake in PR 3 (#92):** I put `new URL(process.env.SITE_URL)` in the root layout, so one badly typed environment variable stopped every build, and I only tested it with good values and with no value. The lead code validated `SITE_URL` at run time (a form error), which is a milder failure; I did not apply the same care at build time. The PR 3 summary told David to "set `SITE_URL`" without saying the exact format.
 - **I wrote the test file before the code but ran the tests only once, after both existed,** so I did not see them fail first. The cases were written from the failure, not from the implementation.
+
+### Phase 6, PR 5: deploy notes
+
+**Prompt (summary):** David: "#93 merged" (continue with PR 5, the deploy notes and the environment table).
+
+**Produced:** `docs/DEPLOY.md` (before the first deploy, the Vercel project, the environment table, the checks after the deploy, what to do when something is wrong, the production switch) and a "Deploy" section in the README that links to it. Variable names were read from `.env.example` and `src/config/env.ts`; the "must not be set" list from the code that refuses or ignores them (`memory-store.ts`, `env.ts`, the test routes).
+
+**Checked:** `pnpm format:check`. Nothing was run: this is documentation.
+
+**Not verified, and marked "verify in their docs" in the file:** where the Vercel function region is set, that Vercel Cron sends `CRON_SECRET` as a Bearer header, that Hobby allows a cron once a day, and how to promote a previous deployment. I wrote them from general knowledge, not from the repo or from the current Vercel documentation.
+
+**Mistakes and corrections**
+
+- None yet in this PR beyond the above: the file was written once, and the claims about the repo were checked against the code.
