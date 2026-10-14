@@ -16,7 +16,7 @@ import type {
 } from './lead-ports'
 import { sendLeadToMeta, type CapiConfig } from './capi'
 import { leadEvent, validSessionId } from './events'
-import { hitEmailLimit, hitIpLimit } from './rate-limits'
+import { hitEmailLimit, hitIpLimit, RATE_LIMIT_KEEP_DAYS } from './rate-limits'
 import { newToken } from './tokens'
 
 // What the form and the API send. Everything is "unknown": it comes from outside.
@@ -87,7 +87,6 @@ export const CONSENT_TEXT_VERSION = '2026-10-tips-v1'
 const MAX_LENGTH = 254
 const MAX_TRACKING_LENGTH = 200
 const MIN_FILL_MS = 2000
-const RATE_LIMIT_KEEP_DAYS = 2
 const DAY_MS = 86_400_000
 
 // The slider grid of the calculator (Calculator.tsx) and its horizons.

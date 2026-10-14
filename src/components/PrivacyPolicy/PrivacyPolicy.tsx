@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Container } from '@/components/Container'
 import { Tag } from '@/components/Tag'
 import { legalCopy } from '@/content/copy'
+import { retentionConfig } from '@/config/retention'
 import { controllerLabel } from '@/config/site'
 import { nbsp } from '@/lib/typography'
 import styles from './PrivacyPolicy.module.scss'
@@ -58,7 +59,7 @@ export function PrivacyPolicy() {
               <p className={styles.text}>
                 {withGaps(
                   typeof section.text === 'function'
-                    ? section.text(controllerLabel())
+                    ? section.text(controllerLabel(), retentionConfig())
                     : section.text,
                 )}
               </p>

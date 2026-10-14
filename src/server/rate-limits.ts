@@ -8,6 +8,8 @@ export const IP_LIMIT_PER_HOUR = 5
 export const EMAIL_LIMIT_PER_DAY = 3
 // First-party events: a visit sends about six, so 120 an hour is far above a person.
 export const EVENT_LIMIT_PER_HOUR = 120
+// Windows older than this are no use to anyone and are deleted.
+export const RATE_LIMIT_KEEP_DAYS = 2
 const HOUR_MS = 3_600_000
 const DAY_MS = 86_400_000
 

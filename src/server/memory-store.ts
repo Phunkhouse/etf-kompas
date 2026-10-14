@@ -6,6 +6,7 @@ import type {
   LeadRecord,
   MemoryLeadStore,
   RateLimiter,
+  RetentionStore,
   TokenRecord,
 } from './lead-ports'
 
@@ -30,10 +31,53 @@ export function createMemoryLeadStore(): MemoryLeadStore {
       return row.hits <= limit
     },
     async purgeBefore(date) {
+      let removed = 0
       for (const [id, row] of windows) {
-        if (row.windowStart < date) windows.delete(id)
+        if (row.windowStart < date) {
+          windows.delete(id)
+          removed += 1
+        }
+      }
+      return removed
+    },
+  }
+
+  const retention: RetentionStore = {
+    async dueCandidates(createdBefore, unsubscribedBefore) {
+      return [...leads.values()]
+        .filter(
+          (lead) =>
+            lead.createdAt < createdBefore ||
+            (lead.unsubscribedAt !== null &&
+              lead.unsubscribedAt < unsubscribedBefore),
+        )
+        .map((lead) => ({ ...lead }))
+    },
+    async deleteLead(id) {
+      leads.delete(id)
+      for (let i = tokens.length - 1; i >= 0; i -= 1) {
+        if (tokens[i].leadId === id) tokens.splice(i, 1)
       }
     },
+    async deleteEventsBySession(sessionIds) {
+      return removeEvents((event) =>
+        event.sessionId !== null ? sessionIds.includes(event.sessionId) : false,
+      )
+    },
+    async deleteEventsBefore(date) {
+      return removeEvents((event) => event.createdAt < date)
+    },
+  }
+
+  function removeEvents(test: (event: EventRecord) => boolean): number {
+    let removed = 0
+    for (let i = events.length - 1; i >= 0; i -= 1) {
+      if (test(events[i])) {
+        events.splice(i, 1)
+        removed += 1
+      }
+    }
+    return removed
   }
 
   return {
@@ -60,6 +104,7 @@ export function createMemoryLeadStore(): MemoryLeadStore {
       },
     },
     limiter,
+    retention,
     events: {
       async add(event) {
         events.push({ ...event })
@@ -69,6 +114,20 @@ export function createMemoryLeadStore(): MemoryLeadStore {
     leads: () => [...leads.values()].map((lead) => ({ ...lead })),
     tokens: () => tokens.map((token) => ({ ...token })),
     limiterWindows: () => [...windows.values()].map((row) => ({ ...row })),
+    ageLead(email, days) {
+      const shift = (value: Date | null) =>
+        value === null ? null : new Date(value.getTime() - days * 86_400_000)
+      for (const [id, lead] of leads) {
+        if (lead.email !== email) continue
+        leads.set(id, {
+          ...lead,
+          createdAt: shift(lead.createdAt)!,
+          consentConfirmedAt: shift(lead.consentConfirmedAt),
+          optinSentAt: shift(lead.optinSentAt),
+          unsubscribedAt: shift(lead.unsubscribedAt),
+        })
+      }
+    },
     expireTokens(email, now) {
       const ids = [...leads.values()]
         .filter((lead) => lead.email === email)

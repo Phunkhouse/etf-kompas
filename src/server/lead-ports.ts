@@ -81,8 +81,23 @@ export type EventStore = {
 export type RateLimiter = {
   // Counts one hit in the window and says whether it is within the limit.
   hit(key: string, windowStart: Date, limit: number): Promise<boolean>
-  // Removes windows that started before the date.
-  purgeBefore(date: Date): Promise<void>
+  // Removes windows that started before the date and says how many.
+  purgeBefore(date: Date): Promise<number>
+}
+
+// Deleting personal data when its time is up (Phase 6, PR 2, src/server/retention.ts).
+// Every method says only counts, never what was deleted.
+export type RetentionStore = {
+  // A superset of the leads that may be due: created before the first date, or
+  // unsubscribed before the second. The rules decide which are really due.
+  dueCandidates(
+    createdBefore: Date,
+    unsubscribedBefore: Date,
+  ): Promise<LeadRecord[]>
+  // Removes the row for good; its result tokens go with it.
+  deleteLead(id: string): Promise<void>
+  deleteEventsBySession(sessionIds: string[]): Promise<number>
+  deleteEventsBefore(date: Date): Promise<number>
 }
 
 // What `createMemoryLeadStore()` (src/server/memory-store.ts) returns: the two
@@ -92,10 +107,13 @@ export type MemoryLeadStore = {
   store: LeadStore
   limiter: RateLimiter
   events: EventStore
+  retention: RetentionStore
   leads(): LeadRecord[]
   eventRows(): EventRecord[]
   tokens(): TokenRecord[]
   limiterWindows(): { key: string; windowStart: Date; hits: number }[]
   // Test only: makes every token of this address expired.
   expireTokens(email: string, now: Date): void
+  // Test only: moves the dates of this address's lead back by that many days.
+  ageLead(email: string, days: number): void
 }

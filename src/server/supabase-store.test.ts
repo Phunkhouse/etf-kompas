@@ -234,4 +234,91 @@ describe('the events adapter', () => {
       calc_years: 10,
     })
   })
+
+  describe('retention (Phase 6, PR 2: cases SB-1 and SB-2)', () => {
+    const lead1 = '11111111-1111-4111-8111-111111111111'
+    const countHeader = (total: number) =>
+      new Headers({ 'content-range': `*/${total}` })
+
+    function stubCounted(total: number, ok = true, status = 200) {
+      const spy = vi.fn<typeof fetch>(
+        async () =>
+          ({
+            ok,
+            status,
+            headers: countHeader(total),
+            json: async () => [],
+          }) as Response,
+      )
+      vi.stubGlobal('fetch', spy)
+      return spy
+    }
+
+    it('SB-1 deletes one lead by id (the tokens cascade in the database)', async () => {
+      const spy = stubFetch([])
+      await createSupabaseStore(config).retention.deleteLead(lead1)
+      const { url, init } = firstCall(spy)
+      expect(url).toBe(`https://abc.supabase.co/rest/v1/leads?id=eq.${lead1}`)
+      expect(init.method).toBe('DELETE')
+    })
+
+    it('SB-1 deletes events by session ids with an in filter and returns the count', async () => {
+      const spy = stubCounted(3)
+      const count = await createSupabaseStore(
+        config,
+      ).retention.deleteEventsBySession(['s-1', 's-2'])
+      const { url, init } = firstCall(spy)
+      expect(url).toContain('/events?session_id=in.(s-1,s-2)')
+      expect(init.method).toBe('DELETE')
+      expect(count).toBe(3)
+    })
+
+    it('SB-1 deletes nothing, and sends nothing, for an empty list of sessions', async () => {
+      const spy = stubCounted(0)
+      expect(
+        await createSupabaseStore(config).retention.deleteEventsBySession([]),
+      ).toBe(0)
+      expect(spy).not.toHaveBeenCalled()
+    })
+
+    it('SB-1 deletes events older than a date with an lt filter on created_at', async () => {
+      const spy = stubCounted(2)
+      const count = await createSupabaseStore(
+        config,
+      ).retention.deleteEventsBefore(new Date('2026-04-14T12:00:00Z'))
+      expect(firstCall(spy).url).toContain(
+        '/events?created_at=lt.2026-04-14T12%3A00%3A00.000Z',
+      )
+      expect(count).toBe(2)
+    })
+
+    it('SB-1 lists candidates created before one date or unsubscribed before another', async () => {
+      const spy = stubFetch([])
+      await createSupabaseStore(config).retention.dueCandidates(
+        new Date('2026-04-14T12:00:00Z'),
+        new Date('2026-09-14T12:00:00Z'),
+      )
+      const { url } = firstCall(spy)
+      expect(url).toContain('/leads?')
+      expect(url).toContain('or=(created_at.lt.')
+      expect(url).toContain('unsubscribed_at.lt.')
+    })
+
+    it('SB-1 counts the rate-limit rows it removes', async () => {
+      const spy = stubCounted(4)
+      expect(
+        await createSupabaseStore(config).limiter.purgeBefore(
+          new Date('2026-10-12T12:00:00Z'),
+        ),
+      ).toBe(4)
+      expect(firstCall(spy).url).toContain('/rate_limits?window_start=lt.')
+    })
+
+    it('SB-2 an error answer is thrown with the status only, so the service can count it', async () => {
+      stubCounted(0, false, 500)
+      await expect(
+        createSupabaseStore(config).retention.deleteEventsBefore(new Date()),
+      ).rejects.toThrow('500')
+    })
+  })
 })

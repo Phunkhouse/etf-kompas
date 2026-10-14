@@ -24,6 +24,7 @@ export async function POST(request: Request) {
   const body = (await request.json()) as {
     email?: string
     expireTokens?: boolean
+    ageDays?: number
     allowEmail?: string
   }
   // Puts an address on the sandbox allowlist, so mail to it is really "sent".
@@ -32,6 +33,10 @@ export async function POST(request: Request) {
   }
   if (typeof body.email === 'string' && body.expireTokens) {
     memory.expireTokens(body.email.toLowerCase(), new Date())
+  }
+  // Test only: makes the lead of that address `ageDays` days older (for the purge).
+  if (typeof body.email === 'string' && typeof body.ageDays === 'number') {
+    memory.ageLead(body.email.toLowerCase(), body.ageDays)
   }
   return Response.json({ ok: true })
 }

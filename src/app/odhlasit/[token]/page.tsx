@@ -7,6 +7,7 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
 import { StatusCard } from '@/components/StatusCard'
 import { subscribeCopy } from '@/content/copy'
+import { retentionConfig } from '@/config/retention'
 import { unsubscribe } from '@/server/subscriptions'
 
 export const metadata: Metadata = {
@@ -35,7 +36,7 @@ export default async function UnsubscribePage({
           <StatusCard
             label={copy.unsubscribe.label}
             title={copy.unsubscribe.title}
-            text={copy.unsubscribe.text}
+            text={`${copy.unsubscribe.text} ${copy.unsubscribe.kept(retentionConfig().daysAfterUnsubscribe)}`}
           >
             <form action={resubscribeAction}>
               <input type="hidden" name="token" value={token} />

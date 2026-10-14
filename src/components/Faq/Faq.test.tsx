@@ -51,11 +51,11 @@ describe('Faq: "Časté dotazy"', () => {
     )
   })
 
-  it('answers the e-mail question without a retention period, and says it is a trial', () => {
+  it('answers the e-mail question without numbers, points to the policy and says it is a trial', () => {
     const { container } = render(<Faq facts={facts()} />)
     const text = answers(container)[2]
     expect(text).toContain(
-      'Pošleme vám na něj srovnání. Tipy k investování jen když to zaškrtnete. V každém e-mailu bude odkaz na odhlášení. Zatím jde o zkušební provoz: e-mail nikam neukládáme.',
+      'Pošleme vám na něj srovnání. Tipy k investování jen když to zaškrtnete. V každém e-mailu bude odkaz na odhlášení. Uchováváme ho jen omezenou dobu a pak ho sami smažeme, lhůty jsou v zásadách zpracování. Zatím jde o zkušební provoz.',
     )
     expect(text).not.toMatch(/\d/)
   })

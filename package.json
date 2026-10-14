@@ -18,6 +18,7 @@
     "data:validate": "tsx scripts/validate-data.ts",
     "data:validate:draft": "tsx scripts/validate-data.ts --draft",
     "data:gaps": "tsx scripts/data-gaps.ts",
+    "lead:delete": "tsx --env-file=.env.local scripts/delete-lead.ts",
     "contrast:check": "tsx scripts/check-contrast.ts",
     "copy:check": "tsx scripts/check-copy.ts"
   },
