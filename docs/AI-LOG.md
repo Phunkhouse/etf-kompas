@@ -1135,3 +1135,13 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Decision notes 0053 to 0057 (drafted, status `proposed`, 2026-10-14):** David gave reasons in chat for five of the nine candidates: `fetch` instead of the SDKs ("keep it simple"), Czech route names ("it's a Czech website"), no pounds or francs in the model ("as simple as possible"), `czSupport` as the Czech interface ("my decision; supporting info, not the main message"), and the 200 instead of 404 ("log it as a gap, maybe later if there is time", said earlier). The notes quote only those reasons and say who wrote the context and the consequences (the agent). Left undrafted, because he asked me to remind him of the case and no reason is given yet: the in-memory store and the `VERCEL` guard, the time check from page load, confirming the tips by a button, and the PDF library, fonts and PNG logo.
 
 **Decision notes 0058 to 0061 (drafted, status `proposed`, 2026-10-14):** the four that David had asked me to remind him of. His answers: the second Supabase project is "too robust a solution" (his reason, 0058); for the time check, the confirm button and the PDF library, fonts and logo he accepted the reasons I had given (0059 to 0061). The notes say which reasons are his own words and which were drafted by the agent and accepted, as notes 0047 and 0048 did. Nothing is `accepted` yet: David confirms each note.
+
+## Phase 5: plan
+
+**Prompt (summary):** David: "Let's start Phase 5. Create a checklist." Then answered three questions: GA4 and Meta accounts will come at the end of the phase; raise the JS budget rather than load lazily; save the plan as `docs/PHASE-5-PLAN.md`.
+
+**Produced:** `docs/PHASE-5-PLAN.md` (checklist, five PRs, open items), from SPEC §9, §17.12, §22, §23 and the cookie wireframes. Status `proposed`: not approved, no code yet.
+
+**Mistakes and corrections:** none yet. Open: the new JS budget needs David's reason for a decision note (he said only "raise it").
+
+**JS budget decision (2026-10-14):** I first wrote "raise the budget" into the plan after David's answer. After exploring three architectures, David changed his mind: the budget stays and the consent bar is built in-house (note 0062, reason his). Plan updated. Mistake to record: I had put the budget question as a binary (raise or lazy-load), and the better answer was a third option; the pasted exploration prompt from David is what opened it.
