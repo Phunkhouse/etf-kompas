@@ -338,6 +338,39 @@ export const legalCopy = {
       },
     ],
   },
+  // The cookie bar and settings (wireframe B, "Cookies"). Same drawing text; the
+  // wording about what the categories do has not been reviewed by a lawyer.
+  cookies: {
+    bar: {
+      label: 'Cookies',
+      text: 'Nezbytné cookies používáme, aby web fungoval. Měření návštěvnosti a reklamní cookies zapneme jen s vaším souhlasem.',
+      policy: 'Zásady zpracování',
+      accept: 'Přijmout vše',
+      reject: 'Odmítnout vše',
+      settings: 'Nastavit',
+    },
+    settings: {
+      title: 'Nastavení cookies',
+      intro:
+        'Vyberte, co smíme používat. Volbu kdykoli změníte přes odkaz Cookies v patičce.',
+      close: 'Zavřít',
+      save: 'Uložit výběr',
+      acceptAll: 'Přijmout vše',
+      always: 'Vždy zapnuto',
+      necessary: {
+        title: 'Nezbytné',
+        text: 'Bez nich web nefunguje (například uložení vaší volby). Vypnout je nejde.',
+      },
+      measurement: {
+        title: 'Měření návštěvnosti',
+        text: 'Anonymní statistiky, které nám řeknou, co na webu nefunguje.',
+      },
+      advertising: {
+        title: 'Reklama a remarketing',
+        text: 'Pomáhá změřit reklamy. Zapneme až po vašem souhlasu.',
+      },
+    },
+  },
 }
 
 // The 404 page (wireframe B, "404").
@@ -640,7 +673,7 @@ export const menuCopy = {
   // The pages arrive in C2b; Kontakt goes to the controller section of the policy.
   legal: [
     { label: 'Zásady zpracování', href: '/zasady' },
-    { label: 'Cookies', href: '/zasady#cookies' },
+    { label: 'Cookies', href: '/zasady#cookies', opensCookies: true },
     { label: 'Kontakt', href: '/zasady#kdo-zpracovava' },
   ],
   cta: { label: 'Poslat mi srovnání', href: '#formular' },

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google'
+import { CookieConsent } from '@/components/CookieConsent'
 import './reset.css'
 import './variables.scss'
 import './globals.css'
@@ -26,8 +27,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="cs" className={`${plexSans.variable} ${plexMono.variable}`}>
-      <body>{children}</body>
+    // suppressHydrationWarning: the cookie script sets data-consent on <html>
+    // before React hydrates (note 0062).
+    <html
+      lang="cs"
+      className={`${plexSans.variable} ${plexMono.variable}`}
+      suppressHydrationWarning
+    >
+      <body>
+        {children}
+        <CookieConsent />
+      </body>
     </html>
   )
 }

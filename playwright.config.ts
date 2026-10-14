@@ -5,7 +5,28 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
-  use: { baseURL: 'http://localhost:3000', trace: 'on-first-retry' },
+  use: {
+    baseURL: 'http://localhost:3000',
+    trace: 'on-first-retry',
+    // Every test starts with a cookie choice already made (everything refused), so
+    // the cookie bar does not cover the page. e2e/cookie-consent.spec.ts starts
+    // without one.
+    storageState: {
+      cookies: [
+        {
+          name: 'kompas_consent',
+          value: 'v1-m0-a0-1760000000',
+          domain: 'localhost',
+          path: '/',
+          expires: -1,
+          httpOnly: false,
+          secure: false,
+          sameSite: 'Lax',
+        },
+      ],
+      origins: [],
+    },
+  },
   projects: [
     // Primary: our audience is mobile (SPEC §12a).
     { name: 'mobile', use: { ...devices['Pixel 7'] } },

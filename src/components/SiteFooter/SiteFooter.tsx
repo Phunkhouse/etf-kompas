@@ -6,14 +6,15 @@ import { nbsp } from '@/lib/typography'
 import styles from './SiteFooter.module.scss'
 
 // Risk line, controller, four links and the test-project notice. The links go to
-// the method on the landing page, the privacy policy, its cookies section, and
-// the controller section of the policy (Kontakt).
+// the method on the landing page, the privacy policy, its cookies section (the
+// script turns this click into opening the cookie settings), and the controller
+// section of the policy (Kontakt).
 export function SiteFooter() {
   const { footer } = shellCopy
   const links = [
     { label: footer.method, href: '/#jak-pocitame' },
     { label: footer.privacy, href: '/zasady' },
-    { label: footer.cookies, href: '/zasady#cookies' },
+    { label: footer.cookies, href: '/zasady#cookies', opensCookies: true },
     { label: footer.contact, href: '/zasady#kdo-zpracovava' },
   ]
   return (
@@ -29,7 +30,12 @@ export function SiteFooter() {
             <ul className={styles.list}>
               {links.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href}>{nbsp(link.label)}</a>
+                  <a
+                    href={link.href}
+                    data-consent-action={link.opensCookies ? 'open' : undefined}
+                  >
+                    {nbsp(link.label)}
+                  </a>
                 </li>
               ))}
             </ul>

@@ -35,15 +35,13 @@ test.describe('the footer links', () => {
     ).toBeVisible()
   })
 
-  test('"Cookies" and "Kontakt" land on their sections of the policy', async ({
+  // "Cookies" reopens the cookie settings (e2e/cookie-consent.spec.ts); its link
+  // to #cookies is only the fallback without JavaScript.
+  test('"Kontakt" lands on the controller section of the policy', async ({
     page,
   }) => {
     await page.goto('/')
     const footer = page.getByRole('contentinfo')
-    await footer.getByRole('link', { name: 'Cookies' }).click()
-    await expect(page).toHaveURL(/\/zasady#cookies$/)
-    await expect(page.locator('#cookies')).toBeInViewport()
-    await page.goto('/')
     await footer.getByRole('link', { name: 'Kontakt' }).click()
     await expect(page).toHaveURL(/\/zasady#kdo-zpracovava$/)
     await expect(page.locator('#kdo-zpracovava')).toBeInViewport()
@@ -157,7 +155,10 @@ test.describe('the 404 page', () => {
 })
 
 test.describe('cookies today', () => {
-  test('the landing page and the policy set no cookies at all, which the policy relies on', async ({
+  // A visitor who has not chosen yet: the config's stored choice is left out.
+  test.use({ storageState: { cookies: [], origins: [] } })
+
+  test('before a choice, the landing page and the policy set no cookies at all, which the policy relies on', async ({
     page,
     context,
   }) => {
