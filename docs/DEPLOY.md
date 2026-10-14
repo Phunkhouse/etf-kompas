@@ -57,7 +57,7 @@ Names come from `.env.example`; **never commit a value** (the repo is public). A
 | `RETENTION_UNSUBSCRIBED_DAYS` | no              | no      | default 30 (provisional, note 0067)                                                                                                                                         |
 | `GA4_MEASUREMENT_ID`          | for GA4         | no      | `G-...`; without it only first-party events run                                                                                                                             |
 | `META_PIXEL_ID`               | for the Pixel   | no      | digits                                                                                                                                                                      |
-| `META_CAPI_TOKEN`             | for server Lead | **yes** | not set yet: the server-side Lead is **built, not enabled**                                                                                                                 |
+| `META_CAPI_TOKEN`             | for server Lead | **yes** | not set, by decision (note 0071): the server-side Lead is **built, not enabled**                                                                                            |
 | `META_GRAPH_VERSION`          | for server Lead | no      | read the current version from Meta's documentation; no default. Not set yet                                                                                                 |
 
 Must **not** be set on Vercel: `LEAD_STORE=memory` (the in-memory store refuses to start on Vercel, and the test routes `/api/test-leads` and `/api/test-capi` answer 404 without it), `LEAD_MIN_FILL_MS`, `META_GRAPH_BASE`.
