@@ -1,0 +1,23 @@
+# Legal pack
+
+Status: **started 2026-10-14, incomplete.** SPEC §19 describes what the pack will hold. This project has no lawyer (note 0039), so the pack is best effort; it is built so that a qualified reviewer could check it quickly. Nothing here is legal advice or a statement that the site complies.
+
+## Open points for a reviewer
+
+Each point says where it comes from. Add to this list when a phase raises one; do not answer a question here without a source.
+
+| #   | Point                                                                                                                                                                                                                       | Where                                                             | Raised  |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------- |
+| 1   | Is "Anonymní statistiky, které nám řeknou, co na webu nefunguje" an accurate description of the measurement category? GA4 is not strictly anonymous. The wording is the drawing's text; the real tools are not yet decided. | `legalCopy.cookies.settings.measurement` in `src/content/copy.ts` | Phase 5 |
+| 2   | How long may the consent choice cookie `kompas_consent` live, and how long is a choice valid before we ask again? 180 days is the agent's own pick, marked `TODO_VERIFY`.                                                   | `CONSENT_MAX_AGE` in `src/lib/consent.ts`                         | Phase 5 |
+| 3   | Is the consent wording valid (equal "Přijmout vše" and "Odmítnout vše", granular categories, off by default)? SPEC §19 question (b).                                                                                        | cookie bar and settings                                           | Phase 5 |
+| 4   | Is cookieless, aggregate first-party counting before consent acceptable without consent? Needs legal sign-off (SPEC §9, §22).                                                                                               | `/api/event` (Phase 5, PR 2)                                      | Phase 5 |
+| 5   | Retention period for stored e-mails and for first-party events, and the deletion process (SPEC §19 question e). Not decided; the privacy text has `[doplnit]`.                                                              | `legalCopy.privacy`, `scripts/delete-lead.ts` (not done)          | Phase 4 |
+| 6   | Hashed e-mail data to the Meta Conversions API: only with advertising consent. Is that the right condition?                                                                                                                 | Phase 5, PR 4                                                     | Phase 5 |
+
+## Still to write (SPEC §19, item 3)
+
+- Data-flow map: what is collected, where it is stored, processors, retention, transfers outside the EU.
+- Drafts of the privacy policy, consent texts and cookie categories (the privacy page and the cookie texts exist as placeholders).
+- The event list from SPEC §9 mapped to consent categories (after Phase 5).
+- The fixed list of reviewer questions (a) to (f) from SPEC §19.
