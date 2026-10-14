@@ -19,12 +19,12 @@
       "evidence": null
     },
     "czSupport": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": true,
+      "sourceUrl": "https://www.degiro.cz",
+      "asOf": "2026-10-12",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-14",
+      "evidence": "sha256:a055296a3a5bd544c38511914c6e99d64ed361d71646029b7d7e1842da5feac6 (degiro-vusa-search-2026-10-12.png): logged-in platform in Czech (\"Zůstatek\", \"Portfolio\", \"NÁKUP\", \"PRODEJ\", \"Údaje o cenách\"). Meaning of czSupport (David, 2026-10-14): the interface the visitor uses is available in Czech."
     },
     "availability": {
       "voo": {
@@ -320,12 +320,12 @@
       "evidence": null
     },
     "czSupport": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": true,
+      "sourceUrl": "https://www.fio.cz",
+      "asOf": "2026-10-12",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-14",
+      "evidence": "sha256:6e96a301910ff3226f01b9767b30dd4282678b91ee9088649958e042c3ff50f5 (fio-vuaa-search-01-2026-10-12.png): e-Broker demo account in Czech (\"Pokyny\", \"Moje zprávy\", \"Odhlášení\", \"Zdroj dat\"), language switch \"cz en sk\". Meaning of czSupport (David, 2026-10-14): the interface the visitor uses is available in Czech."
     },
     "availability": {
       "voo": {
@@ -512,12 +512,12 @@
       "evidence": null
     },
     "czSupport": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": false,
+      "sourceUrl": "https://www.interactivebrokers.com",
+      "asOf": "2026-10-14",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-14",
+      "evidence": "sha256:97e06fa11d447cbe02c02a804818001a6fb9130ce1ae82a80c2af4a8e1431dd2 (ibkr-lang-1.png) and sha256:6bac3de3d11dfc2002ac86a0f9af0c19225c7092e7ca0ded17ac368c8b6cb4b6 (ibkr-lang-2.png): the language menu of the client portal (David's own account) lists English, Deutsch, Nederlands, Español, Français, Italiano, Magyar, Português, Русский, 简体中文, 繁體中文, 日本語, 한국어, العربية and עברית; there is no Czech. The two captures overlap and the second ends the list. The absence is read from these captures on 2026-10-14; the portal is in English in every other IBKR screenshot. Meaning of czSupport (David, 2026-10-14): the interface the visitor uses is available in Czech."
     },
     "availability": {
       "voo": {
@@ -788,12 +788,12 @@
       "evidence": null
     },
     "czSupport": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": true,
+      "sourceUrl": "https://www.trading212.com/cs/terms/invest",
+      "asOf": "2026-10-14",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-14",
+      "evidence": "sha256:291d4b4fe9fbf53294057cb7f36d3763c6d20f8401f6fb452302de74ce03c641 (trading212-lang.png): the app's Settings screen in Czech (\"Nastavení\", \"Jazyk: Česky\"); sha256:08f595561e6c5075438cc310ffe1d5ed6f25689cd0d642e4ecdd0afc85de2cf7 (trading-212-fees-cz.png): the website's terms page in Czech (\"Podmínky a poplatky\", language CS, Česká republika). Meaning of czSupport (David, 2026-10-14): the interface the visitor uses is available in Czech."
     },
     "availability": {
       "voo": {
@@ -1010,12 +1010,12 @@
       "evidence": null
     },
     "czSupport": {
-      "value": "TODO_VERIFY",
-      "sourceUrl": null,
-      "asOf": null,
-      "verifiedBy": null,
-      "verifiedOn": null,
-      "evidence": null
+      "value": true,
+      "sourceUrl": "https://www.xtb.com/cz",
+      "asOf": "2026-10-12",
+      "verifiedBy": "David",
+      "verifiedOn": "2026-10-14",
+      "evidence": "sha256:dede9b0262e9bf0c651b124425b79c87a0006430bfec6c1e58df6eb2688074ba (xtb-vusa-search-2026-10-12.png): platform in Czech (\"Aktivovat účet\", \"Moje obchody\", \"Otevřené pozice\", \"Odhlásit se\"). Meaning of czSupport (David, 2026-10-14): the interface the visitor uses is available in Czech."
     },
     "availability": {
       "voo": {
