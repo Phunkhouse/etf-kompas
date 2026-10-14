@@ -1312,3 +1312,17 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Mistakes and corrections**
 
 - None yet in this PR beyond the above: the file was written once, and the claims about the repo were checked against the code.
+
+### Phase 6, PR 6: in-app browser test record
+
+**Prompt (summary):** David: "let's test in app browser". I prepared `docs/IN-APP-BROWSER-TEST.md` (checklist from SPEC §23, an events query, a record table); David ran it on his phone and reported the results; his reason for leaving out the copy-link hint: "it opened in both apps, so it is not needed now".
+
+**Produced:** the record of the test, decision note 0068, a README gap line. I wrote the checklist; the results are David's.
+
+**Checked:** nothing by me: it needs a real phone. **Verified by David's query:** the stored `in_app_browser` and `device` values on the in-app rows (true and phone) and on the others (false). **Not verified:** the tips confirmation, scrolling under the app bar, the footer "Cookies" link, the results page, "Přihlásit zpět". They are marked "not reported" in the record, not "ok".
+
+**Mistakes and corrections**
+
+- **No wrong claim reached David in the checklist that I know of.** The one wording difference I found (SPEC §23 says "Otevřít přehled", the page says "Otevřít srovnání") I checked against `src/content/copy.ts` before writing the checklist, so the checklist uses the page's wording.
+- **The checklist's item 7 and item 8 overlap** (the success state with its links, and the results page opening), so David's answer covered the first and left the second unclear. I recorded item 8 as "not reported" instead of assuming it passed.
+- **I wrote the first version of this log entry with a mistake that did not happen** (a correction of a draft that never existed). I caught it before the PR was opened and removed it; the log must record only what happened.
