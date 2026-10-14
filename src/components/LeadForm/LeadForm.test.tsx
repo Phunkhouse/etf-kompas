@@ -192,6 +192,7 @@ describe('LeadForm: a valid address', () => {
   const state: LeadFormState = {
     status: 'ok',
     resultsPath: '/srovnani/abc',
+    eventId: null,
     email: { status: 'skipped', address: 'jan@domena.cz' },
   }
 
@@ -229,6 +230,7 @@ describe('LeadForm: what is said about the e-mail', () => {
   const ok = (status: 'sent' | 'skipped' | 'failed'): LeadFormState => ({
     status: 'ok',
     resultsPath: '/srovnani/abc',
+    eventId: null,
     email: { status, address: 'jan@domena.cz' },
   })
 
@@ -313,5 +315,28 @@ describe('LeadForm: fields the visitor does not see', () => {
     expect(Number(data.get('t'))).toBeGreaterThanOrEqual(0)
     expect(data.get('website')).toBe('')
     window.history.replaceState(null, '', '/')
+  })
+})
+
+describe('LeadForm: the id the vendors dedupe on', () => {
+  const ok = (eventId: string | null): LeadFormState => ({
+    status: 'ok',
+    resultsPath: '/srovnani/abc',
+    eventId,
+    email: { status: 'skipped', address: 'jan@domena.cz' },
+  })
+
+  it('F-1 the success state carries data-lead-event-id when there is an id', () => {
+    const id = '3b1f1c0e-6a52-4c1c-9d5e-0f7a1b2c3d4e'
+    const { container } = renderForm({ initialState: ok(id) })
+    expect(
+      container.querySelector('#formular')?.getAttribute('data-lead-event-id'),
+    ).toBe(id)
+  })
+
+  it('F-1 and no attribute when the id is null (a repeat submit)', () => {
+    const { container } = renderForm({ initialState: ok(null) })
+    expect(container.querySelector('#formular')).not.toBeNull()
+    expect(container.querySelector('[data-lead-event-id]')).toBeNull()
   })
 })

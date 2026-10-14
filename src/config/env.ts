@@ -133,3 +133,46 @@ export function trackingEnv(
     pixel: read('META_PIXEL_ID', PIXEL_ID),
   }
 }
+
+// The Meta Conversions API (Phase 5, PR 4). The call is made only when the pixel id, the
+// token and the Graph API version are all set; a half-configured set counts as not
+// configured, with a warning that names the variable. There is no default version: it is
+// read from Meta's documentation when the account exists (TODO_VERIFY). `META_GRAPH_BASE`
+// points the call at a local stub and is honoured only with the in-memory store.
+export type MetaServerConfig = {
+  pixelId: string
+  token: string
+  version: string
+  base: string
+}
+
+export function metaServerEnv(
+  source: Record<string, string | undefined> = process.env,
+): MetaServerConfig | null {
+  const pixelId = trackingEnv(source).pixel
+  const token = source.META_CAPI_TOKEN?.trim() || null
+  const version = source.META_GRAPH_VERSION?.trim() || null
+  if (!pixelId && !token && !version) return null
+  if (!pixelId || !token || !version) {
+    const missing = [
+      !pixelId && 'META_PIXEL_ID',
+      !token && 'META_CAPI_TOKEN',
+      !version && 'META_GRAPH_VERSION',
+    ].filter(Boolean)
+    console.warn(
+      `Meta Conversions API is off: ${missing.join(', ')} not set or not valid.`,
+    )
+    return null
+  }
+  if (!/^v\d+\.\d+$/.test(version)) {
+    console.warn(
+      'META_GRAPH_VERSION is not valid, Meta Conversions API is off.',
+    )
+    return null
+  }
+  const base =
+    source.LEAD_STORE === 'memory' && source.META_GRAPH_BASE
+      ? source.META_GRAPH_BASE
+      : 'https://graph.facebook.com'
+  return { pixelId, token, version, base }
+}

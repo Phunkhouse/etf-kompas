@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { leadEnv, trackingEnv } from './env'
+import { leadEnv, metaServerEnv, trackingEnv } from './env'
 
 const secret = 's'.repeat(32)
 
@@ -78,5 +78,45 @@ describe('trackingEnv', () => {
     expect(text).not.toContain('<b>')
     expect(text).not.toContain('pixel-id')
     warn.mockRestore()
+  })
+})
+
+describe('metaServerEnv', () => {
+  const all = {
+    META_PIXEL_ID: '1234567890',
+    META_CAPI_TOKEN: 'tok-secret',
+    META_GRAPH_VERSION: 'v0.0',
+  }
+
+  it('is off when nothing is set, and on when the three are', () => {
+    expect(metaServerEnv({})).toBeNull()
+    expect(metaServerEnv(all)).toEqual({
+      pixelId: '1234567890',
+      token: 'tok-secret',
+      version: 'v0.0',
+      base: 'https://graph.facebook.com',
+    })
+  })
+
+  it('V-2 two of three count as off, with a warning that names the variable and not a value', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    expect(metaServerEnv({ ...all, META_GRAPH_VERSION: undefined })).toBeNull()
+    expect(metaServerEnv({ ...all, META_CAPI_TOKEN: '' })).toBeNull()
+    const text = JSON.stringify(warn.mock.calls)
+    expect(text).toContain('META_GRAPH_VERSION')
+    expect(text).toContain('META_CAPI_TOKEN')
+    expect(text).not.toContain('tok-secret')
+    warn.mockRestore()
+  })
+
+  it('C-7 META_GRAPH_BASE is honoured only with the in-memory store', () => {
+    const stub = 'http://localhost:3100/api/test-capi'
+    expect(metaServerEnv({ ...all, META_GRAPH_BASE: stub })?.base).toBe(
+      'https://graph.facebook.com',
+    )
+    expect(
+      metaServerEnv({ ...all, META_GRAPH_BASE: stub, LEAD_STORE: 'memory' })
+        ?.base,
+    ).toBe(stub)
   })
 })

@@ -16,7 +16,7 @@ async function scriptBytes(browser: Browser, path: string): Promise<number> {
   return sizes.reduce((sum, size) => sum + size, 0)
 }
 
-const kb = (bytes: number) => `${(bytes / 1024).toFixed(1)} KB`
+const kb = (bytes: number) => `${(bytes / 1024).toFixed(2)} KB`
 
 // What the page's own code adds on top of an empty page. This is the part we
 // control. The empty page is a fixed size, measured on 2026-10-11 with Next's own

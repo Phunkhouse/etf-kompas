@@ -3,6 +3,7 @@ import { expect, type APIRequestContext, type Page } from '@playwright/test'
 // Shared by the tracking specs: the in-memory view of the events, a marker that tells one
 // test's events from another's, and the path of a visitor.
 export type StoredEvent = {
+  id: string
   name: string
   sessionId: string | null
   variant: string | null
@@ -29,8 +30,9 @@ export async function walk(
   page: Page,
   request: APIRequestContext,
   utm: string,
+  query = '',
 ) {
-  await page.goto(`/?utm_source=${utm}`)
+  await page.goto(`/?utm_source=${utm}${query}`)
   await page.getByRole('slider').first().focus()
   await page.keyboard.press('ArrowRight')
   await page.locator('[data-track="result"]').scrollIntoViewIfNeeded()

@@ -1,7 +1,8 @@
 // Wires the lead rules to the real store, the clock and the request. Everything
 // else (the rules) lives in src/server/leads.ts; this file only connects.
 import { headers } from 'next/headers'
-import { leadEnv } from '@/config/env'
+import { after } from 'next/server'
+import { leadEnv, metaServerEnv } from '@/config/env'
 import { controllerLabel } from '@/config/site'
 import {
   purgeOldRateLimits,
@@ -46,6 +47,11 @@ export function memoryLeads(): MemoryLeadStore | null {
   if (process.env.LEAD_STORE !== 'memory') return null
   globalForLeads.__memoryLeads ??= createMemoryLeadStore()
   return globalForLeads.__memoryLeads
+}
+
+function capiConfig(siteUrl: string): LeadDeps['capi'] {
+  const meta = metaServerEnv()
+  return meta ? { ...meta, siteUrl } : undefined
 }
 
 let deps: LeadDeps | null = null
@@ -93,6 +99,8 @@ export function leadDeps(): LeadDeps {
     store: adapters.store,
     limiter: adapters.limiter,
     events: adapters.events,
+    capi: capiConfig(env.SITE_URL),
+    afterResponse: (task) => after(task),
     now: () => new Date(),
     secrets: { ipHash: env.IP_HASH_SECRET },
     mail,
@@ -130,7 +138,12 @@ export async function handleLead(input: LeadInput): Promise<LeadFormState> {
       email: typeof input.email === 'string' ? input.email : '',
     }
   }
-  const state = await submitLead(input, { ip: await clientIp() }, ready)
+  const list = await headers()
+  const state = await submitLead(
+    input,
+    { ip: await clientIp(), userAgent: list.get('user-agent') },
+    ready,
+  )
   // Now and then, tidy the counters; never on the visitor's way.
   if (Math.random() < 0.02) {
     void purgeOldRateLimits(ready).catch(() => {})

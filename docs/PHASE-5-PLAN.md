@@ -63,12 +63,12 @@ Banner and consent state are separate from the React bundle: the head script rea
 
 ### PR 4: `feat: server-side lead event`
 
-- [ ] Test cases first, approved before implementing.
-- [ ] One `event_id` per submission, shared by the browser and the server.
-- [ ] Meta Conversions API and GA4 Measurement Protocol from the server; hashed data only with consent.
-- [ ] `lead` exactly once per submission (double click, resubmit, same e-mail twice).
-- [ ] A failed or slow send never blocks or fails the lead.
-- [ ] Privacy and cookie text match what actually runs (placeholder, needs a lawyer).
+- [x] Test cases first, approved before implementing.
+- [x] One `event_id` per submission, shared by the browser and the server.
+- [x] Meta Conversions API from the server; hashed data only with advertising consent. The GA4 Measurement Protocol is not built (it would double count, David agreed 2026-10-14).
+- [x] `lead` exactly once per submission (double click, resubmit, same e-mail twice).
+- [x] A failed or slow send never blocks or fails the lead.
+- [x] Privacy and cookie text match what actually runs (placeholder, needs a lawyer).
 
 ### PR 5: `docs: close Phase 5`
 
@@ -185,3 +185,56 @@ Playwright (`e2e/ad-tags.spec.ts`, mobile, fake ids set in the webServer environ
 - A-4 with the ids left out of the environment the same path makes no third-party request, even after "Přijmout vše" (a second small run of the same test with the variables unset).
 - A-5 JS budget test stays green (149.9 of 150 KB; the inline script is not counted).
 - A-6 INP and TBT, measured by hand once with and without consent on a throttled run, written into the PR (no assertion).
+
+## PR 4: decisions and test cases (approved by David 2026-10-14; decisions 2 and 3 to be revisited when the accounts exist)
+
+Source: SPEC §9 (`lead` also server-side), §17.12, the Phase 5 acceptance criteria, notes 0064 and 0065. Test cases first: nothing below is implemented until David approves it. As in PR 3 the accounts do not exist, so the Meta Conversions API (CAPI) is tested against a local stub route; whether Meta accepts the request is only proven at the end of the phase in Test Events.
+
+### Decisions I need
+
+1. **One `event_id`.** It is the id of the first-party `lead` event row (note 0065). The server returns it in the form state, the success markup carries it as `data-lead-event-id`, the tracker sends the browser `lead` with it, and the server CAPI call sends the same one. It exists **only for a new lead** (a repeat submit of the same address returns `null`), so neither vendor counts a person twice.
+2. **GA4 gets `generate_lead` from the browser only; I propose not to build the GA4 Measurement Protocol call.** SPEC §9 asks for both, but GA4 has no `event_id` deduplication between a browser event and a Measurement Protocol event, so every visitor whose browser event arrives would count twice, and the server call also needs the visitor's GA client id, which exists only when measurement is agreed (the same people whose browser event arrives). This is a deviation from the spec: your decision. Alternative: build it anyway and accept the double count.
+3. **CAPI only with advertising consent, and only when fully configured.** Without "Reklama a remarketing" agreed nothing about the visitor goes to Meta. The call is made when `META_PIXEL_ID`, `META_CAPI_TOKEN` and `META_GRAPH_VERSION` are all set. **I do not know which Graph API version is current, so there is no default** (`TODO_VERIFY`; you read it from Meta's documentation when the account exists). It sends: event name `Lead`, the event id, the server's time, `action_source: website`, the page address (`SITE_URL`), the SHA-256 of the lower-cased e-mail, the visitor's IP and user agent, and `fbc` built from the stored `fbclid` (and `fbp` when the browser sent it). The exact `fbc` format is from my memory of Meta's documentation: checked in Test Events at the end.
+4. **How consent reaches the server.** At submit the tracker sets a hidden `ads` field to `1` only when advertising is agreed (like `sid`). The server trusts it, as it does `sid`. Anything but the literal `1` means no.
+5. **Sending never blocks the answer.** The CAPI call runs after the response (Next's `after`), with a 3-second timeout and no retry. A failure is logged without the e-mail, the token or the response body. A lost event is accepted.
+6. **A test hook.** `META_GRAPH_BASE` replaces `https://graph.facebook.com` and is honoured only when `LEAD_STORE=memory` (never on Vercel), so Playwright can point the server at a local stub route `/api/test-capi` (404 outside the memory store).
+7. **Bundle.** The success markup needs `data-lead-event-id` in the form component, a few bytes in the client bundle; the margin is 0.1 KB. I measure it, and if it does not fit I come back to you before doing anything else.
+
+### Test cases
+
+Server (`leads.test.ts` and a new `capi.test.ts`, unit):
+
+- L-1 the state of a new lead has an `eventId` equal to the id of its stored `lead` event row; a repeat submit has `null`; a bot's fake success has `null`.
+- L-2 the event id is a UUID and is the same in the state, the event row and the CAPI body.
+- C-1 with advertising consent and the three variables set, a new lead produces one request: URL `…/<version>/<pixel id>/events`, body with the fields of decision 3, the e-mail only as a SHA-256 of the lower-cased, trimmed address, time in seconds from the server's clock.
+- C-2 no request when: the `ads` field is not `1`; any of the three variables is missing; the lead is a repeat; the submit was a bot.
+- C-3 IP and user agent are in the request only because consent is given (no request, no data).
+- C-4 `fbc` is built from `fbclid` only when there is one; `fbp` only when sent.
+- C-5 a failing, refused or 3-second-slow Meta answer does not change the returned state and does not throw; the log line contains neither the e-mail, nor the token, nor the response body.
+- C-6 the request is made after the response (the test collects the after-task and sees no request before it runs).
+- C-7 `META_GRAPH_BASE` is ignored unless `LEAD_STORE=memory`.
+
+Env (`env.test.ts`):
+
+- V-2 the three Meta server variables are optional together: a token without a version, or the reverse, counts as not configured, with a warning that names the variable.
+
+Browser script (`Tracker.test.tsx`, jsdom, the real inline script):
+
+- B-L1 when `[data-lead-event-id]` appears, GA4 gets `generate_lead` with the id as `event_id`, and the Pixel gets `Lead` with `eventID` set, each once, whatever happens to the markup afterwards.
+- B-L2 only the vendors that are on get it: nothing when both are off; GA4 only with measurement; the Pixel only with advertising.
+- B-L3 no vendor event when the markup has no id (a repeat submit).
+- B-L4 the first-party count is untouched: `lead` is never sent to `/api/event` by the browser.
+- B-L5 the hidden `ads` field is `1` at submit only when advertising is agreed, and empty otherwise; `sid` behaves as before.
+
+Component (`LeadForm.test.tsx`):
+
+- F-1 the success state has `data-lead-event-id` when the state has an id, and no attribute when it has `null`.
+
+Playwright (`e2e/lead-event.spec.ts`, mobile, fake ids, stubbed vendor scripts, the CAPI stub route):
+
+- E-1 "Přijmout vše", the whole path and a submit: GA4 receives `page_view, calc_start, calc_result, gate_view, form_focus, generate_lead`; the Pixel queue ends with `Lead` and an `eventID`; the CAPI stub received one request with the same id, which is also the id of the stored `lead` event.
+- E-2 "Odmítnout vše": the same path stores the lead and the first-party `lead` event; no vendor `lead`, and the CAPI stub received nothing.
+- E-3 measurement only: GA4 `generate_lead`; the Pixel and CAPI nothing.
+- E-4 the same address twice: one browser `lead` per vendor and one CAPI request.
+- E-5 the CAPI stub answers 500 (and, in a second run, never answers): the submit still ends in "Hotovo", the lead is stored, the results link works.
+- E-6 JS budget test stays green (149.9 of 150 KB or less).

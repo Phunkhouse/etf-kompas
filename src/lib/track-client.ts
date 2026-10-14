@@ -312,9 +312,43 @@ export function trackClient(
       const field =
         form && (form.elements.namedItem('sid') as HTMLInputElement | null)
       if (field) field.value = agreed() ? sid : ''
+      // Advertising agreed: tell the server (it may send the lead to Meta) and pass the
+      // Pixel's browser id when there is one.
+      const ads =
+        form && (form.elements.namedItem('ads') as HTMLInputElement | null)
+      const fbp =
+        form && (form.elements.namedItem('fbp') as HTMLInputElement | null)
+      const on = !!choice() && choice()!.advertising
+      if (ads) ads.value = on ? '1' : ''
+      if (fbp) fbp.value = on ? cookie('_fbp') || '' : ''
     },
     true,
   )
+
+  // The lead (PR 4): the success state of the form carries the id the server made.
+  // The vendors get the browser side of it, with that id so they can drop the
+  // server's copy of the same conversion. The first-party `lead` is the server's.
+  const leads: Record<string, boolean> = {}
+  const watchLead = () => {
+    const mark = doc.querySelector('[data-lead-event-id]')
+    const id = mark && mark.getAttribute('data-lead-event-id')
+    if (!id || leads[id]) return
+    leads[id] = true
+    try {
+      if (gaOn) gtag('event', 'generate_lead', props({ event_id: id }))
+      if (metaOn) w.fbq('track', 'Lead', {}, { eventID: id })
+    } catch {
+      // a vendor never breaks the page
+    }
+  }
+  if (typeof MutationObserver !== 'undefined' && main) {
+    new MutationObserver(watchLead).observe(main, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['data-lead-event-id'],
+    })
+  }
 
   if (typeof IntersectionObserver !== 'undefined') {
     const result = doc.querySelector('[data-track="result"]')
