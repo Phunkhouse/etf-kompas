@@ -1,6 +1,11 @@
 import { computeGaps, summarize } from '@/server/data/gaps'
 import { loadData } from '@/server/data/load'
-import { needs, unusedFundFields, unusedFundIds } from '@/server/data/needs'
+import {
+  needs,
+  unusedBrokerFields,
+  unusedFundFields,
+  unusedFundIds,
+} from '@/server/data/needs'
 import { dataSchema } from '@/server/data/schema'
 
 // What the rev. 4 screens still need from data/*.json (see docs/DATA-NEEDS.md).
@@ -39,7 +44,10 @@ async function main() {
     ? `funds ${unusedFundIds.join(', ')}; `
     : ''
   console.log(
-    `Not used by any rev. 4 screen (not worth verifying now): ${unusedFunds}fields ${unusedFundFields.join(', ')}.`,
+    `Not used by any rev. 4 screen (not worth verifying now): ${unusedFunds}fund fields ${unusedFundFields.join(', ')}.`,
+  )
+  console.log(
+    `Not used by the calculator any more (version 1 fields, still asked for by data:validate strict): broker fields ${unusedBrokerFields.join(', ')}.`,
   )
 }
 
