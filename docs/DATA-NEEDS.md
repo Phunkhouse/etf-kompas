@@ -4,34 +4,21 @@ Derived from the rev. 4 text spec ([wireframe-b.md](design/wireframe-b.md), deci
 
 **Rule for design reviews:** a number or a claim on a wireframe is final only when its row below is verified. Unverified values stay `[ověřit]` in the design and in the page, and a screen that depends on them hides (the saving box) or says so. This avoids a second review after the data turns out different, which is what happened with VOO's fee in rev. 2.
 
-## Status on 2026-10-12
+## Status on 2026-10-14
 
-`pnpm data:gaps`: 32 of 118 needed values verified (a value two screens need counts twice). To do: **43 different missing values** in the current data model and **35 values the model has no place for yet**.
+`pnpm data:gaps`: **138 of 138 needed values verified** (a value two screens need counts twice). Nothing the rev. 4 screens need is missing from the data files, and nothing is left without a place in the data model. Since 2026-10-12 the model gained what the old list called "two things the model does not have yet": purchase commission rules, conversion fees per currency, custody fees and the listing (currency and venue) of each fund at each broker (calculator version 2, [METHODOLOGY-V2.md](METHODOLOGY-V2.md) §3). `pnpm data:gaps` now checks those, not the three broker fields of version 1.
 
-| Screen          | Needs                                                                                       | Verified | Missing                                                                                 |
-| --------------- | ------------------------------------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------------- |
-| Hero table      | name, fee and Acc/Dist type of CSPX, VUAA, CNDX, EQQQ                                       | 9 of 12  | name, fee and type of EQQQ (the KID given is for a different share class, see AI-LOG)   |
-| Hero line       | where CSPX is sold; where VOO and QQQ are not                                               | 9 of 15  | Fio and IBKR for CSPX, VOO and QQQ                                                      |
-| Calculator      | CSPX fee; conversion and custody fee of five brokers; purchase commission; listing currency | 2 of 16  | 4 conversion fees, 5 custody fees, 5 commission rules (new), 5 listing currencies (new) |
-| Comparison page | five twins: fee and type; availability 5 x 5; Czech support; listing per fund and broker    | 15 of 70 | VUSA and EQQQ entirely, Fio and IBKR entirely, 5 `czSupport`, 25 listings (new)         |
+| Screen          | Needs                                                                                                  | Verified |
+| --------------- | ------------------------------------------------------------------------------------------------------ | -------- |
+| Hero table      | name, fee and Acc/Dist type of CSPX, VUAA, CNDX, EQQQ; where CSPX is sold; where VOO and QQQ are not   | 23 of 23 |
+| Calculator      | CSPX fee; purchase rule, custody fee and conversion fee (per currency of the listings) of five brokers | 20 of 20 |
+| Comparison page | five twins: fee and type; availability 5 x 5; Czech support; a listing and a price for every pair sold | 95 of 95 |
 
-## Two things the data model does not have yet
+**What "verified" does not mean here:**
 
-1. **Purchase commission per broker**, as a rule that can be calculated for one monthly purchase in Kč. "Poplatky brokera" counts both purchase commission and custody fee (David, 2026-10-12). Today the model has only `custodyFeePct`, which cannot express a fixed fee per year or a free tier. A change to the model needs a note and tests first.
-2. **Listing currency per fund and broker** (USD or EUR). Wireframe rule 5: the calculator counts CSPX in dollars and the rows read "převod korun na dolary", so each broker's listing decides whether a conversion is paid. At DEGIRO, EUR to CZK is free (METHODOLOGY).
-
-## Verification batches, easiest first
-
-| Batch | What                                                                                                                      | Count    | Source                                                                                    |
-| ----- | ------------------------------------------------------------------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------- |
-| A     | Acc/Dist for CSPX, VUAA, CNDX: **done 2026-10-12**, read from the factsheets and the KID by Claude and confirmed by David | 3        | factsheets and the KID (the iShares ones are not kept locally, the hash is in the record) |
-| B     | VUSA and EQQQ: name, fee, type                                                                                            | 6        | issuer factsheet or KID, as for the others                                                |
-| C     | Availability screenshots: Fio and IBKR for 7 funds, and DEGIRO, Trading 212, XTB for VUSA and EQQQ                        | 20       | the broker's instrument search, logged in, as before                                      |
-| D     | Conversion fee per broker                                                                                                 | 4        | each broker's fee page, saved as a dated PDF                                              |
-| E     | Custody fee per broker                                                                                                    | 5        | same                                                                                      |
-| F     | Purchase commission rule per broker                                                                                       | 5        | same, once the model is agreed                                                            |
-| G     | Listing currency per fund and broker                                                                                      | up to 25 | the instrument page of each broker                                                        |
-| H     | Czech support per broker                                                                                                  | 5        | the broker's site                                                                         |
+- It means a value has a source and evidence, not that the listing is the cheapest one a broker offers. Listings in GBP, GBX and CHF are not recorded (the model has only CZK, EUR and USD), and for IBKR the Swiss listing of EQQQ in USD has no purchase rule (the commission is in CHF).
+- `pnpm data:validate` (strict, the deploy gate in Phase 6) still fails on 51 `TODO_VERIFY` values. They are fields no screen uses: `fxFeePct` and `custodyFeePct` of version 1 of every broker, fund size, returns, dividend yield, withholding rate and replication, `rates` in the data file (the page reads the Czech National Bank's rates), VOO and QQQ at Fio. Before the deploy they have to be filled in or dropped from the data model, which needs a decision note.
+- The tax cards on the comparison page and the table "Kde fond koupit" (with the "Česky" column) are not built yet, so those values are verified but not shown.
 
 ## Not worth verifying now
 

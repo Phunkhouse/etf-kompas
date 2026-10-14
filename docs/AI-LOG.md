@@ -1073,3 +1073,15 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **What counts as evidence, and what does not:** DEGIRO, Fio and XTB are shown in Czech in screenshots he had already saved (the Czech UI strings are quoted in each record). Trading 212: the app's Settings screen ("Jazyk: Česky") and the Czech terms page. IBKR "no": two captures of the portal's language menu, which together list 15 languages without Czech.
 - **I wrote the IBKR absence carefully:** two overlapping captures of a scrolled list are not the whole list. The record says the second capture ends the list and that the absence is read from these captures. If IBKR adds Czech, the value is stale after 120 days, as for every other value.
 - **The page does not use `czSupport` yet** (the "Kde fond koupit" table with the "Česky" column is not built), so no visitor-facing number changed. `pnpm data:validate:draft` warnings went from 56 to 51.
+
+### Data gaps checker brought up to date
+
+**Prompt (summary):** David: "Yes update the gaps before pdf" (after I said `pnpm data:gaps` still counted listings and purchase rules as missing).
+
+**Produced:** `needs.ts` and `gaps.ts` check the calculator's current model (a purchase rule and a custody fee per broker, a conversion fee for each currency of the broker's verified listings, a verified listing for every pair verified as sold, and that the calculator's own pricing code can price every such pair) instead of the version 1 broker fields and the two "planned" needs. New tests in `gaps.test.ts`; `DATA-NEEDS.md` has the status of 2026-10-14. The output now says 138 of 138 verified.
+
+**Mistakes and corrections**
+
+- **"138 of 138" reads like "done", and it is not.** The checker answers what the rev. 4 screens need, and says nothing about the strict validation (`pnpm data:validate`, the Phase 6 gate), which still fails on 51 `TODO_VERIFY` values in fields no screen uses. I added a line to the output and a section in `DATA-NEEDS.md` so the number is not read as readiness for deploy.
+- **First draft of that section said VOO and QQQ were open at Fio and IBKR; only Fio is.** IBKR's `false` was verified earlier. Found by running `node` over the file before committing, not by trusting my memory of the table.
+- **`gaps.ts` now imports the calculator's `priceBroker`** so that "can be priced" is the calculator's own answer and cannot drift from it. The rates in the check are placeholders (only the existence of a price matters).

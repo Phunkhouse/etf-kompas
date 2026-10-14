@@ -145,6 +145,168 @@ describe('computeGaps', () => {
   })
 })
 
+// A broker with the fee model of the calculator (METHODOLOGY-V2 §3).
+function priced(
+  id: string,
+  options: {
+    availability?: Broker['availability']
+    listings?: Record<string, unknown[]>
+    fx?: Record<string, unknown>
+    purchase?: unknown[]
+    custody?: unknown
+  },
+): Broker {
+  const base = broker(id, options.availability ?? { f: sourced(true) })
+  return {
+    ...base,
+    fees: {
+      fx: options.fx ?? {},
+      purchase: options.purchase ?? [],
+      custody: options.custody,
+      listings: options.listings ?? {},
+    },
+  } as unknown as Broker
+}
+
+const rule = sourced({
+  venues: null,
+  currency: 'EUR',
+  fixed: 1,
+  percent: 0,
+})
+const eurListing = sourced({ currency: 'EUR', venue: 'XETRA' })
+const usdListing = sourced({ currency: 'USD', venue: 'LSE' })
+const fundF = etf('f', { name: 'F', ter: 0.07 })
+
+describe('computeGaps: the calculator fees', () => {
+  const need = (part: 'purchase' | 'custody' | 'fx'): Need => ({
+    kind: 'fees',
+    screen: 'S',
+    what: 'w',
+    brokerIds: ['x', 'y'],
+    part,
+  })
+
+  it('wants one verified purchase rule per broker', () => {
+    const data = {
+      etfs: [],
+      brokers: [priced('x', { purchase: [rule] }), priced('y', {})],
+    }
+    const [gap] = computeGaps(data, [need('purchase')])
+    expect(gap).toMatchObject({ total: 2, verified: 1, inModel: true })
+    expect(gap.missing).toEqual(['y.purchase'])
+  })
+
+  it('wants a verified custody fee per broker', () => {
+    const data = {
+      etfs: [],
+      brokers: [
+        priced('x', { custody: sourced({ currency: 'CZK' }) }),
+        priced('y', {}),
+      ],
+    }
+    expect(computeGaps(data, [need('custody')])[0].missing).toEqual([
+      'y.custody',
+    ])
+  })
+
+  it('wants a conversion fee for each currency its listings use, not for CZK', () => {
+    const data = {
+      etfs: [],
+      brokers: [
+        priced('x', {
+          listings: { f: [eurListing, usdListing] },
+          fx: { EUR: sourced(0.1) },
+        }),
+        priced('y', {
+          listings: { f: [sourced({ currency: 'CZK', venue: 'PSE' })] },
+        }),
+      ],
+    }
+    const [gap] = computeGaps(data, [need('fx')])
+    expect(gap).toMatchObject({ total: 2, verified: 1 })
+    expect(gap.missing).toEqual(['x.fx.USD'])
+  })
+
+  it('does not count a listing without a source as a currency in use', () => {
+    const unverified = { ...usdListing, evidence: null }
+    const data = {
+      etfs: [],
+      brokers: [priced('x', { listings: { f: [unverified] } })],
+    }
+    expect(computeGaps(data, [need('fx')])[0].total).toBe(0)
+  })
+})
+
+describe('computeGaps: listings and prices', () => {
+  const pairs = (
+    kind: 'listings' | 'priced',
+    brokerIds = ['x', 'y', 'z'],
+  ): Need => ({
+    kind,
+    screen: 'S',
+    what: 'w',
+    fundIds: ['f'],
+    brokerIds,
+  })
+
+  it('counts only the pairs verified as sold, and wants a listing for each', () => {
+    const data = {
+      etfs: [fundF],
+      brokers: [
+        priced('x', { listings: { f: [eurListing] } }),
+        priced('y', {}),
+        priced('z', { availability: { f: sourced(false) } }),
+      ],
+    }
+    const [gap] = computeGaps(data, [pairs('listings')])
+    expect(gap).toMatchObject({ total: 2, verified: 1 })
+    expect(gap.missing).toEqual(['y/f'])
+  })
+
+  it('does not need a listing where the availability is not verified', () => {
+    const data = {
+      etfs: [fundF],
+      brokers: [priced('x', { availability: { f: todo } })],
+    }
+    expect(computeGaps(data, [pairs('listings')])[0].total).toBe(0)
+  })
+
+  it('calls a pair priced only when the calculator can price it', () => {
+    const complete = priced('x', {
+      listings: { f: [eurListing] },
+      fx: { EUR: sourced(0.1) },
+      purchase: [rule],
+      custody: sourced({ currency: 'CZK', annualFixed: 0, annualPercent: 0 }),
+    })
+    const noRule = priced('y', {
+      listings: { f: [eurListing] },
+      fx: { EUR: sourced(0.1) },
+      custody: sourced({ currency: 'CZK', annualFixed: 0, annualPercent: 0 }),
+    })
+    const noListing = priced('z', { purchase: [rule] })
+    const [gap] = computeGaps(
+      { etfs: [fundF], brokers: [complete, noRule, noListing] },
+      [pairs('priced')],
+    )
+    expect(gap).toMatchObject({ total: 3, verified: 1 })
+    expect(gap.missing).toEqual(['y/f', 'z/f'])
+  })
+
+  it('cannot price a fund whose annual fee is not verified', () => {
+    const complete = priced('x', {
+      listings: { f: [eurListing] },
+      fx: { EUR: sourced(0.1) },
+      purchase: [rule],
+      custody: sourced({ currency: 'CZK', annualFixed: 0, annualPercent: 0 }),
+    })
+    const [gap] = computeGaps({ etfs: [etf('f')], brokers: [complete] }, [
+      pairs('priced', ['x']),
+    ])
+    expect(gap.missing).toEqual(['x/f'])
+  })
+})
+
 describe('summarize', () => {
   it('counts each missing value once, and the planned ones separately', () => {
     const data = { etfs: [etf('a'), etf('b')], brokers: [] }

@@ -9,6 +9,11 @@ export type FundField = Exclude<
 >
 export type BrokerField = 'fxFeePct' | 'custodyFeePct' | 'czSupport'
 
+// A part of a broker's price in the calculator's model (METHODOLOGY-V2 §3): the
+// commission of one purchase, the custody fee, and the conversion fee of each
+// currency the broker's verified listings use.
+export type FeePart = 'purchase' | 'custody' | 'fx'
+
 export type Need =
   | {
       kind: 'fund'
@@ -26,6 +31,33 @@ export type Need =
     }
   | {
       kind: 'availability'
+      screen: string
+      what: string
+      fundIds: string[]
+      brokerIds: string[]
+    }
+  // The fee parts of the calculator's model, per broker.
+  | {
+      kind: 'fees'
+      screen: string
+      what: string
+      brokerIds: string[]
+      part: FeePart
+    }
+  // Every fund a broker is verified to sell has a verified listing (currency and
+  // venue). Only the pairs verified as sold count.
+  | {
+      kind: 'listings'
+      screen: string
+      what: string
+      fundIds: string[]
+      brokerIds: string[]
+    }
+  // Every fund a broker is verified to sell can be priced by the calculator's own
+  // code (the listing, the conversion fee and a purchase rule for its venue are all
+  // verified): the cell "Za 10 let celkem" has a number.
+  | {
+      kind: 'priced'
       screen: string
       what: string
       fundIds: string[]
@@ -79,25 +111,25 @@ export const needs: Need[] = [
     fields: ['ter'],
   },
   {
-    kind: 'broker',
-    screen: 'Calculator',
-    what: 'conversion fee and custody fee of every broker (the "poplatky brokera" and "převod korun" parts)',
-    brokerIds: BROKERS,
-    fields: ['fxFeePct', 'custodyFeePct'],
-  },
-  {
-    kind: 'planned',
+    kind: 'fees',
     screen: 'Calculator',
     what: 'purchase commission of every broker, as a rule that can be calculated for one monthly purchase',
-    field: 'purchase commission rule',
-    count: BROKERS.length,
+    brokerIds: BROKERS,
+    part: 'purchase',
   },
   {
-    kind: 'planned',
+    kind: 'fees',
     screen: 'Calculator',
-    what: 'the listing (USD or EUR) in which each broker sells the fund: decides whether a conversion is paid',
-    field: 'listing currency of CSPX per broker',
-    count: BROKERS.length,
+    what: 'custody fee of every broker',
+    brokerIds: BROKERS,
+    part: 'custody',
+  },
+  {
+    kind: 'fees',
+    screen: 'Calculator',
+    what: 'conversion fee of every broker, for each currency its listings use',
+    brokerIds: BROKERS,
+    part: 'fx',
   },
   {
     kind: 'fund',
@@ -121,11 +153,18 @@ export const needs: Need[] = [
     fields: ['czSupport'],
   },
   {
-    kind: 'planned',
+    kind: 'listings',
     screen: 'Comparison page',
-    what: 'the listing (USD or EUR) per fund and broker, for "Za 10 let celkem"',
-    field: 'listing currency per fund and broker',
-    count: ALL_TWINS.length * BROKERS.length,
+    what: 'the listing (USD or EUR) per fund and broker that sells it, for "Za 10 let celkem"',
+    fundIds: ALL_TWINS,
+    brokerIds: BROKERS,
+  },
+  {
+    kind: 'priced',
+    screen: 'Comparison page',
+    what: 'a price in the table "Za 10 let celkem" for every fund a broker sells',
+    fundIds: ALL_TWINS,
+    brokerIds: BROKERS,
   },
 ]
 
@@ -140,5 +179,12 @@ export const unusedFundFields: FundField[] = [
   'replication',
 ]
 export const unusedFundIds: string[] = []
+
+// The broker fields of the first calculator (version 1). The calculator now reads
+// `fees` (listings, purchase rules, conversion and custody fees), so nothing shows
+// these three any more. They are still in the schema, so the strict validation
+// (`pnpm data:validate`, the deploy gate) still asks for them; dropping them from
+// the data model needs a decision note.
+export const unusedBrokerFields: string[] = ['fxFeePct', 'custodyFeePct']
 
 export type { Broker }
