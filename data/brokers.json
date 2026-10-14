@@ -662,6 +662,67 @@
             "verifiedOn": "2026-10-13",
             "evidence": "sha256:e28197332b7c5130171789662e57570511d3003978088b64b3bd18aa9cc1401f (ibkr-sxr8-detail-2026-10-13.png): quote page SXR8 ISHARES CORE S&P 500, exchange IBIS2, price in EUR (752.50). The fund is the same as CSPX by name (\"ISHARES CORE S&P 500\"); no ISIN is shown. The SXR8 search (ibkr-sxr8-search-2026-10-13.png, sha256:99d4729558a74321883fca16a47c1dccdb76124b3c30f030c64bf0dd2ecda983) lists it on IBIS2, Germany. Captured by David 2026-10-13 (the date is the day he saved the files); the pages show no date. The site is the Irish one (interactivebrokers.ie); the screenshots do not show which entity David's account belongs to."
           }
+        ],
+        "vuaa": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "LSE"
+            },
+            "sourceUrl": "https://www.interactivebrokers.com",
+            "asOf": "2026-10-14",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:99b56781ab6677d2f0476bddf301a07489a89b2ffa55f81e8a6c098a5fd10aa3 (ibkr-vuaa-detail-usd-2026-10-14.png): quote page VUAA, name VANG S&P500 USDA, exchange LSEETF, price in USD (151.30). The venue is recorded as LSE, the name used for the same listing at CSPX, Trading 212 and XTB. The name is abbreviated and no ISIN is shown; it is tied to the fund as in the availability record. Interactive Brokers client portal, David's own account; the page shows no date (the date is from the file name) and does not show which IBKR entity the account belongs to."
+          },
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "BVME.ETF"
+            },
+            "sourceUrl": "https://www.interactivebrokers.com",
+            "asOf": "2026-10-14",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:65976e53f89084efbb964957e00e5a702e2796163ca6cfe3a335e7b59335ba82 (ibkr-vuaa-detail-eur-2026-10-14.png): quote page VUAA, name VANG S&P500 USDA, exchange BVME.ETF (Borsa Italiana), price in EUR (134.96). There is no purchase rule for this venue yet, so it is not priced. Interactive Brokers client portal, David's own account; the page shows no date (the date is from the file name) and does not show which IBKR entity the account belongs to."
+          }
+        ],
+        "cndx": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "LSE"
+            },
+            "sourceUrl": "https://www.interactivebrokers.com",
+            "asOf": "2026-10-14",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:3f3ab4fb3c857da2f95f1681ca517389d4c0107e245ea8eaeccaf81d1bbccb1a (ibkr-cndx-detail-usd-2026-10-14.png): quote page CNDX, name ISHARES NASDAQ 100 USD ACC, exchange LSEETF, price in USD (1756.4). The venue is recorded as LSE, as for CSPX. Interactive Brokers client portal, David's own account; the page shows no date (the date is from the file name) and does not show which IBKR entity the account belongs to."
+          }
+        ],
+        "eqqq": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "EBS"
+            },
+            "sourceUrl": "https://www.interactivebrokers.com",
+            "asOf": "2026-10-14",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:39cb3210f07b8dd8b5c7967ec9081e29e7ceb2ec914b5d1f659c840b4094fd7f (ibkr-eqqq-detail-usd-2026-10-14.png): quote page EQQQ, name INVESCO NASDAQ-100 DIST, exchange EBS (SIX Swiss Exchange), price in USD (747.2). There is no purchase rule for this venue yet (the Swiss commission is in CHF), so it is not priced. The LSEETF line is in GBP (56329.00 GBp) and is not recorded: the model has no GBP. Interactive Brokers client portal, David's own account; the page shows no date (the date is from the file name) and does not show which IBKR entity the account belongs to."
+          },
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "BVME.ETF"
+            },
+            "sourceUrl": "https://www.interactivebrokers.com",
+            "asOf": "2026-10-14",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:859c28c532838c424b5c69c2b26b3a0576dde0ee8be0e3e79db9057817cec6e1 (ibkr-eqqq-detail-eur-2026-10-14.png): quote page EQQQ, name INVESCO NASDAQ-100 DIST, exchange BVME.ETF (Borsa Italiana), price in EUR (667.64). There is no purchase rule for this venue yet, so it is not priced. Interactive Brokers client portal, David's own account; the page shows no date (the date is from the file name) and does not show which IBKR entity the account belongs to."
+          }
         ]
       }
     }
@@ -870,6 +931,19 @@
             "verifiedBy": "David",
             "verifiedOn": "2026-10-14",
             "evidence": "sha256:56cd45bdcbe5a58251cbf71f9445d011114ff74203eb470dc13545d0cd9a24b1 (trading212-eqqq-search-2026-10-12.png): \"Invesco EQQQ Nasdaq-100 (Dist)\", EQQQ · SIX, price in USD ($749.7). The LSE line (pence) is not recorded: the model has no GBP. The ISIN is not printed here; the ticker and the Dist class are tied to the fund by the DEGIRO screenshot of the same ticker (degiro-eqqq-search-2026-10-12.png, ISIN IE0032077012, as in the availability record)."
+          }
+        ],
+        "vusa": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "AMS"
+            },
+            "sourceUrl": "https://www.trading212.com",
+            "asOf": "2026-10-14",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:9964011e70dc3c35a05274cc36e592223bc80b4909dbe921256c27e7d10863f5 (trading212-vusa-detail-eur-2026-10-14.png): instrument page \"Vanguard S&P 500 (Dist)\", VUSA · AMS, price in EUR (€132.248). No ISIN is shown; the ticker VUSA and the Dist class match IE00B3XXRP09 (DEGIRO screenshot and Vanguard factsheet of 31 August 2026, as in the availability record). The earlier LSE line in GBP is not recorded: the model has no GBP."
           }
         ]
       }
