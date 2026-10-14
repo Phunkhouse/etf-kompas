@@ -1326,3 +1326,17 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **No wrong claim reached David in the checklist that I know of.** The one wording difference I found (SPEC §23 says "Otevřít přehled", the page says "Otevřít srovnání") I checked against `src/content/copy.ts` before writing the checklist, so the checklist uses the page's wording.
 - **The checklist's item 7 and item 8 overlap** (the success state with its links, and the results page opening), so David's answer covered the first and left the second unclear. I recorded item 8 as "not reported" instead of assuming it passed.
 - **I wrote the first version of this log entry with a mistake that did not happen** (a correction of a draft that never existed). I caught it before the PR was opened and removed it; the log must record only what happened.
+
+### Phase 6: Lighthouse on the live site
+
+**Prompt (summary):** David: "run the lighthouse one-off", then "let's give investigation a shot. If it proves too problematic, we'll accept 2,4". (A one-off `npx lighthouse@12` run, not added to the repo.)
+
+**Produced:** measurements of `/` and `/?v=b` on `https://etf-kompas-kappa.vercel.app` in two modes, a short browser script that listed the LCP candidates, and the README line above. No code changed.
+
+**Findings:** simulated (default) mode: performance 97 to 99, LCP 2.3 to 2.4 s, accessibility 100; applied throttling (the gate of SPEC §22): performance 100, LCP 0.9 to 1.0 s. The LCP element is the cookie bar's paragraph; an emulated slow phone (4x CPU, slow 4G) paints it at 0.56 s. The 2.3 s is Lighthouse's estimate, which note 0042 already told us (simulated ~2.65 s, gate = applied).
+
+**Mistakes and corrections**
+
+- **I told David the LCP target was "not met" from the simulated number and offered to change the cookie bar,** before comparing with the applied mode that the spec and note 0042 name as the gate. I had read note 0042's numbers earlier in the project and did not check which mode the target uses before reporting a miss. The investigation (one more run, with `--throttling-method=devtools`) showed there was nothing to fix. I should have run both modes at the start.
+- **My first run was refused twice** (David interrupted the combined command with `npx` and a git pull in one line); I split the commands. No harm.
+- **I guessed first that the bar was shown late (a reveal script)**; the markup and the browser measurement (0.56 s) showed it is plain HTML painted at once. Reported as a guess in the message, not as a finding.
