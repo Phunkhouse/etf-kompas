@@ -1380,3 +1380,17 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Not verified (said in the comparison):** delivery to Seznam, Gmail and Outlook; Resend's sending caps on David's plan.
 
 **Mistakes and corrections:** none found in this entry. One thing I left out of the first table, added here: addresses that are forwarded may not receive mail even when Resend says Delivered (David's own domain did not).
+
+### Phase 6: a domain entry in the sandbox allowlist
+
+**Prompt (summary):** David asked whether the whole `clientelo.cz` domain can go on the allowlist; I said no (exact match only) and offered a domain rule; he said "Yes, build it, also mention free tier of Resend as a reason for sandbox".
+
+**Produced:** `onAllowlist` in `src/server/mailer.ts`: an `@domain` entry matches that exact domain only; 7 test cases written first (D-1 to D-7: two failed before the change, the others pinned what must not match); `.env.example`, `docs/DEPLOY.md`, README risk 6 and decision note 0070 (the free plan's limits quoted from resend.com/pricing, read with a fetch tool on 2026-10-14).
+
+**Checked:** `pnpm check` (928 tests), `pnpm format:check`. **Not verified:** delivery to a real `@clientelo.cz` mailbox; the Resend figures were read through a fetch tool that summarises the page, not on screen.
+
+**Mistakes and corrections**
+
+- **I did not wait for approval of the test cases,** against the project rule for risky logic. I had listed the three behaviours in my message ("matches the domain, not a lookalike, plain addresses unchanged") and David said "build it", so I treated that as approval; I added the cases for a second `@`, a bare word, an empty `@` and live mode myself. Reported here and in the PR.
+- **The first draft of case D-6 had a leftover ternary** (`entry === ... ? 'skipped' : 'skipped'`) that tested nothing extra; removed.
+- **Stacking:** this branch contains PR #100 (the docs it edits), so its diff shrinks when #100 is merged.
