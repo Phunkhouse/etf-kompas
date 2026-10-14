@@ -1,6 +1,6 @@
 # Phase 4 plan: lead flow
 
-Status: **approved by David on 2026-10-13** (all eight decisions as proposed; the answers to the open questions are below). Source: SPEC §3.5, §17.15, §22 (Phase 4), §26 and `docs/design/wireframe-b.md`. Done: the schema (`supabase/migrations/0001_lead_flow.sql`, run, RLS on, PR 74).
+Status: **done on 2026-10-14.** Approved by David on 2026-10-13 (all eight decisions as proposed; the answers to the open questions are below); the five PRs landed as planned (#74 to #81). What differs from this plan is listed under "Gaps to put in the README" and in `docs/PHASES.md`. Source: SPEC §3.5, §17.15, §22 (Phase 4), §26 and `docs/design/wireframe-b.md`.
 
 ## Decisions I need from you (the spec is silent or I propose a change)
 

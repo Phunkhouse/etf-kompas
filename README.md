@@ -29,19 +29,26 @@ Order of running: 2, then 1, then 3, because test 2 needs only copy and test 1 n
 - **What was not chosen.** Assigning the variant ourselves from the click id (`fbclid`) in a small `proxy.ts`. It would give one method for every platform and a split we can verify, but it uses the id before any consent, which nobody has reviewed legally. It stays an option if the platforms' own tools cannot be used.
 - **What would be needed first.** A budget (about 3,200 visitors per variant for 8 % against 10 %, see above), the tracking of Phase 5 with `variant` on every event, and the lead flow of Phase 4.
 
-## Known gaps (end of Phase 3, 2026-10-13)
+## Known gaps (end of Phase 4, 2026-10-14)
 
 What is not done or not right yet, so nobody has to find it:
 
-- **Not live.** The e-mail form stores and sends nothing (Phase 4), there is no tracking or cookie consent (Phase 5), and nothing is deployed (Phase 6). The site is `noindex`.
+- **Not live.** There is no tracking or cookie consent (Phase 5) and nothing is deployed (Phase 6). The site is `noindex`. Leads are stored for real (Supabase, EU) and e-mails go out through Resend from a test domain, in sandbox mode only to an allowlist until it is switched to live.
 - **The 5-second test was run with one person**, not the three the spec asks for (note 0052). She understood what the page offers and did not notice that it is free; the line was then made bolder and has not been tested again.
-- **The Czech copy** was reviewed by the author while building, not in a separate pass. One final check is planned before it goes live. The legal text (privacy policy, controller) is placeholder text and has not been seen by a lawyer.
+- **The Czech copy** was reviewed by the author while building, not in a separate pass. One final check is planned before it goes live. The legal text (privacy policy, controller, the consent wording of the tips box) is placeholder text and has not been seen by a lawyer.
 - **The A/B test is designed, not run** (see above). The way the traffic is split is chosen (Meta's own test) but not set up.
-- **Data.** Prices are complete only for CSPX (five brokers). VUAA and CNDX are priced at DEGIRO only, VUSA and EQQQ at none. The "Česky" (Czech support) column is empty. The deploy gate `pnpm data:validate` fails today with 56 `TODO_VERIFY` values, on purpose. Broker fee records go stale after 45 days.
-- **Two data records rest on soft evidence:** the Fio conversion rate comes from a demo-account screen (note 0047), and the Interactive Brokers conversion fee from a footnote that says "typically" and "at its discretion"; whether an account can hold CZK is not shown.
+- **Tax text is missing.** The three tax cards on the comparison page and page 4 of the PDF say `[ověřit zdroj]`. They need text from a verified source (Finanční správa) with a link per statement.
+- **The comparison page lacks the table "Kde fond koupit"** of the drawing. Its data (purchase fees, conversion, custody, Czech language, source and date) is verified and is on page 5 of the PDF. The sections are numbered 1 to 3.
+- **An unknown, expired or mistyped results link answers HTTP 200**, with the message "Tento odkaz už nefunguje", not 404: the page streams after a static shell. It is `noindex` and `Cache-Control: private, no-store`. A real 404 would need a Proxy that repeats the lookup.
+- **Deleting a lead is not built.** `scripts/delete-lead.ts` and the retention period are Phase 6, so the unsubscribe page does not say when an e-mail is deleted. When it is built, it must also delete the lead's results tokens. A race between two simultaneous first submits of the same address gives one of them an error answer.
+- **The e-mails** have no tracking and no one-click `List-Unsubscribe-Post` (the plain header is set). Delivery to Seznam, Gmail and Outlook is a manual check before launch. One real run was done by the author on 2026-10-14.
+- **The PDF** reads its fonts (IBM Plex, SIL OFL) and the logo from disk; this works on `next start` and is **not verified on Vercel**. `scripts/build-pdf.ts` of the spec does not exist because `tsx` cannot load `@react-pdf/renderer`.
+- **Data.** What the screens need is verified (`pnpm data:gaps`: 138 of 138). All five funds are priced at all five brokers, on the listings we recorded: listings in GBP, GBX and CHF are not recorded because the model has only CZK, EUR and USD, so the cheapest real listing can be missing from a price. The deploy gate `pnpm data:validate` fails today with 51 `TODO_VERIFY` values in fields no screen uses, on purpose. Broker fee records go stale after 45 days.
+- **Soft evidence:** the Fio conversion rate comes from a demo-account screen (note 0047), the Interactive Brokers conversion fee from a footnote that says "typically" and "at its discretion", the IBKR purchase fees assume the Fixed plan and that the exchanges BVME.ETF and AEB are covered by the Italy and Netherlands tables, and several listings rest on a ticker and a share class matching another broker's screen (no ISIN is shown).
 - **"Ověřeno k 6. 2026"** in the top bar is the oldest date among all the numbers (the VOO factsheet), not the date of what the page shows most prominently.
-- **Performance** was measured under applied throttling on `/` only; the other pages were measured only in the default, pessimistic mode (note 0042).
+- **Performance** was measured under applied throttling on `/` only; the other pages were measured only in the default, pessimistic mode (note 0042). The JS budget is 149.8 KB of 150 KB: about 0.2 KB is left.
 - **The hero lead is hidden on phones** to keep the button above the fold (note 0031), and the component is still named `HeroB` from the time when there were two heroes.
+- **The design PNGs** in `docs/design/images/` still show older data and short broker names; the sources and the text spec are updated. Exporting needs IBM Plex installed locally.
 
 ## Stack
 

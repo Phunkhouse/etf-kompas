@@ -3,14 +3,16 @@
 #   "Poplatek*" with a footnote, the index as the row title with manager, ticker and description under it,
 #   no "nebo rovnou srovnání brokerů", no [ověřit] where the data is verified.
 # - Data (calculator at 3 000 Kč a month, 10 years, 6 %, CSPX, ČNB rates of 2026-10-12): the amounts are the
-#   output of the real calculator, not invented. Where the data is not verified (IBKR, "Česky") [ověřit] stays.
+#   output of the real calculator, not invented. Where the data is not verified [ověřit] stays.
+# - Data of 2026-10-14 (Phase 4): the amounts are recalculated with the verified data of that day and the ČNB rates of
+#   2026-10-13; Interactive Brokers is priced and "Česky" is verified for all five brokers.
 # Runs after apply_rev5.py, on artboards-v4.
 import re
 
 D = 'artboards-v4'
-# numbers from the calculator (src/server/broker-pricing.ts) with the verified data of 2026-10-13
-TOTAL, FUND, FX, BROKER = '30 778 Kč', '1 748 Kč', '13 434 Kč', '15 596 Kč'
-VALUE, SAVING, SAVING_B = '456 642 Kč', '28 302 Kč', '28 302 Kč'
+# numbers from the calculator (src/server/broker-pricing.ts) with the verified data of 2026-10-14 (ČNB rates of 2026-10-13)
+TOTAL, FUND, FX, BROKER = '30 769 Kč', '1 748 Kč', '13 434 Kč', '15 587 Kč'
+VALUE, SAVING, SAVING_B = '456 651 Kč', '28 293 Kč', '28 293 Kč'
 TAG_OLD = 'Za 10 let vás koupitelné ETF (CSPX) bude stát'
 TAG_NEW = 'Za 10 let vás fond (CSPX) může u ověřených brokerů stát i'
 ROWS = [
@@ -177,13 +179,16 @@ FUNDS = [('iShares CSPX', 'S&amp;P 500', 'Acc', '0,07 %'), ('Vanguard VUAA', 'S&
          ('Invesco EQQQ', 'Nasdaq 100', 'Dist', '0,30 %')]
 VER = '<span class="pill ver">[ověřit]</span>'
 YES = '<span class="pill yes">Ano</span>'
-# CSPX at each broker: (name, sold?, fees = broker + conversion, total over 10 years); IBKR is not verified
-PRICES = [('DEGIRO', True, '12 668 Kč', '14 416 Kč'), ('Fio', True, '29 030 Kč', '30 778 Kč'), ('IBKR', None, None, None),
-          ('Trading 212', True, '729 Kč', '2 476 Kč'), ('XTB', True, '2 428 Kč', '4 176 Kč')]
+# CSPX at each broker: (name, sold?, fees = broker + conversion, total over 10 years)
+PRICES = [('DEGIRO', True, '12 660 Kč', '14 408 Kč'), ('Fio', True, '29 021 Kč', '30 769 Kč'),
+          ('IBKR', True, '11 984 Kč', '13 732 Kč'), ('Trading 212', True, '729 Kč', '2 476 Kč'),
+          ('XTB', True, '2 428 Kč', '4 176 Kč')]
 LOWEST = '2 476 Kč'
-# fee per broker, from data/brokers.json (the 5 listed): purchase, conversion; "Česky" is not in the data
-FEES = [('DEGIRO', '1 € (Tradegate), jinde 3 €', '0 % na eura, 0,25 % na dolary'), ('Fio', '3,95 € (XETRA)', '2,77 %'),
-        ('IBKR', None, None), ('Trading 212', '0 Kč', '0,15 %'), ('XTB', '0 Kč', '0,5 %')]
+# fee per broker, from data/brokers.json (the 5 listed): purchase, conversion, Czech language (all verified)
+FEES = [('DEGIRO', '1 € (Tradegate), jinde 3 €', '0 % na eura, 0,25 % na dolary', 'Ano'),
+        ('Fio', '3,95 € (XETRA)', '2,766 %', 'Ano'),
+        ('IBKR', '0,05 % z nákupu, nejméně 3 € (IBIS2, BVME.ETF, AEB); 0,05 % z nákupu, nejméně 4 $ (LSE)', '0,03 %', 'Ne'),
+        ('Trading 212', '0 Kč', '0,15 %', 'Ano'), ('XTB', '0 Kč', '0,5 %', 'Ano')]
 
 
 def results(f, mobile):
@@ -208,11 +213,11 @@ def results(f, mobile):
                       f'<div class="kv"><span>Za 10 let celkem</span><span class="num">{total or "–"}</span></div></div>')
         s = s[:i] + cards + '\n' + s[j:]
         # section 3: DEGIRO and Fio shown, "Zobrazit dalších 3 firmy" stays
-        for n, buy, conv in FEES[:2]:
+        for n, buy, conv, cz in FEES[:2]:
             old = (f'<strong>{n}</strong><div class="kv" style="margin-top:6px"><span>Poplatek za nákup</span><span>[ověřit]</span></div>'
                    f'<div class="kv"><span>Převod korun</span><span>[ověřit]</span></div><div class="kv"><span>Česky</span><span>[ano/ne]</span></div>')
             new = (f'<strong>{n}</strong><div class="kv" style="margin-top:6px"><span>Poplatek za nákup</span><span>{buy}</span></div>'
-                   f'<div class="kv"><span>Převod korun</span><span>{conv}</span></div><div class="kv"><span>Česky</span><span>[ověřit]</span></div>')
+                   f'<div class="kv"><span>Převod korun</span><span>{conv}</span></div><div class="kv"><span>Česky</span><span>{cz}</span></div>')
             s = one(s, old, new)
     else:
         i = s.index('<tr><td><strong>iShares CSPX')
@@ -227,18 +232,18 @@ def results(f, mobile):
             for n, sold, fees, total in PRICES)
         s = s[:i] + rows + s[j:]
         # section 3: the table of all five brokers
-        for n, buy, conv in FEES:
-            b = (buy or '[ověřit]'); c = (conv or '[ověřit]')
+        for n, buy, conv, cz in FEES:
+            b = buy; c = conv
             old = (f'<sc-raw-td><strong>{n}</strong></sc-raw-td><sc-raw-td class="num">[ověřit]</sc-raw-td>'
                    f'<sc-raw-td class="num">[ověřit]</sc-raw-td><sc-raw-td>[ano/ne]</sc-raw-td>')
             if n == 'XTB':
                 old = old.replace('<sc-raw-td><strong>', '<sc-raw-td style="border-bottom:0"><strong>').replace('class="num">[ověřit]', 'class="num" style="border-bottom:0">[ověřit]').replace('<sc-raw-td>[ano/ne]', '<sc-raw-td style="border-bottom:0">[ano/ne]')
             new = old.replace('class="num">[ověřit]</sc-raw-td><sc-raw-td class="num">[ověřit]', f'class="num">{b}</sc-raw-td><sc-raw-td class="num">{c}', 1) if 'style="border-bottom:0"' not in old else old.replace('class="num" style="border-bottom:0">[ověřit]</sc-raw-td><sc-raw-td class="num" style="border-bottom:0">[ověřit]', f'class="num" style="border-bottom:0">{b}</sc-raw-td><sc-raw-td class="num" style="border-bottom:0">{c}', 1)
-            new = new.replace('[ano/ne]', '[ověřit]')
+            new = new.replace('[ano/ne]', cz)
             s = one(s, old, new)
     s = one(s, '<strong>Mezi ověřenými brokery se výsledek liší až o X XXX Kč.</strong> Nejnižší možné poplatky s vaším nastavením: X XXX Kč za 10 let.',
             f'<strong>Mezi ověřenými brokery se výsledek liší až o {SAVING}.</strong> Nejnižší možné poplatky s vaším nastavením: {LOWEST} za 10 let.')
-    s = one(s, 'Ceny brokerů: [ověřit u každého, zdroj k číslu].', 'Ceny brokerů: u každého je zdroj a datum ověření; u IBKR zatím ověřujeme.')
+    s = one(s, 'Ceny brokerů: [ověřit u každého, zdroj k číslu].', 'Ceny brokerů: u každého je zdroj a datum ověření; u neověřených to doplníme.')
     s = one(s, '>CSNDX</span>', '>CNDX</span>')
     s = one(s, 'Poplatky fondů a to, u koho je koupíte', 'Poplatky fondů a to, u koho je koupíte')
     if not mobile:
@@ -250,7 +255,7 @@ def results(f, mobile):
 results('92ef8ee0', False)
 results('24e61a2e', True)
 
-# PDF page 1: availability of the five funds at the five brokers (IBKR is not verified), the real value and fees
+# PDF page 1: availability of the five funds at the five brokers (all verified), the real value and fees
 s = read('pd01pdf1')
 FN = [('S&amp;P 500 · CSPX', 'Acc', '0,07 %'), ('S&amp;P 500 · VUAA', 'Acc', '0,07 %'), ('S&amp;P 500 · VUSA', 'Dist', '0,07 %'),
       ('Nasdaq 100 · CNDX', 'Acc', '0,30 %'), ('Nasdaq 100 · EQQQ', 'Dist', '0,30 %')]
@@ -258,9 +263,9 @@ i = s.index('<tbody>') + len('<tbody>')
 j = s.index('</tbody>')
 rows = ''.join(
     f'<tr><td><b>{n}</b><br><span style="font-size:11px;color:#555">{ty}</span></td><td class="num">{fee}</td>'
-    f'<td>{YES}</td><td>{YES}</td><td>{VER}</td><td>{YES}</td><td>{YES}</td></tr>' for n, ty, fee in FN)
+    f'<td>{YES}</td><td>{YES}</td><td>{YES}</td><td>{YES}</td><td>{YES}</td></tr>' for n, ty, fee in FN)
 s = s[:i] + rows + s[j:]
-s = one(s, '[ověřit] = zatím neověřeno, doplníme zdroj. „Ano“ jen s uvedeným zdrojem a datem.', '[ověřit] = zatím neověřeno, doplníme zdroj. „Ano“ jen s uvedeným zdrojem a datem. Interactive Brokers zatím ověřujeme.')
+s = one(s, '[ověřit] = zatím neověřeno, doplníme zdroj. „Ano“ jen s uvedeným zdrojem a datem.', '[ověřit] = zatím neověřeno, doplníme zdroj. „Ano“ jen s uvedeným zdrojem a datem.')
 s = one(s, 'Ilustrativní hodnota po 10 letech: X XXX Kč, z toho poplatky X XXX Kč.', f'Ilustrativní hodnota po 10 letech: {VALUE}, z toho poplatky {TOTAL}.')
 write('pd01pdf1', dates(s))
 print('ok pd01pdf1')
