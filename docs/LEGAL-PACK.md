@@ -14,6 +14,7 @@ Each point says where it comes from. Add to this list when a phase raises one; d
 | 4   | Is cookieless, aggregate first-party counting before consent acceptable without consent? Needs legal sign-off (SPEC §9, §22).                                                                                               | `/api/event` (Phase 5, PR 2)                                      | Phase 5 |
 | 5   | Retention period for stored e-mails and for first-party events, and the deletion process (SPEC §19 question e). Not decided; the privacy text has `[doplnit]`.                                                              | `legalCopy.privacy`, `scripts/delete-lead.ts` (not done)          | Phase 4 |
 | 6   | Hashed e-mail data to the Meta Conversions API: only with advertising consent. Is that the right condition?                                                                                                                 | Phase 5, PR 4                                                     | Phase 5 |
+| 7   | A `session_id` on the lead row links the e-mail to the visit's events. Proposed: stored only when measurement is agreed. Is that enough, and are the events then personal data?                                             | `leads.session_id`, `events` (Phase 5, PR 2)                      | Phase 5 |
 
 ## Still to write (SPEC §19, item 3)
 
