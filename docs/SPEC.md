@@ -117,10 +117,10 @@ Rules:
   - US-listed: VOO and QQQ (only to say where they cannot be bought)
   - UCITS twins: iShares Core S&P 500 UCITS (CSPX), Vanguard S&P 500 UCITS (VUAA), Vanguard S&P 500 UCITS Dist (VUSA), iShares Nasdaq 100 UCITS (CNDX), Invesco EQQQ Nasdaq-100 UCITS (EQQQ)
 - Sources, in order of preference: issuer factsheets/KIDs (Vanguard, iShares, Invesco, Schwab), justETF for UCITS metadata, Finanční správa and the CZ-US double-tax treaty text for tax statements, broker fee schedules for the broker table.
-- Storage: `data/etfs.json`, `data/brokers.json`, `data/rates.json` and `data/sources.json`, each record `{value, sourceUrl, asOf, verifiedBy, verifiedOn, evidence}`. Schema validated at build time with Zod; **the build fails if any value lacks a source or is older than 120 days (45 days for broker fees and exchange rates, notes 0024 and 0038).**
+- Storage: `data/etfs.json`, `data/brokers.json` and `data/sources.json`, each record `{value, sourceUrl, asOf, verifiedBy, verifiedOn, evidence}`. Schema validated at build time with Zod; **the build fails if any value lacks a source or is older than 120 days (45 days for broker fees, notes 0024 and 0038; a fetched exchange rate older than 45 days is not used at run time).**
 - Refresh: `scripts/fetch-data.ts` fetches where machine-readable, otherwise a documented manual-entry template. Agents may not fill in numbers they cannot fetch; they must mark `TODO_VERIFY` and the build must refuse to deploy with any `TODO_VERIFY`.
 - **No performance figures are shown** (decided 2026-10-12, note 0039); the risk line stays on every page: *"Investování nese riziko ztráty. Minulé výnosy nezaručují budoucí."*
-- **Exchange rates** are not typed in: the server fetches the Czech National Bank's daily file and caches it for 12 hours, with the verified record in `data/rates.json` as the fallback (note 0038).
+- **Exchange rates** are not typed in: the server fetches the Czech National Bank's daily file and caches it for 12 hours. There is no stored fallback record (note 0066: it would be too old to use within days); without the bank's answer the page shows the fund fee only (note 0038).
 
 ---
 
@@ -243,7 +243,7 @@ Tooling: Vercel Edge Config / cookie-based bucketing, or simply separate `?v=` U
 | Tests | **Vitest** (projects `unit` + `components`, split by file suffix) and **Playwright** (mobile-first happy path, form, consent) | See §12a |
 | Analytics | GA4 + Meta Pixel/CAPI + Vercel Analytics | gated by consent |
 | PDF | Personalised 6-page PDF, generated on request from the same data JSON and the visitor's setup (`@react-pdf/renderer`) | so the PDF cannot drift from the page; note 0039 |
-| Exchange rates | The Czech National Bank daily file, fetched by the server and cached for 12 hours (`use cache`), the verified record in `data/rates.json` as the fallback | note 0038 |
+| Exchange rates | The Czech National Bank daily file, fetched by the server and cached for 12 hours (`use cache`), no stored fallback (note 0066) | note 0038 |
 | CI | GitHub Actions: format check, lint, typecheck, test, data validation, build, e2e; Lighthouse CI as P1 | Structure from the starter guide, see §12a |
 
 Suggestions you can veto: skip a UI kit and charting library entirely (payload and genericness); use `next/font` self-hosting for GDPR-safe fonts; keep JS small (target: our own code adds at most 20 KB gzipped over an empty Next page, the whole route stays under 150 KB gzipped, LCP under 2.0 s on mid-range Android over Slow 4G; the first target of 90 KB was dropped, decision note 0034).
@@ -296,7 +296,7 @@ src/
   server/            framework-free logic: cost.ts, broker-pricing.ts, cnb.ts, availability.ts, leads.ts,
                      data/ (schema, validate, load, bundled, gaps, needs, freshness)
   styles/            _utilities.scss, colors.ts, contrast-pairs.ts
-data/                etfs.json, brokers.json, rates.json, sources.json
+data/                etfs.json, brokers.json, sources.json
 scripts/             validate-data.ts, data-gaps.ts, check-copy.ts, check-contrast.ts, build-pdf.ts
 e2e/                 Playwright specs
 docs/                SPEC.md, PHASES.md, starter-guide.md, METHODOLOGY.md (v1), METHODOLOGY-V2.md, DATA-NEEDS.md,
@@ -392,7 +392,7 @@ Principle: a number is only on the page if a human has checked it against a prim
 - Tax statements: the statute itself (Zákon č. 586/1992 Sb., o daních z příjmů), Finanční správa guidance, and the CZ-US double-tax treaty text. Each statement on the page cites the section it comes from. Wording is "obecná informace, ne daňové poradenství".
 - Broker facts (fees, FX, availability of a given ETF): the broker's official fee schedule or product page, plus a dated screenshot of the broker's own instrument search for each ETF. Availability claims depend on that screenshot, not on memory or forum posts.
 
-**Record schema (extends §5):** every value has `{value, sourceUrl, asOf, verifiedBy, verifiedOn, evidence}` where `evidence` is an archive link (web.archive.org) and/or a SHA-256 of the saved source PDF. The validator fails the build if any field is missing, `TODO_VERIFY` remains, or `asOf` is older than 120 days (45 days for broker fees and exchange rates). `asOf` is the date printed in a dated data document; for a source that stays in force or has no data date (a fee overview, a treaty, a live page) it is the date we captured it and confirmed it is current (note 0024).
+**Record schema (extends §5):** every value has `{value, sourceUrl, asOf, verifiedBy, verifiedOn, evidence}` where `evidence` is an archive link (web.archive.org) and/or a SHA-256 of the saved source PDF. The validator fails the build if any field is missing, `TODO_VERIFY` remains, or `asOf` is older than 120 days (45 days for broker fees). `asOf` is the date printed in a dated data document; for a source that stays in force or has no data date (a fee overview, a treaty, a live page) it is the date we captured it and confirmed it is current (note 0024).
 
 **Process**
 1. Agent proposes values via `scripts/fetch-data.ts`, or marks `TODO_VERIFY` where it cannot fetch. It may never fill from memory.

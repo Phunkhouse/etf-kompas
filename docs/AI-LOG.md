@@ -1418,6 +1418,46 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 **Mistakes and corrections:** none new. One thing to note: I had built PR #103 (the optional test code) before he decided; it is now unused, and I left the choice to merge or close it to him instead of closing it myself.
 
+### Phase 6: the basis for the tax text (`docs/TAX-SOURCES.md`)
+
+**Prompt (summary):** David: "I would still do this part" (the README line that the Czech tax explanation is not written), "point where I can find the data, so we can prepare at least a basis, which legal could later check".
+
+**Produced:** `docs/TAX-SOURCES.md`: the primary texts to read (the Income Tax Act on e-Sbírka and zakonyprolidi, three Finanční správa pages, the two treaties, the W-8BEN page), a table of ten statements with what the pages said and a status, a basis of three supportable sentences about selling after three years or under 100 000 Kč, and six questions for a reviewer. A README line points to it. No tax text was put on any page.
+
+**What I did and did not read:** a fetch tool that summarises a page read the three Finanční správa pages and the first 100 000 of 790 000 characters of the consolidated law; e-Sbírka itself and the 2009 instruction for Příloha č. 3 could not be read (JavaScript page; compressed PDF). So nothing is "verified"; the file says that at its top.
+
+**Mistakes and corrections**
+
+- **A search summary and a page disagreed, and I did not take the summary.** The summary said the 40 million Kč cap still applies; the 2026 press release says it is abolished; the "Ostatní" page still describes it. I read the pages and the law page, found the two Finanční správa pages disagree, and recorded that instead of choosing.
+- **The summaries named different letters of § 4 for the same rules** (u for the time test, t for the 100 000 Kč value limit on the law page; the finance page names none). Left as "check the law" instead of picking one.
+- **I found a tax claim already on the live page** (the third card of "Za co platíte": a foreign state takes part of the profits) that has no source behind it since note 0069 dropped the treaty sources, and that is false for accumulating funds. It went in unnoticed in Phase 3. Reported in the file; not changed.
+- **I almost cited the 2009 instruction for Příloha č. 3** as if current; the fetch showed its 2009 metadata, so I marked it "must not be used".
+
+### Phase 6: the unsourced tax card is replaced
+
+**Prompt (summary):** David approved ("Yes for both decisions") replacing the third card's text with `[ověřit zdroj]`.
+
+**Produced:** tests first (`HiddenCosts.test.tsx`: the card reads `[ověřit zdroj]`, and the page does not say "stáhne", "zahraničí" or "vyplacených"; the Playwright check in `e2e/explainers.spec.ts`; two of them failed before the change), then the text in `copy.ts`. `docs/TAX-SOURCES.md` and the README line say the statement is gone.
+
+**Checked:** `pnpm check` (930 tests), `pnpm format:check`, Playwright on a production build.
+
+**Not changed, on purpose:** two placeholders on the comparison page (`copy.ts`) still name "what the foreign state takes" as a topic ("Text se doplní …", a hint under the tax line). They are placeholders, not claims; a reviewer decides their wording.
+
+**Mistakes and corrections**
+
+- **This is the claim I should have caught in Phase 3, when I wrote the card.** The sentence was general and carried no figure, so `copy:check` passed it; I had no rule that a tax sentence needs a source, only that a figure does. The rule now in practice: no tax sentence without a source behind it.
+- **My first edit of the test failed:** the helper that finds the card's sentence looked for a full stop, which `[ověřit zdroj]` has none; I changed the finder instead of the text.
+
+### Phase 6: the `rates.json` drift in the spec and the methodology
+
+**Prompt (summary):** David approved ("Yes for both decisions") syncing SPEC §4 and §5 and METHODOLOGY-V2 §2 with note 0066, which removed `data/rates.json`.
+
+**Produced:** SPEC §5 (the storage list, the 45-day sentence, the exchange-rate bullet), the module table, the folder tree, the record-schema sentence, and METHODOLOGY-V2 (the inputs table, "Fallback" became "No fallback record", the decided list); note 0038's status line points to 0066. The runtime behaviour was not changed (`src/server/cnb.ts` already ignores a rate older than 45 days).
+
+**Checked:** `grep` that no stale mention of `data/rates.json` remains outside the sentence that says it was removed; `pnpm format:check`.
+
+**Mistakes and corrections:** I removed `rates.json` in PR 1 (note 0066) and left the spec describing it for a whole day, even after I had listed the drift in the README PR; the spec is the source of truth, so a deviation that David approved should have been synced in the same PR.
+
 ### Phase 6: closing the phase
 
 **Prompt (summary):** the last item of the plan: bring `docs/PHASES.md` and the plan checklist to the truth.

@@ -13,7 +13,9 @@ for (const path of ['/', '/?v=b']) {
         'Převod korun',
         'Daň ze zisků',
       ])
-      await expect(costs).toContainText('si stáhne zahraničí dřív')
+      // the third card has no tax statement until a source is checked (docs/TAX-SOURCES.md)
+      await expect(costs).toContainText('[ověřit zdroj]')
+      await expect(costs).not.toContainText('zahraničí')
     })
 
     test('the previews have captions and the button goes to the form', async ({

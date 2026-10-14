@@ -213,7 +213,10 @@ export const hiddenCostsCopy = {
     },
     {
       title: 'Daň ze zisků',
-      text: 'Část vyplacených zisků si stáhne zahraničí dřív, než se k vám dostanou.',
+      // No tax statement until a source is read and a reviewer has checked it
+      // (docs/TAX-SOURCES.md): the earlier sentence had no source and is wrong for a
+      // fund that pays nothing out.
+      text: '[ověřit zdroj]',
     },
   ],
 }
