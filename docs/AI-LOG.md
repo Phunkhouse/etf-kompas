@@ -1356,3 +1356,17 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **I wrote that the author "did not delegate" the fund set, the broker neutrality rule and every Czech sentence.** I could not support the first two from the repo, and the Czech copy was written by the agent and reviewed by the author. Replaced with what the log and the notes do show.
 - **I wrote "twice" for reporting a result before checking the measure,** where the log has it once in this phase; and I named a specific spec number that could not be met without finding which one in the log. Both corrected.
 - **Doc drift I did not fix here:** SPEC §4 and §5 and METHODOLOGY-V2 §2 still describe `data/rates.json` as the exchange-rate fallback, which note 0066 removed. The README says what is true now. A separate small docs PR syncs them (a deviation from the spec the author approved in note 0066).
+
+### Phase 6, PR 8: the pre-release audit
+
+**Prompt (summary):** David: "#98 landed. Now for the audit" (the open decisions he wanted compared before release: notes 0019, 0023, 0025). I read the three notes against the code and data and brought a table of findings; David chose "drop the unused fields" and "a new audit note, old ones marked".
+
+**Produced:** the audit note 0069; the four fields `dividendYieldPct`, `withholdingRate`, `indexName`, `domicile` and every record of VOO and QQQ removed from the model and `data/etfs.json`; seven orphaned sources removed; notes 0019, 0022, 0023 and 0025 marked; the docs that mentioned the fields updated; one test changed and one added.
+
+**Checked:** `pnpm check` (921 tests), `pnpm format:check`, `pnpm data:validate` (0 errors), `pnpm data:gaps` (138 of 138, as before). I ran the validator forward by day again: the first failing date is now 2026-10-25, then 2026-11-15. **Not checked:** the Playwright suite on a production build in this PR (no screen reads the dropped fields; the CI run is the check).
+
+**Mistakes and corrections**
+
+- **I did not spot until the audit that the strict gate checks fields no page uses, a consequence I should have raised when the gate was agreed (PR 4).** I had recorded the 2026-10-29 failure date in PR 4 without asking why a record of a fund the page does not display was in the gate.
+- **Making `ter`, `name` and `isin` optional broke the places that read them** (the typechecker found five); fixed with explicit checks and a test that a fund with no records is valid.
+- **I marked note 0022 as superseded although David named only 0019, 0023 and 0025.** Its subject (the `domicile` field) no longer exists, so leaving it "accepted" would be wrong; flagged in the PR.

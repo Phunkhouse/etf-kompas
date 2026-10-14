@@ -129,7 +129,7 @@ export function computeGaps(
           const ok =
             need.kind === 'listings'
               ? (broker.fees?.listings[fundId] ?? []).some(isVerified)
-              : fund !== undefined &&
+              : fund?.ter !== undefined &&
                 isVerified(fund.ter) &&
                 typeof fund.ter.value === 'number' &&
                 priceBroker(

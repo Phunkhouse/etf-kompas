@@ -71,8 +71,8 @@ describe('computeGaps', () => {
 
   it('does not count a value without evidence or without a source', () => {
     const noEvidence = etf('a', { name: 'A', ter: 0.07 })
-    noEvidence.ter = { ...noEvidence.ter, evidence: null }
-    noEvidence.name = { ...noEvidence.name, sourceUrl: '' }
+    noEvidence.ter = { ...noEvidence.ter!, evidence: null }
+    noEvidence.name = { ...noEvidence.name!, sourceUrl: '' }
     const [gap] = computeGaps({ etfs: [noEvidence], brokers: [] }, [
       { ...fundNeed, fundIds: ['a'] },
     ])

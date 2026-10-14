@@ -1,7 +1,7 @@
 # 0019. Cost breakdown: costs added one at a time, per fund
 
 Date: 2026-10-11
-Status: accepted
+Status: partly superseded by 0037 and 0069 (the breakdown rule stands with different parts; the single conversion fee is gone)
 Phase: 2
 
 ## Context

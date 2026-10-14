@@ -89,17 +89,14 @@ export const etfSchema = z.object({
   ticker: z.string().min(1),
   region: z.enum(['us-listed', 'ucits']),
   indexGroup: z.string().min(1),
-  name: sourced(z.string().min(1)),
-  isin: sourced(isin),
-  // Not shown by any screen, so optional: a fund without it is valid (note 0066).
-  indexName: sourced(z.string().min(1)).optional(),
-  domicile: sourced(z.string().min(1)).optional(),
-  // The original US funds (VOO, QQQ) have none; the twins need it (`pnpm data:gaps`).
+  // The American originals (VOO, QQQ) are named only to say where they cannot be
+  // bought, so they carry no records (note 0069). The twins need all four, which
+  // `pnpm data:gaps` checks screen by screen.
+  name: sourced(z.string().min(1)).optional(),
+  isin: sourced(isin).optional(),
   distribution: sourced(z.string().min(1)).optional(),
   // Percentages are plain numbers: 0.07 means 0.07 %.
-  ter: sourced(z.number().min(0)),
-  dividendYieldPct: sourced(z.number().min(0)).optional(),
-  withholdingRate: sourced(z.number().min(0).max(100)).optional(),
+  ter: sourced(z.number().min(0)).optional(),
 })
 
 export const brokerSchema = z.object({

@@ -314,7 +314,7 @@ describe('the real data files', () => {
     // Czech National Bank fixing of 9 October 2026
     const rates: Rates = { EUR: 24.365, USD: 21.745 }
     const cspx = data.etfs.find((fund) => fund.id === 'cspx')!
-    const ter = cspx.ter.value as number
+    const ter = cspx.ter!.value as number
     const prices = priceBrokers(data.brokers, 'cspx', ter, rates, INPUT)
     const degiro = prices.pricedBrokers.find((p) => p.brokerId === 'degiro')!
     // EUR 3 per order (2 plus 1 handling), EUR 2.50 a year, no conversion in euro

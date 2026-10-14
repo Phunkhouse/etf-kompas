@@ -77,7 +77,12 @@ export function calculatorData(
   const { etfs, brokers } = parsed.data
 
   const fund = etfs.find((etf) => etf.id === fundId)
-  if (!fund || !isVerified(fund.ter) || typeof fund.ter.value !== 'number') {
+  if (
+    !fund ||
+    !fund.ter ||
+    !isVerified(fund.ter) ||
+    typeof fund.ter.value !== 'number'
+  ) {
     return null
   }
 

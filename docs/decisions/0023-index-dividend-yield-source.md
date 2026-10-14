@@ -1,7 +1,7 @@
 # 0023. One dividend yield per index, with a fund-based exception for the Nasdaq-100
 
 Date: 2026-10-11
-Status: accepted
+Status: superseded by 0069 (the dividend yield was dropped)
 Phase: 3
 
 ## Context

@@ -1,7 +1,7 @@
 # 0022. Domicile of US-listed funds means "regulated in the US"
 
 Date: 2026-10-11
-Status: accepted
+Status: superseded by 0069 (the `domicile` field was dropped)
 Phase: 3
 
 ## Context

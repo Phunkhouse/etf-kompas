@@ -1,7 +1,7 @@
 # 0025. Dividend withholding rate is 15 % for all five funds
 
 Date: 2026-10-11
-Status: accepted
+Status: superseded by 0069 (the withholding rate was dropped)
 Phase: 3
 
 ## Context
