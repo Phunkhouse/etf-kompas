@@ -33,9 +33,9 @@ Written 2026-10-14 (Phase 6). **Status: a basis for a qualified reviewer, not le
 | 9   | **A foreign fund** is treated like a domestic security for the time test.                                                                                                                                                                                                     | A search summary said a Finanční správa instruction (Pokyn GFŘ D-59) says a foreign issuer's security counts. **Not read.**                                                                          | Pokyn GFŘ D-59: https://financnisprava.gov.cz/assets/cs/prilohy/d-sprava-dani-a-poplatku/Pokyn_GFR-D-59.pdf | **unverified**                                                                                                                                                  |
 | 10  | Exempt income above **5 million Kč** must be notified to the tax administrator.                                                                                                                                                                                               | A search summary said so for 2025. **The press release I read does not mention it.** Irrelevant to the audience.                                                                                     | the Finanční správa page for the 2025 return                                                                | **unverified**, probably not needed                                                                                                                             |
 
-## 3. One tax statement is already on the live page
+## 3. The one tax statement that was on the page is gone
 
-The third card of "Za co platíte, aniž to vidíte" (`src/content/copy.ts`, `hiddenCostsCopy`) reads, in effect: _a part of paid-out profits is taken by a foreign state before it reaches you._ No source stands behind it now (the treaty and convention sources were dropped with note 0069), and for an accumulating fund nothing is paid out at all (row 8). It is general and carries no figure, which is why `copy:check` passes; but it is a tax claim. A reviewer should decide whether to keep it, reword it or replace it with `[ověřit zdroj]`. I did not change it.
+The third card of "Za co platíte, aniž to vidíte" (`hiddenCostsCopy` in `src/content/copy.ts`) said that a part of paid-out profits is taken by a foreign state before it reaches the investor. No source stood behind it (the treaty and convention sources were dropped with note 0069), and for an accumulating fund nothing is paid out (row 8). On 2026-10-14, with David's approval, the card's text became `[ověřit zdroj]`, like the other tax text. The comparison page's tax cards and page 4 of the PDF were already placeholders; their placeholder wording and two hints still name "what the foreign state takes" as a topic (not as a claim). A reviewer decides what replaces them.
 
 ## 4. A basis for a text (only what rows 1 to 3 support)
 
@@ -54,7 +54,7 @@ Nothing about **dividends, foreign tax, accumulating funds or the tax return** m
 3. Are dividends of a foreign (Irish) distributing fund declared as § 8 income, and how is the foreign tax credited (rows 4, 5)?
 4. Does the time test run per purchase, so that monthly purchases each need three years? (This is what the page's audience will do; no source read says it.)
 5. May the page say any of this to a non-professional audience without a licence, or does it only point to Finanční správa (SPEC §19 question a)?
-6. Keep, reword or remove the third card (section 3 above).
+6. What should the third card and the placeholders of the comparison page and the PDF say, if anything (section 3 above)?
 
 ## 6. Where this goes next
 

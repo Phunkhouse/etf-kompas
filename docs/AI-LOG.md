@@ -1432,3 +1432,18 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **The summaries named different letters of § 4 for the same rules** (u for the time test, t for the 100 000 Kč value limit on the law page; the finance page names none). Left as "check the law" instead of picking one.
 - **I found a tax claim already on the live page** (the third card of "Za co platíte": a foreign state takes part of the profits) that has no source behind it since note 0069 dropped the treaty sources, and that is false for accumulating funds. It went in unnoticed in Phase 3. Reported in the file; not changed.
 - **I almost cited the 2009 instruction for Příloha č. 3** as if current; the fetch showed its 2009 metadata, so I marked it "must not be used".
+
+### Phase 6: the unsourced tax card is replaced
+
+**Prompt (summary):** David approved ("Yes for both decisions") replacing the third card's text with `[ověřit zdroj]`.
+
+**Produced:** tests first (`HiddenCosts.test.tsx`: the card reads `[ověřit zdroj]`, and the page does not say "stáhne", "zahraničí" or "vyplacených"; the Playwright check in `e2e/explainers.spec.ts`; two of them failed before the change), then the text in `copy.ts`. `docs/TAX-SOURCES.md` and the README line say the statement is gone.
+
+**Checked:** `pnpm check` (930 tests), `pnpm format:check`, Playwright on a production build.
+
+**Not changed, on purpose:** two placeholders on the comparison page (`copy.ts`) still name "what the foreign state takes" as a topic ("Text se doplní …", a hint under the tax line). They are placeholders, not claims; a reviewer decides their wording.
+
+**Mistakes and corrections**
+
+- **This is the claim I should have caught in Phase 3, when I wrote the card.** The sentence was general and carried no figure, so `copy:check` passed it; I had no rule that a tax sentence needs a source, only that a figure does. The rule now in practice: no tax sentence without a source behind it.
+- **My first edit of the test failed:** the helper that finds the card's sentence looked for a full stop, which `[ověřit zdroj]` has none; I changed the finder instead of the text.
