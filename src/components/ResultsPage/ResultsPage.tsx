@@ -1,4 +1,5 @@
 import { BrokerPicker } from '@/components/BrokerPicker'
+import { ButtonLink } from '@/components/Button'
 import { Container } from '@/components/Container'
 import { NumberDisplay } from '@/components/NumberDisplay'
 import { Pill } from '@/components/Pill'
@@ -19,7 +20,13 @@ const METHOD_HREF = '/#jak-pocitame'
 // setup and number, the five funds side by side, the broker table, the taxes and
 // the method. The numbers come ready from `comparison()`, the same pricing as the
 // calculator; nothing is calculated here.
-export function ResultsPage({ comparison }: { comparison: Comparison }) {
+export function ResultsPage({
+  comparison,
+  pdfHref,
+}: {
+  comparison: Comparison
+  pdfHref: string
+}) {
   const { funds, byFund, setup, headlineFundId } = comparison
   const head = funds.find((fund) => fund.fundId === headlineFundId)
   const headline = byFund[headlineFundId]
@@ -69,6 +76,11 @@ export function ResultsPage({ comparison }: { comparison: Comparison }) {
               <Tag as="p">{text.label}</Tag>
               <h1 className={styles.title}>{nbsp(text.title)}</h1>
               <p className={styles.lead}>{nbsp(text.lead)}</p>
+              <div className={styles.actions}>
+                <ButtonLink href={pdfHref} variant="secondary">
+                  {nbsp(text.pdf)}
+                </ButtonLink>
+              </div>
             </header>
 
             {head && total !== null ? (

@@ -1085,3 +1085,19 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **"138 of 138" reads like "done", and it is not.** The checker answers what the rev. 4 screens need, and says nothing about the strict validation (`pnpm data:validate`, the Phase 6 gate), which still fails on 51 `TODO_VERIFY` values in fields no screen uses. I added a line to the output and a section in `DATA-NEEDS.md` so the number is not read as readiness for deploy.
 - **First draft of that section said VOO and QQQ were open at Fio and IBKR; only Fio is.** IBKR's `false` was verified earlier. Found by running `node` over the file before committing, not by trusting my memory of the table.
 - **`gaps.ts` now imports the calculator's `priceBroker`** so that "can be priced" is the calculator's own answer and cannot drift from it. The rates in the check are placeholders (only the existence of a price matters).
+
+### Phase 4, PR 3: the personalised PDF
+
+**Prompt (summary):** David approved the six pages (1 and 4 drawn, 2, 3, 5 and 6 proposed by me) and four decisions (page 4 stays unfilled, IBM Plex committed as font files, the route and its headers, a pure model plus a thin layout), then approved the tests.
+
+**Produced:** `src/server/pdf-model.ts` (all numbers and texts of the six pages, from the calculator's own pricing), `src/components/PdfDocument/` (the layout with `@react-pdf/renderer`), `GET /srovnani/[token]/pdf` (inline, `private, no-store`, `noindex`, a real 404), the "Stáhnout PDF · 6 stran" links (results page, success state), `pdfCopy` in `copy.ts`, IBM Plex Sans (Regular, Medium, Bold) and Mono Medium as WOFF files with their licence in `src/server/pdf/fonts/`. I looked at all six pages as images.
+
+**Mistakes and corrections**
+
+- **One of the tests David approved was wrong, and I rewrote it:** "the PDF contains no `@`" read the whole file as text, but the fonts are binary data and can hold any byte, so it cannot be a text check. Replaced by a check that the model has no `@` (and the e-mail itself is checked in the e2e). Also two of my test expectations were too strict: I compared a text with a normal space to one with a non-breaking space, and I ran the copy rules over third-party titles and venue codes (for example "BVME.ETF" tripped "ETF only once"), so that test now covers only the prose I write.
+- **The page-count test caught what my eyes would not at first:** page 6 (23 sources) spilled onto a seventh page. I made the list smaller (6.5 pt, host in line with the title) and checked the six pages as images.
+- **The copy rules caught my own wording twice:** `zdroje` is banned by the glossary (page 4's lead said "ověřeného zdroje"; now "podkladu"), and a ticker may not stand in prose (page 3's lead named CSPX; now "Fond, který počítá kalkulačka").
+- **`scripts/build-pdf.ts` (listed in SPEC §13) is not there.** `tsx` cannot load `@react-pdf/renderer` (its `hyphenate` package has no CommonJS export that `tsx` accepts), even renamed to `.mts`. I looked at the pages through a throwaway test instead, which I deleted. The route and `pnpm test:e2e` are the way to get a PDF now. If we want the script, it needs a different runner.
+- **Not verified:** the fonts and the logo are read from disk at request time and shipped with `outputFileTracingIncludes`. It works in `next start` (the e2e runs on a production build), but I cannot check how Vercel traces them before the Phase 6 deploy. Written into the README gaps.
+- **The logo is the PNG (`logo-600w.png`), not the SVG:** react-pdf draws PNG and JPEG images, not SVG files. The wordmark is the final logo, just as a bitmap.
+- JS budget: 149.4 KB of 150 KB (it was 148.9).

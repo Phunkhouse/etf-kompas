@@ -107,3 +107,16 @@
   font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
+
+// The PDF is the second way in, after the comparison page: an outlined button.
+.pdf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--touch-target-lg);
+  border: var(--border-width-strong) solid var(--color-ink);
+  border-radius: var(--radius-md);
+  color: var(--color-ink);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}

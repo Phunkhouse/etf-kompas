@@ -246,6 +246,7 @@ export const leadFormCopy = {
     strong: 'Hotovo.',
     text: ' Váš e-mail jsme uložili.',
     open: 'Otevřít srovnání',
+    pdf: 'Stáhnout PDF · 6 stran',
   },
 }
 
@@ -413,6 +414,7 @@ export const resultsCopy = {
     link: 'Otevřít postup',
   },
   expires: 'Odkaz platí 30 dní.',
+  pdf: 'Stáhnout PDF · 6 stran',
 }
 
 // A results link that does not work: never issued, expired or mistyped. One text for
@@ -422,6 +424,112 @@ export const resultsGoneCopy = {
   title: 'Tento odkaz už nefunguje',
   text: 'Odkaz je možná starý, platí 30 dní, nebo v něm je překlep. Kalkulačku najdete na úvodní stránce.',
   back: 'Zpět na úvod',
+}
+
+// The personalised PDF (wireframe B, "PDF, favicon, sharing"; six pages approved by
+// David on 2026-10-14). The numbers and the broker lines come from `pdfModel()`.
+export const pdfCopy = {
+  header: 'Vaše srovnání',
+  footer: {
+    advice: 'Obecná informace, ne investiční ani daňové poradenství.',
+    verified: (month: string) => `Čísla ověřena k ${month}`,
+    estimate: 'odhad bez českých daní a inflace',
+    controller: (controller: string) => `Správce: ${controller}`,
+  },
+  unverified: '[ověřit]',
+  none: '–',
+  yes: 'Ano',
+  no: 'Ne',
+  comparison: {
+    label: 'Strana 1 · Srovnání',
+    title: 'Americké indexy z Česka: u koho je koupíte a za kolik?',
+    lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Níže je poplatek fondu a to, u kterého brokera ho koupíte.',
+    columns: { fund: 'Fond', fee: 'Poplatek' },
+    legend:
+      '[ověřit] = zatím neověřeno, doplníme zdroj. „Ano“ jen s uvedeným zdrojem a datem.',
+    valueLabel: 'Při vašem nastavení',
+    value: (years: number, value: string, fees: string) =>
+      `Ilustrativní hodnota po ${years} letech: ${value}, z toho poplatky ${fees}.`,
+    valueNote: (rate: string) =>
+      `${rate} ročně, příklad, ne slib. Odhad, bez českých daní a inflace.`,
+  },
+  costs: {
+    label: 'Strana 2 · Cena',
+    title: 'Kolik vás to bude stát',
+    lead: (years: number) =>
+      `Celkem za ${years} let u každého fondu a brokera: poplatek fondu, převod korun a poplatky brokera.`,
+    columns: { fund: 'Fond' },
+    note: 'Odhad. Bez českých daní a inflace.',
+  },
+  breakdown: {
+    label: 'Strana 3 · Z čeho se cena skládá',
+    title: 'Z čeho se cena skládá',
+    // The fund the calculator prices; its name stands in the table caption.
+    lead: (years: number) =>
+      `Fond, který počítá kalkulačka, za ${years} let. Cena se skládá z poplatku fondu, převodu korun a poplatků brokera.`,
+    columns: {
+      broker: 'Broker',
+      fund: 'Poplatek fondu',
+      fx: 'Převod korun',
+      brokerFees: 'Poplatky brokera',
+      total: 'Celkem',
+    },
+  },
+  taxes: {
+    label: 'Strana 4 · Daně',
+    title: 'Co platí v Česku',
+    lead: 'Jedna strana o tom, co se děje s výnosem. Text vychází jen z ověřeného podkladu (Finanční správa), který u každé věty uvedeme.',
+    rows: [
+      {
+        label: 'Fond, který výnosy reinvestuje',
+        hint: 'Co to znamená pro daň v Česku.',
+      },
+      {
+        label: 'Fond, který výnosy vyplácí',
+        hint: 'Jak se zdaňují vyplacené výnosy.',
+      },
+      {
+        label: 'Časový test',
+        hint: 'Za jakých podmínek je prodej osvobozen.',
+      },
+      {
+        label: 'Daň z dividend v zahraničí',
+        hint: 'Co stáhne zahraničí a co se dá započítat.',
+      },
+    ],
+    unverified: '[ověřit zdroj]',
+    note: 'Nejde o daňové poradenství. Před rozhodnutím se poraďte s poradcem.',
+  },
+  where: {
+    label: 'Strana 5 · Kde fond koupit',
+    title: 'Kde fond koupit',
+    lead: 'Pět brokerů, abecedně. Poplatky z ceníků brokerů, u každého se zdrojem a datem.',
+    columns: {
+      broker: 'Broker',
+      purchase: 'Poplatek za nákup',
+      fx: 'Převod korun',
+      custody: 'Vedení účtu',
+      czech: 'Česky',
+      source: 'Zdroj a datum',
+    },
+    other: 'jinde',
+    yearly: 'ročně',
+    ofPurchase: 'z nákupu',
+    atLeast: 'nejméně',
+    atMost: 'nejvýše',
+    toEuros: 'na eura',
+    toDollars: 'na dolary',
+    toBoth: 'na eura i dolary',
+  },
+  method: {
+    label: 'Strana 6 · Jak počítáme',
+    title: 'Jak počítáme a odkud máme čísla',
+    counted:
+      'Počítáme roční poplatek fondu, převod korun a poplatky brokera. Nepočítáme inflaci ani české daně.',
+    proof:
+      'Každé číslo má uvedený podklad a datum ověření. Co není ověřeno, je označeno [ověřit].',
+    sourcesHeading: 'Odkud máme čísla',
+  },
 }
 
 export const notFoundCopy = {
@@ -473,6 +581,7 @@ export const copy = {
   legal: legalCopy,
   notFound: notFoundCopy,
   results: resultsCopy,
+  pdf: pdfCopy,
   resultsGone: resultsGoneCopy,
   menu: menuCopy,
   stickyBar: stickyBarCopy,

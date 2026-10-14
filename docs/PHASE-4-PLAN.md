@@ -114,6 +114,9 @@ Vitest (`src/server/*.test.ts`, node) unless it says E2E. Ports are faked in mem
 - Delivery tests to Seznam, Gmail and Outlook with the real domain are manual and happen before launch.
 - The email and the four small pages in desktop width are not drawn.
 
+- The PDF fonts and the logo are read from disk and shipped with `outputFileTracingIncludes`: works on `next start`, to verify on the Vercel deploy (Phase 6).
+- PDF page 4 (taxes) has no verified text yet: four rows say `[ověřit zdroj]`.
+
 ## Out of scope for Phase 4
 
 Tracking and consent banner, `events` table and `lead` events (Phase 5), the optional phone step (P2), nurture emails (P2), Vercel deploy (Phase 6).

@@ -41,7 +41,7 @@ export default async function ResultsRoute({
   return (
     <>
       <SiteHeader base="/" />
-      <ResultsPage comparison={result} />
+      <ResultsPage comparison={result} pdfHref={`/srovnani/${token}/pdf`} />
       <SiteFooter />
     </>
   )
