@@ -1,7 +1,9 @@
 import { BrokerPicker } from '@/components/BrokerPicker'
+import { resendMineAction } from '@/app/mail-actions'
 import { ButtonLink } from '@/components/Button'
 import { Container } from '@/components/Container'
 import { NumberDisplay } from '@/components/NumberDisplay'
+import { ResendCard } from '@/components/ResendCard'
 import { Pill } from '@/components/Pill'
 import { Table, TableLabel, type TableColumn } from '@/components/Table'
 import { Tag } from '@/components/Tag'
@@ -23,9 +25,12 @@ const METHOD_HREF = '/#jak-pocitame'
 export function ResultsPage({
   comparison,
   pdfHref,
+  token,
 }: {
   comparison: Comparison
   pdfHref: string
+  // the token of this page: the card sends a new link to the lead's own address
+  token: string
 }) {
   const { funds, byFund, setup, headlineFundId } = comparison
   const head = funds.find((fund) => fund.fundId === headlineFundId)
@@ -164,7 +169,7 @@ export function ResultsPage({
               <a href={METHOD_HREF} className={styles.link}>
                 {nbsp(text.method.link)}
               </a>
-              <p className={styles.note}>{nbsp(text.expires)}</p>
+              <ResendCard action={resendMineAction.bind(null, token)} />
             </section>
           </div>
         </div>

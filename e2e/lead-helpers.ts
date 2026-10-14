@@ -27,3 +27,50 @@ export async function storedLeads(
   const response = await request.get('/api/test-leads')
   return ((await response.json()) as { leads: StoredLead[] }).leads
 }
+
+export type RecordedMail = {
+  to: string
+  subject: string
+  html: string
+  text: string
+  headers?: Record<string, string>
+}
+
+type TestState = {
+  leads: (StoredLead & {
+    consentConfirmedAt: string | null
+    unsubscribedAt: string | null
+    optinSentAt: string | null
+    emailStatus: string
+  })[]
+  mails: RecordedMail[]
+}
+
+// What the in-memory server stored and "sent" (test-only route, 404 elsewhere).
+export async function testState(
+  request: APIRequestContext,
+): Promise<TestState> {
+  const response = await request.get('/api/test-leads')
+  return (await response.json()) as TestState
+}
+
+export async function mailsTo(
+  request: APIRequestContext,
+  email: string,
+): Promise<RecordedMail[]> {
+  return (await testState(request)).mails.filter((m) => m.to === email)
+}
+
+// Puts an address on the sandbox allowlist, so mail to it is really "sent".
+export async function allow(request: APIRequestContext, email: string) {
+  await request.post('/api/test-leads', { data: { allowEmail: email } })
+}
+
+// The first link of a kind in a mail, as a path on the site under test.
+export function linkIn(mail: RecordedMail, prefix: string): string {
+  const match = mail.text.match(
+    new RegExp(`https?://[^/\\s]+(${prefix}[^\\s"'<>)]+)`),
+  )
+  if (!match) throw new Error(`no ${prefix} link in: ${mail.text}`)
+  return match[1]
+}

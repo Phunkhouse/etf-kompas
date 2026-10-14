@@ -12,7 +12,7 @@ import {
 // in-memory store (playwright.config.ts).
 const field = { name: 'Váš e-mail' }
 const send = { name: 'Poslat mi srovnání' }
-const doneText = 'Hotovo. Váš e-mail jsme uložili.'
+const doneText = 'Hotovo. Srovnání je připravené.'
 
 test.beforeEach(async ({ context }) => {
   await context.setExtraHTTPHeaders({ 'x-forwarded-for': randomIp() })

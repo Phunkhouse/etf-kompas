@@ -25,6 +25,7 @@ type Row = {
   marketing_consent: boolean
   consent_text_version: string | null
   consent_confirmed_at: string | null
+  optin_sent_at: string | null
   email_status: EmailStatus
   unsubscribed_at: string | null
   deleted_at: string | null
@@ -58,6 +59,7 @@ function fromRow(row: Row): LeadRecord {
     marketingConsent: row.marketing_consent,
     consentTextVersion: row.consent_text_version,
     consentConfirmedAt: date(row.consent_confirmed_at),
+    optinSentAt: date(row.optin_sent_at),
     emailStatus: row.email_status,
     unsubscribedAt: date(row.unsubscribed_at),
     deletedAt: date(row.deleted_at),
@@ -81,6 +83,7 @@ function toRow(lead: LeadRecord): Row {
     marketing_consent: lead.marketingConsent,
     consent_text_version: lead.consentTextVersion,
     consent_confirmed_at: iso(lead.consentConfirmedAt),
+    optin_sent_at: iso(lead.optinSentAt),
     email_status: lead.emailStatus,
     unsubscribed_at: iso(lead.unsubscribedAt),
     deleted_at: iso(lead.deletedAt),

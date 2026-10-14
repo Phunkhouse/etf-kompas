@@ -23,6 +23,12 @@ export default defineConfig({
     timeout: 120_000,
     // The lead flow runs on the in-memory store, so e2e needs no secrets and
     // writes to no real database (the store is refused on Vercel).
-    env: { LEAD_STORE: 'memory', LEAD_MIN_FILL_MS: '0' },
+    env: {
+      LEAD_STORE: 'memory',
+      LEAD_MIN_FILL_MS: '0',
+      // A recording mailer in sandbox mode: tests put the addresses they need on the
+      // allowlist, and nothing leaves the machine.
+      EMAIL_MODE: 'sandbox',
+    },
   },
 })

@@ -1,9 +1,16 @@
 // Lead handling for the e-mail form (SPEC §3.3, §26). Pure rules: the store and the
 // limiter are passed in, so the same code runs against Supabase, in memory and in
 // tests. No imports from next or react.
-import { hashEmail, hashIp } from './ip-hash'
+import {
+  issueResultsToken,
+  optInDue,
+  sendKompas,
+  sendOptIn,
+  type MailDeps,
+} from './lead-mail'
 import type { LeadRecord, LeadStore, RateLimiter } from './lead-ports'
-import { hashToken, newToken } from './tokens'
+import { hitEmailLimit, hitIpLimit } from './rate-limits'
+import { newToken } from './tokens'
 
 // What the form and the API send. Everything is "unknown": it comes from outside.
 export type LeadInput = {
@@ -31,13 +38,20 @@ export type LeadFormState =
   | { status: 'invalid'; email: string }
   | { status: 'error'; email: string }
   | { status: 'limited'; retryAfterSeconds: number }
-  | { status: 'ok'; resultsPath: string }
+  | {
+      status: 'ok'
+      resultsPath: string
+      // what became of the e-mail with the link: only `sent` may be said to the visitor
+      email: { status: 'sent' | 'skipped' | 'failed'; address: string }
+    }
 
 export type LeadDeps = {
   store: LeadStore
   limiter: RateLimiter
   now: () => Date
   secrets: { ipHash: string }
+  // E-mail (PR 4): without it no e-mail goes out
+  mail?: MailDeps
   // The shortest time a person needs to fill the form; default 2000 ms. Only
   // end-to-end tests lower it, because a test types faster than a person.
   minFillMs?: number
@@ -51,11 +65,7 @@ export const CONSENT_TEXT_VERSION = '2026-10-tips-v1'
 const MAX_LENGTH = 254
 const MAX_TRACKING_LENGTH = 200
 const MIN_FILL_MS = 2000
-const IP_LIMIT_PER_HOUR = 5
-const EMAIL_LIMIT_PER_DAY = 3
-const TOKEN_DAYS = 30
 const RATE_LIMIT_KEEP_DAYS = 2
-const HOUR_MS = 3_600_000
 const DAY_MS = 86_400_000
 
 // The slider grid of the calculator (Calculator.tsx) and its horizons.
@@ -123,14 +133,6 @@ function typed(input: LeadInput): string {
   return typeof input.email === 'string' ? input.email : ''
 }
 
-function startOfHour(date: Date): Date {
-  return new Date(Math.floor(date.getTime() / HOUR_MS) * HOUR_MS)
-}
-
-function startOfDay(date: Date): Date {
-  return new Date(Math.floor(date.getTime() / DAY_MS) * DAY_MS)
-}
-
 type Setup = { monthly: number; years: number }
 
 function newLead(
@@ -157,6 +159,7 @@ function newLead(
     marketingConsent: tips,
     consentTextVersion: tips ? CONSENT_TEXT_VERSION : null,
     consentConfirmedAt: null,
+    optinSentAt: null,
     emailStatus: 'queued',
     unsubscribedAt: null,
     deletedAt: null,
@@ -196,25 +199,17 @@ export async function submitLead(
   try {
     // A bot gets a believable success that leads nowhere, and uses no quota.
     if (looksLikeBot(input, deps.minFillMs ?? MIN_FILL_MS)) {
-      return { status: 'ok', resultsPath: `/srovnani/${newToken()}` }
+      return {
+        status: 'ok',
+        resultsPath: `/srovnani/${newToken()}`,
+        email: { status: 'skipped', address: typed(input) },
+      }
     }
 
     const now = deps.now()
-    const ipKey = `ip:${hashIp(request.ip, deps.secrets.ipHash, now)}`
-    const withinIpLimit = await deps.limiter.hit(
-      ipKey,
-      startOfHour(now),
-      IP_LIMIT_PER_HOUR,
-    )
-    if (!withinIpLimit) {
-      const next = startOfHour(now).getTime() + HOUR_MS
-      return {
-        status: 'limited',
-        retryAfterSeconds: Math.max(
-          1,
-          Math.ceil((next - now.getTime()) / 1000),
-        ),
-      }
+    const byIp = await hitIpLimit(deps, request.ip)
+    if (!byIp.ok) {
+      return { status: 'limited', retryAfterSeconds: byIp.retryAfterSeconds }
     }
 
     const result = validateLead(input)
@@ -222,37 +217,36 @@ export async function submitLead(
     if (!result.ok || !setup) return { status: 'invalid', email: typed(input) }
     const { email, tips } = result.lead
 
-    const emailKey = `email:${hashEmail(email, deps.secrets.ipHash)}`
-    const withinEmailLimit = await deps.limiter.hit(
-      emailKey,
-      startOfDay(now),
-      EMAIL_LIMIT_PER_DAY,
-    )
-    if (!withinEmailLimit) {
-      const next = startOfDay(now).getTime() + DAY_MS
-      return {
-        status: 'limited',
-        retryAfterSeconds: Math.max(
-          1,
-          Math.ceil((next - now.getTime()) / 1000),
-        ),
-      }
+    const byEmail = await hitEmailLimit(deps, email)
+    if (!byEmail.ok) {
+      return { status: 'limited', retryAfterSeconds: byEmail.retryAfterSeconds }
     }
 
     const existing = await deps.store.findByEmail(email)
-    const lead = existing
+    let lead = existing
       ? mergeLead(existing, input, tips, setup, now)
       : newLead(input, email, tips, setup, now, crypto.randomUUID())
     await deps.store.save(lead)
+    const token = await issueResultsToken(deps.store, lead.id, now)
 
-    const token = newToken()
-    await deps.store.addToken({
-      tokenHash: hashToken(token),
-      leadId: lead.id,
-      createdAt: now,
-      expiresAt: new Date(now.getTime() + TOKEN_DAYS * DAY_MS),
-    })
-    return { status: 'ok', resultsPath: `/srovnani/${token}` }
+    // The e-mails come after the lead is stored: a failure to send never fails the
+    // submit. Only a message that was really sent is recorded as sent.
+    const delivery = await sendKompas(lead, token, deps.mail)
+    if (delivery !== 'skipped') {
+      lead = { ...lead, emailStatus: delivery === 'sent' ? 'sent' : 'failed' }
+      await deps.store.save(lead)
+    }
+    if (tips && optInDue(lead, now)) {
+      if ((await sendOptIn(lead, deps.mail, now)) === 'sent') {
+        lead = { ...lead, optinSentAt: now }
+        await deps.store.save(lead)
+      }
+    }
+    return {
+      status: 'ok',
+      resultsPath: `/srovnani/${token}`,
+      email: { status: delivery, address: lead.email },
+    }
   } catch {
     return { status: 'error', email: typed(input) }
   }

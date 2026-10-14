@@ -1,0 +1,1 @@
+export { ResendCard } from './ResendCard'

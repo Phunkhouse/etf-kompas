@@ -142,7 +142,7 @@ describe('S: storage and idempotency', () => {
       ME,
       deps,
     )
-    expect(result).toEqual({
+    expect(result).toMatchObject({
       status: 'ok',
       resultsPath: expect.stringMatching(RESULTS_PATH),
     })

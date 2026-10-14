@@ -83,6 +83,13 @@ export function LeadForm({
         <a href={`${state.resultsPath}/pdf`} className={styles.pdf}>
           {nbsp(text.done.pdf)}
         </a>
+        {state.email.status === 'sent' ? (
+          <p className={styles.mailed}>
+            {nbsp(text.done.sent(state.email.address))}
+          </p>
+        ) : state.email.status === 'failed' ? (
+          <p className={styles.mailed}>{nbsp(text.done.failed)}</p>
+        ) : null}
       </div>
     )
   }

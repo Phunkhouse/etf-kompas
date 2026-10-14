@@ -7,7 +7,7 @@ import { randomEmail, randomIp } from './lead-helpers'
 const field = { name: 'Váš e-mail' }
 const send = { name: 'Poslat mi srovnání' }
 const invalidText = 'Zadejte e-mail ve tvaru jmeno@domena.cz.'
-const doneText = 'Hotovo. Váš e-mail jsme uložili.'
+const doneText = 'Hotovo. Srovnání je připravené.'
 
 test.beforeEach(async ({ context }) => {
   await context.setExtraHTTPHeaders({ 'x-forwarded-for': randomIp() })
