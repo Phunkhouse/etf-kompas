@@ -19,15 +19,33 @@ const normal = (address: string) => address.trim().toLowerCase()
 
 // In sandbox mode only the allowlist is sent to. Anyone else is `skipped`: the mailer
 // is not called, so the UI can never claim an e-mail went to them.
+// An entry is an address ("david@pm.me") or a whole domain written with the @
+// ("@clientelo.cz"). A domain entry matches that exact domain only: not a subdomain,
+// not a lookalike, and not an address with more than one @. A word without an @ in
+// front ("clientelo.cz") matches nothing, so a typo never widens the list.
+const DOMAIN =
+  /^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/
+
+function onAllowlist(allowlist: string[], to: string): boolean {
+  const address = normal(to)
+  const parts = address.split('@')
+  const domain = parts.length === 2 ? parts[1] : null
+  return allowlist.some((raw) => {
+    const entry = normal(raw)
+    if (entry.startsWith('@')) {
+      const wanted = entry.slice(1)
+      return domain !== null && DOMAIN.test(wanted) && domain === wanted
+    }
+    return entry === address
+  })
+}
+
 export async function deliver(
   mailer: Mailer,
   config: DeliveryMode,
   message: MailMessage,
 ): Promise<Delivery> {
-  if (
-    config.mode === 'sandbox' &&
-    !config.allowlist.some((entry) => normal(entry) === normal(message.to))
-  ) {
+  if (config.mode === 'sandbox' && !onAllowlist(config.allowlist, message.to)) {
     return 'skipped'
   }
   try {

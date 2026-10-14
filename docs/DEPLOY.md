@@ -51,7 +51,7 @@ Names come from `.env.example`; **never commit a value** (the repo is public). A
 | `EMAIL_FROM`                  | yes             | no      | sender on the verified test domain, says it is a test project                                                                                                               |
 | `EMAIL_REPLY_TO`              | no              | no      |                                                                                                                                                                             |
 | `EMAIL_MODE`                  | no              | no      | `sandbox` (default, only the allowlist) or `live`. **Decided 2026-10-14: `sandbox` for the submission.** In `sandbox` the page never says an e-mail was sent to anyone else |
-| `EMAIL_SANDBOX_ALLOWLIST`     | in sandbox      | no      | comma separated                                                                                                                                                             |
+| `EMAIL_SANDBOX_ALLOWLIST`     | in sandbox      | no      | comma separated: addresses, or a whole domain written with the @ (`@clientelo.cz`, that exact domain only)                                                                  |
 | `CRON_SECRET`                 | yes             | **yes** | at least 32 bytes. Vercel Cron sends it as `Authorization: Bearer ...` to `/api/purge` (**verify in their docs**); without it the route answers 401                         |
 | `RETENTION_LEAD_MONTHS`       | no              | no      | default 6 (provisional, note 0067)                                                                                                                                          |
 | `RETENTION_UNSUBSCRIBED_DAYS` | no              | no      | default 30 (provisional, note 0067)                                                                                                                                         |
@@ -88,6 +88,7 @@ It answers `{"leads":0,"events":0,"rateLimits":0,"failed":0}` or counts of what 
 ### Who receives e-mail in `sandbox` (the mode for the submission)
 
 - Add each reviewer's address to `EMAIL_SANDBOX_ALLOWLIST` in Vercel (comma separated, Production) and **redeploy**; a change applies to the next deployment only. Addresses are personal data: keep them in Vercel, never in the repo or in a chat.
+- A whole company can be added with a domain entry, `@clientelo.cz`: every mailbox on that exact domain then receives the e-mail. It does not cover subdomains, and `clientelo.cz` without the @ matches nothing. Test one address of that domain first: a company mail system may filter a new sender (never checked for Clientelo).
 - Use direct addresses. An address that is forwarded (the author's own domain, forwarded to another mailbox, lost the e-mail on 2026-10-14) may not receive it even when Resend says Delivered.
 - A reviewer not on the list gets the results page and the PDF in the page, and no e-mail. Say so when you send the link.
 - To go `live` instead, see "Production switch" below and test delivery to Seznam, Gmail and Outlook first (never checked).

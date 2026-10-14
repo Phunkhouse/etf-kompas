@@ -26,6 +26,15 @@ describe('leadEnv', () => {
     })
   })
 
+  it('keeps a domain entry of the allowlist as written', () => {
+    expect(
+      leadEnv({
+        LEAD_STORE: 'memory',
+        EMAIL_SANDBOX_ALLOWLIST: 'a@b.cz, @clientelo.cz',
+      }),
+    ).toMatchObject({ EMAIL_SANDBOX_ALLOWLIST: ['a@b.cz', '@clientelo.cz'] })
+  })
+
   it('needs nothing else for the memory store', () => {
     expect(leadEnv({ LEAD_STORE: 'memory' })).toMatchObject({
       LEAD_STORE: 'memory',

@@ -155,3 +155,92 @@ describe('createResendMailer', () => {
     expect(spy.mock.calls[0][1]?.signal).toBeInstanceOf(AbortSignal)
   })
 })
+
+// Phase 6: a domain entry ("@clientelo.cz") in the sandbox allowlist, so every mailbox of
+// a reviewing company can try the e-mail (cases D-1 to D-7, written first). Only the exact
+// domain matches; a plain address keeps its exact meaning.
+describe('deliver: a domain entry in the sandbox allowlist', () => {
+  const to = (address: string) => ({ ...MESSAGE, to: address })
+  const run = async (allowlist: string[], address: string) => {
+    const mailer = createRecordingMailer()
+    const result = await deliver(
+      mailer,
+      { mode: 'sandbox', allowlist },
+      to(address),
+    )
+    return { result, sent: mailer.sent().length }
+  }
+
+  it('D-1 sends to any address on the domain, ignoring case and spaces', async () => {
+    for (const address of [
+      'jana@clientelo.cz',
+      'Jana.Novakova@Clientelo.CZ',
+      '  petr@clientelo.cz ',
+    ]) {
+      expect(await run([' @Clientelo.cz '], address)).toEqual({
+        result: 'sent',
+        sent: 1,
+      })
+    }
+  })
+
+  it('D-2 does not send to a lookalike or to another domain', async () => {
+    for (const address of [
+      'x@evilclientelo.cz',
+      'x@clientelo.cz.evil.com',
+      'x@sub.clientelo.cz',
+      'x@clientelo.com',
+      'clientelo.cz@evil.com',
+      'x@clientelo.cz@evil.com',
+      'x@evil.com@clientelo.cz',
+    ]) {
+      expect(await run(['@clientelo.cz'], address), address).toEqual({
+        result: 'skipped',
+        sent: 0,
+      })
+    }
+  })
+
+  it('D-3 an entry without the @ is not a domain entry and matches nothing', async () => {
+    expect(await run(['clientelo.cz'], 'jana@clientelo.cz')).toEqual({
+      result: 'skipped',
+      sent: 0,
+    })
+  })
+
+  it('D-4 a plain address entry still means that one address only', async () => {
+    expect(await run(['david@pm.me'], 'david@pm.me')).toMatchObject({
+      result: 'sent',
+    })
+    expect(await run(['david@pm.me'], 'other@pm.me')).toMatchObject({
+      result: 'skipped',
+    })
+  })
+
+  it('D-5 addresses and domains can be mixed in one list', async () => {
+    const list = ['david@pm.me', '@clientelo.cz']
+    expect((await run(list, 'david@pm.me')).result).toBe('sent')
+    expect((await run(list, 'jana@clientelo.cz')).result).toBe('sent')
+    expect((await run(list, 'x@gmail.com')).result).toBe('skipped')
+  })
+
+  it('D-6 an empty or malformed domain entry never opens the list', async () => {
+    for (const entry of ['@', '@@', '@ ', '@.', '@*']) {
+      expect((await run([entry], 'jana@clientelo.cz')).result, entry).toBe(
+        'skipped',
+      )
+      expect((await run([entry], 'x@gmail.com')).result, entry).toBe('skipped')
+    }
+  })
+
+  it('D-7 a domain entry does nothing in live mode (live sends to all anyway)', async () => {
+    const mailer = createRecordingMailer()
+    expect(
+      await deliver(
+        mailer,
+        { mode: 'live', allowlist: ['@clientelo.cz'] },
+        to('x@gmail.com'),
+      ),
+    ).toBe('sent')
+  })
+})
