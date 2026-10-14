@@ -1370,3 +1370,13 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **I did not spot until the audit that the strict gate checks fields no page uses, a consequence I should have raised when the gate was agreed (PR 4).** I had recorded the 2026-10-29 failure date in PR 4 without asking why a record of a fund the page does not display was in the gate.
 - **Making `ter`, `name` and `isin` optional broke the places that read them** (the typechecker found five); fixed with explicit checks and a test that a fund with no records is valid.
 - **I marked note 0022 as superseded although David named only 0019, 0023 and 0025.** Its subject (the `domicile` field) no longer exists, so leaving it "accepted" would be wrong; flagged in the PR.
+
+### Phase 6: EMAIL_MODE decided (sandbox)
+
+**Prompt (summary):** David: "Let's go for EMAIL_MODE. What are the options, pros and cons". I compared `sandbox` and `live` from the code (`deliver` in `src/server/mailer.ts`, the form's limits, note 0011, SPEC §17.15), and David chose "sandbox + allowlist".
+
+**Produced:** the README risk line and the "Who receives e-mail in sandbox" part of `docs/DEPLOY.md`; no code change (the mode is an environment variable, already `sandbox` on Vercel).
+
+**Not verified (said in the comparison):** delivery to Seznam, Gmail and Outlook; Resend's sending caps on David's plan.
+
+**Mistakes and corrections:** none found in this entry. One thing I left out of the first table, added here: addresses that are forwarded may not receive mail even when Resend says Delivered (David's own domain did not).

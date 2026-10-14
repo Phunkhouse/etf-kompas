@@ -40,25 +40,25 @@ The site ships **`noindex`**, with no paid traffic, until the launch gate of SPE
 
 Names come from `.env.example`; **never commit a value** (the repo is public). A value can be shown nowhere, not even in a log.
 
-| Variable                      | Required        | Secret  | Notes                                                                                                                                                            |
-| ----------------------------- | --------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `SUPABASE_URL`                | yes             | no      | the project URL                                                                                                                                                  |
-| `SUPABASE_SECRET_KEY`         | yes             | **yes** | bypasses RLS, server only                                                                                                                                        |
-| `IP_HASH_SECRET`              | yes             | **yes** | at least 32 bytes, new random value, not the local one                                                                                                           |
-| `TOKEN_SIGNING_SECRET`        | yes             | **yes** | at least 32 bytes, a different random value                                                                                                                      |
-| `SITE_URL`                    | yes             | no      | the public address, no trailing slash; also in the build                                                                                                         |
-| `RESEND_API_KEY`              | yes             | **yes** | sending access only                                                                                                                                              |
-| `EMAIL_FROM`                  | yes             | no      | sender on the verified test domain, says it is a test project                                                                                                    |
-| `EMAIL_REPLY_TO`              | no              | no      |                                                                                                                                                                  |
-| `EMAIL_MODE`                  | no              | no      | `sandbox` (default, only the allowlist) or `live`. **David decides at the end of the phase.** In `sandbox` the page never says an e-mail was sent to anyone else |
-| `EMAIL_SANDBOX_ALLOWLIST`     | in sandbox      | no      | comma separated                                                                                                                                                  |
-| `CRON_SECRET`                 | yes             | **yes** | at least 32 bytes. Vercel Cron sends it as `Authorization: Bearer ...` to `/api/purge` (**verify in their docs**); without it the route answers 401              |
-| `RETENTION_LEAD_MONTHS`       | no              | no      | default 6 (provisional, note 0067)                                                                                                                               |
-| `RETENTION_UNSUBSCRIBED_DAYS` | no              | no      | default 30 (provisional, note 0067)                                                                                                                              |
-| `GA4_MEASUREMENT_ID`          | for GA4         | no      | `G-...`; without it only first-party events run                                                                                                                  |
-| `META_PIXEL_ID`               | for the Pixel   | no      | digits                                                                                                                                                           |
-| `META_CAPI_TOKEN`             | for server Lead | **yes** | not set yet: the server-side Lead is **built, not enabled**                                                                                                      |
-| `META_GRAPH_VERSION`          | for server Lead | no      | read the current version from Meta's documentation; no default. Not set yet                                                                                      |
+| Variable                      | Required        | Secret  | Notes                                                                                                                                                                       |
+| ----------------------------- | --------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SUPABASE_URL`                | yes             | no      | the project URL                                                                                                                                                             |
+| `SUPABASE_SECRET_KEY`         | yes             | **yes** | bypasses RLS, server only                                                                                                                                                   |
+| `IP_HASH_SECRET`              | yes             | **yes** | at least 32 bytes, new random value, not the local one                                                                                                                      |
+| `TOKEN_SIGNING_SECRET`        | yes             | **yes** | at least 32 bytes, a different random value                                                                                                                                 |
+| `SITE_URL`                    | yes             | no      | the public address, no trailing slash; also in the build                                                                                                                    |
+| `RESEND_API_KEY`              | yes             | **yes** | sending access only                                                                                                                                                         |
+| `EMAIL_FROM`                  | yes             | no      | sender on the verified test domain, says it is a test project                                                                                                               |
+| `EMAIL_REPLY_TO`              | no              | no      |                                                                                                                                                                             |
+| `EMAIL_MODE`                  | no              | no      | `sandbox` (default, only the allowlist) or `live`. **Decided 2026-10-14: `sandbox` for the submission.** In `sandbox` the page never says an e-mail was sent to anyone else |
+| `EMAIL_SANDBOX_ALLOWLIST`     | in sandbox      | no      | comma separated                                                                                                                                                             |
+| `CRON_SECRET`                 | yes             | **yes** | at least 32 bytes. Vercel Cron sends it as `Authorization: Bearer ...` to `/api/purge` (**verify in their docs**); without it the route answers 401                         |
+| `RETENTION_LEAD_MONTHS`       | no              | no      | default 6 (provisional, note 0067)                                                                                                                                          |
+| `RETENTION_UNSUBSCRIBED_DAYS` | no              | no      | default 30 (provisional, note 0067)                                                                                                                                         |
+| `GA4_MEASUREMENT_ID`          | for GA4         | no      | `G-...`; without it only first-party events run                                                                                                                             |
+| `META_PIXEL_ID`               | for the Pixel   | no      | digits                                                                                                                                                                      |
+| `META_CAPI_TOKEN`             | for server Lead | **yes** | not set yet: the server-side Lead is **built, not enabled**                                                                                                                 |
+| `META_GRAPH_VERSION`          | for server Lead | no      | read the current version from Meta's documentation; no default. Not set yet                                                                                                 |
 
 Must **not** be set on Vercel: `LEAD_STORE=memory` (the in-memory store refuses to start on Vercel, and the test routes `/api/test-leads` and `/api/test-capi` answer 404 without it), `LEAD_MIN_FILL_MS`, `META_GRAPH_BASE`.
 
@@ -84,6 +84,13 @@ It answers `{"leads":0,"events":0,"rateLimits":0,"failed":0}` or counts of what 
 - [ ] Tracking, on a real phone with the network tab open: zero requests to Google or Meta before consent and after "Odmítnout vše"; after "Přijmout vše" the GA4 DebugView and Meta Test Events show `page_view` to `lead` with one `event_id`.
 - [ ] Lighthouse mobile on the live address: performance at least 90, accessibility at least 95, LCP under 2.0 s, CLS under 0.05; route JavaScript still at most 150 KB gzipped (`pnpm test:e2e` on a production build checks the budget).
 - [ ] The in-app browser checklist of SPEC §23, on a real phone, recorded in a decision note.
+
+### Who receives e-mail in `sandbox` (the mode for the submission)
+
+- Add each reviewer's address to `EMAIL_SANDBOX_ALLOWLIST` in Vercel (comma separated, Production) and **redeploy**; a change applies to the next deployment only. Addresses are personal data: keep them in Vercel, never in the repo or in a chat.
+- Use direct addresses. An address that is forwarded (the author's own domain, forwarded to another mailbox, lost the e-mail on 2026-10-14) may not receive it even when Resend says Delivered.
+- A reviewer not on the list gets the results page and the PDF in the page, and no e-mail. Say so when you send the link.
+- To go `live` instead, see "Production switch" below and test delivery to Seznam, Gmail and Outlook first (never checked).
 
 ## 5. If something is wrong
 
