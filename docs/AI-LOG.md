@@ -1417,3 +1417,13 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Produced:** decision note 0071 (his reason: too much hassle), the README and `docs/DEPLOY.md` lines saying the call is off by decision. No code change.
 
 **Mistakes and corrections:** none new. One thing to note: I had built PR #103 (the optional test code) before he decided; it is now unused, and I left the choice to merge or close it to him instead of closing it myself.
+
+### Phase 6: the `rates.json` drift in the spec and the methodology
+
+**Prompt (summary):** David approved ("Yes for both decisions") syncing SPEC §4 and §5 and METHODOLOGY-V2 §2 with note 0066, which removed `data/rates.json`.
+
+**Produced:** SPEC §5 (the storage list, the 45-day sentence, the exchange-rate bullet), the module table, the folder tree, the record-schema sentence, and METHODOLOGY-V2 (the inputs table, "Fallback" became "No fallback record", the decided list); note 0038's status line points to 0066. The runtime behaviour was not changed (`src/server/cnb.ts` already ignores a rate older than 45 days).
+
+**Checked:** `grep` that no stale mention of `data/rates.json` remains outside the sentence that says it was removed; `pnpm format:check`.
+
+**Mistakes and corrections:** I removed `rates.json` in PR 1 (note 0066) and left the spec describing it for a whole day, even after I had listed the drift in the README PR; the spec is the source of truth, so a deviation that David approved should have been synced in the same PR.

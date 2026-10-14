@@ -19,15 +19,15 @@ The SPEC §21 sentence "broker commissions: out of scope" is therefore changed. 
 
 ## 2. Inputs
 
-| Name            | Unit                   | Meaning                                                                                                                              |
-| --------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `monthly` D     | whole Kč               | one investment at the end of every month                                                                                             |
-| `years` Y       | years                  | 5, 10 or 20                                                                                                                          |
-| `grossReturn` g | % p.a.                 | the same for every fund, default 6, 0 to 12                                                                                          |
-| `ter` t         | % p.a.                 | the fund's annual fee (`0.07` means 0,07 %)                                                                                          |
-| listing         | currency and venue     | how the chosen broker sells the fund, for example `USD` on the London Stock Exchange                                                 |
-| broker fees     | see §3                 | verified per broker                                                                                                                  |
-| rates           | Kč per EUR and per USD | the Czech National Bank rate on a stated date, a sourced record (decided). **Proposed:** the freshness limit of broker fees, 45 days |
+| Name            | Unit                   | Meaning                                                                                                       |
+| --------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `monthly` D     | whole Kč               | one investment at the end of every month                                                                      |
+| `years` Y       | years                  | 5, 10 or 20                                                                                                   |
+| `grossReturn` g | % p.a.                 | the same for every fund, default 6, 0 to 12                                                                   |
+| `ter` t         | % p.a.                 | the fund's annual fee (`0.07` means 0,07 %)                                                                   |
+| listing         | currency and venue     | how the chosen broker sells the fund, for example `USD` on the London Stock Exchange                          |
+| broker fees     | see §3                 | verified per broker                                                                                           |
+| rates           | Kč per EUR and per USD | the Czech National Bank rate on a stated date, fetched daily (decided); a rate older than 45 days is not used |
 
 Percentages are plain numbers everywhere (as in the data files). Lowercase symbols below are fractions: `g = grossReturn / 100`, `t = ter / 100`.
 
@@ -37,7 +37,7 @@ A rate from a file goes stale fast, so the rate is not typed into the data. Inst
 
 - **Source.** The Czech National Bank's public daily file (`denni_kurz.txt`): one line per currency, `EMU|euro|1|EUR|24,365`, with the date in the first line. The bank publishes it on working days; at weekends and holidays the last fixing stays valid.
 - **How often.** The server fetches it when its cached copy is older than **12 hours** (Next.js `use cache` with `cacheLife`), so the whole site makes about two small requests a day, not one per visitor. A failed fetch is cached for only 5 minutes, so it is retried soon without hammering the bank.
-- **Fallback.** If the fetch fails or the answer cannot be read, the verified record in `data/rates.json` is used while it is at most 45 days old. With neither, there is no rate, brokers with fees in euro or dollars have no price, and the calculator is in the fund-fee-only state (decision A).
+- **No fallback record.** There was a verified record in `data/rates.json` for the case that the fetch fails; note 0066 removed it, because it would be older than the freshness limit within days. If the fetch fails or the answer cannot be read, there is no rate, brokers with fees in euro or dollars have no price, and the calculator is in the fund-fee-only state (decision A).
 - **Freshness.** A rate older than 45 days is never used, the limit of broker fees. Each currency is chosen on its own.
 - **Shown.** "kurz ČNB z 9. 10. 2026" with the rate's own date, in "Jak počítáme" and under the result.
 - **Privacy.** The request is made by the server and carries nothing about the visitor.
@@ -174,7 +174,7 @@ Then, for each column (`B` is the column letter in the formulas):
 2. Fees are static data in `data/`, not fetched. The loading and failure states of the wireframe are dropped.
 3. **Headline number:** the cost at the priced broker with the highest cost (section 5).
 4. **Withholding and dividend yield** are not in the formula.
-5. **Exchange rates:** the Czech National Bank rate on a stated date, a sourced record.
+5. **Exchange rates:** the Czech National Bank rate on a stated date, fetched daily; no stored record (note 0066).
 6. The saving box is **hidden when the spread is 0 Kč**; **one order a month** (a free first order is entered as `fixed = 0`).
 7. **No priced broker:** the calculator shows only the fund-fee part ("roční poplatek fondu") with the rest as `[ověřit]` and no total. DEGIRO is priced first, because its schedule is on file.
 8. **Headline wording** for now: "Za 10 let vás fond (CSPX) může u ověřených brokerů stát i X XXX Kč" (decided 2026-10-13, note 0037; the amount is still the highest verified cost).
