@@ -269,3 +269,13 @@ print('ok pd01pdf1')
 for f in ('pd02pdf4', '734d3e9c'):
     write(f, dates(read(f)))
 print('ok dates')
+
+# David, 2026-10-14: the full broker names are right wherever there is room (the page
+# shows the names of the data files). Last step, so the lines above can still find
+# the rows by their short names.
+for f in ('92ef8ee0', '24e61a2e', 'pd01pdf1'):
+    s = read(f)
+    s = s.replace('>Fio<', '>Fio e-Broker<').replace('>IBKR<', '>Interactive Brokers<')
+    s = s.replace('u IBKR zatím ověřujeme', 'u Interactive Brokers zatím ověřujeme')
+    write(f, s)
+print('ok broker names')

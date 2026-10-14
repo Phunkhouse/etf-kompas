@@ -106,6 +106,9 @@ Vitest (`src/server/*.test.ts`, node) unless it says E2E. Ports are faked in mem
 
 ## Gaps to put in the README (known now)
 
+- An unknown, expired or malformed results link answers 200, not 404 (the page streams after a static shell). A real 404 needs a Proxy that repeats the lookup. David, 2026-10-14: a gap for now, maybe later if there is time.
+- The PNG exports of the comparison page and PDF page 1 still show "Fio" and "IBKR"; the sources are fixed and the images need exporting on a machine with IBM Plex (`export_images.py`).
+
 - Retention and deletion: `scripts/delete-lead.ts` and the contact address are not in Phase 4 (SPEC §26 suggests them): moved to Phase 6 (decided).
 - Legal review of the consent wording and the controller details (placeholders stay).
 - Delivery tests to Seznam, Gmail and Outlook with the real domain are manual and happen before launch.

@@ -9,7 +9,7 @@
   padding-block: var(--space-12) var(--space-16);
 
   @include from('md') {
-    padding-block: var(--space-16) var(--space-20);
+    padding-block: var(--space-16) var(--space-16);
     text-align: center;
   }
 }
