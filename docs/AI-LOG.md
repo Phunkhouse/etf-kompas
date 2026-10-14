@@ -1215,6 +1215,19 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **My measuring script gave different numbers on each run** (it summed sizes asynchronously and closed too early), so I measured with the project's own budget test instead.
 - **A test bug:** the helper `setup(capi = CONFIG)` replaced `undefined` with the default, so "not configured" was not tested; found by the test failing, fixed with an explicit `null`.
 
+### Closing Phase 5
+
+**Prompt (summary):** David: "#88 landed". PR 5 of the plan: close the docs.
+
+**Produced:** `docs/PHASES.md` (Phase 5 done on stubs, its result against the five criteria, the caveats), the README's known gaps (end of Phase 5), `docs/PHASE-5-PLAN.md` (status and the open list).
+
+**Mistakes and corrections**
+
+- **The plan promised `in_app_browser` on the lead; it is on the events only.** I found it while checking the five criteria against the code, not while building. Adding it to the lead needs a migration and another hidden field in a budget with 30 bytes left, so it is listed as a gap instead of done quietly.
+- **The plan's PR 5 line "real accounts connected" cannot be done yet.** Written as open items, not ticked.
+
+**Real GA4 (2026-10-14):** David gave the GA4 and Meta ids (put in `.env.local`, not committed) and tested GA4 with the real property: "fully tested". What exactly he saw is not recorded. Meta cannot be tested yet (Test Events need a public address), so it waits for Vercel. The docs of PR 5 were changed to say so.
+
 ### Phase 6, PR 1: data model without unused unverified fields
 
 **Prompt (summary):** David approved the Phase 6 plan and answered "yes drop, but verify if something isn't essential" for the 51 `TODO_VERIFY` values.
