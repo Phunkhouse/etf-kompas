@@ -119,14 +119,40 @@ describe('createSupabaseStore', () => {
     await createSupabaseStore(config).store.addToken({
       tokenHash: 'abc',
       leadId: lead.id,
+      createdAt: new Date('2026-10-14T10:00:00Z'),
       expiresAt: new Date('2026-11-13T10:00:00Z'),
     })
     const { init } = firstCall(fetchSpy)
     expect(JSON.parse(init.body as string)).toEqual({
       token_hash: 'abc',
       lead_id: lead.id,
+      created_at: '2026-10-14T10:00:00.000Z',
       expires_at: '2026-11-13T10:00:00.000Z',
     })
+  })
+
+  it('finds a token by its hash and a lead by its id', async () => {
+    const { store } = createSupabaseStore(config)
+    const spy = stubFetch([
+      {
+        token_hash: 'abc',
+        lead_id: lead.id,
+        created_at: '2026-10-14T10:00:00+00:00',
+        expires_at: '2026-11-13T10:00:00+00:00',
+      },
+    ])
+    await expect(store.findToken('abc')).resolves.toEqual({
+      tokenHash: 'abc',
+      leadId: lead.id,
+      createdAt: new Date('2026-10-14T10:00:00Z'),
+      expiresAt: new Date('2026-11-13T10:00:00Z'),
+    })
+    expect(firstCall(spy).url).toContain('/result_tokens?token_hash=eq.abc')
+    stubFetch([])
+    await expect(store.findToken('zzz')).resolves.toBeNull()
+    const byId = stubFetch([])
+    await expect(store.findById(lead.id)).resolves.toBeNull()
+    expect(firstCall(byId).url).toContain(`/leads?id=eq.${lead.id}`)
   })
 
   it('counts a hit through the rpc and reads the answer', async () => {

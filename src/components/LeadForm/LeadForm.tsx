@@ -77,6 +77,9 @@ export function LeadForm({
           <strong>{text.done.strong}</strong>
           {nbsp(text.done.text)}
         </p>
+        <a href={state.resultsPath} className={styles.open}>
+          {nbsp(text.done.open)}
+        </a>
       </div>
     )
   }

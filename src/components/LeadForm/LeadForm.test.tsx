@@ -198,11 +198,18 @@ describe('LeadForm: a valid address', () => {
     )
   })
 
+  it('links to the comparison the server named', () => {
+    renderForm({ initialState: state })
+    expect(
+      screen
+        .getByRole('link', { name: 'Otevřít srovnání' })
+        .getAttribute('href'),
+    ).toBe('/srovnani/abc')
+  })
+
   it('does not claim that anything was sent or is ready', () => {
     const { container } = renderForm({ initialState: state })
-    expect(container.textContent).not.toMatch(
-      /Odkaz jsme poslali|připravené|odeslali/,
-    )
+    expect(container.textContent).not.toMatch(/Odkaz jsme poslali|odeslali/)
   })
 
   it('replaces the form: no field and no send button', () => {

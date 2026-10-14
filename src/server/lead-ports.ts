@@ -24,13 +24,21 @@ export type LeadRecord = {
   deletedAt: Date | null
 }
 
-export type TokenRecord = { tokenHash: string; leadId: string; expiresAt: Date }
+export type TokenRecord = {
+  tokenHash: string
+  leadId: string
+  createdAt: Date
+  expiresAt: Date
+}
 
 export type LeadStore = {
   findByEmail(email: string): Promise<LeadRecord | null>
   // Insert, or replace the row with the same id.
   save(lead: LeadRecord): Promise<void>
   addToken(token: TokenRecord): Promise<void>
+  // The results page (PR 2): a token by its hash, and a lead by its id.
+  findToken(tokenHash: string): Promise<TokenRecord | null>
+  findById(id: string): Promise<LeadRecord | null>
 }
 
 export type RateLimiter = {
@@ -49,4 +57,6 @@ export type MemoryLeadStore = {
   leads(): LeadRecord[]
   tokens(): TokenRecord[]
   limiterWindows(): { key: string; windowStart: Date; hits: number }[]
+  // Test only: makes every token of this address expired.
+  expireTokens(email: string, now: Date): void
 }

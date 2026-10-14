@@ -249,6 +249,7 @@ export async function submitLead(
     await deps.store.addToken({
       tokenHash: hashToken(token),
       leadId: lead.id,
+      createdAt: now,
       expiresAt: new Date(now.getTime() + TOKEN_DAYS * DAY_MS),
     })
     return { status: 'ok', resultsPath: `/srovnani/${token}` }

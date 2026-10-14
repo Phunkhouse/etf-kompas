@@ -1019,5 +1019,20 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **A guard I wrote in the plan could not work.** "The memory store refuses `NODE_ENV=production`" fails in CI, which runs the e2e on a production build. The guard is now `VERCEL` being set (tested).
 - **The test route was frozen at build time.** With `cacheComponents` a `GET` without request data is prerendered, so the production-build e2e saw an empty store while the dev run passed. Fixed with `connection()`. The lesson is the same as before: the dev server passing is not the production build passing; I ran `CI=1 pnpm test:e2e`.
 - **The success text is deliberately small** ("Hotovo. Váš e-mail jsme uložili."): the link to the comparison is returned by the server but not shown, because the results page does not exist yet (PR 2).
-- **Not verified:** the Supabase adapter was tested only against a stubbed `fetch`. It has not talked to the real project yet; the request shapes (PostgREST upsert, the `rate_limit_hit` rpc, the `apikey` header for the new secret keys) are from my knowledge of the API, not from a run.
+- **Verified later by David (2026-10-14):** I tested the Supabase adapter only against a stubbed `fetch`; David sent one lead through the real project and checked the three tables. The request shapes (PostgREST upsert, the `rate_limit_hit` rpc, the `apikey` header for the new secret keys) worked as written.
 - `pnpm test:e2e` JS budget: 148.0 KB of 150 KB (was 147.4 KB).
+
+### Phase 4, PR 2: results page
+
+**Prompt (summary):** David: "Tests are fine, proceed", with answers on five deviations (resend form moves to PR 4, full broker names also in the design, no brand prefix on fund rows, test route to expire tokens, fund picker needs JavaScript).
+
+**Produced:** `resolveResults` (token to lead), `comparison()` (five funds x five brokers from the calculator's own pricing), the route `/srovnani/[token]` with `noindex` and `Cache-Control: private, no-store` set in `next.config.ts`, the components `ResultsPage`, `BrokerPicker` and `ResultsGone`, the "Otevřít srovnání" link in the success state, `POST /api/test-leads` to expire tokens in e2e. The approved tests passed on the first run; I changed two things in the e2e file (below).
+
+**Mistakes and corrections**
+
+- **David approved "404 for an unknown link", and I could not deliver it.** With `cacheComponents` the page is prerendered as a static shell and streams the rest, so the status is already 200 when `notFound()` runs; a real 404 needs a Proxy that repeats the lookup. I found out from the first e2e run, not from reading the docs before promising it in the plan. The goal behind the approval (out of caches and search) is met by the headers and the same page for every reason; the plan and the e2e file say 200 now. Not hidden in a test: David is told in the PR.
+- **Two e2e assertions were my own errors.** (1) "the calculator's headline" was read with `getByText(/Kč/).first()`, which is the slider value, so it would have passed for the wrong reason; now the `status` element is read. (2) The test expected an `[ověřit]` broker in the CSPX table, but all five brokers are now priced for CSPX. The `[ověřit]` rule is covered by a component test with hand-made data and a unit test that removes one broker's fees.
+- **`new Date()` in a prerendered shell broke the production build** (not the dev server): fixed with `connection()` before the lookup. The same lesson as in PR 1: run `CI=1 pnpm test:e2e`.
+- **Two layout defects I only saw in a screenshot:** the big number in the dark strip was invisible on desktop (it measures its own column and collapsed to 0 width, and it needs `data-tone="dark"` for its colour), and "Koupíte?" ran into the next header on a phone (column widths). Unit tests could not have caught either.
+- **Not built:** section 3 of the drawing ("Kde fond koupit", the purchase-fee table) and the contents "Na stránce" as a sticky desktop list is only a plain list; the tax cards show the drawing's own `[Text se doplní podle ověřeného podkladu]` placeholders. The page numbers the sections 1 to 3 instead of 1 to 4. These are gaps, listed in the PR.
+- JS budget: 148.9 KB of 150 KB (it was 148.0): about 1 KB left.
