@@ -1312,3 +1312,16 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Mistakes and corrections**
 
 - None yet in this PR beyond the above: the file was written once, and the claims about the repo were checked against the code.
+
+### Phase 6, PR 6: in-app browser test record
+
+**Prompt (summary):** David: "let's test in app browser". I prepared `docs/IN-APP-BROWSER-TEST.md` (checklist from SPEC §23, an events query, a record table); David ran it on his phone and reported the results; his reason for leaving out the copy-link hint: "it opened in both apps, so it is not needed now".
+
+**Produced:** the record of the test, decision note 0068, a README gap line. I wrote the checklist; the results are David's.
+
+**Checked:** nothing by me: it needs a real phone. **Not verified:** the stored `in_app_browser` flag (the Supabase query was not reported back), the tips confirmation, scrolling under the app bar, the footer "Cookies" link, the results page, "Přihlásit zpět". They are marked "not reported" in the record, not "ok".
+
+**Mistakes and corrections**
+
+- **My checklist asked David to look for the "Otevřít přehled" wording from SPEC §23 in an earlier draft; the page says "Otevřít srovnání".** I corrected the checklist against `src/content/copy.ts` before sending it.
+- **I wrote item 8 ("the results page opens") in a way that overlapped with item 7,** so David's answer covered one and left the other unclear. I recorded item 8 as "not reported" instead of assuming.
