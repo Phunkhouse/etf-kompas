@@ -1,6 +1,6 @@
 import { computeGaps, summarize } from '@/server/data/gaps'
 import { loadData } from '@/server/data/load'
-import { needs, unusedFundFields, unusedFundIds } from '@/server/data/needs'
+import { needs } from '@/server/data/needs'
 import { dataSchema } from '@/server/data/schema'
 
 // What the rev. 4 screens still need from data/*.json (see docs/DATA-NEEDS.md).
@@ -34,12 +34,6 @@ async function main() {
   )
   console.log(
     `To do: ${uniqueMissing} different missing values in the data model, and ${notInModel} values the model has no place for yet (NEW).`,
-  )
-  const unusedFunds = unusedFundIds.length
-    ? `funds ${unusedFundIds.join(', ')}; `
-    : ''
-  console.log(
-    `Not used by any rev. 4 screen (not worth verifying now): ${unusedFunds}fund fields ${unusedFundFields.join(', ')}.`,
   )
 }
 

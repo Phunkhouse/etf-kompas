@@ -168,15 +168,9 @@ export const needs: Need[] = [
   },
 ]
 
-// Data that no rev. 4 screen shows. Optional in the data model, verified where we
-// have it. (VTI, SCHD and VWCE were removed with note 0036; the unverified unused
-// fields, the version 1 broker fees and the stored exchange rate with note 0066.)
-export const unusedFundFields: FundField[] = [
-  'indexName',
-  'domicile',
-  'dividendYieldPct',
-  'withholdingRate',
-]
-export const unusedFundIds: string[] = []
+// Funds no rev. 4 screen needs data for. VTI, SCHD and VWCE were removed with note 0036;
+// the unused fields (dividend yield, withholding rate, index name, domicile) and the
+// records of VOO and QQQ with note 0069. The two originals are named only for
+// availability.
 
 export type { Broker }

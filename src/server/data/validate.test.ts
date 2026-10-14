@@ -289,11 +289,23 @@ describe('validateData', () => {
     })
 
     it('reports a missing required field as MALFORMED', () => {
-      const withoutTer = { ...etf(), ter: undefined }
-      const result = run(data({ etfs: [withoutTer] }))
+      const withoutTicker = { ...etf(), ticker: undefined }
+      const result = run(data({ etfs: [withoutTicker] }))
       expect(result.issues).toContainEqual(
-        expect.objectContaining({ code: 'MALFORMED', path: 'etfs[0].ter' }),
+        expect.objectContaining({ code: 'MALFORMED', path: 'etfs[0].ticker' }),
       )
+    })
+
+    // The American originals carry no records (note 0069); the twins' records are
+    // demanded screen by screen by `pnpm data:gaps`, not by the schema.
+    it('accepts a fund without any sourced record', () => {
+      const original = {
+        id: 'voo',
+        ticker: 'VOO',
+        region: 'us-listed',
+        indexGroup: 'sp500',
+      }
+      expect(run(data({ etfs: [original] })).ok).toBe(true)
     })
 
     it('does not throw on garbage input', () => {

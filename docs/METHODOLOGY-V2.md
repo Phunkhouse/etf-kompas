@@ -6,14 +6,14 @@ Status: **draft for review** (after wireframe rev. 4, decision note 0035). It re
 
 Rev. 4 asks "what does the fund you can buy cost you over 10 years, and how much does the broker change it". The result has three parts: **fund fee, conversion of korunas, broker fees** (decided: broker fees = purchase commission **and** custody fee). Taxes and inflation are not counted.
 
-|                             | Version 1                         | Version 2                                                      |
-| --------------------------- | --------------------------------- | -------------------------------------------------------------- |
-| Question                    | American fund against its twin    | what the buyable twin (CSPX) costs, per broker                 |
-| Parts                       | fund fee, conversion, withholding | fund fee, conversion, **broker fees**                          |
-| Dividend yield, withholding | in the formula                    | **not in the formula** (still in the data, used for text only) |
-| Gap to another fund         | headline                          | gone                                                           |
-| Broker commissions          | out of scope (SPEC §21)           | **in scope**                                                   |
-| Result per broker           | no                                | yes; the spread between brokers is the saving box              |
+|                             | Version 1                         | Version 2                                                     |
+| --------------------------- | --------------------------------- | ------------------------------------------------------------- |
+| Question                    | American fund against its twin    | what the buyable twin (CSPX) costs, per broker                |
+| Parts                       | fund fee, conversion, withholding | fund fee, conversion, **broker fees**                         |
+| Dividend yield, withholding | in the formula                    | **not in the formula**, and no longer in the data (note 0069) |
+| Gap to another fund         | headline                          | gone                                                          |
+| Broker commissions          | out of scope (SPEC §21)           | **in scope**                                                  |
+| Result per broker           | no                                | yes; the spread between brokers is the saving box             |
 
 The SPEC §21 sentence "broker commissions: out of scope" is therefore changed. **Proposed.**
 

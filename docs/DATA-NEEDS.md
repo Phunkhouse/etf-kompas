@@ -22,7 +22,7 @@ Derived from the rev. 4 text spec ([wireframe-b.md](design/wireframe-b.md), deci
 
 ## Not worth verifying now
 
-No rev. 4 screen shows these fields: fund size, 5 and 10 year returns, dividend yield, withholding rate and replication. VOO and QQQ are needed only for availability. (VTI, SCHD and VWCE were removed from the data, note 0036.) Dividend yield and withholding were verified for the old calculator and stay in the data; the tax text is written from a source, not from these fields.
+No rev. 4 screen shows fund size, 5 and 10 year returns, dividend yield, withholding rate, replication, the index name or the domicile; none of them is in the data any more (notes 0066 and 0069). VOO and QQQ are needed only for availability and carry no records. (VTI, SCHD and VWCE were removed from the data, note 0036.)
 
 ## Open decisions
 
