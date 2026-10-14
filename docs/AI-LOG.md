@@ -1409,3 +1409,11 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 - **I told David the exact Events Manager button names from memory** ("Test browser events", "Open website", "Settings → Conversions API → Generate access token") and said so; his screenshot (Czech UI, a test code `TEST15906`) shows the flow worked, but I did not know the Czech labels.
 - **I did not expect the automatic "Subscribed Button Click" event.** Our tracker sends only `PageView`, `ViewContent` and `Lead`. I only found it in his screenshot. It comes from Meta's own settings for the dataset (my reading; the label in the screenshot is cut off), and whether it matters for the privacy text is not decided.
+
+### Phase 6: the server-side Meta Lead stays off
+
+**Prompt (summary):** David: "I have changed my mind it's too much hassle. Let's go with 'a different way out: leave the server call built, not enabled'".
+
+**Produced:** decision note 0071 (his reason: too much hassle), the README and `docs/DEPLOY.md` lines saying the call is off by decision. No code change.
+
+**Mistakes and corrections:** none new. One thing to note: I had built PR #103 (the optional test code) before he decided; it is now unused, and I left the choice to merge or close it to him instead of closing it myself.
