@@ -6,7 +6,25 @@ The site ships **`noindex`**, with no paid traffic, until the launch gate of SPE
 
 ## 1. Before the first deploy
 
-- [ ] Supabase project in the EU region. In the SQL editor run, in this order: `supabase/migrations/0001_lead_flow.sql`, `0002_optin_sent_at.sql`, `0003_events.sql`. Row level security is on and there are no policies, so only the secret key reads or writes.
+- [ ] Supabase project in the EU region. Row level security is on and there are no policies, so only the secret key reads or writes. The migrations are not safe to run twice (they use plain `create table`), so first see what a project already has. In the SQL editor:
+
+  ```sql
+  select
+    to_regclass('public.leads')         as leads,          -- 0001
+    to_regclass('public.result_tokens') as result_tokens,  -- 0001
+    to_regclass('public.rate_limits')   as rate_limits,    -- 0001
+    to_regclass('public.events')        as events,         -- 0003
+    (select count(*) from information_schema.columns
+      where table_schema = 'public' and table_name = 'leads'
+        and column_name = 'optin_sent_at') as optin_sent_at,  -- 0002, expect 1
+    (select count(*) from information_schema.columns
+      where table_schema = 'public' and table_name = 'leads'
+        and column_name = 'session_id') as session_id;        -- 0003, expect 1
+  ```
+
+  Everything filled in: nothing to run (the project used for the tests is already complete). Something null or 0: run only the missing files, in this order: `supabase/migrations/0001_lead_flow.sql`, `0002_optin_sent_at.sql`, `0003_events.sql`. A new project needs all three.
+
+- [ ] Test leads from earlier runs are still in the tables and the retention purge treats them like real ones. Delete them by hand, or with `pnpm lead:delete <e-mail>`, if the live address should start clean.
 - [ ] Resend: an API key with sending access, and a test domain verified with SPF, DKIM and DMARC (SPEC §17.15).
 - [ ] GA4 property and Meta dataset (ids exist since 2026-10-14).
 - [ ] The data is fresh. `pnpm data:validate` passes locally; Vercel runs it before every build (`vercel.json`). It first fails on 2026-10-25 if nothing is refreshed.
