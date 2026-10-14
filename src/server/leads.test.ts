@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
-import { noStorage, submitLead, validateLead, type Lead } from './leads'
+import { describe, expect, it } from 'vitest'
+import { validateLead } from './leads'
 
 describe('validateLead: the e-mail address', () => {
   it.each([
@@ -56,81 +56,5 @@ describe('validateLead: the tips checkbox', () => {
     expect(lead('')).toBe(false)
     expect(lead('off')).toBe(false)
     expect(lead(true)).toBe(false)
-  })
-})
-
-describe('submitLead', () => {
-  afterEach(() => vi.restoreAllMocks())
-
-  it('gives the valid lead to the sink once and says ok', async () => {
-    const sink = vi.fn<(lead: Lead) => Promise<void>>().mockResolvedValue()
-    const state = await submitLead(
-      { email: ' Jmeno@Domena.cz ', tips: 'on' },
-      sink,
-    )
-    expect(state).toEqual({ status: 'ok' })
-    expect(sink).toHaveBeenCalledTimes(1)
-    expect(sink).toHaveBeenCalledWith({ email: 'jmeno@domena.cz', tips: true })
-  })
-
-  it('says invalid, with the text as typed, and does not call the sink', async () => {
-    const sink = vi.fn<(lead: Lead) => Promise<void>>().mockResolvedValue()
-    const state = await submitLead({ email: 'jmeno@domena' }, sink)
-    expect(state).toEqual({ status: 'invalid', email: 'jmeno@domena' })
-    expect(sink).not.toHaveBeenCalled()
-  })
-
-  it('keeps an empty field empty when it says invalid', async () => {
-    const state = await submitLead({ email: undefined }, noStorage)
-    expect(state).toEqual({ status: 'invalid', email: '' })
-  })
-
-  it('says error, with the address as typed, when the sink fails', async () => {
-    const sink = vi
-      .fn<(lead: Lead) => Promise<void>>()
-      .mockRejectedValue(new Error('down'))
-    const state = await submitLead({ email: 'jmeno@domena.cz' }, sink)
-    expect(state).toEqual({ status: 'error', email: 'jmeno@domena.cz' })
-  })
-
-  it('never throws, whatever the input or the sink does', async () => {
-    const sink = () => {
-      throw new Error('sync failure')
-    }
-    await expect(
-      submitLead({ email: 'jmeno@domena.cz' }, sink as never),
-    ).resolves.toEqual({ status: 'error', email: 'jmeno@domena.cz' })
-    await expect(submitLead({ email: {} }, noStorage)).resolves.toMatchObject({
-      status: 'invalid',
-    })
-  })
-})
-
-describe('noStorage (before Phase 4)', () => {
-  afterEach(() => vi.restoreAllMocks())
-
-  it('resolves and keeps nothing: no log, no network', async () => {
-    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
-    const info = vi.spyOn(console, 'info').mockImplementation(() => {})
-    const error = vi.spyOn(console, 'error').mockImplementation(() => {})
-    const fetchSpy = vi.fn()
-    vi.stubGlobal('fetch', fetchSpy)
-    try {
-      await expect(
-        noStorage({ email: 'jmeno@domena.cz', tips: false }),
-      ).resolves.toBeUndefined()
-      expect(log).not.toHaveBeenCalled()
-      expect(info).not.toHaveBeenCalled()
-      expect(error).not.toHaveBeenCalled()
-      expect(fetchSpy).not.toHaveBeenCalled()
-    } finally {
-      vi.unstubAllGlobals()
-    }
-  })
-
-  it('makes submitLead say ok for a valid address', async () => {
-    await expect(
-      submitLead({ email: 'jmeno@domena.cz' }, noStorage),
-    ).resolves.toEqual({ status: 'ok' })
   })
 })

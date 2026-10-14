@@ -9,9 +9,9 @@ Status: **approved by David on 2026-10-13** (all eight decisions as proposed; th
 3. **Route names.** SPEC §13 says `results/[token]`, `unsubscribe`, `confirm`; the existing routes are Czech (`/zasady`). I propose `/srovnani/[token]`, `/srovnani/[token]/pdf`, `/odhlasit/[token]`, `/potvrdit/[token]`. Czech is what the visitor sees in the address bar.
 4. **Same email twice.** One `leads` row, success again, a new token, and the email is sent again within the per-email limit (3 per day). The tips consent can be switched on by a second submit but never off by one (only unsubscribe turns it off). A person who unsubscribed still gets the Kompas but is not set to "tips" again by a plain submit.
 5. **Calculator values.** The form sends the amount and years as whole numbers. The server accepts only the slider's grid (500 to 20 000 Kč in steps of 500, years in the calculator's range) and recomputes every number itself. `calc_monthly_bucket` stores that exact grid value (the grid is already the bucket).
-6. **Minimum time-to-submit.** The page is static, so the server cannot stamp the render time. The form sets a hidden `t` field with the time at mount; the server rejects under 2 s. A missing `t` (no JavaScript) is allowed. Weak, but the honeypot and the rate limits are the real defence. Is that acceptable?
+6. **Minimum time-to-submit.** The page is static, so the server cannot stamp the render time. At submit the form's JavaScript fills a hidden `t` field with the milliseconds since the page loaded (`performance.now()`, not a clock time, so a wrong clock on the phone cannot break it; since the page, not the form, because a visitor who jumps to the form and autofills it is fast and must not be dropped); the server rejects under 2 s. A missing `t` (no JavaScript) is allowed. Weak, but the honeypot and the rate limits are the real defence. Is that acceptable?
 7. **Lifetimes.** Results token and PDF: 30 days (spec). Double opt-in link: **7 days** (my proposal). Unsubscribe link: no expiry.
-8. **CI e2e without secrets.** `LEAD_STORE=memory` and `EMAIL_MODE=sandbox` with a recording mailer, used by Playwright and CI. The memory store refuses to start when `NODE_ENV=production`. One manual smoke test against the real Supabase and Resend, written into the PR. Alternative: a second Supabase test project.
+8. **CI e2e without secrets.** `LEAD_STORE=memory` and `EMAIL_MODE=sandbox` with a recording mailer, used by Playwright and CI. The memory store refuses to start on Vercel (`VERCEL` is set); `NODE_ENV=production` could not be the guard, because CI runs the e2e against a production build (`pnpm build && pnpm start`). One manual smoke test against the real Supabase and Resend, written into the PR. Alternative: a second Supabase test project.
 
 ## PRs (one concern each, in this order)
 
@@ -56,7 +56,7 @@ Vitest (`src/server/*.test.ts`, node) unless it says E2E. Ports are faked in mem
 **Honeypot and time check**
 
 - H-1 a filled honeypot returns an `ok`-looking state, stores nothing, sends nothing, counts no email limit, and its link does not resolve.
-- H-2 `t` under 2 s is handled like the honeypot; `t` of 2 s or more passes; `t` missing passes; `t` in the future or not a number is rejected like the honeypot.
+- H-2 `t` under 2 s is handled like the honeypot; `t` of 2 s or more passes; `t` missing passes; `t` that is not a non-negative number is handled like the honeypot.
 
 **Rate limits**
 

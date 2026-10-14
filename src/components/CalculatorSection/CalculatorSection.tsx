@@ -8,11 +8,13 @@ import styles from './CalculatorSection.module.scss'
 type CalculatorSectionProps = {
   // null shows the failure state (no amount).
   data: CalculatorData | null
+  // The A/B variant shown, stored with the lead.
+  variant?: 'a' | 'b'
 }
 
 // The dark band with the calculator and the e-mail form. `#spocitat` is where the
 // hero button jumps to.
-export function CalculatorSection({ data }: CalculatorSectionProps) {
+export function CalculatorSection({ data, variant }: CalculatorSectionProps) {
   return (
     <Section tone="dark" id="spocitat" labelledBy="calculator-heading">
       <div className={styles.layout}>
@@ -24,7 +26,7 @@ export function CalculatorSection({ data }: CalculatorSectionProps) {
           />
         </div>
         <div className={styles.form}>
-          <LeadForm action={sendLead} />
+          <LeadForm action={sendLead} variant={variant} />
         </div>
       </div>
     </Section>

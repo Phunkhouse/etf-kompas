@@ -1,12 +1,17 @@
 import { test, expect } from '@playwright/test'
+import { randomEmail, randomIp } from './lead-helpers'
 
-// The e-mail form (SPEC §3.3). Before Phase 4 nothing is stored or sent, and the
-// page says so. It works with and without JavaScript.
+// The e-mail form (SPEC §3.3). A valid address is stored (in memory in e2e) and the
+// page says so. It works with and without JavaScript. Each test is its own visitor
+// (its own IP), so the rate limit of one test does not reach another.
 const field = { name: 'Váš e-mail' }
 const send = { name: 'Poslat mi srovnání' }
 const invalidText = 'Zadejte e-mail ve tvaru jmeno@domena.cz.'
-const placeholderText =
-  'Zkušební provoz: váš e-mail jsme nikam neuložili ani neodeslali.'
+const doneText = 'Hotovo. Váš e-mail jsme uložili.'
+
+test.beforeEach(async ({ context }) => {
+  await context.setExtraHTTPHeaders({ 'x-forwarded-for': randomIp() })
+})
 
 test.describe('with JavaScript', () => {
   test('a wrong address shows the error and keeps what was typed', async ({
@@ -21,13 +26,13 @@ test.describe('with JavaScript', () => {
     await expect(input).toHaveAttribute('aria-invalid', 'true')
   })
 
-  test('a valid address shows the honest placeholder @smoke', async ({
+  test('a valid address is stored and the page says so @smoke', async ({
     page,
   }) => {
     await page.goto('/?v=b')
-    await page.getByRole('textbox', field).fill('jan@domena.cz')
+    await page.getByRole('textbox', field).fill(randomEmail())
     await page.getByRole('button', send).click()
-    await expect(page.getByText(placeholderText)).toBeVisible()
+    await expect(page.getByText(doneText)).toBeVisible()
     await expect(page.getByRole('textbox', field)).toHaveCount(0)
   })
 
@@ -57,13 +62,13 @@ test.describe('without JavaScript', () => {
     await expect(page.getByRole('textbox', field)).toHaveValue('jmeno@domena')
   })
 
-  test('a valid address posts and shows the honest placeholder', async ({
+  test('a valid address posts and the page says it is stored', async ({
     page,
   }) => {
     await page.goto('/?v=b')
-    await page.getByRole('textbox', field).fill('jan@domena.cz')
+    await page.getByRole('textbox', field).fill(randomEmail())
     await page.getByRole('button', send).click()
-    await expect(page.getByText(placeholderText)).toBeVisible()
+    await expect(page.getByText(doneText)).toBeVisible()
   })
 })
 
