@@ -1409,3 +1409,17 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 - **I told David the exact Events Manager button names from memory** ("Test browser events", "Open website", "Settings → Conversions API → Generate access token") and said so; his screenshot (Czech UI, a test code `TEST15906`) shows the flow worked, but I did not know the Czech labels.
 - **I did not expect the automatic "Subscribed Button Click" event.** Our tracker sends only `PageView`, `ViewContent` and `Lead`. I only found it in his screenshot. It comes from Meta's own settings for the dataset (my reading; the label in the screenshot is cut off), and whether it matters for the privacy text is not decided.
+
+### Phase 6: an optional Test Events code for the server-side Lead
+
+**Prompt (summary):** after the browser-side Test Events run, David: "Prepare it" (the optional `META_TEST_EVENT_CODE`, so the server call can be seen in Test Events).
+
+**Produced:** tests first (`env.test.ts` T-1 to T-5, `capi.test.ts` T-6 to T-8, and an assertion in `e2e/lead-event.spec.ts` against the stub; 7 failed before the change), then `testEventCode` in `metaServerEnv` and `CapiConfig`, `test_event_code` in the request body only when set, a warning at start-up that names the variable and never the value, `.env.example` and a "Testing the server-side Meta Lead" part of `docs/DEPLOY.md` (including the step that removes the code again).
+
+**Checked:** `pnpm check` (937 tests), `pnpm format:check`, 202 Playwright tests on a production build (the stub receives `TEST12345`). **Not verified:** against Meta. The field name `test_event_code` and its place next to `data` come from Meta's Conversions API page (read through a fetch tool); the server call has still never reached Meta.
+
+**Mistakes and corrections**
+
+- **I left a comment in `capi.ts` that pointed to a decision note (0071) that does not exist,** while preparing the change; found on re-reading and changed to point at `docs/DEPLOY.md`. A note is not written: David gave no reason beyond "prepare it".
+- **One existing test pinned the exact object `metaServerEnv` returns,** so adding a field broke it; I updated its expectation in the same PR (`testEventCode: null`), not the code.
+- **The risk I had to design around:** a code left set in production would send every server `Lead` to Test Events and none to the dataset, silently. The start-up warning and the last step of the procedure are the safeguards; there is no automatic one.

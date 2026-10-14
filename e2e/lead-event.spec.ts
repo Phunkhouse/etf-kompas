@@ -14,7 +14,10 @@ import { marker, stored, walk } from './track-helpers'
 test.use({ storageState: { cookies: [], origins: [] } })
 
 type Layer = { dataLayer?: IArguments[]; fbq?: { queue: unknown[][] } }
-type Captured = { path: string; body: { data: CapiEvent[] } }
+type Captured = {
+  path: string
+  body: { data: CapiEvent[]; test_event_code?: string }
+}
 type CapiEvent = {
   event_name: string
   event_id: string
@@ -84,6 +87,10 @@ test('E-1 all agreed: the browser and the server send the same lead', async ({
   const sent = (await capiFor(request, click))[0].body.data[0]
   expect(sent).toMatchObject({ event_name: 'Lead', event_id: id })
   expect(sent.user_data.em[0]).toMatch(/^[0-9a-f]{64}$/)
+  // the Test Events code set in playwright.config.ts goes in the body (Phase 6)
+  expect((await capiFor(request, click))[0].body.test_event_code).toBe(
+    'TEST12345',
+  )
   const first = (await stored(request)).events.find(
     (e) => e.utmSource === utm && e.name === 'lead',
   )

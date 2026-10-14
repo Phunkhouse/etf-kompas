@@ -14,6 +14,9 @@ export type CapiConfig = {
   base: string
   // the public address of the site, sent as the event source
   siteUrl: string
+  // Meta's Test Events code, sent in the body so the event shows in that tool only. Unset in
+  // production (docs/DEPLOY.md).
+  testEventCode?: string | null
 }
 
 export type CapiLead = {
@@ -63,6 +66,9 @@ export function buildLeadRequest(
         },
       ],
       access_token: config.token,
+      ...(config.testEventCode
+        ? { test_event_code: config.testEventCode }
+        : {}),
     },
   }
 }

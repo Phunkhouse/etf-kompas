@@ -104,6 +104,7 @@ describe('metaServerEnv', () => {
       token: 'tok-secret',
       version: 'v0.0',
       base: 'https://graph.facebook.com',
+      testEventCode: null,
     })
   })
 
@@ -127,5 +128,57 @@ describe('metaServerEnv', () => {
       metaServerEnv({ ...all, META_GRAPH_BASE: stub, LEAD_STORE: 'memory' })
         ?.base,
     ).toBe(stub)
+  })
+
+  // Phase 6: an optional Test Events code, so server events show up in Meta's Test
+  // Events tool and not in the real dataset (cases T-1 to T-5, written first).
+  describe('the Test Events code', () => {
+    it('T-1 is null by default and when empty, with no warning', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      expect(metaServerEnv(all)?.testEventCode).toBeNull()
+      expect(
+        metaServerEnv({ ...all, META_TEST_EVENT_CODE: '' })?.testEventCode,
+      ).toBeNull()
+      expect(warn).not.toHaveBeenCalled()
+      warn.mockRestore()
+    })
+
+    it('T-2 is read, trimmed, from META_TEST_EVENT_CODE', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      expect(
+        metaServerEnv({ ...all, META_TEST_EVENT_CODE: ' TEST15906 ' })
+          ?.testEventCode,
+      ).toBe('TEST15906')
+      warn.mockRestore()
+    })
+
+    it('T-3 a code that is not letters and digits is ignored, the API stays on, and the warning names the variable and not the value', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      for (const bad of ['TE ST', 'TEST-1;DROP', 'x'.repeat(40), 'ab']) {
+        const config = metaServerEnv({ ...all, META_TEST_EVENT_CODE: bad })
+        expect(config?.testEventCode).toBeNull()
+        expect(config?.token).toBe('tok-secret')
+      }
+      const text = JSON.stringify(warn.mock.calls)
+      expect(text).toContain('META_TEST_EVENT_CODE')
+      expect(text).not.toContain('DROP')
+      warn.mockRestore()
+    })
+
+    it('T-4 a valid code warns that events go to Test Events only, without showing it', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      metaServerEnv({ ...all, META_TEST_EVENT_CODE: 'TEST15906' })
+      const text = JSON.stringify(warn.mock.calls)
+      expect(text).toContain('META_TEST_EVENT_CODE')
+      expect(text).toMatch(/Test Events/)
+      expect(text).not.toContain('TEST15906')
+      warn.mockRestore()
+    })
+
+    it('T-5 a code alone does not switch the API on', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      expect(metaServerEnv({ META_TEST_EVENT_CODE: 'TEST15906' })).toBeNull()
+      warn.mockRestore()
+    })
   })
 })

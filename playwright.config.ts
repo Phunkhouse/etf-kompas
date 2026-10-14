@@ -63,6 +63,8 @@ export default defineConfig({
       META_PIXEL_ID: '1234567890',
       // The server-side Lead goes to a stub route of ours, never to Meta (test-capi).
       META_CAPI_TOKEN: 'test-token',
+      // Sent in the body of the stub call (e2e/lead-event.spec.ts); a stand-in for Meta's code.
+      META_TEST_EVENT_CODE: 'TEST12345',
       META_GRAPH_VERSION: 'v0.0',
       META_GRAPH_BASE: `http://localhost:${port}/api/test-capi`,
     },

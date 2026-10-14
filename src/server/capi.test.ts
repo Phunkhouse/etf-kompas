@@ -220,3 +220,60 @@ describe('C-5 a failing call', () => {
     vi.unstubAllGlobals()
   })
 })
+
+// Phase 6: the optional Test Events code (cases T-6 to T-8, written first). With a code the
+// call goes to Meta's Test Events tool and not to the real dataset, so it must be absent
+// from the body in production.
+describe('T: the test_event_code in the request', () => {
+  const lead: CapiLead = {
+    eventId: '3b1f1c0e-6a52-4c1c-9d5e-0f7a1b2c3d4e',
+    email: 'jmeno@domena.cz',
+    time: START,
+    ip: '203.0.113.7',
+    userAgent: 'Mozilla/5.0 Test',
+    fbclid: 'abc123',
+    fbp: null,
+  }
+
+  it('T-6 the body has test_event_code next to data when a code is set, and not otherwise', () => {
+    const withCode = buildLeadRequest(
+      { ...CONFIG, testEventCode: 'TEST15906' },
+      lead,
+    ).body as Record<string, unknown>
+    expect(withCode.test_event_code).toBe('TEST15906')
+    expect(Object.keys(withCode).sort()).toEqual([
+      'access_token',
+      'data',
+      'test_event_code',
+    ])
+    for (const none of [undefined, null]) {
+      const body = buildLeadRequest({ ...CONFIG, testEventCode: none }, lead)
+        .body as Record<string, unknown>
+      expect('test_event_code' in body).toBe(false)
+    }
+  })
+
+  it('T-7 the code is in the body only, never in the address', () => {
+    const { url } = buildLeadRequest(
+      { ...CONFIG, testEventCode: 'TEST15906' },
+      lead,
+    )
+    expect(url).not.toContain('TEST15906')
+  })
+
+  it('T-8 the code is sent through a real submit, and a failure does not log it', async () => {
+    const { deps, tasks } = setup({ ...CONFIG, testEventCode: 'TEST15906' })
+    const spy = vi.fn<typeof fetch>(
+      async () => new Response('{}', { status: 500 }),
+    )
+    vi.stubGlobal('fetch', spy)
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {})
+    await submitLead(form(), REQUEST, deps)
+    await tasks[0]()
+    vi.unstubAllGlobals()
+    const body = JSON.parse(String(spy.mock.calls[0][1]?.body))
+    expect(body.test_event_code).toBe('TEST15906')
+    expect(JSON.stringify(error.mock.calls)).not.toContain('TEST15906')
+    error.mockRestore()
+  })
+})

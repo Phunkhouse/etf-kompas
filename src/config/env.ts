@@ -144,6 +144,27 @@ export type MetaServerConfig = {
   token: string
   version: string
   base: string
+  // The code of Meta's Test Events tool. With it the server events go to that tool only,
+  // not to the real dataset, so it is for testing and unset in production.
+  testEventCode: string | null
+}
+
+// Letters and digits, 4 to 20 (Meta's codes look like TEST15906). Anything else is ignored with
+// a warning that names the variable and never shows its value. A valid code warns too, because
+// a code left set in production would send every server Lead to Test Events and none to the dataset.
+function testEventCode(
+  source: Record<string, string | undefined>,
+): string | null {
+  const value = source.META_TEST_EVENT_CODE?.trim()
+  if (!value) return null
+  if (!/^[A-Za-z0-9]{4,20}$/.test(value)) {
+    console.warn('META_TEST_EVENT_CODE is not valid and is ignored.')
+    return null
+  }
+  console.warn(
+    'META_TEST_EVENT_CODE is set: server events go to Meta Test Events only, not to the dataset. Unset it in production.',
+  )
+  return value
 }
 
 export function metaServerEnv(
@@ -174,5 +195,5 @@ export function metaServerEnv(
     source.LEAD_STORE === 'memory' && source.META_GRAPH_BASE
       ? source.META_GRAPH_BASE
       : 'https://graph.facebook.com'
-  return { pixelId, token, version, base }
+  return { pixelId, token, version, base, testEventCode: testEventCode(source) }
 }
