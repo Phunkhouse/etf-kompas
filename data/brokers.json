@@ -215,6 +215,87 @@
             "verifiedOn": "2026-10-11",
             "evidence": "sha256:684c4ef8825f2433aed5c38422533d3a5dc78028fe3f5314dd2608885ea9de0c (degiro-vuaa-search-2026-10-11.png); logged-in instrument search, listing Xetra in EUR"
           }
+        ],
+        "vusa": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "Tradegate"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:a055296a3a5bd544c38511914c6e99d64ed361d71646029b7d7e1842da5feac6 (degiro-vusa-search-2026-10-12.png); logged-in instrument page, \"Vanguard S&P 500 UCITS ETF USD Dis\", Symbol | ISIN VUSA | IE00B3XXRP09, exchange Tradegate AG, price in EUR (€132,625). Other exchanges are not shown on this page"
+          }
+        ],
+        "eqqq": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "Tradegate"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:43ff6a5df68eb1300f142f8545f0db0e18bbacb1214bda85a69199f08d5b5288 (degiro-eqqq-search-2026-10-12.png); logged-in instrument search, ISIN IE0032077012 (Dist): Tradegate AG, EQQQ, EUR"
+          },
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "Xetra"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:43ff6a5df68eb1300f142f8545f0db0e18bbacb1214bda85a69199f08d5b5288 (degiro-eqqq-search-2026-10-12.png); logged-in instrument search, ISIN IE0032077012 (Dist): Xetra, EQQQ, EUR"
+          },
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "Euronext Paris"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:43ff6a5df68eb1300f142f8545f0db0e18bbacb1214bda85a69199f08d5b5288 (degiro-eqqq-search-2026-10-12.png); logged-in instrument search, ISIN IE0032077012 (Dist): Euronext Paris, EQQQ, EUR"
+          },
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "Euronext Milan"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:43ff6a5df68eb1300f142f8545f0db0e18bbacb1214bda85a69199f08d5b5288 (degiro-eqqq-search-2026-10-12.png); logged-in instrument search, ISIN IE0032077012 (Dist): Euronext Milan, EQQQ, EUR"
+          },
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "SIX Swiss Exchange"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:43ff6a5df68eb1300f142f8545f0db0e18bbacb1214bda85a69199f08d5b5288 (degiro-eqqq-search-2026-10-12.png); logged-in instrument search, ISIN IE0032077012 (Dist): SIX Swiss Exchange, EQQQ, USD"
+          },
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "London Stock Exchange"
+            },
+            "sourceUrl": "https://www.degiro.cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:43ff6a5df68eb1300f142f8545f0db0e18bbacb1214bda85a69199f08d5b5288 (degiro-eqqq-search-2026-10-12.png); logged-in instrument search, ISIN IE0032077012 (Dist): London Stock Exchange, symbol EQQU, USD (the GBX line, symbol EQQQ, is not recorded: the model has no GBP)"
+          }
         ]
       }
     }
@@ -354,6 +435,58 @@
             "verifiedBy": "David",
             "verifiedOn": "2026-10-13",
             "evidence": "sha256:75c216b7a2c9bed82282dff56d0c4a7f3cd053eca733edca5b552e83ef80ffcb (fio-sxr8-search-01-2026-10-12.png) and sha256:39e043a76d282a9e5ed84011855f0eea9caea793e416bc8450b4cf94e0631e68 (fio-sxr8-search-02-2026-10-12.png): SXR8 on XETRA, price in EUR (the same inference as the availability record: the ticker SXR8 is taken to be iShares Core S&P 500)"
+          }
+        ],
+        "vuaa": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "XETRA"
+            },
+            "sourceUrl": "https://www.fio.cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:6e96a301910ff3226f01b9767b30dd4282678b91ee9088649958e042c3ff50f5 (fio-vuaa-search-01-2026-10-12.png) and sha256:9bcdf84b9a7173ab52d6739b25bc15bc3675f66ce43e067f9dcab3e8ce1d2c61 (fio-vuaa-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: purchase form, ticker VUAA, market XETRA, price in EUR. The ISIN is not shown by Fio; VUAA is linked to IE00BFMXXD54 by the DEGIRO screenshot of the same ticker, as in the availability record."
+          }
+        ],
+        "vusa": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "XETRA"
+            },
+            "sourceUrl": "https://www.fio.cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:021571f02041386c745d1b05339cffcd2e35ca333fe49584bec9a41eb32fed70 (fio-vusa-search-01-2026-10-12.png) and sha256:3e2a666699bdcfbd66d586c09846558281edcbe0b056e1a272c75ffe5d73a295 (fio-vusa-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: purchase form, ticker VUSA, market XETRA, price in EUR. No ISIN is printed here; the ticker VUSA and the Dist class match IE00B3XXRP09 (DEGIRO screenshot and Vanguard factsheet of 31 August 2026, as in the availability record)."
+          }
+        ],
+        "cndx": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "XETRA"
+            },
+            "sourceUrl": "https://www.fio.cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:84ea4355c0cc1eb000ef03a78dbd1ccca5b9868a17d6e0cfeb5f5098cd1dfd90 (fio-sxrv-search-01-2026-10-12.png) and sha256:d01f6b96668e51246f87036e77f750a49135573524b3de9a54119ee16546c867 (fio-sxrv-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: purchase form, ticker SXRV, market XETRA, price in EUR. INFERENCE accepted by David (2026-10-12), as in the availability record: Fio shows no ISIN; the ticker SXRV is taken to be iShares NASDAQ 100 UCITS ETF (IE00B53SZB19)."
+          }
+        ],
+        "eqqq": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "XETRA"
+            },
+            "sourceUrl": "https://www.fio.cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:00a6d33a416af85555b2aeb06143b011348baa01e98e02f8ef42a76ce9dc6933 (fio-eqqq-search-01-2026-10-12.png) and sha256:8d7136ecbba703fd7e8f3d6e5a658122d646f96f9f0e9192ae458b9bd2c68e93 (fio-eqqq-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: purchase form, ticker EQQQ, market XETRA, price in EUR. The ISIN is not printed here; the ticker and the Dist class are tied to the fund by the DEGIRO screenshot of the same ticker (degiro-eqqq-search-2026-10-12.png, ISIN IE0032077012, as in the availability record)."
           }
         ]
       }
@@ -677,6 +810,67 @@
             "verifiedOn": "2026-10-13",
             "evidence": "sha256:26d529cc1f55bdd1c19b1a0069cfdef98661948f3b8355ae4b102acb20b7f56e (trading212-cspx-search-2026-10-11.png): \"iShares Core S&P 500 (Acc)\", CSPX · LSE, price in USD ($841.26)"
           }
+        ],
+        "vuaa": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "MIL"
+            },
+            "sourceUrl": "https://www.trading212.com",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:c07bfdb150d5c5c4cc1827767ef9d1222f32d1157abed73cba9346f736e64325 (trading212-vuaa-search-2026-10-11.png): \"Vanguard S&P 500 (Acc)\", VUAA · MIL, price in EUR (€134.74)"
+          },
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "LSE"
+            },
+            "sourceUrl": "https://www.trading212.com",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:c07bfdb150d5c5c4cc1827767ef9d1222f32d1157abed73cba9346f736e64325 (trading212-vuaa-search-2026-10-11.png): \"Vanguard S&P 500 (Acc)\", VUAA · LSE, price in USD ($150.900)"
+          }
+        ],
+        "cndx": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "LSE"
+            },
+            "sourceUrl": "https://www.trading212.com",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:b7f27d343c14b1dc78e52badafa8494be76aab6a74ebf5caef04570c958ade12 (trading212-cndx-search-2026-10-11.png): \"iShares NASDAQ 100 (Acc)\", CNDX · LSE, price in USD ($1,770.80)"
+          }
+        ],
+        "eqqq": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "MIL"
+            },
+            "sourceUrl": "https://www.trading212.com",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:56cd45bdcbe5a58251cbf71f9445d011114ff74203eb470dc13545d0cd9a24b1 (trading212-eqqq-search-2026-10-12.png): \"Invesco EQQQ Nasdaq-100 (Dist)\", EQQQ · MIL, price in EUR (€671.06). The ISIN is not printed here; the ticker and the Dist class are tied to the fund by the DEGIRO screenshot of the same ticker (degiro-eqqq-search-2026-10-12.png, ISIN IE0032077012, as in the availability record)."
+          },
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "SIX"
+            },
+            "sourceUrl": "https://www.trading212.com",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:56cd45bdcbe5a58251cbf71f9445d011114ff74203eb470dc13545d0cd9a24b1 (trading212-eqqq-search-2026-10-12.png): \"Invesco EQQQ Nasdaq-100 (Dist)\", EQQQ · SIX, price in USD ($749.7). The LSE line (pence) is not recorded: the model has no GBP. The ISIN is not printed here; the ticker and the Dist class are tied to the fund by the DEGIRO screenshot of the same ticker (degiro-eqqq-search-2026-10-12.png, ISIN IE0032077012, as in the availability record)."
+          }
         ]
       }
     }
@@ -824,6 +1018,69 @@
             "verifiedBy": "David",
             "verifiedOn": "2026-10-13",
             "evidence": "sha256:9e1e0794af40e82bd623c87b6337332239fd366c0bcaa58934bca4c07bc2c7fe (xtb-cspx-search-2026-10-11.png): CSPX.UK, \"iShares Core S&P 500 UCITS (Acc USD)\", price in USD (841.39). Listing evidence from 2026-10-11"
+          }
+        ],
+        "vuaa": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "XETRA"
+            },
+            "sourceUrl": "https://www.xtb.com/cz",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:6f17e2c289867cd033fa9aac2aadd8b85e18683290db7bb6d8d3d6cd818dd124 (xtb-vuaa-search-2026-10-11.png): VUAA.DE, \"Vanguard S&P 500 UCITS (Acc EUR)\", price in EUR (134.88). The venue name follows the symbol suffix (.DE as XETRA, .UK as LSE), as agreed with David on 2026-10-14; the search shows only the suffix."
+          },
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "LSE"
+            },
+            "sourceUrl": "https://www.xtb.com/cz",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:6f17e2c289867cd033fa9aac2aadd8b85e18683290db7bb6d8d3d6cd818dd124 (xtb-vuaa-search-2026-10-11.png): VUAA.UK, \"Vanguard S&P 500 UCITS (Acc USD)\", price in USD (150.88). The CFD line is not a share of the fund and is not recorded. The venue name follows the symbol suffix (.DE as XETRA, .UK as LSE), as agreed with David on 2026-10-14; the search shows only the suffix."
+          }
+        ],
+        "vusa": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "XETRA"
+            },
+            "sourceUrl": "https://www.xtb.com/cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:dede9b0262e9bf0c651b124425b79c87a0006430bfec6c1e58df6eb2688074ba (xtb-vusa-search-2026-10-12.png): VUSA.DE, \"Vanguard, UCITS, DIST, EUR\" (account not yet activated). VUSA.UK is GBP and is not recorded. The venue name follows the symbol suffix (.DE as XETRA, .UK as LSE), as agreed with David on 2026-10-14; the search shows only the suffix. No ISIN is printed here; the ticker VUSA and the Dist class match IE00B3XXRP09 (DEGIRO screenshot and Vanguard factsheet of 31 August 2026, as in the availability record)."
+          }
+        ],
+        "cndx": [
+          {
+            "value": {
+              "currency": "USD",
+              "venue": "LSE"
+            },
+            "sourceUrl": "https://www.xtb.com/cz",
+            "asOf": "2026-10-11",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:768c52243f5c0e2fcf1185bbc1829e007fdb4c0e7a619b5643caf5f59c57fa2c (xtb-cndx-search-2026-10-11.png): CNDX.UK, \"iShares NASDAQ 100 UCITS (Acc USD)\", price in USD (1770.2). The venue name follows the symbol suffix (.DE as XETRA, .UK as LSE), as agreed with David on 2026-10-14; the search shows only the suffix."
+          }
+        ],
+        "eqqq": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "XETRA"
+            },
+            "sourceUrl": "https://www.xtb.com/cz",
+            "asOf": "2026-10-12",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:761079da3d682c1f1b6ce067e2755749509142857625c2c056fa9b39500f6102 (xtb-eqqq-search-2026-10-12.png): EQQQ.DE, \"Invesco, UCITS, DIST, EUR\". EQQQ.UK is GBP and is not recorded; EQQB.DE and EQEU.DE are accumulating or hedged classes, not this fund. The venue name follows the symbol suffix (.DE as XETRA, .UK as LSE), as agreed with David on 2026-10-14; the search shows only the suffix. The ISIN is not printed here; the ticker and the Dist class are tied to the fund by the DEGIRO screenshot of the same ticker (degiro-eqqq-search-2026-10-12.png, ISIN IE0032077012, as in the availability record)."
           }
         ]
       }
