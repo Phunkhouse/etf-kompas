@@ -624,6 +624,34 @@
           "verifiedBy": "David",
           "verifiedOn": "2026-10-13",
           "evidence": "sha256:6bdf822a5f8e70f7159cd79b7d7787404d321fb0db5381ff3991a580cb50871a (ibkr-fees-commision-uk-usd-denominated.png, same page): table UNITED KINGDOM, tab USD Denominated, plan \"Fixed - IB SmartRouting\": 0.05% of Trade Value, minimum per order (shares) USD 4.00, maximum None, Third Party Fees None. The Fixed plan was chosen by David; the Tiered plan is not used. Captured by David 2026-10-13 (the date is the day he saved the files); the pages show no date. The site is the Irish one (interactivebrokers.ie); the screenshots do not show which entity David's account belongs to."
+        },
+        {
+          "value": {
+            "venues": ["BVME.ETF"],
+            "currency": "EUR",
+            "fixed": 0,
+            "percent": 0.05,
+            "min": 3
+          },
+          "sourceUrl": "https://www.interactivebrokers.ie/en/pricing/commissions-stocks.php?region=europe",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-14",
+          "evidence": "sha256:61e7ed1d137e5440c82116062e008b43eec9188631f38edc1e41d1a1c595d13f (ibkr-fees-commision.png, same page as the other IBKR rules): table ITALY, plan \"Fixed - IB SmartRouting\": 0.05% of Trade Value, minimum per order (shares) EUR 3.00, maximum None, Third Party Fees None. The Fixed plan is used, as for the Germany and UK rules; the Tiered plan is not. The exchange BVME.ETF of the VUAA and EQQQ listings (ibkr-vuaa-detail-eur-2026-10-14.png, ibkr-eqqq-detail-eur-2026-10-14.png, both with the Italian flag) is taken to be covered by the Italy table. The file shows no date (2026-10-13 is the day it was saved)."
+        },
+        {
+          "value": {
+            "venues": ["AEB"],
+            "currency": "EUR",
+            "fixed": 0,
+            "percent": 0.05,
+            "min": 3
+          },
+          "sourceUrl": "https://www.interactivebrokers.ie/en/pricing/commissions-stocks.php?region=europe",
+          "asOf": "2026-10-13",
+          "verifiedBy": "David",
+          "verifiedOn": "2026-10-14",
+          "evidence": "sha256:61e7ed1d137e5440c82116062e008b43eec9188631f38edc1e41d1a1c595d13f (ibkr-fees-commision.png, same page as the other IBKR rules): table NETHERLANDS, tab EUR Denominated, plan \"Fixed - IB SmartRouting\": 0.05% of Trade Value, minimum per order (shares) EUR 3.00, maximum None, Third Party Fees None. The Fixed plan is used, as for the Germany and UK rules; the Tiered plan is not. The exchange AEB of the VUSA listing (ibkr-vusa-detail-eur-2026-10-14.png, Dutch flag) is taken to be covered by the Netherlands table. The file shows no date (2026-10-13 is the day it was saved)."
         }
       ],
       "custody": {
@@ -722,6 +750,19 @@
             "verifiedBy": "David",
             "verifiedOn": "2026-10-14",
             "evidence": "sha256:859c28c532838c424b5c69c2b26b3a0576dde0ee8be0e3e79db9057817cec6e1 (ibkr-eqqq-detail-eur-2026-10-14.png): quote page EQQQ, name INVESCO NASDAQ-100 DIST, exchange BVME.ETF (Borsa Italiana), price in EUR (667.64). There is no purchase rule for this venue yet, so it is not priced. Interactive Brokers client portal, David's own account; the page shows no date (the date is from the file name) and does not show which IBKR entity the account belongs to."
+          }
+        ],
+        "vusa": [
+          {
+            "value": {
+              "currency": "EUR",
+              "venue": "AEB"
+            },
+            "sourceUrl": "https://www.interactivebrokers.com",
+            "asOf": "2026-10-14",
+            "verifiedBy": "David",
+            "verifiedOn": "2026-10-14",
+            "evidence": "sha256:67dbb366b3270a8c5b1e0bcab31d77898b507082220da5ad0a8acc80213c1ffa (ibkr-vusa-detail-eur-2026-10-14.png): quote page VUSA, name VANG S&P500 USDD, exchange AEB (Euronext Amsterdam, Dutch flag), price in EUR (132.280). The name is abbreviated and no ISIN is shown; it is tied to the fund as in the availability record. The LSEETF line is in GBP and the EBS line in CHF: not recorded, the model has neither. David's own account; the page shows no date (the date is from the file name) and does not show which IBKR entity the account belongs to."
           }
         ]
       }
