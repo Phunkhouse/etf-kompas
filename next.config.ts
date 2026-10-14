@@ -26,6 +26,13 @@ const nextConfig: NextConfig = {
   // caches (SPEC §26).
   async headers() {
     return [
+      // The whole site is out of search engines until the launch gate (SPEC §17.7, §19.5,
+      // §22 Phase 6): every path, pages, files and the API. The robots tag in the layout
+      // says the same. robots.txt must not block the crawl, or the header is never read.
+      {
+        source: '/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
       {
         source: '/srovnani/:path*',
         headers: [
