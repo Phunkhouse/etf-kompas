@@ -185,6 +185,15 @@ export const faqCopy = {
     us: {
       some: (verified: number, total: number, tickers: string) =>
         `Zatím to vypadá, že ne. U ${verified} z ${total} brokerů máme ověřeno, že ${tickers} nenabízí. U ostatních ověřujeme.`,
+      // A broker is verified as selling them (Fio e-Broker, after a W-8BEN, as Fio's
+      // own page "Formuláře W-8" says).
+      mostly: (verified: number, total: number, tickers: string) =>
+        `Většinou ne. U ${verified} z ${total} brokerů máme ověřeno, že ${tickers} nenabízí.`,
+      sellers: (names: string, count: number) =>
+        `${names} je ${count > 1 ? 'nabízejí' : 'nabízí'}`,
+      sellersCondition:
+        'ale nejdřív je potřeba odevzdat daňový formulář W-8BEN.',
+      others: 'U ostatních ověřujeme.',
       all: (total: number, tickers: string) =>
         `Ne. Ani jeden z ${total} ověřených brokerů ${tickers} nenabízí.`,
       none: (tickers: string) =>

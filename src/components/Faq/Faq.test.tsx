@@ -10,6 +10,7 @@ const facts = (over: Partial<OriginalsFacts> = {}): OriginalsFacts => ({
   verifiedNo: 3,
   total: 5,
   europeanSold: true,
+  sellers: [],
   ...over,
 })
 
@@ -121,5 +122,54 @@ describe('Faq: the answer about the American funds comes from the data', () => {
     const text = first(container)
     expect(text).toContain('zatím ověřujeme')
     expect(text).not.toMatch(/\d/)
+  })
+
+  describe('when a broker is verified as selling the American funds', () => {
+    const W8 = 'nejdřív je potřeba odevzdat daňový formulář W-8BEN.'
+
+    it('says "mostly no" and names the seller with the W-8BEN condition, leaving nothing "to verify"', () => {
+      const { container } = render(
+        <Faq facts={facts({ verifiedNo: 4, sellers: ['Fio e-Broker'] })} />,
+      )
+      const text = answers(container)[0]
+      expect(text).toContain(
+        'Většinou ne. U 4 z 5 brokerů máme ověřeno, že VOO a QQQ nenabízí.',
+      )
+      expect(text).toContain(`Fio e-Broker je nabízí, ale ${W8}`)
+      expect(text).not.toContain('ověřujeme')
+      expect(text).not.toContain('Zatím to vypadá')
+    })
+
+    it('joins several sellers and uses the plural verb', () => {
+      const { container } = render(
+        <Faq
+          facts={facts({
+            verifiedNo: 3,
+            sellers: ['Fio e-Broker', 'Trading 212'],
+          })}
+        />,
+      )
+      expect(answers(container)[0]).toContain(
+        `Fio e-Broker a Trading 212 je nabízejí, ale ${W8}`,
+      )
+    })
+
+    it('still says the others are being verified when some brokers are neither', () => {
+      const { container } = render(
+        <Faq
+          facts={facts({ verifiedNo: 3, sellers: ['Fio e-Broker'], total: 5 })}
+        />,
+      )
+      expect(answers(container)[0]).toContain('U ostatních ověřujeme.')
+    })
+
+    it('keeps the European twin and the KID reason after it', () => {
+      const { container } = render(
+        <Faq facts={facts({ verifiedNo: 4, sellers: ['Fio e-Broker'] })} />,
+      )
+      const text = answers(container)[0]
+      expect(text).toContain('Stejné indexy koupíte v evropské verzi.')
+      expect(text.indexOf('W-8BEN')).toBeLessThan(text.indexOf('Stejné indexy'))
+    })
   })
 })

@@ -1485,3 +1485,17 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **The addendum is wrong on § 10 odst. 4:** it is the tax base (income minus expenses), the expense for a thing is in § 10 odst. 5; there is no FIFO rule in § 10. The first document's FIFO claim has no source.
 - **I wrote "the plan is below" and did not write the plan,** so David approved a plan he could not see. I wrote it out in the next message and he confirmed.
 - **The Finanční správa page "Ostatní" is stale** (names písm. q) and the 40 million Kč cap); the law and the press release agree with each other, not with that page.
+
+### After Phase 6: Fio offers VOO and QQQ
+
+**Prompt (summary):** David added screenshots and Fio's W-8 page to `Downloads/evidence/brokers` and said the FAQ line "4 z 5" looked old.
+
+**Produced:** two `availability` records for Fio (VOO, QQQ: yes, with the hashes of the screenshots and the PDF); `originalsFacts().sellers`; a new FAQ answer when a broker is verified as selling them ("Většinou ne. … Fio e-Broker je nabízí, ale nejdřív je potřeba odevzdat daňový formulář W-8BEN."), wording accepted by David. Tests first (`hero.test.ts`, `Faq.test.tsx`).
+
+**Checked:** `pnpm check`, `pnpm format:check`, strict `pnpm data:validate`. The pages are demo-account screenshots; the demo account is not a live account, and the records say so.
+
+**Mistakes and corrections**
+
+- **I first answered that the FAQ was current** (it matched the data: 4 of 5 "no"). It was the data that was missing, not the text. David had Fio's answer on his disk and I had not asked where the evidence was.
+- **I wrote that SPEC needed a change for Fio;** it did not (it already allows only the soft claim). I corrected it in the next message.
+- **I looked for the new files in the repo first** instead of asking where they were.

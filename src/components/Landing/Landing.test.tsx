@@ -201,6 +201,7 @@ describe('Landing, the trust block and the FAQ', () => {
           verifiedNo: 3,
           total: 5,
           europeanSold: true,
+          sellers: [],
         }}
       />,
     )

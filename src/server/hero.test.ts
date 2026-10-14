@@ -266,6 +266,7 @@ describe('originalsFacts: for the FAQ answer about the American funds', () => {
       verifiedNo: 3,
       total: 5,
       europeanSold: true,
+      sellers: [],
     })
   })
 
@@ -302,6 +303,25 @@ describe('originalsFacts: for the FAQ answer about the American funds', () => {
       originals,
     )
     expect(facts.verifiedNo).toBe(0)
+  })
+
+  it('names the brokers verified as selling both American funds', () => {
+    const facts = originalsFacts(
+      {
+        etfs,
+        brokers: brokers([
+          { voo: yes, qqq: yes },
+          { voo: yes, qqq: no },
+          { voo: yes, qqq: todo },
+          { voo: unsourcedYes, qqq: unsourcedYes },
+          { voo: no, qqq: no },
+          {},
+        ]),
+      },
+      'cspx',
+      originals,
+    )
+    expect(facts.sellers).toEqual(['Broker 0'])
   })
 
   it('says the European twin is sold only with a verified seller', () => {

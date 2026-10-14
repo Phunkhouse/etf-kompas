@@ -21,6 +21,18 @@ function americanFundsAnswer(facts: OriginalsFacts | undefined): string {
   if (facts.verifiedNo === 0) return answers.none(tickers)
 
   const parts: string[] = []
+  if (facts.sellers.length > 0) {
+    const names = facts.sellers.join(' a ')
+    const unknown = facts.total - facts.verifiedNo - facts.sellers.length
+    parts.push(
+      answers.mostly(facts.verifiedNo, facts.total, tickers),
+      `${answers.sellers(names, facts.sellers.length)}, ${answers.sellersCondition}`,
+    )
+    if (unknown > 0) parts.push(answers.others)
+    if (facts.europeanSold) parts.push(answers.european)
+    parts.push(answers.reason)
+    return parts.join(' ')
+  }
   const everyone = facts.total > 0 && facts.verifiedNo >= facts.total
   parts.push(
     everyone
