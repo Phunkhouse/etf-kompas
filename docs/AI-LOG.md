@@ -1340,3 +1340,19 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **I told David the LCP target was "not met" from the simulated number and offered to change the cookie bar,** before comparing with the applied mode that the spec and note 0042 name as the gate. I had read note 0042's numbers earlier in the project and did not check which mode the target uses before reporting a miss. The investigation (one more run, with `--throttling-method=devtools`) showed there was nothing to fix. I should have run both modes at the start.
 - **My first run was refused twice** (David interrupted the combined command with `npx` and a git pull in one line); I split the commands. No harm.
 - **I guessed first that the bar was shown late (a reveal script)**; the markup and the browser measurement (0.56 s) showed it is plain HTML painted at once. Reported as a guess in the message, not as a finding.
+
+### Phase 6, PR 7: the README
+
+**Prompt (summary):** David: "#97 landed, let's move to the README". The plan item: README complete per SPEC §16, all known gaps listed.
+
+**Produced:** `README.md` rewritten into the twelve sections of SPEC §16 (254 lines): audience and the NYSE-vs-UCITS decision, offer and gate, the ads and UTM scheme, section order, the calculator and its limits, data sources, the tracking plan with a funnel query, conversion assumptions and lead economics (§28), the A/B hypotheses (kept word for word), a section on working with AI written from this log, the risks and the known gaps (brought up to the end of Phase 6), and run, test, deploy. Sections that already existed were kept; the old "Not live" and "not verified on Vercel" gap lines were corrected from what was found on the live site.
+
+**Checked:** every claim I could against the repo (note and PR counts, the rate limits, the minimum fill time, the file names of the notes, the source count, the CI steps, where `copy:check` runs, the first stale date). `pnpm format:check`. **Not verified:** the funnel SQL was written from the table definition and has not been run against the production table; the section 10 summary is mine, drawn from this log, and is for David to rewrite in his own voice.
+
+**Mistakes and corrections (in this PR, found by checking my first draft against the repo)**
+
+- **I cited note 0009 for the phone step and note 0065 for "no GA4 Measurement Protocol".** Neither note says that (the phone step is SPEC §17.4; the Measurement Protocol decision has no note yet, it waits for David's "ok"). Fixed.
+- **I wrote that the EQQQ documents of the wrong share class were the agent's mistake.** The log says the author supplied them and the agent noticed. Reworded to what the log says; the real agent mistake there was a February document read where an August one was the right source for `asOf`.
+- **I wrote that the author "did not delegate" the fund set, the broker neutrality rule and every Czech sentence.** I could not support the first two from the repo, and the Czech copy was written by the agent and reviewed by the author. Replaced with what the log and the notes do show.
+- **I wrote "twice" for reporting a result before checking the measure,** where the log has it once in this phase; and I named a specific spec number that could not be met without finding which one in the log. Both corrected.
+- **Doc drift I did not fix here:** SPEC §4 and §5 and METHODOLOGY-V2 §2 still describe `data/rates.json` as the exchange-rate fallback, which note 0066 removed. The README says what is true now. A separate small docs PR syncs them (a deviation from the spec the author approved in note 0066).
