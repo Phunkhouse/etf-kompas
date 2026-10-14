@@ -74,9 +74,10 @@ Banner and consent state are separate from the React bundle: the head script rea
 
 - [x] `docs/PHASES.md`, the README gaps, `docs/AI-LOG.md`.
 - [ ] Decision notes for the vendors after consent and for no GA4 Measurement Protocol: suggested to David, written after his reason.
-- [ ] **Open, needs David's accounts:** a GA4 property (Measurement ID, API secret not needed) and a Meta dataset (Pixel ID, Conversions API token, Test Events code, the current Graph API version); the ids into Vercel and `.env.local`.
-- [ ] **Open:** test events seen in GA4 DebugView and Meta Test Events; the Meta call accepted (`fbc` format, version); `after` on Vercel.
-- [ ] **Open:** the real-phone check (SPEC §19 reviewer list e and f): nothing marketing before consent, `lead` once with matching `event_id`.
+- [x] GA4 property created and the id in `.env.local` (2026-10-14); David tested GA4 with the real property. Meta dataset created, Pixel id in `.env.local`.
+- [ ] **Open, waits for the Vercel address (Phase 6):** Meta Test Events (the dataset needs a public address); the ids, the Conversions API token and the current Graph API version into the Vercel environment variables.
+- [ ] **Open:** the Meta server call accepted (`fbc` format, version, payload) and `after` on Vercel.
+- [ ] **Open:** the real-phone check of the Meta side (nothing marketing before consent, `lead` once with matching `event_id`).
 - [ ] **Open:** INP and TBT with and without consent.
 
 ## Cut order if we slip

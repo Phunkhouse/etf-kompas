@@ -1225,3 +1225,5 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 - **The plan promised `in_app_browser` on the lead; it is on the events only.** I found it while checking the five criteria against the code, not while building. Adding it to the lead needs a migration and another hidden field in a budget with 30 bytes left, so it is listed as a gap instead of done quietly.
 - **The plan's PR 5 line "real accounts connected" cannot be done yet.** Written as open items, not ticked.
+
+**Real GA4 (2026-10-14):** David gave the GA4 and Meta ids (put in `.env.local`, not committed) and tested GA4 with the real property: "fully tested". What exactly he saw is not recorded. Meta cannot be tested yet (Test Events need a public address), so it waits for Vercel. The docs of PR 5 were changed to say so.
