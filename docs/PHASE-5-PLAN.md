@@ -1,6 +1,6 @@
 # Phase 5 plan: tracking and consent
 
-Status: **approved by David on 2026-10-14.** Source: SPEC §9, §17.12, §22 (Phase 5), §23 and `docs/design/wireframe-b.md` (cookies). Written 2026-10-14.
+Status: **PRs 1 to 4 done on 2026-10-14 (#84, #86, #87, #88); PR 5 closes the docs, the real accounts are still open.** Approved by David on 2026-10-14. Source: SPEC §9, §17.12, §22 (Phase 5), §23 and `docs/design/wireframe-b.md` (cookies). Written 2026-10-14.
 
 ## Answers from David (2026-10-14)
 
@@ -72,12 +72,12 @@ Banner and consent state are separate from the React bundle: the head script rea
 
 ### PR 5: `docs: close Phase 5`
 
-- [ ] Real accounts connected; test events seen in GA4 DebugView and Meta Test Events.
-- [ ] `docs/PHASES.md`, README gaps, decision notes, `docs/AI-LOG.md`.
-
-### Every PR
-
-- [ ] `pnpm check && pnpm format:check` green; AI-LOG line; no new dependency without a one-line reason; decision notes suggested, not invented.
+- [x] `docs/PHASES.md`, the README gaps, `docs/AI-LOG.md`.
+- [ ] Decision notes for the vendors after consent and for no GA4 Measurement Protocol: suggested to David, written after his reason.
+- [ ] **Open, needs David's accounts:** a GA4 property (Measurement ID, API secret not needed) and a Meta dataset (Pixel ID, Conversions API token, Test Events code, the current Graph API version); the ids into Vercel and `.env.local`.
+- [ ] **Open:** test events seen in GA4 DebugView and Meta Test Events; the Meta call accepted (`fbc` format, version); `after` on Vercel.
+- [ ] **Open:** the real-phone check (SPEC §19 reviewer list e and f): nothing marketing before consent, `lead` once with matching `event_id`.
+- [ ] **Open:** INP and TBT with and without consent.
 
 ## Cut order if we slip
 
