@@ -17,6 +17,7 @@ const lead: LeadRecord = {
   variant: 'b',
   calcMonthly: 5000,
   calcYears: 10,
+  sessionId: null,
   marketingConsent: true,
   consentTextVersion: 'v1',
   consentConfirmedAt: null,
@@ -96,6 +97,7 @@ describe('createSupabaseStore', () => {
         variant: 'b',
         calc_monthly_bucket: 5000,
         calc_years: 10,
+        session_id: null,
         marketing_consent: true,
         consent_text_version: 'v1',
         consent_confirmed_at: null,
@@ -196,5 +198,40 @@ describe('createSupabaseStore', () => {
     const failure = createSupabaseStore(config).store.save(lead)
     await expect(failure).rejects.toThrow('409')
     await expect(failure).rejects.not.toThrow('jmeno')
+  })
+})
+
+describe('the events adapter', () => {
+  it('posts one row with snake_case columns and no personal data', async () => {
+    const { events } = createSupabaseStore(config)
+    const spy = stubFetch(null, true, 201)
+    await events.add({
+      id: '22222222-2222-4222-8222-222222222222',
+      createdAt: new Date('2026-10-14T10:00:00Z'),
+      sessionId: '33333333-3333-4333-8333-333333333333',
+      name: 'calc_result',
+      variant: 'a',
+      utmSource: 'ig',
+      utmMedium: null,
+      utmCampaign: null,
+      utmContent: null,
+      utmTerm: null,
+      fbclid: null,
+      device: 'phone',
+      inAppBrowser: true,
+      consentMeasurement: false,
+      calcMonthly: 5000,
+      calcYears: 10,
+    })
+    const [url, init] = spy.mock.calls[0]
+    expect(String(url)).toBe('https://abc.supabase.co/rest/v1/events')
+    expect(JSON.parse(String(init?.body))).toMatchObject({
+      session_id: '33333333-3333-4333-8333-333333333333',
+      name: 'calc_result',
+      in_app_browser: true,
+      consent_measurement: false,
+      calc_monthly_bucket: 5000,
+      calc_years: 10,
+    })
   })
 })

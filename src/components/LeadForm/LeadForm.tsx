@@ -109,6 +109,9 @@ export function LeadForm({
       >
         <input type="hidden" name="variant" value={variant} />
         <input type="hidden" name="t" defaultValue="" />
+        {/* The visit's session id: the tracker fills it at submit, and only after
+            the visitor agreed to measurement. */}
+        <input type="hidden" name="sid" defaultValue="" />
         {CAMPAIGN_FIELDS.map((name) => (
           <input key={name} type="hidden" name={name} defaultValue="" />
         ))}

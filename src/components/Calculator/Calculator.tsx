@@ -92,7 +92,7 @@ export function Calculator({
     : [{ id: 'fund', label: text.parts.fund, amount: fundFee }]
 
   return (
-    <div className={styles.calculator}>
+    <div className={styles.calculator} data-track="calculator">
       <div className={styles.inputs}>
         {heading}
         {/* The setting goes with the e-mail form (id "lead-form"); the server checks it. */}
@@ -130,7 +130,7 @@ export function Calculator({
         </div>
       </div>
 
-      <div className={styles.result}>
+      <div className={styles.result} data-track="result">
         <NumberDisplay value={headline ? headline.totalKc : fundFee} />
         <p className={styles.total}>
           {nbsp(

@@ -1,12 +1,15 @@
 import { defineConfig, devices } from '@playwright/test'
 
+// E2E_PORT lets a run use another port when a dev server already holds 3000.
+const port = process.env.E2E_PORT ?? '3000'
+
 export default defineConfig({
   testDir: './e2e',
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: `http://localhost:${port}`,
     trace: 'on-first-retry',
     // Every test starts with a cookie choice already made (everything refused), so
     // the cookie bar does not cover the page. e2e/cookie-consent.spec.ts starts
@@ -38,8 +41,10 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: process.env.CI ? 'pnpm build && pnpm start' : 'pnpm dev',
-    url: 'http://localhost:3000',
+    command: process.env.CI
+      ? `pnpm build && pnpm start -p ${port}`
+      : `pnpm dev -p ${port}`,
+    url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
     // The lead flow runs on the in-memory store, so e2e needs no secrets and

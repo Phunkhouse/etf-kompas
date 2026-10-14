@@ -1,0 +1,333 @@
+import { render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { CONSENT_COOKIE } from '@/lib/consent'
+import { SESSION_COOKIE, Tracker } from './Tracker'
+
+// Cases B-1 to B-9 of docs/PHASE-5-PLAN.md, with the real inline script. The page is a
+// small stand-in with the elements the tracker watches.
+type Sent = Record<string, unknown>
+let sent: Sent[] = []
+const observers: {
+  callback: IntersectionObserverCallback
+  target: Element | null
+}[] = []
+const originalDocumentAdd = document.addEventListener.bind(document)
+const originalWindowAdd = window.addEventListener.bind(window)
+const added: [string, EventListenerOrEventListenerObject, unknown][] = []
+const addedWindow: [string, EventListenerOrEventListenerObject][] = []
+
+async function readBlob(blob: Blob): Promise<Sent> {
+  return JSON.parse(await blob.text()) as Sent
+}
+
+function mount(url = '/?utm_source=ig&fbclid=abc') {
+  window.history.replaceState(null, '', url)
+  document.body.innerHTML = `
+    <main data-variant="b">
+      <div data-track="calculator">
+        <input type="hidden" name="monthly" value="5000" />
+        <input type="hidden" name="years" value="10" />
+        <input type="range" aria-label="Měsíčně" />
+        <button type="button">20 let</button>
+        <div data-track="result">výsledek</div>
+      </div>
+      <div id="formular">
+        <form id="lead-form"><input type="hidden" name="sid" /><input name="email" aria-label="e-mail" /></form>
+      </div>
+    </main>`
+  const view = render(<Tracker />, {
+    container: document.body.appendChild(document.createElement('div')),
+  })
+  const script = view.container.querySelector('script')
+  vi.spyOn(document, 'addEventListener').mockImplementation(
+    (
+      type: string,
+      handler: EventListenerOrEventListenerObject,
+      options?: boolean | AddEventListenerOptions,
+    ) => {
+      added.push([type, handler, options])
+      originalDocumentAdd(type, handler, options)
+    },
+  )
+  vi.spyOn(window, 'addEventListener').mockImplementation(
+    (type: string, handler: EventListenerOrEventListenerObject) => {
+      addedWindow.push([type, handler])
+      originalWindowAdd(type, handler)
+    },
+  )
+  new Function(script!.textContent ?? '')()
+}
+
+// Tells every observer that its element is (or is not) in view.
+function inView(selector: string, visible: boolean) {
+  const target = document.querySelector(selector)!
+  for (const observer of observers.filter((o) => o.target === target)) {
+    observer.callback(
+      [
+        {
+          isIntersecting: visible,
+          intersectionRatio: visible ? 1 : 0,
+          intersectionRect: { height: visible ? 600 : 0 },
+          target,
+        } as unknown as IntersectionObserverEntry,
+      ],
+      {} as IntersectionObserver,
+    )
+  }
+}
+
+const names = () => sent.map((event) => event.name)
+const clear = () => {
+  document.cookie = `${CONSENT_COOKIE}=; Max-Age=0; Path=/`
+  document.cookie = `${SESSION_COOKIE}=; Max-Age=0; Path=/`
+}
+
+beforeEach(() => {
+  vi.useFakeTimers({ shouldAdvanceTime: true })
+  clear()
+  sent = []
+  navigator.sendBeacon = vi.fn((_url: string | URL, data?: BodyInit | null) => {
+    void readBlob(data as Blob).then((payload) => sent.push(payload))
+    return true
+  })
+  vi.stubGlobal(
+    'IntersectionObserver',
+    class {
+      callback: IntersectionObserverCallback
+      constructor(callback: IntersectionObserverCallback) {
+        this.callback = callback
+      }
+      observe(target: Element) {
+        observers.push({ callback: this.callback, target })
+      }
+      disconnect() {}
+      unobserve() {}
+    },
+  )
+  vi.stubGlobal('matchMedia', (query: string) => ({
+    matches: query.includes('767'),
+    media: query,
+  }))
+})
+
+afterEach(() => {
+  vi.useRealTimers()
+  vi.restoreAllMocks()
+  vi.unstubAllGlobals()
+  for (const [type, handler, options] of added.splice(0)) {
+    document.removeEventListener(type, handler, options as boolean)
+  }
+  for (const [type, handler] of addedWindow.splice(0)) {
+    window.removeEventListener(type, handler)
+  }
+  observers.length = 0
+  clear()
+})
+
+const flush = async () => {
+  await vi.advanceTimersByTimeAsync(0)
+}
+
+describe('Tracker', () => {
+  it('B-1 sends page_view once on load with variant, campaign, device and the in-app flag', async () => {
+    mount()
+    await flush()
+    expect(sent).toHaveLength(1)
+    expect(sent[0]).toMatchObject({
+      name: 'page_view',
+      variant: 'b',
+      utm_source: 'ig',
+      fbclid: 'abc',
+      device: 'phone',
+      inAppBrowser: false,
+      measurement: false,
+    })
+    expect(sent[0].sessionId).toMatch(/^[0-9a-f-]{36}$/)
+  })
+
+  it('B-1 flags Instagram, Facebook and Messenger user agents', async () => {
+    for (const agent of [
+      'Mozilla/5.0 Instagram 300',
+      'FBAN/FBIOS',
+      'FBAV/450',
+    ]) {
+      sent = []
+      vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(agent)
+      mount()
+      await flush()
+      expect(sent[0].inAppBrowser).toBe(true)
+      document.body.innerHTML = ''
+    }
+  })
+
+  it('B-2 sets no cookie and writes no storage before measurement is agreed', async () => {
+    const setItem = vi.spyOn(Storage.prototype, 'setItem')
+    mount()
+    await flush()
+    expect(document.cookie).not.toContain(SESSION_COOKIE)
+    expect(setItem).not.toHaveBeenCalled()
+  })
+
+  it('B-2 the id differs on the next load', async () => {
+    mount()
+    await flush()
+    const first = sent[0].sessionId
+    sent = []
+    mount()
+    await flush()
+    expect(sent[0].sessionId).not.toBe(first)
+  })
+
+  it('B-3 after measurement is agreed the cookie keeps the same id', async () => {
+    mount()
+    await flush()
+    const id = sent[0].sessionId
+    document.cookie = `${CONSENT_COOKIE}=v1-m1-a0-1760000000; Path=/`
+    window.dispatchEvent(
+      new CustomEvent('kompas:consent', {
+        detail: { measurement: true, advertising: false },
+      }),
+    )
+    expect(document.cookie).toContain(`${SESSION_COOKIE}=${id}`)
+    sent = []
+    mount()
+    await flush()
+    expect(sent[0].sessionId).toBe(id)
+    expect(sent[0].measurement).toBe(true)
+  })
+
+  it('B-3 withdrawing consent removes the cookie', async () => {
+    document.cookie = `${CONSENT_COOKIE}=v1-m1-a0-1760000000; Path=/`
+    mount()
+    await flush()
+    expect(document.cookie).toContain(SESSION_COOKIE)
+    document.cookie = `${CONSENT_COOKIE}=v1-m0-a0-1760000001; Path=/`
+    window.dispatchEvent(
+      new CustomEvent('kompas:consent', {
+        detail: { measurement: false, advertising: false },
+      }),
+    )
+    expect(document.cookie).not.toContain(SESSION_COOKIE)
+  })
+
+  it('B-4 a refusal still sends events, without a session cookie', async () => {
+    document.cookie = `${CONSENT_COOKIE}=v1-m0-a0-1760000000; Path=/`
+    mount()
+    await flush()
+    expect(names()).toEqual(['page_view'])
+    expect(sent[0].measurement).toBe(false)
+    expect(document.cookie).not.toContain(SESSION_COOKIE)
+  })
+
+  it('B-5 calc_start fires once however often the slider moves', async () => {
+    mount()
+    const slider = document.querySelector('input[type="range"]')!
+    for (let i = 0; i < 3; i += 1)
+      slider.dispatchEvent(new Event('input', { bubbles: true }))
+    await userEvent.click(document.querySelector('button')!)
+    await flush()
+    expect(names().filter((n) => n === 'calc_start')).toHaveLength(1)
+  })
+
+  it('B-5 calc_result needs calc_start and one second in view, and fires once with the setup', async () => {
+    mount()
+    inView('[data-track="result"]', true)
+    await vi.advanceTimersByTimeAsync(2000)
+    expect(names()).not.toContain('calc_result')
+    document
+      .querySelector('input[type="range"]')!
+      .dispatchEvent(new Event('input', { bubbles: true }))
+    await vi.advanceTimersByTimeAsync(900)
+    expect(names()).not.toContain('calc_result')
+    await vi.advanceTimersByTimeAsync(200)
+    expect(names()).toContain('calc_result')
+    expect(sent.find((e) => e.name === 'calc_result')).toMatchObject({
+      monthly: 5000,
+      years: 10,
+    })
+    inView('[data-track="result"]', false)
+    inView('[data-track="result"]', true)
+    await vi.advanceTimersByTimeAsync(2000)
+    expect(names().filter((n) => n === 'calc_result')).toHaveLength(1)
+  })
+
+  it('B-5 leaving the view before one second cancels calc_result', async () => {
+    mount()
+    document
+      .querySelector('input[type="range"]')!
+      .dispatchEvent(new Event('input', { bubbles: true }))
+    inView('[data-track="result"]', true)
+    await vi.advanceTimersByTimeAsync(500)
+    inView('[data-track="result"]', false)
+    await vi.advanceTimersByTimeAsync(2000)
+    expect(names()).not.toContain('calc_result')
+  })
+
+  it('B-6 gate_view and form_focus fire once each', async () => {
+    mount()
+    inView('#formular', true)
+    inView('#formular', true)
+    const email = document.querySelector<HTMLInputElement>(
+      'input[name="email"]',
+    )!
+    email.focus()
+    email.blur()
+    email.focus()
+    await flush()
+    expect(names().filter((n) => n === 'gate_view')).toHaveLength(1)
+    expect(names().filter((n) => n === 'form_focus')).toHaveLength(1)
+  })
+
+  it('B-7 ?debug=1 prints each event and sends the same', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
+    mount('/?debug=1')
+    await flush()
+    expect(log).toHaveBeenCalledWith(
+      '[track]',
+      expect.objectContaining({ name: 'page_view' }),
+    )
+    expect(sent).toHaveLength(1)
+  })
+
+  it('B-8 a failed request does not throw and is not retried in a loop', async () => {
+    const fetchSpy = vi.fn(() => Promise.reject(new Error('offline')))
+    vi.stubGlobal('fetch', fetchSpy)
+    navigator.sendBeacon = vi.fn(() => false)
+    expect(() => mount()).not.toThrow()
+    await flush()
+    expect(fetchSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('B-9 the events leave in the order of the funnel', async () => {
+    mount()
+    document
+      .querySelector('input[type="range"]')!
+      .dispatchEvent(new Event('input', { bubbles: true }))
+    inView('[data-track="result"]', true)
+    await vi.advanceTimersByTimeAsync(1100)
+    inView('#formular', true)
+    document.querySelector<HTMLInputElement>('input[name="email"]')!.focus()
+    await flush()
+    expect(names()).toEqual([
+      'page_view',
+      'calc_start',
+      'calc_result',
+      'gate_view',
+      'form_focus',
+    ])
+  })
+
+  it('puts the session id on the lead form at submit only when measurement is agreed', async () => {
+    mount()
+    const form = document.querySelector<HTMLFormElement>('#lead-form')!
+    form.addEventListener('submit', (event) => event.preventDefault())
+    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
+    expect((form.elements.namedItem('sid') as HTMLInputElement).value).toBe('')
+    document.cookie = `${CONSENT_COOKIE}=v1-m1-a0-1760000000; Path=/`
+    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
+    expect((form.elements.namedItem('sid') as HTMLInputElement).value).toMatch(
+      /^[0-9a-f-]{36}$/,
+    )
+  })
+})

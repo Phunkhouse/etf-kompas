@@ -19,6 +19,7 @@ const FIELDS = [
   'utm_content',
   'utm_term',
   'fbclid',
+  'sid',
 ] as const
 
 export async function sendLead(

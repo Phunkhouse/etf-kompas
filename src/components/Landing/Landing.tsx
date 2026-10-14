@@ -7,6 +7,7 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SourceBar } from '@/components/SourceBar'
 import { StickyBar } from '@/components/StickyBar'
+import { Tracker } from '@/components/Tracker'
 import { TrustBlock } from '@/components/TrustBlock'
 import type { HeroNote, HeroTwin, OriginalsFacts } from '@/server/hero'
 import type { CalculatorData } from '@/server/calculator-data'
@@ -15,7 +16,7 @@ export type Variant = 'a' | 'b'
 
 type LandingProps = {
   // The A/B variant shown: one layout, only the h1 differs (note 0041). It is
-  // written on <main> as data-variant, for the tracking that comes later.
+  // written on <main> as data-variant, which the tracker reads.
   variant: Variant
   dataAsOf: string | null
   // The hero table and its muted line.
@@ -65,6 +66,7 @@ export function Landing({
       </main>
       <SiteFooter />
       <StickyBar />
+      <Tracker />
     </>
   )
 }

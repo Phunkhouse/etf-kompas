@@ -6,6 +6,8 @@ import type { RateLimiter } from './lead-ports'
 
 export const IP_LIMIT_PER_HOUR = 5
 export const EMAIL_LIMIT_PER_DAY = 3
+// First-party events: a visit sends about six, so 120 an hour is far above a person.
+export const EVENT_LIMIT_PER_HOUR = 120
 const HOUR_MS = 3_600_000
 const DAY_MS = 86_400_000
 
@@ -42,4 +44,9 @@ export function hitIpLimit(deps: LimitDeps, ip: string): Promise<Limit> {
 export function hitEmailLimit(deps: LimitDeps, email: string): Promise<Limit> {
   const key = `email:${hashEmail(email, deps.secrets.ipHash)}`
   return hit(deps, key, DAY_MS, EMAIL_LIMIT_PER_DAY)
+}
+
+export function hitEventLimit(deps: LimitDeps, ip: string): Promise<Limit> {
+  const key = `event:${hashIp(ip, deps.secrets.ipHash, deps.now())}`
+  return hit(deps, key, HOUR_MS, EVENT_LIMIT_PER_HOUR)
 }
