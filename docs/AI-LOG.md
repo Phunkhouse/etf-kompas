@@ -1286,6 +1286,19 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **I had the staleness dates in my notes as "24 Oct"** (from PHASES.md); the run says 25 Oct. I used the run.
 - **Consequence I should have said when the gate was agreed:** the gate blocks any build after the first stale record, not just a launch. The live site keeps running (Vercel builds only on a push), but the next push to `main` fails until the data is refreshed.
 
+### Phase 6, fix: a bad SITE_URL no longer fails the build
+
+**Prompt (summary):** David changed `SITE_URL` in Vercel after the first deploy and redeployed; the build failed with `TypeError: Invalid URL` at `metadataBase: new URL(siteUrl)` in `src/app/layout.tsx`.
+
+**Produced:** `src/config/site-url.ts` (`siteUrl()`: trims, adds `https://` to a value without a scheme, keeps only the origin, falls back to localhost with a warning that never shows the value, never throws) with 7 test cases; the layout uses it.
+
+**Checked:** `pnpm check` (920 tests), `pnpm format:check`, and a local `pnpm build` with `SITE_URL=etf-kompas-kappa.vercel.app` (no scheme): the build passes and the page has `og:image` `https://etf-kompas-kappa.vercel.app/share-image.png`. **Not verified:** the real Vercel build with David's actual value (I did not see it; the likely cause is a missing `https://` or a stray space).
+
+**Mistakes and corrections**
+
+- **My own mistake in PR 3 (#92):** I put `new URL(process.env.SITE_URL)` in the root layout, so one badly typed environment variable stopped every build, and I only tested it with good values and with no value. The lead code validated `SITE_URL` at run time (a form error), which is a milder failure; I did not apply the same care at build time. The PR 3 summary told David to "set `SITE_URL`" without saying the exact format.
+- **I wrote the test file before the code but ran the tests only once, after both existed,** so I did not see them fail first. The cases were written from the failure, not from the implementation.
+
 ### Phase 6, PR 5: deploy notes
 
 **Prompt (summary):** David: "#93 merged" (continue with PR 5, the deploy notes and the environment table).
