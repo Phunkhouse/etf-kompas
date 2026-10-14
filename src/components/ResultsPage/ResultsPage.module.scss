@@ -68,6 +68,10 @@
   line-height: var(--line-height-base);
 }
 
+.actions {
+  margin-top: var(--space-2);
+}
+
 .strip {
   display: flex;
   flex-direction: column;

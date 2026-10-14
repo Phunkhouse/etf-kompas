@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
   // Lets a phone on the home network open `pnpm dev` via the Mac's IP (dev only, SPEC §12a).
   // Each `*` matches one label of the hostname, so this covers any 192.168.x.y address.
   allowedDevOrigins: ['192.168.*.*'],
+  // The PDF route reads the fonts and the logo from disk at request time: tell the
+  // build to ship them with it.
+  outputFileTracingIncludes: {
+    '/srovnani/[token]/pdf': [
+      './src/server/pdf/fonts/**/*',
+      './public/brand/logo-600w.png',
+    ],
+  },
   // Hero variants (decision note 0028): `/?v=b` serves the static page /v/b.
   // It has to be a beforeFiles rewrite, because / is an existing page and pages
   // are served before afterFiles rewrites. Any other `v` falls through to `/`.

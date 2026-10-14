@@ -80,6 +80,9 @@ export function LeadForm({
         <a href={state.resultsPath} className={styles.open}>
           {nbsp(text.done.open)}
         </a>
+        <a href={`${state.resultsPath}/pdf`} className={styles.pdf}>
+          {nbsp(text.done.pdf)}
+        </a>
       </div>
     )
   }
