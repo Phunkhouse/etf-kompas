@@ -6,6 +6,28 @@ import { z } from 'zod'
 // Only for end-to-end tests: a test types faster than a person (see leads.ts).
 const minFillMs = z.coerce.number().int().min(0).optional()
 
+// An empty variable (`NAME=` in .env.local) counts as not set.
+const blank = <T extends z.ZodType>(schema: T) =>
+  z.preprocess((value) => (value === '' ? undefined : value), schema)
+
+// The e-mail settings both stores share. `live` sends to anyone; `sandbox` only to the
+// allowlist (comma separated) and the page never says an e-mail was sent otherwise.
+const mailShape = {
+  EMAIL_MODE: blank(z.enum(['live', 'sandbox']).default('sandbox')),
+  EMAIL_SANDBOX_ALLOWLIST: blank(
+    z
+      .string()
+      .default('')
+      .transform((list) =>
+        list
+          .split(',')
+          .map((entry) => entry.trim())
+          .filter(Boolean),
+      ),
+  ),
+  EMAIL_REPLY_TO: blank(z.string().optional()),
+}
+
 const leadEnvSchema = z.discriminatedUnion('LEAD_STORE', [
   z.object({
     LEAD_STORE: z.literal('memory'),
@@ -14,12 +36,22 @@ const leadEnvSchema = z.discriminatedUnion('LEAD_STORE', [
       .string()
       .min(32)
       .default('memory-store-only-not-a-secret!!'),
+    TOKEN_SIGNING_SECRET: blank(
+      z.string().min(32).default('memory-store-links-not-a-secret!!!'),
+    ),
+    SITE_URL: blank(z.url().default('http://localhost:3000')),
+    ...mailShape,
   }),
   z.object({
     LEAD_STORE: z.literal('supabase').default('supabase'),
     SUPABASE_URL: z.url(),
     SUPABASE_SECRET_KEY: z.string().min(1),
     IP_HASH_SECRET: z.string().min(32),
+    TOKEN_SIGNING_SECRET: z.string().min(32),
+    SITE_URL: z.url(),
+    RESEND_API_KEY: z.string().min(1),
+    EMAIL_FROM: z.string().min(3),
+    ...mailShape,
   }),
 ])
 

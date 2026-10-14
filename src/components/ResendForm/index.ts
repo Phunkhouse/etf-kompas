@@ -1,0 +1,1 @@
+export { ResendForm } from './ResendForm'

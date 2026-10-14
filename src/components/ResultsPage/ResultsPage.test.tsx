@@ -67,7 +67,9 @@ function build(overrides: Partial<Comparison> = {}): Comparison {
 
 describe('ResultsPage', () => {
   it('links to the PDF', () => {
-    render(<ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" />)
+    render(
+      <ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" token="x" />,
+    )
     expect(
       screen
         .getByRole('link', { name: 'Stáhnout PDF · 6 stran' })
@@ -76,7 +78,9 @@ describe('ResultsPage', () => {
   })
 
   it('has the title, the setup and the headline number', () => {
-    render(<ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" />)
+    render(
+      <ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" token="x" />,
+    )
     expect(
       screen.getByRole('heading', { level: 1, name: 'Srovnání 5 fondů' }),
     ).toBeTruthy()
@@ -86,7 +90,9 @@ describe('ResultsPage', () => {
   })
 
   it('shows an unverified fee and type as [ověřit], not as a number', () => {
-    render(<ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" />)
+    render(
+      <ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" token="x" />,
+    )
     const table = screen.getByRole('table', { name: 'Fondy vedle sebe' })
     const vusa = within(table).getByRole('row', { name: /VUSA/ })
     expect(within(vusa).getAllByText('[ověřit]')).toHaveLength(2)
@@ -96,7 +102,9 @@ describe('ResultsPage', () => {
   })
 
   it('shows Ano, Ne and [ověřit] for availability, and a dash for no price', () => {
-    render(<ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" />)
+    render(
+      <ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" token="x" />,
+    )
     const table = screen.getByRole('table', { name: 'U kterého brokera?' })
     expect(
       within(within(table).getByRole('row', { name: /Alfa/ })).getByText('Ano'),
@@ -109,7 +117,9 @@ describe('ResultsPage', () => {
   })
 
   it('lists the brokers in the order it is given, not by cost', () => {
-    render(<ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" />)
+    render(
+      <ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" token="x" />,
+    )
     const table = screen.getByRole('table', { name: 'U kterého brokera?' })
     const names = within(table)
       .getAllByRole('rowheader')
@@ -119,7 +129,7 @@ describe('ResultsPage', () => {
 
   it('names the spread and the lowest cost, without the word "nejlevnější"', () => {
     const { container } = render(
-      <ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" />,
+      <ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" token="x" />,
     )
     expect(flat(container.textContent)).toContain(
       'Mezi ověřenými brokery se výsledek liší až o 7 000 Kč. Nejnižší možné poplatky s vaším nastavením: 3 000 Kč za 10 let.',
@@ -136,7 +146,11 @@ describe('ResultsPage', () => {
       },
     })
     const { container } = render(
-      <ResultsPage comparison={comparison} pdfHref="/srovnani/x/pdf" />,
+      <ResultsPage
+        comparison={comparison}
+        pdfHref="/srovnani/x/pdf"
+        token="x"
+      />,
     )
     expect(container.textContent).not.toContain('Mezi ověřenými brokery')
   })
@@ -154,7 +168,13 @@ describe('ResultsPage', () => {
         },
       },
     })
-    render(<ResultsPage comparison={comparison} pdfHref="/srovnani/x/pdf" />)
+    render(
+      <ResultsPage
+        comparison={comparison}
+        pdfHref="/srovnani/x/pdf"
+        token="x"
+      />,
+    )
     const strip = screen.getByRole('region', { name: 'Váš výsledek' })
     expect(flat(strip.textContent)).toContain('bude stát')
     expect(flat(strip.textContent)).toContain('2 000 Kč')
@@ -162,7 +182,7 @@ describe('ResultsPage', () => {
 
   it('says how long the link works and that tax text is still to be filled in', () => {
     const { container } = render(
-      <ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" />,
+      <ResultsPage comparison={build()} pdfHref="/srovnani/x/pdf" token="x" />,
     )
     expect(container.textContent).toContain('Odkaz platí 30 dní.')
     expect(container.textContent).toContain(

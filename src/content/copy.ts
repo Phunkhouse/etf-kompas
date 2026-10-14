@@ -247,6 +247,10 @@ export const leadFormCopy = {
     text: ' Váš e-mail jsme uložili.',
     open: 'Otevřít srovnání',
     pdf: 'Stáhnout PDF · 6 stran',
+    // Said only when the e-mail really went out (sandbox mode sends to the allowlist only).
+    sent: (address: string) =>
+      `Odkaz jsme poslali i na ${address}. Pokud nic nepřijde, zkontrolujte spam.`,
+    failed: 'E-mail se nepodařilo odeslat. Srovnání si otevřete tady.',
   },
 }
 
@@ -415,6 +419,17 @@ export const resultsCopy = {
   },
   expires: 'Odkaz platí 30 dní.',
   pdf: 'Stáhnout PDF · 6 stran',
+  // The card at the end of the comparison page: a new link to the lead's own address.
+  resend: {
+    label: 'Poslat odkaz znovu',
+    text: 'Odkaz platí 30 dní. Zapomněli jste ho?',
+    button: 'Poslat odkaz na můj e-mail',
+    sending: 'Posílám…',
+    sent: 'Poslali jsme vám nový odkaz.',
+    skipped: 'E-mail jsme neodeslali: zatím je zapnutý zkušební provoz.',
+    failed: 'E-mail se nepodařilo odeslat. Zkuste to prosím za chvíli.',
+    limited: 'Příliš mnoho pokusů. Zkuste to prosím později.',
+  },
 }
 
 // A results link that does not work: never issued, expired or mistyped. One text for
@@ -424,6 +439,13 @@ export const resultsGoneCopy = {
   title: 'Tento odkaz už nefunguje',
   text: 'Odkaz je možná starý, platí 30 dní, nebo v něm je překlep. Kalkulačku najdete na úvodní stránce.',
   back: 'Zpět na úvod',
+  // The form under the text: a new link to an address, the same answer for every one.
+  resend: {
+    label: 'Váš e-mail',
+    button: 'Poslat nový odkaz',
+    sending: 'Posílám…',
+    answer: 'Pokud tento e-mail u nás máme, poslali jsme na něj nový odkaz.',
+  },
 }
 
 // The personalised PDF (wireframe B, "PDF, favicon, sharing"; six pages approved by
@@ -532,6 +554,69 @@ export const pdfCopy = {
   },
 }
 
+// The e-mails (PR 4 of Phase 4): the Kompas e-mail and the opt-in e-mail of the drawing.
+export const emailCopy = {
+  kompas: {
+    subject: 'Vaše srovnání je připravené',
+    heading: 'Srovnání je připravené',
+    intro: (monthly: string, years: number) =>
+      `Připravili jsme srovnání pro ${monthly} měsíčně na ${years} let.`,
+    open: 'Otevřít srovnání',
+    pdf: 'Stáhnout PDF · 6 stran',
+    validity: 'Odkaz platí 30 dní.',
+  },
+  optIn: {
+    subject: 'Potvrďte odběr tipů k investování',
+    heading: 'Potvrďte odběr tipů',
+    intro:
+      'Při stažení srovnání jste zaškrtli, že chcete občas dostat tip k investování. Stačí jedno klepnutí.',
+    button: 'Ano, posílejte mi tipy',
+    note: 'Srovnání už máte, na něm tento krok nic nemění. Pokud jste o tipy nežádali, e-mail ignorujte a nic se nestane.',
+  },
+  footer: {
+    controller: (controller: string) => `Správce: ${controller}.`,
+    privacy: 'Zásady zpracování',
+    unsubscribe: 'Odhlásit se',
+    unsubscribeNote: 'Odhlásit se můžete v každém e-mailu.',
+  },
+}
+
+// The pages the links in the e-mails lead to (wireframe B, "After submit and e-mail").
+export const subscribeCopy = {
+  confirm: {
+    label: 'Potvrzení',
+    ask: {
+      title: 'Potvrďte odběr tipů',
+      text: 'Stačí jedno klepnutí. Srovnání už máte, na něm tento krok nic nemění.',
+      button: 'Ano, posílejte mi tipy',
+    },
+    done: {
+      title: 'Odběr tipů potvrzen',
+      text: 'Děkujeme. Tipy budeme posílat zřídka. Odhlásit se můžete v každém e-mailu.',
+      back: 'Zpět na srovnání',
+    },
+    failure: 'Potvrzení se nepovedlo. Zkuste to prosím znovu za chvíli.',
+  },
+  gone: {
+    label: 'Odkaz',
+    title: 'Tento odkaz už nefunguje',
+    text: 'Platnost odkazu vypršela nebo už byl použit. Odběr tipů můžete zapnout znovu ve formuláři na úvodní stránce.',
+    back: 'Zpět na úvod',
+  },
+  unsubscribe: {
+    label: 'Odhlášení',
+    title: 'Odhlášeno',
+    text: 'Srovnání vám už posílat nebudeme. Stalo se to omylem? Přihlásit se můžete znovu.',
+    button: 'Přihlásit zpět',
+    failure: 'Přihlášení se nepovedlo. Zkuste to prosím znovu za chvíli.',
+  },
+  resubscribed: {
+    title: 'Přihlášeno zpět',
+    text: 'Odhlášení jsme zrušili.',
+    back: 'Zpět na úvod',
+  },
+}
+
 export const notFoundCopy = {
   label: '404',
   title: 'Tuhle stránku jsme nenašli',
@@ -581,6 +666,8 @@ export const copy = {
   legal: legalCopy,
   notFound: notFoundCopy,
   results: resultsCopy,
+  email: emailCopy,
+  subscribe: subscribeCopy,
   pdf: pdfCopy,
   resultsGone: resultsGoneCopy,
   menu: menuCopy,

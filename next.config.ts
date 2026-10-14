@@ -33,6 +33,14 @@ const nextConfig: NextConfig = {
           { key: 'Cache-Control', value: 'private, no-store' },
         ],
       },
+      // The links in e-mails belong to one person too (opt-in and unsubscribe).
+      ...['/potvrdit/:path*', '/odhlasit/:path*'].map((source) => ({
+        source,
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+          { key: 'Cache-Control', value: 'private, no-store' },
+        ],
+      })),
     ]
   },
   async rewrites() {

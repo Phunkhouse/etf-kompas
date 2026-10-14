@@ -117,6 +117,10 @@ Vitest (`src/server/*.test.ts`, node) unless it says E2E. Ports are faked in mem
 - The PDF fonts and the logo are read from disk and shipped with `outputFileTracingIncludes`: works on `next start`, to verify on the Vercel deploy (Phase 6).
 - PDF page 4 (taxes) has no verified text yet: four rows say `[ověřit zdroj]`.
 
+- E-mails have no tracking and no one-click `List-Unsubscribe-Post`; the plain `List-Unsubscribe` header is set.
+- Not tried against the real Resend until David sends one to his own address; deliverability to Seznam, Gmail and Outlook is a manual check before launch.
+- The sentence about when an e-mail is deleted is left out until retention is decided and `delete-lead.ts` exists (Phase 6).
+
 ## Out of scope for Phase 4
 
 Tracking and consent banner, `events` table and `lead` events (Phase 5), the optional phone step (P2), nurture emails (P2), Vercel deploy (Phase 6).

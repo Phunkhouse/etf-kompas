@@ -1101,3 +1101,19 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **Not verified:** the fonts and the logo are read from disk at request time and shipped with `outputFileTracingIncludes`. It works in `next start` (the e2e runs on a production build), but I cannot check how Vercel traces them before the Phase 6 deploy. Written into the README gaps.
 - **The logo is the PNG (`logo-600w.png`), not the SVG:** react-pdf draws PNG and JPEG images, not SVG files. The wordmark is the final logo, just as a bitmap.
 - JS budget: 149.4 KB of 150 KB (it was 148.9).
+
+### Phase 4, PR 4: e-mails, double opt-in, unsubscribe, send the link again
+
+**Prompt (summary):** David approved the plan (six pieces, seven decisions) and then the tests; I implemented. Decisions of 2026-10-14 that shape the code: the opt-in is confirmed by a button (a POST), never by opening the link, because mail scanners open links; unsubscribing happens on opening, as drawn, and "Přihlásit zpět" is a button; the sentence "Váš e-mail smažeme do [doplnit] dnů" is left out; the confirmed page gets a fresh results link; the e-mail is sent before the answer, with a 5 s timeout.
+
+**Produced:** `signed-links.ts`, `mailer.ts` (port, the sandbox rule in `deliver`, a Resend adapter over `fetch`, a recording mailer), `emails.ts` (the Kompas and opt-in e-mails, HTML and text), `lead-mail.ts`, `rate-limits.ts` (the limits, shared by the form and the resend), `subscriptions.ts`, `resend-link.ts`; the pages `/potvrdit/[token]`, `/odhlasit/[token]` and `/odhlasit/[token]/zpet`; the card "Poslat odkaz na můj e-mail" and the form on a dead link; the success text "Odkaz jsme poslali i na …" only when the mail was sent; migration `0002_optin_sent_at.sql`. The approved tests passed on the first run, and so did the 12 new e2e tests.
+
+**Mistakes and corrections**
+
+- **One approved assertion had to change:** S-1 of PR 1 compared the whole `ok` state with `toEqual`, and the state now carries the e-mail result. It is `toMatchObject` now, with the same checks.
+- **A test of mine was too broad:** "says nothing about an e-mail when skipped" matched the word "e-mail", which the existing line "Váš e-mail jsme uložili" contains. It now looks for "poslali", "odeslali" and "poslán".
+- **Layout defect seen only in a screenshot:** the buttons of the confirm and unsubscribe pages were small and centred, because the form around the button did not stretch. Fixed in `StatusCard`.
+- **A real consequence to remember:** the Supabase adapter now reads and writes the column `optin_sent_at`, so **the migration must be run before the app is used against Supabase**, or every submit fails with an error answer. I did not run it: it changes David's database.
+- **Not tried against the real Resend:** the adapter was tested with a stubbed `fetch`; the e-mail went to a recording mailer in the e2e. Sending a real e-mail to David's own address is the check, and needs his say-so (it is an outgoing message).
+- **Not done, on purpose:** the e-mail has no tracking pixel and no images, so open rates cannot be measured; there is no one-click `List-Unsubscribe-Post` (the plain header is set). Both are gaps for later, not mistakes.
+- JS budget: 149.8 KB of 150 KB (it was 149.4). About 0.2 KB left: the next line of client code on the landing page breaks it.

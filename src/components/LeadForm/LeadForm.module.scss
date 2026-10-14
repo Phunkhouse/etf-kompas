@@ -120,3 +120,10 @@
   font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
+
+// What became of the e-mail with the link: said only when it is true.
+.mailed {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}

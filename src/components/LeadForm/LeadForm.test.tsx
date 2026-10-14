@@ -189,7 +189,11 @@ describe('LeadForm: sending failed', () => {
 })
 
 describe('LeadForm: a valid address', () => {
-  const state: LeadFormState = { status: 'ok', resultsPath: '/srovnani/abc' }
+  const state: LeadFormState = {
+    status: 'ok',
+    resultsPath: '/srovnani/abc',
+    email: { status: 'skipped', address: 'jan@domena.cz' },
+  }
 
   it('says the address is stored', () => {
     renderForm({ initialState: state })
@@ -218,6 +222,36 @@ describe('LeadForm: a valid address', () => {
     expect(
       screen.queryByRole('button', { name: /Poslat mi srovnání|Zkusit znovu/ }),
     ).toBeNull()
+  })
+})
+
+describe('LeadForm: what is said about the e-mail', () => {
+  const ok = (status: 'sent' | 'skipped' | 'failed'): LeadFormState => ({
+    status: 'ok',
+    resultsPath: '/srovnani/abc',
+    email: { status, address: 'jan@domena.cz' },
+  })
+
+  it('says the link was sent only when it was', () => {
+    const { container } = renderForm({ initialState: ok('sent') })
+    expect(flat(container.textContent)).toContain(
+      'Odkaz jsme poslali i na jan@domena.cz. Pokud nic nepřijde, zkontrolujte spam.',
+    )
+  })
+
+  it('says nothing about an e-mail when it was skipped (sandbox)', () => {
+    const { container } = renderForm({ initialState: ok('skipped') })
+    expect(container.textContent).not.toMatch(/poslali|odeslali|poslán/i)
+    expect(screen.getByRole('link', { name: 'Otevřít srovnání' })).toBeTruthy()
+  })
+
+  it('says the e-mail did not go out when it failed, and still shows the links', () => {
+    const { container } = renderForm({ initialState: ok('failed') })
+    expect(flat(container.textContent)).toContain(
+      'E-mail se nepodařilo odeslat.',
+    )
+    expect(container.textContent).not.toContain('Odkaz jsme poslali')
+    expect(screen.getByRole('link', { name: 'Otevřít srovnání' })).toBeTruthy()
   })
 })
 

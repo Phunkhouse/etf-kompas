@@ -19,6 +19,7 @@ export type LeadRecord = {
   marketingConsent: boolean
   consentTextVersion: string | null
   consentConfirmedAt: Date | null // double opt-in, set by the confirmation link
+  optinSentAt: Date | null // when the opt-in e-mail last went out (once until confirmed or expired)
   emailStatus: EmailStatus
   unsubscribedAt: Date | null
   deletedAt: Date | null
