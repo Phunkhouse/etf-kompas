@@ -35,12 +35,22 @@ describe('HiddenCosts: "Za co platíte, aniž to vidíte"', () => {
     render(<HiddenCosts />)
     const sentences = screen
       .getAllByRole('listitem')
-      .map((item) => flat(within(item).getByText(/\./).textContent))
+      .map((item) =>
+        flat(within(item).getByText(/\.|ověřit zdroj/).textContent),
+      )
     expect(sentences).toEqual([
       'Fond si každý rok vezme malé procento z vašich peněz. Nikdo vám za to nepošle fakturu.',
       'Když fond nebo broker účtuje v cizí měně, platí se za převod z korun.',
-      'Část vyplacených zisků si stáhne zahraničí dřív, než se k vám dostanou.',
+      // No tax statement until a source is read and a reviewer has checked it
+      // (docs/TAX-SOURCES.md): the card says so instead of claiming something.
+      '[ověřit zdroj]',
     ])
+  })
+
+  it('says nothing about who takes what from the profits until a source stands behind it', () => {
+    render(<HiddenCosts />)
+    const body = flat(document.body.textContent)
+    expect(body).not.toMatch(/stáhne|zahraničí|vyplacených/)
   })
 
   it('contains no figures: it must not state a fee, a rate or an amount', () => {
