@@ -1256,3 +1256,19 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **My first purge route called `connection()`,** which throws outside a Next request (the route test caught it); a handler that reads the request headers is dynamic already, so the call was removed.
 - **A one-line `sed -i` on `package.json` failed on macOS** (BSD `sed`); done with a script instead. No harm.
 - **A privacy-page test asserted "no figure of its own";** the retention periods are now figures on purpose, so the test now excludes that section.
+
+### Phase 6, PR 3: noindex everywhere, share image, head
+
+**Prompt (summary):** David: "#91 done" (continue with the plan: the noindex header, the share image and the metadata).
+
+**Produced:** `e2e/head.spec.ts` first; the site-wide `X-Robots-Tag: noindex, nofollow` in `next.config.ts` (every path, files and API too; the results pages keep their own private cache header); `siteCopy` in `src/content/copy.ts` (title and description from the wireframe text, marked "to confirm" there); `metadataBase` from `SITE_URL`, Open Graph and Twitter tags in the layout; `public/share-image.png` (1200 x 630), `src/app/apple-icon.png` (180) and `src/app/icon1.png` (32), made from the drawing and the existing compass icon with the project's IBM Plex files.
+
+**Checked:** `pnpm check` (908 tests), `pnpm format:check`, 202 Playwright tests on a production build, and `curl -I` against a local `next start`: one `X-Robots-Tag` on `/` and on `/srovnani/...`. **Not verified:** the preview in Messenger, Instagram and Slack (needs the live address; the image URL is built from `SITE_URL`, which must be set in Vercel's build environment), and the real `curl -I` on `*.vercel.app`.
+
+**Mistakes and corrections**
+
+- **The share image of the drawing has a defect:** the compass tile covers the end of the headline ("je"). I did not copy it; the new image keeps the layout, narrows the headline so nothing overlaps, and uses the project's IBM Plex Sans instead of the drawing's font. It is a new asset that David has to look at.
+- **My first render had no fonts and no logo:** the browser blocked `file://` resources on a page set from a string (a broken image icon and a serif fallback). I saw it in the picture and rendered from a real file instead.
+- **My first noindex test failed on the 404 page:** Next adds its own robots tag there, so the page has two and the strict locator matched both. The test now looks at the first one.
+- **A reading error of mine on the first `curl`:** a `grep` raced the server and seemed to show a missing header on `/srovnani`; a second run showed it was there once.
+- **The headline ended a line with the one-letter word "u"**, against the typography rule; fixed with non-breaking spaces in the image.

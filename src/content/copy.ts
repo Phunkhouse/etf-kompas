@@ -5,6 +5,17 @@ import type { RetentionConfig } from '@/config/retention'
 // (non-breaking spaces) is applied at render time with nbsp(); a one-letter word
 // at the very end of a string gets its non-breaking space written in here.
 
+// The text of the page's <head> and of the link preview (wireframe B, "PDF, favicon,
+// sharing": "to confirm" by David). Shown by search results, chats and social feeds.
+export const siteCopy = {
+  name: 'ETF Kompas',
+  title: 'ETF Kompas: americké indexy z Česka, u koho je koupíte',
+  description:
+    'Srovnání evropských ETF na S&P 500 a Nasdaq 100: poplatky fondů a brokerů v korunách. Česky, na jedné stránce.',
+  imageAlt:
+    'ETF Kompas. Americké indexy z Česka: u koho je koupíte a za kolik? Poplatky fondů a brokerů v korunách. Na jedné stránce.',
+}
+
 // Page frame: source bar, header, footer (wireframe B, sections 0, 1 and 8).
 export const shellCopy = {
   sourceBar: (date: string) =>
