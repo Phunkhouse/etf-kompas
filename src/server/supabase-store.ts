@@ -7,6 +7,7 @@ import type {
   LeadRecord,
   LeadStore,
   RateLimiter,
+  RetentionStore,
   TokenRecord,
 } from './lead-ports'
 
@@ -38,6 +39,12 @@ type TokenRow = {
   lead_id: string
   created_at: string
   expires_at: string
+}
+
+// How many rows a DELETE removed: the total after the slash of `Content-Range`.
+function deletedCount(response: Response): number {
+  const total = response.headers?.get('content-range')?.split('/')[1]
+  return total && /^\d+$/.test(total) ? Number(total) : 0
 }
 
 const date = (value: string | null) => (value === null ? null : new Date(value))
@@ -100,6 +107,7 @@ export function createSupabaseStore(config: SupabaseConfig): {
   store: LeadStore
   limiter: RateLimiter
   events: EventStore
+  retention: RetentionStore
 } {
   const base = `${config.url.replace(/\/+$/, '')}/rest/v1`
   // The new secret keys (sb_secret_…) are not JWTs and go in `apikey` only.
@@ -196,9 +204,11 @@ export function createSupabaseStore(config: SupabaseConfig): {
       return (await response.json()) === true
     },
     async purgeBefore(cutoff) {
-      await call(
-        `/rate_limits?window_start=lt.${encodeURIComponent(cutoff.toISOString())}`,
-        { method: 'DELETE', prefer: 'return=minimal' },
+      return deletedCount(
+        await call(
+          `/rate_limits?window_start=lt.${encodeURIComponent(cutoff.toISOString())}`,
+          { method: 'DELETE', prefer: 'count=exact,return=minimal' },
+        ),
       )
     },
   }
@@ -230,5 +240,43 @@ export function createSupabaseStore(config: SupabaseConfig): {
     },
   }
 
-  return { store, limiter, events }
+  // Deleting for good. The ids and the counts stay out of every message.
+  const retention: RetentionStore = {
+    async dueCandidates(createdBefore, unsubscribedBefore) {
+      const filter = `or=(created_at.lt.${encodeURIComponent(createdBefore.toISOString())},unsubscribed_at.lt.${encodeURIComponent(unsubscribedBefore.toISOString())})`
+      // One batch a run; the rest waits for the next day.
+      const response = await call(
+        `/leads?${filter}&select=*&order=created_at.asc&limit=500`,
+        { method: 'GET' },
+      )
+      return ((await response.json()) as Row[]).map(fromRow)
+    },
+    async deleteLead(id) {
+      // result_tokens.lead_id is on delete cascade (migration 0001).
+      await call(`/leads?id=eq.${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+        prefer: 'return=minimal',
+      })
+    },
+    async deleteEventsBySession(sessionIds) {
+      if (sessionIds.length === 0) return 0
+      const list = sessionIds.map(encodeURIComponent).join(',')
+      return deletedCount(
+        await call(`/events?session_id=in.(${list})`, {
+          method: 'DELETE',
+          prefer: 'count=exact,return=minimal',
+        }),
+      )
+    },
+    async deleteEventsBefore(cutoff) {
+      return deletedCount(
+        await call(
+          `/events?created_at=lt.${encodeURIComponent(cutoff.toISOString())}`,
+          { method: 'DELETE', prefer: 'count=exact,return=minimal' },
+        ),
+      )
+    },
+  }
+
+  return { store, limiter, events, retention }
 }

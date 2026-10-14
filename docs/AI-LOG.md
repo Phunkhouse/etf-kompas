@@ -1241,3 +1241,18 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **My first dump of `etfs.json` printed the whole file** (I printed the first five elements of a list as if they were keys). Nothing wrong in the repo, but it flooded the context; I used ids only afterwards.
 - **My first reading of the data was wrong:** I took `etfs.json` for an object with an `etfs` key, so the fund list in my plan was incomplete until I read the ids (7 funds, not 5).
 - **I chose "optional, keep verified values" for dividend yield, withholding rate and others instead of dropping them,** which is narrower than David's "drop". Reported in the note so he can overrule it.
+
+### Phase 6, PR 2: automatic retention and deleting a lead
+
+**Prompt (summary):** David approved the PR 2 design and test cases ("Approved") after choosing 6 months after the last contact and 30 days after unsubscribe "for now", automatic, transparent, ready to change.
+
+**Produced:** tests first (`retention.test.ts`, `config/retention.test.ts`, the route, the Supabase adapter, `e2e/retention.spec.ts`; they failed on the missing modules), then `src/config/retention.ts`, `src/server/retention.ts` (`purgeDue`, `deleteLeadByEmail`), the `RetentionStore` port with memory and Supabase adapters, `GET /api/purge` (Bearer `CRON_SECRET`, counts only), `vercel.json` cron, `scripts/delete-lead.ts` (`pnpm lead:delete`), the privacy and unsubscribe wording read from the settings, legal pack point 5, note 0067.
+
+**Checked:** `pnpm check` (908 tests), `pnpm format:check`, 190 Playwright tests on a production build. **Not verified:** a run against the real Supabase and Vercel Cron (the Supabase delete calls are tested only against a mocked API).
+
+**Mistakes and corrections**
+
+- **A wrong claim was already in the page:** the FAQ said "e-mail nikam neukládáme" (we store it nowhere), untrue since Phase 4 stored leads. Nobody caught it for a phase, me included, because the comment above it said "no retention period" and I only looked at the missing period. Found while rewriting the wording; fixed and pinned by a test.
+- **My first purge route called `connection()`,** which throws outside a Next request (the route test caught it); a handler that reads the request headers is dynamic already, so the call was removed.
+- **A one-line `sed -i` on `package.json` failed on macOS** (BSD `sed`); done with a script instead. No harm.
+- **A privacy-page test asserted "no figure of its own";** the retention periods are now figures on purpose, so the test now excludes that section.

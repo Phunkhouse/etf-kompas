@@ -83,10 +83,10 @@ describe("PrivacyPolicy: the wording is the drawing's own", () => {
     )
   })
 
-  it('4: how long, with the number of months left as a gap', () => {
+  it('4: how long, with the two provisional periods from the settings', () => {
     const { container } = render(<PrivacyPolicy />)
     expect(text(container, 'jak-dlouho')).toContain(
-      'E-mail uchováváme do odhlášení, nejdéle [doplnit] měsíců. Souhlas můžete kdykoli odvolat, odkaz je v každém e-mailu.',
+      'E-mail smažeme sami: 6 měsíců po vašem posledním kontaktu s námi, a když se odhlásíte, nejpozději 30 dnů po odhlášení. Tyto lhůty jsou zatím předběžné a čekají na ověření [doplnit]. Souhlas můžete kdykoli odvolat, odkaz je v každém e-mailu.',
     )
   })
 
@@ -120,8 +120,10 @@ describe('PrivacyPolicy: nothing is invented', () => {
     expect([...gaps].every((g) => g.textContent === '[doplnit]')).toBe(true)
   })
 
-  it('has no number of months, no date and no figure of its own', () => {
+  // The only figures are the two retention periods, read from the settings.
+  it('has no date and no figure of its own outside the retention section', () => {
     const { container } = render(<PrivacyPolicy />)
+    container.querySelector('#jak-dlouho')?.remove()
     const withoutGaps = flat(container.textContent).replace(/\[doplnit\]/g, '')
     expect(withoutGaps).not.toMatch(/\d/)
   })

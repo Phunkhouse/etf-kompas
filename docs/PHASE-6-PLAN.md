@@ -1,6 +1,6 @@
 # Phase 6 plan: deploy and polish
 
-Status: **draft, open items answered by David on 2026-10-14 (see "Answers"); waiting for the final approval.** Written 2026-10-14. Source: SPEC §17.14, §19 (launch gate), §20, §22 (Phase 6), §23, `docs/PHASES.md`, `docs/PHASE-5-PLAN.md` (open items) and the README "Known gaps". Deadline: **Fri 2026-10-16**. Today is Wed 2026-10-14, so there are about two working days.
+Status: **approved by David on 2026-10-14. PR 1 (#90) merged; PR 2 (retention) in review.** Written 2026-10-14. Source: SPEC §17.14, §19 (launch gate), §20, §22 (Phase 6), §23, `docs/PHASES.md`, `docs/PHASE-5-PLAN.md` (open items) and the README "Known gaps". Deadline: **Fri 2026-10-16**. Today is Wed 2026-10-14, so there are about two working days.
 
 ## Acceptance (SPEC §22)
 
@@ -142,3 +142,77 @@ Deploy itself is a Vercel project connected to the repo (needs you, see below); 
 ## Cut order if we slip
 
 Czech README, funnel dashboard, Lighthouse CI, PDF (keep the results page), second hero variant. Never cut: sourced data validation, consent, `lead` tracking, honest README gaps.
+
+## PR 2: design and test cases (waiting for David's approval, nothing implemented)
+
+Rules: CLAUDE.md ("for risky logic, write the test cases first and wait for approval"). Source: the answers above, SPEC §19, `docs/LEGAL-PACK.md` point 5.
+
+### Design decisions I need confirmed
+
+1. **Hard delete.** A purged lead is removed from the table (its result tokens go with it by the cascade), not marked with `deletedAt`: a soft-deleted row still holds the e-mail address. A person who comes back later is a new lead (the existing code already treats a missing row as new).
+2. **"Last contact"** = the later of `createdAt` and `consentConfirmedAt`. The opt-in e-mail's send time (`optinSentAt`) is not counted: a send is not a contact from the person.
+3. **Two clocks, whichever is earlier wins:** a lead is due when it has been unsubscribed for more than `daysAfterUnsubscribe` (30 days), or when its last contact is more than `leadMonthsAfterLastContact` (6 months) ago.
+4. **Events:** the events of a due lead are deleted by the lead's `sessionId` (when it has one). Separately, every first-party event older than the lead period (6 months) is deleted, so a visitor who never left an e-mail is not kept longer than a lead. This ties events to the same provisional number; it is an assumption, marked `TODO_VERIFY` in the legal pack.
+5. **Rate-limit rows** older than the existing keep period are purged in the same run (the function exists).
+6. **One run, counts only:** the service returns `{ leads, events, rateLimits }` numbers and logs the same; it never returns or logs an e-mail address, id or session id. One failed delete is counted and does not stop the others.
+7. **Erasure on request:** `scripts/delete-lead.ts <email>` calls the same function for one lead, ignoring the two clocks.
+8. **Settings:** `src/config/retention.ts` (`leadMonthsAfterLastContact`, `daysAfterUnsubscribe`, `provisional: true`), overridable by `RETENTION_LEAD_MONTHS` and `RETENTION_UNSUBSCRIBED_DAYS` (positive integers, an invalid value is an error that names the variable).
+9. **Trigger:** `GET /api/purge` with `Authorization: Bearer $CRON_SECRET`, called daily by Vercel Cron (`vercel.json`). Without a configured `CRON_SECRET` the route answers 401 (never open). Comparison of the secret is constant-time.
+10. **Store port:** a `RetentionStore` (list leads created before a date, delete a lead, delete events by session ids, delete events before a date), implemented by the memory store and the Supabase store like the other ports. Supabase deletes use the secret key only; no migration is needed (the foreign key already cascades tokens).
+
+### Test cases
+
+Unit, rules (`src/server/retention.test.ts`, memory store, fixed `now`):
+
+- RT-1 a lead created 5 months and 29 days ago is kept; 6 months and 1 day ago is deleted.
+- RT-2 "last contact" is the later of `createdAt` and `consentConfirmedAt`: created 8 months ago but confirmed 2 months ago is kept; confirmed 7 months ago is deleted.
+- RT-3 `optinSentAt` alone does not renew the contact.
+- RT-4 unsubscribed 29 days ago is kept (if its last contact is recent); unsubscribed 31 days ago is deleted even though the last contact is recent.
+- RT-5 a lead that unsubscribed and then re-subscribed (`unsubscribedAt` null again) follows only the 6-month clock.
+- RT-6 a due lead's result tokens are gone afterwards; another lead's tokens are untouched.
+- RT-7 a due lead with a `sessionId` loses the events of that session; events of other sessions stay.
+- RT-8 a due lead without a `sessionId` deletes no events by session.
+- RT-9 events older than 6 months are deleted, newer are kept, whether or not a lead exists.
+- RT-10 the `lead` events (no `sessionId`) follow the age rule only.
+- RT-11 old rate-limit windows are purged, recent ones kept.
+- RT-12 if deleting one lead fails, the others are still deleted, and the result counts the failure.
+- RT-13 the result and the log lines contain no e-mail address, lead id or session id (the test searches the output for the addresses it created).
+- RT-14 running it twice in a row deletes nothing the second time (idempotent).
+- RT-15 an address deleted by the purge and submitted again is stored as a new lead and gets a new `lead` event.
+
+Unit, settings (`src/config/retention.test.ts`):
+
+- RC-1 defaults are 6 months and 30 days and `provisional` is true.
+- RC-2 environment values override the defaults.
+- RC-3 zero, negative, decimal or non-numeric values are rejected with the variable's name and no value.
+
+Unit, single erasure (`src/server/delete-lead.test.ts`):
+
+- DL-1 `deleteLeadByEmail` removes a recent lead, its tokens and its session's events, ignoring the clocks.
+- DL-2 the address is matched case-insensitively and trimmed.
+- DL-3 an unknown address returns "not found" and deletes nothing.
+
+Route (`GET /api/purge`, unit test with the memory store):
+
+- PR-1 no header, a wrong secret, or a non-Bearer header: 401, nothing deleted.
+- PR-2 `CRON_SECRET` not configured: 401 even with an empty or any header.
+- PR-3 the right secret: 200 and a body with the three counts only.
+- PR-4 other methods: 405. The response sets no cookie and is `Cache-Control: no-store`.
+
+Supabase adapter (`supabase-store.test.ts`, mocked fetch like the existing cases):
+
+- SB-1 the delete of a lead is one request with the lead id; events by session ids use an `in` filter; the age delete uses a `lt` filter on `created_at`.
+- SB-2 an error response from Supabase becomes a failed count, not an exception out of the service.
+
+Component and page copy:
+
+- CP-1 the privacy text and the unsubscribe page name both periods and say they are provisional; `pnpm copy:check` passes.
+
+Playwright (`e2e/retention.spec.ts`, memory store):
+
+- E2E-1 a lead is submitted, the test route ages it by 7 months, `/api/purge` with the secret deletes it, and its results link now shows the generic "does not work" page.
+- E2E-2 the same address can be submitted again afterwards and is stored as a new lead.
+
+### Not in this PR
+
+A migration (none needed), changing the periods (only a config change), deleting by request from the page (the script is manual), and a legal sign-off of the numbers.

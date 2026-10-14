@@ -1,3 +1,5 @@
+import type { RetentionConfig } from '@/config/retention'
+
 // All user-facing Czech text (SPEC §25, decision note 0002). The calculator
 // strings are the wireframe's working copy (decision note 0017). Typography
 // (non-breaking spaces) is applied at render time with nbsp(); a one-letter word
@@ -164,9 +166,9 @@ export const faqCopy = {
   },
   answers: {
     free: 'Ano. Srovnání je zdarma. Nedostáváme provize a nic vám neprodáváme.',
-    // No retention period: it is not decided yet (SPEC §19).
+    // The periods are in the privacy policy, where they are read from the settings.
     email:
-      'Pošleme vám na něj srovnání. Tipy k investování jen když to zaškrtnete. V každém e-mailu bude odkaz na odhlášení. Zatím jde o zkušební provoz: e-mail nikam neukládáme.',
+      'Pošleme vám na něj srovnání. Tipy k investování jen když to zaškrtnete. V každém e-mailu bude odkaz na odhlášení. Uchováváme ho jen omezenou dobu a pak ho sami smažeme, lhůty jsou v zásadách zpracování. Zatím jde o zkušební provoz.',
     advice:
       'Ne. Ukazujeme poplatky a dostupnost. Není to investiční ani daňové poradenství. Rozhodnutí je na vás.',
     us: {
@@ -289,6 +291,18 @@ export const calculatorCopy = {
   },
 }
 
+// "6 měsíců", "1 měsíc", "2 měsíce": the Czech plural of a count, with the number.
+export function czCount(
+  count: number | string,
+  one: string,
+  few: string,
+  many: string,
+): string {
+  const n = Number(count)
+  const word = n === 1 ? one : n >= 2 && n <= 4 ? few : many
+  return `${count} ${word}`
+}
+
 // The privacy policy page (wireframe B, "Menu, cookies, legal, errors"). It is the
 // wireframe's own text with "[doplnit]" where the text is not decided yet; it has
 // not been reviewed by a qualified person (SPEC §19, note 0039). The `legal` key
@@ -319,7 +333,8 @@ export const legalCopy = {
       {
         id: 'jak-dlouho',
         title: 'Jak dlouho',
-        text: 'E-mail uchováváme do odhlášení, nejdéle [doplnit] měsíců. Souhlas můžete kdykoli odvolat, odkaz je v každém e-mailu.',
+        text: (_controller: string, retention: RetentionConfig) =>
+          `E-mail smažeme sami: ${czCount(retention.leadMonthsAfterLastContact, 'měsíc', 'měsíce', 'měsíců')} po vašem posledním kontaktu s námi, a když se odhlásíte, nejpozději ${czCount(retention.daysAfterUnsubscribe, 'den', 'dny', 'dnů')} po odhlášení. ${retention.provisional ? 'Tyto lhůty jsou zatím předběžné a čekají na ověření [doplnit]. ' : ''}Souhlas můžete kdykoli odvolat, odkaz je v každém e-mailu.`,
       },
       {
         id: 'komu-predavame',
@@ -640,6 +655,9 @@ export const subscribeCopy = {
     label: 'Odhlášení',
     title: 'Odhlášeno',
     text: 'Srovnání vám už posílat nebudeme. Stalo se to omylem? Přihlásit se můžete znovu.',
+    // days: the provisional period after which the address is deleted
+    kept: (days: number) =>
+      `Váš e-mail sami smažeme nejpozději ${czCount(days, 'den', 'dny', 'dnů')} po odhlášení. Tato lhůta je zatím předběžná.`,
     button: 'Přihlásit zpět',
     failure: 'Přihlášení se nepovedlo. Zkuste to prosím znovu za chvíli.',
   },

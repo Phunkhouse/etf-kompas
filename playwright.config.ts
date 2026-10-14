@@ -51,6 +51,8 @@ export default defineConfig({
     // writes to no real database (the store is refused on Vercel).
     env: {
       LEAD_STORE: 'memory',
+      // The purge route is called by the retention test with this secret.
+      CRON_SECRET: 'e2e-cron-secret-of-at-least-32-bytes!',
       LEAD_MIN_FILL_MS: '0',
       // A recording mailer in sandbox mode: tests put the addresses they need on the
       // allowlist, and nothing leaves the machine.
