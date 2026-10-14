@@ -1417,3 +1417,18 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Produced:** decision note 0071 (his reason: too much hassle), the README and `docs/DEPLOY.md` lines saying the call is off by decision. No code change.
 
 **Mistakes and corrections:** none new. One thing to note: I had built PR #103 (the optional test code) before he decided; it is now unused, and I left the choice to merge or close it to him instead of closing it myself.
+
+### Phase 6: the basis for the tax text (`docs/TAX-SOURCES.md`)
+
+**Prompt (summary):** David: "I would still do this part" (the README line that the Czech tax explanation is not written), "point where I can find the data, so we can prepare at least a basis, which legal could later check".
+
+**Produced:** `docs/TAX-SOURCES.md`: the primary texts to read (the Income Tax Act on e-Sbírka and zakonyprolidi, three Finanční správa pages, the two treaties, the W-8BEN page), a table of ten statements with what the pages said and a status, a basis of three supportable sentences about selling after three years or under 100 000 Kč, and six questions for a reviewer. A README line points to it. No tax text was put on any page.
+
+**What I did and did not read:** a fetch tool that summarises a page read the three Finanční správa pages and the first 100 000 of 790 000 characters of the consolidated law; e-Sbírka itself and the 2009 instruction for Příloha č. 3 could not be read (JavaScript page; compressed PDF). So nothing is "verified"; the file says that at its top.
+
+**Mistakes and corrections**
+
+- **A search summary and a page disagreed, and I did not take the summary.** The summary said the 40 million Kč cap still applies; the 2026 press release says it is abolished; the "Ostatní" page still describes it. I read the pages and the law page, found the two Finanční správa pages disagree, and recorded that instead of choosing.
+- **The summaries named different letters of § 4 for the same rules** (u for the time test, t for the 100 000 Kč value limit on the law page; the finance page names none). Left as "check the law" instead of picking one.
+- **I found a tax claim already on the live page** (the third card of "Za co platíte": a foreign state takes part of the profits) that has no source behind it since note 0069 dropped the treaty sources, and that is false for accumulating funds. It went in unnoticed in Phase 3. Reported in the file; not changed.
+- **I almost cited the 2009 instruction for Příloha č. 3** as if current; the fetch showed its 2009 metadata, so I marked it "must not be used".
