@@ -1,6 +1,6 @@
 # Phase 6 plan: deploy and polish
 
-Status: **approved by David on 2026-10-14. PR 1 (#90) merged; PR 2 (retention) merged; PR 3 (noindex, share image, head) merged; PR 4 (strict data gate) in review.** Written 2026-10-14. Source: SPEC §17.14, §19 (launch gate), §20, §22 (Phase 6), §23, `docs/PHASES.md`, `docs/PHASE-5-PLAN.md` (open items) and the README "Known gaps". Deadline: **Fri 2026-10-16**. Today is Wed 2026-10-14, so there are about two working days.
+Status: **approved by David on 2026-10-14. PR 1 (#90) merged; PR 2 (retention) merged; PR 3 (noindex, share image, head) merged; PR 4 (strict data gate) merged; PR 5 (deploy notes) in review.** Written 2026-10-14. Source: SPEC §17.14, §19 (launch gate), §20, §22 (Phase 6), §23, `docs/PHASES.md`, `docs/PHASE-5-PLAN.md` (open items) and the README "Known gaps". Deadline: **Fri 2026-10-16**. Today is Wed 2026-10-14, so there are about two working days.
 
 ## Acceptance (SPEC §22)
 
