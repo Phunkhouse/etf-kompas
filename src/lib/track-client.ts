@@ -14,11 +14,19 @@
 // session cookie `sidCookie`, and withdrawn consent removes the cookie. The id goes
 // to the lead form only then (a hidden `sid` field, set when the form is submitted).
 // `?debug=1` prints each event to the console.
+//
+// GA4 and the Meta Pixel (PR 3): nothing from either vendor is requested before its
+// category is agreed. "Měření návštěvnosti" loads GA4 (Consent Mode v2: default
+// denied, then update with the choice); "Reklama a remarketing" loads the Pixel and
+// turns on GA4's advertising signals. The script tag is added on idle. A withdrawal
+// switches the vendor off for the rest of the page load. Without an id the vendor
+// is never loaded.
 export function trackClient(
   endpoint: string,
   consentCookie: string,
   consentVersion: number,
   sidCookie: string,
+  vendors: { ga4: string | null; pixel: string | null },
 ) {
   const doc = document
   const params = new URLSearchParams(location.search)
@@ -29,9 +37,17 @@ export function trackClient(
     return match ? match[1] : null
   }
 
+  const choice = () => {
+    const match = /^v(\d+)-m([01])-a([01])-\d+$/.exec(
+      cookie(consentCookie) || '',
+    )
+    return match && Number(match[1]) === consentVersion
+      ? { measurement: match[2] === '1', advertising: match[3] === '1' }
+      : null
+  }
   const agreed = () => {
-    const match = /^v(\d+)-m([01])-a[01]-\d+$/.exec(cookie(consentCookie) || '')
-    return !!match && Number(match[1]) === consentVersion && match[2] === '1'
+    const current = choice()
+    return !!current && current.measurement
   }
 
   const uuid = () => {
@@ -71,6 +87,116 @@ export function trackClient(
   const device = matchMedia('(max-width: 767px)').matches ? 'phone' : 'desktop'
   const inAppBrowser = /Instagram|FBAN|FBAV/.test(navigator.userAgent)
 
+  // ---- GA4 and the Meta Pixel ------------------------------------------------
+  const w = window as unknown as Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
+  let gaStarted = false
+  let gaOn = false
+  let metaStarted = false
+  let metaOn = false
+
+  const idle = (run: () => void) => {
+    if ('requestIdleCallback' in window)
+      requestIdleCallback(run, { timeout: 2000 })
+    else setTimeout(run, 200)
+  }
+  const addScript = (src: string) => {
+    const tag = doc.createElement('script')
+    tag.async = true
+    tag.src = src
+    doc.head.appendChild(tag)
+  }
+  // The standard gtag shape: gtag.js reads `arguments` objects from dataLayer.
+  const gtag: (...args: unknown[]) => void = function () {
+    // eslint-disable-next-line prefer-rest-params
+    w.dataLayer.push(arguments)
+  }
+  const grant = (on: boolean) => (on ? 'granted' : 'denied')
+  const signals = (measurement: boolean, advertising: boolean) => ({
+    analytics_storage: grant(measurement),
+    ad_storage: grant(advertising),
+    ad_user_data: grant(advertising),
+    ad_personalization: grant(advertising),
+  })
+  const props = (extra?: Record<string, unknown>) => {
+    const out: Record<string, unknown> = {
+      variant: main && main.getAttribute('data-variant') === 'b' ? 'b' : 'a',
+      device,
+      in_app_browser: inAppBrowser,
+    }
+    if (extra) Object.assign(out, extra)
+    return out
+  }
+
+  // Called at load and on every choice. Never requests anything for a category that
+  // is not agreed, and switches a vendor off when its category is withdrawn.
+  const apply = () => {
+    const current = choice()
+    const measurement = !!current && current.measurement
+    const advertising = !!current && current.advertising
+
+    if (vendors.ga4) {
+      if (measurement && !gaStarted) {
+        gaStarted = true
+        gaOn = true
+        w.dataLayer = w.dataLayer || []
+        gtag('consent', 'default', signals(false, false))
+        gtag('consent', 'update', signals(true, advertising))
+        gtag('js', new Date())
+        gtag('config', vendors.ga4, { send_page_view: false })
+        // the page the visitor agreed on is being viewed now
+        gtag('event', 'page_view', props())
+        idle(() =>
+          addScript(
+            'https://www.googletagmanager.com/gtag/js?id=' +
+              encodeURIComponent(vendors.ga4 as string),
+          ),
+        )
+      } else if (gaStarted) {
+        w['ga-disable-' + vendors.ga4] = !measurement
+        gtag('consent', 'update', signals(measurement, advertising))
+        gaOn = measurement
+      }
+    }
+
+    if (vendors.pixel) {
+      if (advertising && !metaStarted) {
+        metaStarted = true
+        metaOn = true
+        type Fbq = {
+          (...args: unknown[]): void
+          callMethod?: (...args: unknown[]) => void
+          queue: unknown[][]
+          loaded: boolean
+          version: string
+        }
+        const fbq: Fbq = function (...args: unknown[]) {
+          if (fbq.callMethod) fbq.callMethod(...args)
+          else fbq.queue.push(args)
+        } as Fbq
+        fbq.queue = []
+        fbq.loaded = true
+        fbq.version = '2.0'
+        w.fbq = fbq
+        w._fbq = fbq
+        w.fbq('init', vendors.pixel)
+        w.fbq('track', 'PageView')
+        idle(() => addScript('https://connect.facebook.net/en_US/fbevents.js'))
+      } else if (metaStarted) {
+        w.fbq('consent', advertising ? 'grant' : 'revoke')
+        metaOn = advertising
+      }
+    }
+  }
+
+  // One first-party event, forwarded to the vendors whose category is on. page_view
+  // is sent by `apply` when a vendor starts, so it is not sent twice.
+  const forward = (name: string, extra?: Record<string, unknown>) => {
+    if (name === 'page_view') return
+    if (gaOn) gtag('event', name, props(extra))
+    if (metaOn && name === 'calc_result') w.fbq('track', 'ViewContent')
+  }
+  // ----------------------------------------------------------------------------
+
   const send = (name: string, extra?: Record<string, unknown>) => {
     const payload: Record<string, unknown> = {
       sessionId: sid,
@@ -106,6 +232,11 @@ export function trackClient(
       }
     } catch {
       // measuring never breaks the page
+    }
+    try {
+      forward(name, extra)
+    } catch {
+      // a vendor never breaks the page or the first-party count
     }
   }
 
@@ -151,6 +282,14 @@ export function trackClient(
 
   send('page_view')
   fired.page_view = true
+  apply()
+  window.addEventListener('kompas:consent', () => {
+    try {
+      apply()
+    } catch {
+      // a vendor never breaks the page
+    }
+  })
 
   doc.addEventListener('input', (event) => {
     const target = event.target as Element | null

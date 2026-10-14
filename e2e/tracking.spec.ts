@@ -1,5 +1,6 @@
-import { test, expect, type APIRequestContext } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import { randomEmail, randomIp } from './lead-helpers'
+import { marker, stored, walk } from './track-helpers'
 
 // First-party events (Phase 5, PR 2): cases P-1 to P-6 of docs/PHASE-5-PLAN.md. The
 // server runs on the in-memory store; each test is its own visitor (its own IP, and
@@ -7,63 +8,9 @@ import { randomEmail, randomIp } from './lead-helpers'
 // without a stored cookie choice.
 test.use({ storageState: { cookies: [], origins: [] } })
 
-type StoredEvent = {
-  name: string
-  sessionId: string | null
-  variant: string | null
-  utmSource: string | null
-  fbclid: string | null
-  consentMeasurement: boolean
-  calcMonthly: number | null
-  calcYears: number | null
-}
-type StoredLead = { email: string; sessionId: string | null }
-
-async function stored(request: APIRequestContext) {
-  const response = await request.get('/api/test-leads')
-  return (await response.json()) as {
-    events: StoredEvent[]
-    leads: StoredLead[]
-  }
-}
-
-const marker = () => `t${crypto.randomUUID().slice(0, 8)}`
-
 test.beforeEach(async ({ context }) => {
   await context.setExtraHTTPHeaders({ 'x-forwarded-for': randomIp() })
 })
-
-// The whole path of a visitor, up to the submit.
-async function walk(
-  page: import('@playwright/test').Page,
-  request: APIRequestContext,
-  utm: string,
-) {
-  await page.goto(`/?utm_source=${utm}`)
-  await page.getByRole('slider').first().focus()
-  await page.keyboard.press('ArrowRight')
-  await page.locator('[data-track="result"]').scrollIntoViewIfNeeded()
-  // a person reads the result before moving on: calc_result needs one second in view
-  await expect
-    .poll(async () =>
-      (await stored(request)).events
-        .filter((e) => e.utmSource === utm)
-        .map((e) => e.name),
-    )
-    .toContain('calc_result')
-  await page.locator('#formular').scrollIntoViewIfNeeded()
-  // a person reads the form before clicking into it: wait for gate_view
-  await expect
-    .poll(async () =>
-      (await stored(request)).events
-        .filter((e) => e.utmSource === utm)
-        .map((e) => e.name),
-    )
-    .toContain('gate_view')
-  const email = page.getByRole('textbox', { name: 'Váš e-mail' })
-  await email.focus()
-  return email
-}
 
 test('P-1 the first visit sends page_view and sets no cookie @smoke', async ({
   page,

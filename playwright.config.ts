@@ -55,6 +55,10 @@ export default defineConfig({
       // A recording mailer in sandbox mode: tests put the addresses they need on the
       // allowlist, and nothing leaves the machine.
       EMAIL_MODE: 'sandbox',
+      // Fake tag ids, so the loaders are built into the page; the vendor scripts are
+      // answered by stubs in e2e/ad-tags.spec.ts and nothing leaves the machine.
+      GA4_MEASUREMENT_ID: 'G-TEST123456',
+      META_PIXEL_ID: '1234567890',
     },
   },
 })

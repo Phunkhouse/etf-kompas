@@ -55,11 +55,11 @@ Banner and consent state are separate from the React bundle: the head script rea
 
 ### PR 3: `feat: GA4 and Meta after consent`
 
-- [ ] Google Consent Mode v2: all denied by default, updated on the choice.
-- [ ] GA4 and the Pixel are injected on idle (`requestIdleCallback`) only after consent, each by its own category. Consent Mode v2: `default` denied and `update` granted at that moment, no `gtag` before consent.
-- [ ] Measure INP and TBT with and without consent.
-- [ ] Playwright: zero non-essential third-party requests before consent and after "Odmítnout vše".
-- [ ] Playwright: the order `page_view, calc_start, calc_result, gate_view, form_focus, lead`.
+- [x] Google Consent Mode v2: all denied by default, updated on the choice.
+- [x] GA4 and the Pixel are injected on idle (`requestIdleCallback`) only after consent, each by its own category. Consent Mode v2: `default` denied and `update` granted at that moment, no `gtag` before consent.
+- [ ] Measure INP and TBT with and without consent: not done in PR 3 (needs the real tags, see PR 5).
+- [x] Playwright: zero non-essential third-party requests before consent and after "Odmítnout vše".
+- [x] Playwright: the order `page_view, calc_start, calc_result, gate_view, form_focus` (the `lead` part comes in PR 4 with the shared `event_id`).
 
 ### PR 4: `feat: server-side lead event`
 
@@ -141,3 +141,47 @@ Playwright (`e2e/tracking.spec.ts`, mobile, memory store):
 - P-4 UTM and `fbclid` from the URL are on the stored `page_view` and on the lead; the variant of `/?v=b` is `b`.
 - P-5 after "Přijmout vše", `kompas_sid` is set and the lead has the same `session_id`; after "Odmítnout vše" there is no `kompas_sid` and the lead has none.
 - P-6 JS budget test stays green (149.8 of 150 KB).
+
+## PR 3: decisions and test cases (approved by David 2026-10-14)
+
+Source: SPEC §9, §12 (analytics), §17.12, the Phase 5 acceptance criteria. Test cases first: nothing below is implemented until David approves it. The accounts do not exist yet, so everything runs against stubs (a fake GA4 id and Pixel id, and the two vendor scripts answered by empty stub files in Playwright). The real behaviour of the two vendors is only proven at the end of the phase, in GA4 DebugView and Meta Test Events (PR 5).
+
+### Decisions I need
+
+1. **Where it lives.** In the same inline tracker script (note 0063), not in the React bundle (the margin is 0.1 KB). The loader adds about 1.5 KB to the inline script.
+2. **The ids.** Two optional server variables, read when the page is built: `GA4_MEASUREMENT_ID` (form `G-XXXXXXXXXX`) and `META_PIXEL_ID` (digits). Not secret (they are visible on any site that uses them), so no `NEXT_PUBLIC_` prefix is needed: the build writes them into the script. A missing or malformed id means that vendor is never loaded. Without both ids the site only counts first-party (SPEC §17.12). Added to `.env.example`.
+3. **Which category loads what.** "Měření návštěvnosti" loads GA4. "Reklama a remarketing" loads the Meta Pixel and turns on the advertising signals in GA4 (`ad_storage`, `ad_user_data`, `ad_personalization`). Neither vendor is requested before its category is agreed. Loading starts on idle (`requestIdleCallback`, with a timeout fallback), not during the first paint.
+4. **Consent Mode v2.** Because nothing loads before consent, there are no pings and no modelling. The script still sets Consent Mode the standard way at the moment it loads GA4: `default` all denied, then `update` with what the visitor agreed. A later withdrawal sends `update` denied, sets `window['ga-disable-<id>']`, and calls `fbq('consent','revoke')`. A script that is already loaded stays in memory until the next page load.
+5. **What each vendor gets.** GA4: all five browser events under their own names (`page_view`, `calc_start`, `calc_result` with `monthly` and `years`, `gate_view`, `form_focus`) with `variant`, `device` and `in_app_browser`; its automatic page view is switched off so there is no double count. Meta: `PageView`, and the standard `ViewContent` for `calc_result`. `Lead` (and GA4 `generate_lead`) come in PR 4 with the shared `event_id`. The mapping to Meta events is my proposal.
+6. **What the consent does not replay.** The visitor who agrees on the first screen has already produced `page_view`. I send that one to the vendors the moment consent arrives (the page they agreed on is being viewed now). Other earlier events are not replayed.
+7. **The `lead` in the sequence.** The browser-side `lead` needs the shared `event_id` from PR 4, so the full order `page_view … form_focus, lead` for the vendors is tested in PR 4. In PR 3 the order up to `form_focus` is tested.
+
+### Test cases
+
+Browser script (`Tracker.test.tsx`, jsdom, the real inline script; the two ids passed in):
+
+- T-1 with no ids, nothing third-party is ever added, even after full consent.
+- T-2 before any choice, and after "Odmítnout vše", no `<script>` for Google or Meta is added and `dataLayer` and `fbq` do not exist.
+- T-3 measurement only: after the consent event, on idle, the GA4 script with the id is added; `dataLayer` holds, in order, `consent default` (all four denied), `consent update` (`analytics_storage` granted, the other three denied), `js`, `config` with the id and `send_page_view: false`, then `page_view`. No Meta script.
+- T-4 advertising only: the Meta script is added, `init` with the pixel id and `PageView` are queued; GA4 is not loaded.
+- T-5 both: both loaded, and the `update` grants all four GA4 signals.
+- T-6 events after consent: each of the five reaches GA4 under its name with `variant`, `device`, `in_app_browser`; `calc_result` carries `monthly` and `years`; Meta gets `PageView` and `ViewContent` only.
+- T-7 a stored choice at load (a returning visitor) loads the vendors on idle, and sends `page_view` once.
+- T-8 withdrawal: after measurement goes off, GA4 gets `consent update` denied and `ga-disable-<id>` is true; after advertising goes off, `fbq('consent','revoke')` is called; no further events reach the vendor.
+- T-9 a malformed id (`G-` with spaces, a pixel with letters, a script tag in it) is ignored: that vendor is never loaded.
+- T-10 loading is not synchronous: right after the consent event no script is in the page; after idle it is.
+- T-11 events before consent are not replayed except `page_view`.
+- T-12 the first-party events are sent exactly as in PR 2, whatever the vendors do (a vendor script that fails to load changes nothing).
+
+Env (`env.test.ts`):
+
+- V-1 both ids optional; a valid `G-` id and a numeric pixel id pass; a malformed one is dropped with a warning that names the variable and never shows the value.
+
+Playwright (`e2e/ad-tags.spec.ts`, mobile, fake ids set in the webServer environment, vendor scripts answered by empty stubs):
+
+- A-1 first visit, then "Odmítnout vše", then the whole path (slider, result, form): every request goes to localhost; no request to Google or Meta.
+- A-2 "Přijmout vše": requests to the Google tag and `connect.facebook.net` appear (stubbed) only after the click; `dataLayer` and `fbq.queue` have the five events in the order `page_view, calc_start, calc_result, gate_view, form_focus`.
+- A-3 settings with measurement only: the Google tag is requested, Meta is not.
+- A-4 with the ids left out of the environment the same path makes no third-party request, even after "Přijmout vše" (a second small run of the same test with the variables unset).
+- A-5 JS budget test stays green (149.9 of 150 KB; the inline script is not counted).
+- A-6 INP and TBT, measured by hand once with and without consent on a throttled run, written into the PR (no assertion).

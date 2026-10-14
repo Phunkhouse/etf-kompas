@@ -1178,3 +1178,22 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **A port clash.** A dev server of David's held port 3000 (and may be connected to the real Supabase), so Playwright could not start its own. I did not reuse or stop it; I added `E2E_PORT` to the config and ran on 3100.
 - **A lint error (`let` that is never reassigned)** in the tracker; found by `pnpm check`, fixed.
 - **Two things in the privacy text are now untrue:** the page says technical data is processed "only when you allow cookies", but events are counted before any choice. Not changed (the text is a placeholder); added to the legal pack as point 8.
+
+### Phase 5, PR 3: GA4 and the Meta Pixel after consent
+
+**Prompt (summary):** David approved the decisions and the test cases (the plan's "PR 3"): both categories load their vendor, the Meta mapping (`PageView`, `ViewContent`) as proposed, and the order up to `form_focus` now with `lead` in PR 4.
+
+**Produced:** the loader inside the inline tracker (`src/lib/track-client.ts`): Consent Mode v2 (`default` denied, then `update`), GA4 and the Pixel added on idle only after their category is agreed, withdrawal switches them off, `page_view` forwarded once when a vendor starts. `trackingEnv()` reads the optional `GA4_MEASUREMENT_ID` and `META_PIXEL_ID` (`.env.example`). Tests: T-1 to T-12 (jsdom, the real script), V-1, and `e2e/ad-tags.spec.ts` with fake ids and stubbed vendor scripts; `e2e/track-helpers.ts` shares the walk with `e2e/tracking.spec.ts`.
+
+**Checked:** `pnpm check` and `pnpm format:check` green; 182 Playwright tests green on a production build; JS budget unchanged at 149.9 of 150 KB (the inline script is not counted).
+
+**Not done, and why**
+
+- **INP and TBT (case A-6) were not measured.** Lighthouse is not installed, and the cost lives in the real `gtag.js` and `fbevents.js`; stubbed scripts would measure nothing. To do once the real tags are connected.
+- **Case A-4 (a build without ids) is covered by the jsdom case T-1 only.** A second production build for one small test was not worth it.
+- **Nothing was checked against the vendors' current documentation or against GA4 and Meta themselves** (no network, no accounts). The consent calls (`gtag('consent', …)`, `ga-disable-<id>`, `fbq('consent', …)`) are written from what I know of them. DebugView and Test Events at the end of the phase are the real check.
+
+**Mistakes and corrections**
+
+- **My first e2e used two fixed sleeps** (`waitForTimeout`), against the project rule. Replaced by polling the stored first-party events, and the walk became a shared helper.
+- **I tagged the full-order test `@smoke`, which also runs on desktop.** There the form is in view at load, so `gate_view` comes before `calc_result`. The order is a phone order; the tag is removed.
