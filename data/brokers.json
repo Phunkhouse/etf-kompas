@@ -335,6 +335,22 @@
         "verifiedBy": "David",
         "verifiedOn": "2026-10-12",
         "evidence": "sha256:00a6d33a416af85555b2aeb06143b011348baa01e98e02f8ef42a76ce9dc6933 (fio-eqqq-search-01-2026-10-12.png) and sha256:8d7136ecbba703fd7e8f3d6e5a658122d646f96f9f0e9192ae458b9bd2c68e93 (fio-eqqq-search-02-2026-10-12.png); Fio e-Broker demo account 2026-10-12: instrument page \"INVESCO NAS.-100 ETF (SRN : EQQQ)\" and purchase form: ticker EQQQ, market XETRA, price in EUR. The ISIN is not shown by Fio; EQQQ is linked to IE0032077012 (Dist) by the DEGIRO screenshot of the same ticker"
+      },
+      "voo": {
+        "value": true,
+        "sourceUrl": "https://www.fio.cz",
+        "asOf": "2026-10-14",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-14",
+        "evidence": "sha256:fa4251c8277e3f2aebf80eaf40996f5aa66be59a751516bf16b6fcbb0a7f3bc9 (fio-voo-search-2026-10-14.png): Fio e-Broker demo account, 2026-10-14 (the page shows the market date 13.10.26): instrument page \"VANGUARD S&P 500 ETF (USA-NYSE : VOO)\" with a quote, a bid and an ask, and the red notice that trading on American markets first needs the W8 tax form handed to the broker; sha256:434fe8d13811bfd0bbefb9817357a0d1617945ef27403457108d0baf03e24dd8 (fio-w-8.pdf, Fio banka \"Formuláře W-8\"): a signed W-8BEN is needed to trade securities on US markets. So Fio offers the fund, on condition of a W-8BEN. The demo account is not a live account."
+      },
+      "qqq": {
+        "value": true,
+        "sourceUrl": "https://www.fio.cz",
+        "asOf": "2026-10-14",
+        "verifiedBy": "David",
+        "verifiedOn": "2026-10-14",
+        "evidence": "sha256:e1df2983ad2297a5d8d19f803c205c7e9c5fda9fb5020a7cfea4a008c02db6bc (fio-qqq-search-2026-10-14.png): Fio e-Broker demo account, 2026-10-14 (the page shows the market date 13.10.26): instrument page \"INVESCO QQQ TRUST (USA-NASDAQ : QQQ)\" with a quote, a bid and an ask, and the red notice that trading on American markets first needs the W8 tax form handed to the broker; sha256:434fe8d13811bfd0bbefb9817357a0d1617945ef27403457108d0baf03e24dd8 (fio-w-8.pdf, Fio banka \"Formuláře W-8\"): a signed W-8BEN is needed to trade securities on US markets. So Fio offers the fund, on condition of a W-8BEN. The demo account is not a live account."
       }
     },
     "fees": {

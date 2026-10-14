@@ -101,6 +101,8 @@ export type OriginalsFacts = {
   total: number
   // at least one broker is verified as selling the first twin
   europeanSold: boolean
+  // names of the brokers verified as selling every one of the originals
+  sellers: string[]
 }
 
 // What the FAQ may say about the American funds: how many brokers are verified as
@@ -124,6 +126,13 @@ export function originalsFacts(
     tickers: originals.map((etf) => etf.ticker),
     verifiedNo: counts.length > 0 ? Math.min(...counts) : 0,
     total: brokers.length,
+    sellers: brokers
+      .filter((broker) =>
+        originals.every(
+          (etf) => verifiedValue(broker.availability[etf.id]) === true,
+        ),
+      )
+      .map((broker) => broker.name),
     europeanSold: brokers.some(
       (broker) => verifiedValue(broker.availability[firstFundId]) === true,
     ),
