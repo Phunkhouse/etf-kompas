@@ -1145,3 +1145,18 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Mistakes and corrections:** none yet. Open: the new JS budget needs David's reason for a decision note (he said only "raise it").
 
 **JS budget decision (2026-10-14):** I first wrote "raise the budget" into the plan after David's answer. After exploring three architectures, David changed his mind: the budget stays and the consent bar is built in-house (note 0062, reason his). Plan updated. Mistake to record: I had put the budget question as a binary (raise or lazy-load), and the better answer was a third option; the pasted exploration prompt from David is what opened it.
+
+### Phase 5, PR 1: consent bar and settings
+
+**Prompt (summary):** David: "#83 landed" (the approved plan, `docs/PHASE-5-PLAN.md`): start PR 1.
+
+**Produced:** the in-house cookie bar and settings (note 0062): `src/components/CookieConsent/` (server-rendered HTML, SCSS, tests), `src/lib/consent.ts` (cookie format and reader), `src/lib/consent-client.ts` (the browser behaviour, written into one inline `<script>` of about 1.3 KB raw, 0.7 KB gzipped, with no React hydration), the copy in `legalCopy.cookies`, the `switch-on` colour token and two contrast pairs. The footer and menu "Cookies" links open the settings (`data-consent-action="open"`), with `/zasady#cookies` as the no-JavaScript fallback. `e2e/cookie-consent.spec.ts` is new. The e2e config now stores a "refused everything" choice for all other tests.
+
+**Checked:** `pnpm check` and `pnpm format:check` green; all 173 Playwright tests green on a production build; the JS budget test is unchanged at 149.8 of 150 KB (the script is inline HTML, not a script request; the inline code also appears once in the page's data payload, about 0.8 KB gzipped more, not measured by that test); screenshots of the phone and desktop bar and settings compared with the drawings.
+
+**Mistakes and corrections**
+
+- **My first full e2e run failed 4 tests.** The bar covers the sticky bar and the footer on a phone, so clicks were intercepted, and one test asserted that the site sets no cookies at all. I should have expected this when adding a fixed element to every page. Fix: the e2e config stores a choice for every test and the cookie tests start without one; the "no cookies" test now says "before a choice", which is the real rule.
+- **A test mounted the inline script many times** and the document listeners piled up, so events were counted five times. A test-only artifact (the real page runs it once); the test now removes its listeners.
+
+**Open points for David:** (1) the bar shows the "Zásady zpracování" link on the phone too, the phone drawing has none; (2) "Anonymní statistiky" is the drawing's text, but GA4 is not strictly anonymous: a lawyer should look at it; (3) the choice cookie lives 180 days, `TODO_VERIFY` (legal); (4) on desktop the buttons are reversed in CSS to match the drawing, so the tab order differs from the visual order.

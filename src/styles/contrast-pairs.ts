@@ -11,6 +11,8 @@ export type ContrastPair = {
 // Every foreground/background pair used in the UI. Add a pair here when a
 // component starts using it; `pnpm contrast:check` fails the build on a miss.
 export const contrastPairs: ContrastPair[] = [
+  { fg: 'switch-on', bg: 'surface', min: 3, use: 'cookie switch, on (UI)' },
+  { fg: 'muted', bg: 'surface', min: 3, use: 'cookie switch, off (UI)' },
   { fg: 'ink', bg: 'paper', min: 4.5, use: 'body text' },
   { fg: 'ink-soft', bg: 'paper', min: 4.5, use: 'secondary text' },
   { fg: 'ink-soft', bg: 'surface', min: 4.5, use: 'secondary text on cards' },
