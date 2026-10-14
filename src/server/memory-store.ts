@@ -48,10 +48,28 @@ export function createMemoryLeadStore(): MemoryLeadStore {
       async addToken(token) {
         tokens.push({ ...token })
       },
+      async findToken(tokenHash) {
+        const found = tokens.find((token) => token.tokenHash === tokenHash)
+        return found ? { ...found } : null
+      },
+      async findById(id) {
+        const found = leads.get(id)
+        return found ? { ...found } : null
+      },
     },
     limiter,
     leads: () => [...leads.values()].map((lead) => ({ ...lead })),
     tokens: () => tokens.map((token) => ({ ...token })),
     limiterWindows: () => [...windows.values()].map((row) => ({ ...row })),
+    expireTokens(email, now) {
+      const ids = [...leads.values()]
+        .filter((lead) => lead.email === email)
+        .map((lead) => lead.id)
+      for (const token of tokens) {
+        if (ids.includes(token.leadId)) {
+          token.expiresAt = new Date(now.getTime() - 1000)
+        }
+      }
+    },
   }
 }

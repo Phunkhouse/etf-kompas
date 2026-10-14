@@ -30,6 +30,13 @@ type Row = {
   deleted_at: string | null
 }
 
+type TokenRow = {
+  token_hash: string
+  lead_id: string
+  created_at: string
+  expires_at: string
+}
+
 const date = (value: string | null) => (value === null ? null : new Date(value))
 const iso = (value: Date | null) =>
   value === null ? null : value.toISOString()
@@ -132,12 +139,35 @@ export function createSupabaseStore(config: SupabaseConfig): {
         prefer: 'resolution=merge-duplicates,return=minimal',
       })
     },
+    async findToken(tokenHash) {
+      const response = await call(
+        `/result_tokens?token_hash=eq.${encodeURIComponent(tokenHash)}&select=*&limit=1`,
+        { method: 'GET' },
+      )
+      const rows = (await response.json()) as TokenRow[]
+      if (rows.length === 0) return null
+      return {
+        tokenHash: rows[0].token_hash,
+        leadId: rows[0].lead_id,
+        createdAt: new Date(rows[0].created_at),
+        expiresAt: new Date(rows[0].expires_at),
+      }
+    },
+    async findById(id) {
+      const response = await call(
+        `/leads?id=eq.${encodeURIComponent(id)}&select=*&limit=1`,
+        { method: 'GET' },
+      )
+      const rows = (await response.json()) as Row[]
+      return rows.length === 0 ? null : fromRow(rows[0])
+    },
     async addToken(token: TokenRecord) {
       await call('/result_tokens', {
         method: 'POST',
         body: {
           token_hash: token.tokenHash,
           lead_id: token.leadId,
+          created_at: token.createdAt.toISOString(),
           expires_at: token.expiresAt.toISOString(),
         },
         prefer: 'return=minimal',

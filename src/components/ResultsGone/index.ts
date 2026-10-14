@@ -1,0 +1,1 @@
+export { ResultsGone } from './ResultsGone'

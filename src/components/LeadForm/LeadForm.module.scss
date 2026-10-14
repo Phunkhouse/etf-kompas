@@ -94,3 +94,16 @@
   height: 1px;
   overflow: hidden;
 }
+
+// The link to the comparison after a sent form: the same ink button as the submit.
+.open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--touch-target-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}

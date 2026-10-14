@@ -85,7 +85,7 @@ Vitest (`src/server/*.test.ts`, node) unless it says E2E. Ports are faked in mem
 **Results page, PDF, small pages (component and route tests)**
 
 - P-1 a valid token renders the visitor's amount and years, and the totals equal `cost.ts` and `broker-pricing.ts` for the same inputs (the same numbers as the calculator).
-- P-2 expired, unknown and malformed tokens render the same generic message and the "Poslat odkaz znovu" form, with HTTP status 404 (decided: 404, to keep it out of caches), never the lead's data.
+- P-2 expired, unknown and malformed tokens render the same generic message and the "Poslat odkaz znovu" form, with HTTP status 200 (decided 404, but the page streams after a static shell and cannot change its status; the intent, out of caches and search, is met by `Cache-Control: private, no-store` and `noindex`), never the lead's data.
 - P-3 headers on every token page: `X-Robots-Tag: noindex`, `<meta robots noindex>`, `Cache-Control: private`.
 - P-4 the PDF has 6 pages, the same totals as the page, `[ověřit]` wherever the page has it, and no figure that is `TODO_VERIFY`.
 - P-5 confirm: a valid link sets `consent_confirmed_at`, a second use shows the confirmed page again without changing the date, an expired or altered link shows "Tento odkaz už nefunguje" with a way back.
@@ -105,6 +105,9 @@ Vitest (`src/server/*.test.ts`, node) unless it says E2E. Ports are faked in mem
 - Everything above also runs without JavaScript where the form is concerned (a native POST).
 
 ## Gaps to put in the README (known now)
+
+- An unknown, expired or malformed results link answers 200, not 404 (the page streams after a static shell). A real 404 needs a Proxy that repeats the lookup. David, 2026-10-14: a gap for now, maybe later if there is time.
+- The PNG exports of the comparison page and PDF page 1 still show "Fio" and "IBKR"; the sources are fixed and the images need exporting on a machine with IBM Plex (`export_images.py`).
 
 - Retention and deletion: `scripts/delete-lead.ts` and the contact address are not in Phase 4 (SPEC §26 suggests them): moved to Phase 6 (decided).
 - Legal review of the consent wording and the controller details (placeholders stay).

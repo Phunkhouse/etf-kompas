@@ -14,6 +14,19 @@ const nextConfig: NextConfig = {
   // Hero variants (decision note 0028): `/?v=b` serves the static page /v/b.
   // It has to be a beforeFiles rewrite, because / is an existing page and pages
   // are served before afterFiles rewrites. Any other `v` falls through to `/`.
+  // A results link belongs to one person: out of search engines and out of shared
+  // caches (SPEC §26).
+  async headers() {
+    return [
+      {
+        source: '/srovnani/:path*',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+          { key: 'Cache-Control', value: 'private, no-store' },
+        ],
+      },
+    ]
+  },
   async rewrites() {
     return {
       beforeFiles: [

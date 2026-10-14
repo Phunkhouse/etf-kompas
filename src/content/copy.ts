@@ -240,11 +240,12 @@ export const leadFormCopy = {
     strong: 'Příliš mnoho pokusů.',
     text: ' Zkuste to prosím později.',
   },
-  // The address is stored. The link to the comparison comes with the results
-  // page (Phase 4, next steps), so this does not promise it yet.
+  // The address is stored and the comparison is open now. It does not say that an
+  // e-mail was sent: that comes with the e-mails (Phase 4, PR 4).
   done: {
     strong: 'Hotovo.',
     text: ' Váš e-mail jsme uložili.',
+    open: 'Otevřít srovnání',
   },
 }
 
@@ -335,6 +336,94 @@ export const legalCopy = {
 }
 
 // The 404 page (wireframe B, "404").
+// The comparison page behind the e-mail (wireframe B, "Comparison page", PR 2).
+// Section 3 of the drawing ("Kde fond koupit") is not built yet, so the numbers
+// of the later sections are one lower than in the drawing.
+export const resultsCopy = {
+  label: 'Vaše srovnání',
+  title: 'Srovnání 5 fondů',
+  lead: 'Poplatky fondů a to, u koho je koupíte a kolik za to zaplatíte. Bez výnosů, jen to, co fond stojí.',
+  strip: {
+    label: 'Váš výsledek',
+    setup: (monthly: string, years: number) =>
+      `${monthly} měsíčně · ${years} let`,
+    total: (years: number, ticker: string) =>
+      `Za ${years} let vás fond (${ticker}) může u ověřených brokerů stát i`,
+    fundOnly: (years: number, ticker: string) =>
+      `Za ${years} let vás poplatek fondu (${ticker}) bude stát`,
+  },
+  contents: {
+    label: 'Na stránce',
+    funds: '1 · Fondy vedle sebe',
+    taxes: '2 · Daně v Česku',
+    method: '3 · Jak počítáme',
+  },
+  funds: {
+    heading: '1 · Fondy vedle sebe',
+    label: 'Stejný index, jiný fond',
+    caption: 'Fondy vedle sebe',
+    columns: { fund: 'Co koupíte', type: 'Typ', fee: 'Roční poplatek' },
+    accumulating: 'Acc',
+    distributing: 'Dist',
+    legend:
+      'Acc = fond výnosy sám reinvestuje. Dist = výnosy vyplácí. Jen cena a dostupnost, ne výnosy.',
+  },
+  brokers: {
+    heading: 'U kterého brokera?',
+    pick: 'Vyberte fond',
+    caption: 'U kterého brokera?',
+    columns: {
+      broker: 'Broker',
+      buy: 'Koupíte?',
+      fees: 'Poplatky brokera a převod',
+      total: (years: number) => `Za ${years} let celkem`,
+    },
+    yes: 'Ano',
+    no: 'Ne',
+    unverified: '[ověřit]',
+    none: '–',
+    assumption: (monthly: string, years: number, rate: string) =>
+      `${monthly} měsíčně · ${years} let · ${rate} ročně · jedna investice měsíčně · příklad, ne slib. Částky se řídí kalkulačkou.`,
+    summary: (spread: string, lowest: string, years: number) =>
+      `Mezi ověřenými brokery se výsledek liší až o ${spread}. Nejnižší možné poplatky s vaším nastavením: ${lowest} za ${years} let.`,
+    estimate:
+      'Odhad. Bez českých daní a inflace. Ceny brokerů: u každého je zdroj a datum ověření; u neověřených to doplníme.',
+  },
+  taxes: {
+    heading: '2 · Daně v Česku',
+    items: [
+      {
+        label: 'Prodej po letech',
+        text: '[Text se doplní podle ověřeného podkladu: kdy je zisk z prodeje osvobozen.]',
+      },
+      {
+        label: 'Dividendy ze zahraničí',
+        text: '[Text se doplní podle ověřeného podkladu: co stáhne zahraničí a co dopočítáte u nás.]',
+      },
+      {
+        label: 'Přiznání',
+        text: '[Text se doplní podle ověřeného podkladu: co a kam uvést.]',
+      },
+    ],
+    note: 'Obecná informace, ne daňové poradenství.',
+  },
+  method: {
+    heading: '3 · Jak počítáme',
+    text: 'Počítáme roční poplatek fondu, převod korun a poplatky brokera. Nepočítáme inflaci ani české daně.',
+    link: 'Otevřít postup',
+  },
+  expires: 'Odkaz platí 30 dní.',
+}
+
+// A results link that does not work: never issued, expired or mistyped. One text for
+// all of them, so it does not say whether an address is known.
+export const resultsGoneCopy = {
+  label: 'Odkaz',
+  title: 'Tento odkaz už nefunguje',
+  text: 'Odkaz je možná starý, platí 30 dní, nebo v něm je překlep. Kalkulačku najdete na úvodní stránce.',
+  back: 'Zpět na úvod',
+}
+
 export const notFoundCopy = {
   label: '404',
   title: 'Tuhle stránku jsme nenašli',
@@ -383,6 +472,8 @@ export const copy = {
   calculator: calculatorCopy,
   legal: legalCopy,
   notFound: notFoundCopy,
+  results: resultsCopy,
+  resultsGone: resultsGoneCopy,
   menu: menuCopy,
   stickyBar: stickyBarCopy,
 }
