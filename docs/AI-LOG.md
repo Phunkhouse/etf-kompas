@@ -1143,3 +1143,5 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Produced:** `docs/PHASE-5-PLAN.md` (checklist, five PRs, open items), from SPEC §9, §17.12, §22, §23 and the cookie wireframes. Status `proposed`: not approved, no code yet.
 
 **Mistakes and corrections:** none yet. Open: the new JS budget needs David's reason for a decision note (he said only "raise it").
+
+**JS budget decision (2026-10-14):** I first wrote "raise the budget" into the plan after David's answer. After exploring three architectures, David changed his mind: the budget stays and the consent bar is built in-house (note 0062, reason his). Plan updated. Mistake to record: I had put the budget question as a binary (raise or lazy-load), and the better answer was a third option; the pasted exploration prompt from David is what opened it.
