@@ -1,6 +1,6 @@
 # Phase 6 plan: deploy and polish
 
-Status: **approved by David on 2026-10-14. PR 1 (#90) merged; PR 2 (retention) merged; PR 3 (noindex, share image, head) merged; PR 4 (strict data gate) merged; PR 5 (deploy notes) in review.** Written 2026-10-14. Source: SPEC §17.14, §19 (launch gate), §20, §22 (Phase 6), §23, `docs/PHASES.md`, `docs/PHASE-5-PLAN.md` (open items) and the README "Known gaps". Deadline: **Fri 2026-10-16**. Today is Wed 2026-10-14, so there are about two working days.
+Status: **approved by David on 2026-10-14; done on 2026-10-14 with the open items marked below.** Written 2026-10-14. Source: SPEC §17.14, §19 (launch gate), §20, §22 (Phase 6), §23, `docs/PHASES.md`, `docs/PHASE-5-PLAN.md` (open items) and the README "Known gaps". Deadline: **Fri 2026-10-16**. Today is Wed 2026-10-14, so there are about two working days.
 
 ## Acceptance (SPEC §22)
 
@@ -59,76 +59,76 @@ Deploy itself is a Vercel project connected to the repo (needs you, see below); 
 
 ### Needs from David (blockers, in order)
 
-- [ ] Approve this plan (answers recorded above).
-- [ ] Add `CRON_SECRET` to Vercel (a random value, `openssl rand -base64 32`).
-- [ ] Remind: decide `EMAIL_MODE` (`live` or `sandbox`) **at the end of the phase**.
-- [ ] Create the Vercel project (Hobby), connect the GitHub repo, region near the Supabase EU project.
-- [ ] Put the environment variables into Vercel (names in `.env.example`): Supabase URL and secret key, Resend key, `EMAIL_MODE`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, `SITE_URL` (the `*.vercel.app` address), `IP_HASH_SECRET`, `TOKEN_SIGNING_SECRET` (new values, not the local ones), `GA4_MEASUREMENT_ID`, `META_PIXEL_ID`, and the CAPI pair if you have it.
-- [ ] Make sure `LEAD_STORE=memory` is **not** set on Vercel (test routes are 404 only without it).
-- [ ] Apply the three Supabase migrations to the production project (or confirm the one in use is the production one).
-- [ ] Final read of the Czech copy in `src/content/copy.ts` (SPEC §17.10, named step).
-- [ ] Real-phone tests: Meta Test Events, network tab with consent refused, in-app browser (below).
+- [x] Approve this plan (answers recorded above).
+- [x] Add `CRON_SECRET` to Vercel (a random value, `openssl rand -base64 32`). (rotated and saved by David; the manual `/api/purge` answered with `failed: 0`)
+- [x] Remind: decide `EMAIL_MODE` (`live` or `sandbox`) **at the end of the phase**. Decided: `sandbox` with an allowlist (note 0070).
+- [x] Create the Vercel project (Hobby), connect the GitHub repo, region near the Supabase EU project. Live at https://etf-kompas-kappa.vercel.app.
+- [x] Put the environment variables into Vercel (names in `.env.example`): Supabase URL and secret key, Resend key, `EMAIL_MODE`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, `SITE_URL` (the `*.vercel.app` address), `IP_HASH_SECRET`, `TOKEN_SIGNING_SECRET` (new values, not the local ones), `GA4_MEASUREMENT_ID`, `META_PIXEL_ID`, and the CAPI pair if you have it. (reported by David; the strict build and the live pages work).
+- [x] Make sure `LEAD_STORE=memory` is **not** set on Vercel (test routes are 404 only without it). `/api/test-leads` answers 404 on the live site.
+- [x] Apply the three Supabase migrations to the production project (or confirm the one in use is the production one). The `events` table on the live project holds rows, so the migrations are in.
+- [ ] Final read of the Czech copy in `src/content/copy.ts` (SPEC §17.10, named step). **Still open: David's last pass.**
+- [x] Real-phone tests: Meta Test Events, network tab with consent refused, in-app browser (below). Done: the in-app browser (note 0068) and Meta Test Events (browser side). **Not reported:** the network tab with consent refused.
 
 ### Deploy
 
-- [ ] First production deploy from `main`; build is green on Vercel.
-- [ ] `curl -I https://<site>.vercel.app/` shows `X-Robots-Tag: noindex` (and the `<meta robots>` is in the HTML); same check on `/srovnani/x`, `/zasady`.
-- [ ] `/robots.txt` disallows everything or is absent by decision.
-- [ ] Security headers reviewed (no inline-script breakage if a CSP is added; if not added, listed as a gap).
-- [ ] PDF route works on Vercel (fonts and logo traced by `outputFileTracingIncludes`): open a real PDF, check pages and fonts. **Open caveat from Phase 4.**
-- [ ] Results link from the e-mail uses the deployed `SITE_URL`; opt-in and unsubscribe links work against production.
-- [ ] Daily exchange-rate fetch works on Vercel (note 0038); fallback behaviour seen once.
-- [ ] Vercel Cron runs `/api/purge` once (401 without the secret, counts only in the answer).
-- [ ] Rate limit (6th request, 429) works against the deployed Supabase-backed store.
-- [ ] Lighthouse mobile on the live URL: performance >= 90, accessibility >= 95, LCP < 2.0 s, CLS < 0.05; JS still <= 150 KB gzipped.
-- [ ] INP and TBT with and without consent measured (open from Phase 5 PR 3).
-- [ ] `after` (server-side Lead send) confirmed on Vercel (open from Phase 5).
+- [x] First production deploy from `main`; build is green on Vercel.
+- [x] `curl -I https://<site>.vercel.app/` shows `X-Robots-Tag: noindex` (and the `<meta robots>` is in the HTML); same check on `/srovnani/x`, `/zasady`. Checked on `/`, `/zasady`, `/srovnani/x`, a 404 and the share image.
+- [x] `/robots.txt` disallows everything or is absent by decision. Absent (404) by decision: a block would hide the noindex header from crawlers.
+- [ ] Security headers reviewed (no inline-script breakage if a CSP is added; if not added, listed as a gap). **Not reviewed.** The live site sends HSTS (Vercel) and our `X-Robots-Tag`; no CSP, `X-Frame-Options`, `X-Content-Type-Options` or `Referrer-Policy`. Listed in the README.
+- [x] PDF route works on Vercel (fonts and logo traced by `outputFileTracingIncludes`): open a real PDF, check pages and fonts. **Open caveat from Phase 4.** David opened a PDF on the live site and found it fine (one file).
+- [x] Results link from the e-mail uses the deployed `SITE_URL`; opt-in and unsubscribe links work against production. David checked the links and unsubscribe.
+- [ ] Daily exchange-rate fetch works on Vercel (note 0038); fallback behaviour seen once. **Not checked from outside** (the page's cost numbers are computed in the browser).
+- [ ] Vercel Cron runs `/api/purge` once (401 without the secret, counts only in the answer). The route was called by hand (401 without the secret, counts only with it). **The cron's own first run was not observed.**
+- [ ] Rate limit (6th request, 429) works against the deployed Supabase-backed store. **Not run against the live site.**
+- [x] Lighthouse mobile on the live URL: performance >= 90, accessibility >= 95, LCP < 2.0 s, CLS < 0.05; JS still <= 150 KB gzipped. Applied throttling: performance 100, LCP 0.9 to 1.0 s. Simulated: 97 to 99, LCP 2.3 to 2.4 s (README).
+- [ ] INP and TBT with and without consent measured (open from Phase 5 PR 3). **Not measured.**
+- [ ] `after` (server-side Lead send) confirmed on Vercel (open from Phase 5). Not applicable: the server-side call is off by decision (note 0071).
 
 ### Tracking on the live site (Phase 5 leftovers)
 
-- [ ] Network tab on a real phone: zero third-party requests before consent and after "Odmítnout vše".
+- [ ] Network tab on a real phone: zero third-party requests before consent and after "Odmítnout vše". **Not reported.** Meta Test Events showed nothing after "Odmítnout vše".
 - [x] GA4 DebugView (2026-10-14) and Meta Test Events (browser side, 2026-10-14) show the events after consent; the shared `event_id` with the server call is not checked (server side not enabled).
-- [ ] Meta Conversions API: documented as "built, not enabled" (token and Graph version missing); enabling is a later step.
-- [ ] Decision notes waiting on your "ok": vendors only after consent, no GA4 Measurement Protocol.
+- [x] Meta Conversions API: documented as "built, not enabled" (token and Graph version missing); enabling is a later step. Decided: stays off (note 0071).
+- [ ] Decision notes waiting on your "ok": vendors only after consent, no GA4 Measurement Protocol. **Still not written** (vendors only after consent; no GA4 Measurement Protocol).
 
 ### In-app browser (SPEC §23), on a real phone
 
-- [ ] Send the deployed link to yourself in Instagram DM and Messenger; open it **inside the app**.
-- [ ] Hero fits, sticky bar does not jump with the keyboard, no autofocus on e-mail, `100dvh` behaves.
-- [ ] Calculator works; submit works; success state shows "Otevřít přehled" first, then "Stáhnout PDF" and the copy-link hint.
-- [ ] Results page opens; PDF link opens (no `download` attribute reliance).
-- [ ] Open the opt-in and results links from the e-mail inside the mail app's webview (Gmail, Seznam).
-- [ ] `in_app_browser=true` appears on the events.
-- [ ] Record results (what worked, what did not, device and app versions) in a decision note.
+- [x] Send the deployed link to yourself in Instagram DM and Messenger; open it **inside the app**.
+- [x] Hero fits, sticky bar does not jump with the keyboard, no autofocus on e-mail, `100dvh` behaves.
+- [x] Calculator works; submit works; success state shows "Otevřít přehled" first, then "Stáhnout PDF" and the copy-link hint. The page says "Otevřít srovnání"; the copy-link hint is not built (note 0068).
+- [ ] Results page opens; PDF link opens (no `download` attribute reliance). The PDF opened in both apps; the results page itself: not reported.
+- [ ] Open the opt-in and results links from the e-mail inside the mail app's webview (Gmail, Seznam). Not applicable on this phone: e-mail links open in Safari.
+- [x] `in_app_browser=true` appears on the events. Seen in the stored events.
+- [x] Record results (what worked, what did not, device and app versions) in a decision note. Note 0068 and `docs/IN-APP-BROWSER-TEST.md`.
 
 ### Polish
 
-- [ ] 404 page checked on the live site against the drawing.
-- [ ] Privacy page and unsubscribe page name the provisional retention periods; `docs/LEGAL-PACK.md` point 5 updated (period still `TODO_VERIFY`, defaults and how to change them).
-- [ ] Privacy page text matches what actually runs (cookies, events, processors); placeholders marked `TODO_VERIFY`; controller details still placeholders.
-- [ ] Footer "Zásady zpracování" and "Cookies" linked (memory: needs wireframes; if none drawn, state that in the README). Mobile menu likewise.
-- [ ] Favicon in all sizes; OG image 1200x630, Czech title and description, checked in a link preview.
-- [ ] Data freshness: no record stale on deploy day (earliest: EQQQ KIID 2026-10-24, VOO 2026-10-28, XTB about 14 Nov). **Remind David: add the monthly "refresh data" issue action** (SPEC §18, P1).
-- [ ] Delivery of the Kompas e-mail checked at Seznam, Gmail and Outlook (spam folder too).
-- [ ] Tax cards and PDF page 4: either verified Finanční správa text, or the README keeps the gap listed (never invent).
+- [ ] 404 page checked on the live site against the drawing. The status is 404 on the live site; **not compared with the drawing.**
+- [x] Privacy page and unsubscribe page name the provisional retention periods; `docs/LEGAL-PACK.md` point 5 updated (period still `TODO_VERIFY`, defaults and how to change them).
+- [ ] Privacy page text matches what actually runs (cookies, events, processors); placeholders marked `TODO_VERIFY`; controller details still placeholders. **Open:** legal pack point 8.
+- [ ] Footer "Zásady zpracování" and "Cookies" linked (memory: needs wireframes; if none drawn, state that in the README). Mobile menu likewise. The footer links exist; **the "Cookies" link reopening the settings was not reported.**
+- [ ] Favicon in all sizes; OG image 1200x630, Czech title and description, checked in a link preview. Built (`icon.svg`, 32 px, 180 px, share image). **The preview in Messenger, Instagram or Slack was not checked.**
+- [ ] Data freshness: no record stale on deploy day (earliest: EQQQ KIID 2026-10-24, VOO 2026-10-28, XTB about 14 Nov). **Remind David: add the monthly "refresh data" issue action** (SPEC §18, P1). Fresh on deploy day; the gate first fails on 2026-10-25. **The monthly refresh job is not built.**
+- [ ] Delivery of the Kompas e-mail checked at Seznam, Gmail and Outlook (spam folder too). **Not checked.** Only a direct `pm.me` address received it.
+- [x] Tax cards and PDF page 4: either verified Finanční správa text, or the README keeps the gap listed (never invent). The gap stays in the README; `docs/TAX-SOURCES.md` is the basis for a reviewer.
 
 ### README (SPEC §16)
 
-- [ ] 1 to 6 present and current; 7 tracking plan and how to read the funnel; 8 expected conversion; 9 A/B hypotheses (already there).
-- [ ] 10 "How I worked with AI" written from `docs/AI-LOG.md`, with the real mistakes.
-- [ ] 11 gaps updated to the end-of-Phase-6 state: no lawyer, legal pack unsigned, placeholder controller, test sending domain, Vercel Hobby terms, data refresh cadence, 200 on unknown link, retention, CAPI status, 5-second test with one person.
-- [ ] 12 run, test, deploy instructions and the **production switch checklist** (real domain with SPF/DKIM/DMARC, controller details, `EMAIL_MODE=live`, lift `noindex`).
-- [ ] Launch gate (SPEC §19.5) stated plainly: the site stays `noindex`, no paid traffic.
-- [ ] Czech README only if time is left (cut first).
+- [x] 1 to 6 present and current; 7 tracking plan and how to read the funnel; 8 expected conversion; 9 A/B hypotheses (already there).
+- [x] 10 "How I worked with AI" written from `docs/AI-LOG.md`, with the real mistakes. A draft from the AI log for David to rewrite.
+- [x] 11 gaps updated to the end-of-Phase-6 state: no lawyer, legal pack unsigned, placeholder controller, test sending domain, Vercel Hobby terms, data refresh cadence, 200 on unknown link, retention, CAPI status, 5-second test with one person.
+- [x] 12 run, test, deploy instructions and the **production switch checklist** (real domain with SPF/DKIM/DMARC, controller details, `EMAIL_MODE=live`, lift `noindex`).
+- [x] Launch gate (SPEC §19.5) stated plainly: the site stays `noindex`, no paid traffic.
+- [ ] Czech README only if time is left (cut first). Not written (the cut order puts it first).
 
 ### Close the phase
 
-- [ ] `docs/PHASES.md` status and `docs/PHASE-5-PLAN.md` leftovers updated.
-- [ ] Pre-release decision audit session (notes 0019, 0025, 0023).
-- [ ] Decision notes drafted from your reasons (data model trim, retention defaults (reason still needed), in-app browser result, audit outcomes, deploy gate).
-- [ ] `docs/AI-LOG.md` entry per PR, mistakes included.
-- [ ] `pnpm check && pnpm format:check` green on every PR; no new dependency without a reason.
-- [ ] Final review with David Thu evening; Fri 10-16 is buffer and submission (public repo + working `*.vercel.app` URL).
+- [x] `docs/PHASES.md` status and `docs/PHASE-5-PLAN.md` leftovers updated. This PR.
+- [x] Pre-release decision audit session (notes 0019, 0025, 0023). Note 0069.
+- [x] Decision notes drafted from your reasons (data model trim, retention defaults (reason still needed), in-app browser result, audit outcomes, deploy gate). Notes 0066 to 0071. The reason for the retention defaults was not given beyond "for now".
+- [x] `docs/AI-LOG.md` entry per PR, mistakes included.
+- [x] `pnpm check && pnpm format:check` green on every PR; no new dependency without a reason.
+- [ ] Final review with David Thu evening; Fri 10-16 is buffer and submission (public repo + working `*.vercel.app` URL). **Open.**
 
 ## Timeline
 

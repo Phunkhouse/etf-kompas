@@ -1417,3 +1417,16 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Produced:** decision note 0071 (his reason: too much hassle), the README and `docs/DEPLOY.md` lines saying the call is off by decision. No code change.
 
 **Mistakes and corrections:** none new. One thing to note: I had built PR #103 (the optional test code) before he decided; it is now unused, and I left the choice to merge or close it to him instead of closing it myself.
+
+### Phase 6: closing the phase
+
+**Prompt (summary):** the last item of the plan: bring `docs/PHASES.md` and the plan checklist to the truth.
+
+**Produced:** `docs/PHASES.md` (the Phase 6 status and its open items), every line of the Phase 6 plan checklist ticked or left open with a note of what was and was not seen, and a README line about the security headers (found while ticking: only HSTS, from Vercel).
+
+**Checked:** each tick against what was seen in this session: `curl -I`, David's reports, the PRs. Where the evidence was only "David said it works", the line says so. `pnpm format:check`.
+
+**Mistakes and corrections**
+
+- **The plan's checklist had items I had never planned to test and then said were done** in my own summaries (the cron "first run"; the rate limit on the live site; the exchange-rate fetch). They are left open, not ticked.
+- **My plan said the earliest stale date was 24 Oct for EQQQ and 28 Oct for VOO;** the validator says 25 Oct, and the VOO record no longer exists (note 0069). The plan keeps the old numbers in its first draft text and notes the correction at the line.
