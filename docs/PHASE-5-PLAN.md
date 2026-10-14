@@ -75,7 +75,8 @@ Banner and consent state are separate from the React bundle: the head script rea
 - [x] `docs/PHASES.md`, the README gaps, `docs/AI-LOG.md`.
 - [ ] Decision notes for the vendors after consent and for no GA4 Measurement Protocol: suggested to David, written after his reason.
 - [x] GA4 property created and the id in `.env.local` (2026-10-14); David tested GA4 with the real property. Meta dataset created, Pixel id in `.env.local`.
-- [ ] **Open, waits for the Vercel address (Phase 6):** Meta Test Events (the dataset needs a public address); the ids, the Conversions API token and the current Graph API version into the Vercel environment variables.
+- [x] **Meta Test Events, browser side, done on the deployed address (2026-10-14):** `PageView`, `ViewContent` and `Lead` with an event ID after "Přijmout vše"; nothing after "Odmítnout vše". Meta also showed its own automatic "Subscribed Button Click".
+- [ ] **Still open:** the Conversions API token and the current Graph API version into the Vercel environment variables, then the server-side call in Test Events (it sends no `test_event_code` yet).
 - [ ] **Open:** the Meta server call accepted (`fbc` format, version, payload) and `after` on Vercel.
 - [ ] **Open:** the real-phone check of the Meta side (nothing marketing before consent, `lead` once with matching `event_id`).
 - [ ] **Open:** INP and TBT with and without consent.

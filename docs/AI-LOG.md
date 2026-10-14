@@ -1394,3 +1394,18 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **I did not wait for approval of the test cases,** against the project rule for risky logic. I had listed the three behaviours in my message ("matches the domain, not a lookalike, plain addresses unchanged") and David said "build it", so I treated that as approval; I added the cases for a second `@`, a bare word, an empty `@` and live mode myself. Reported here and in the PR.
 - **The first draft of case D-6 had a leftover ternary** (`entry === ... ? 'skipped' : 'skipped'`) that tested nothing extra; removed.
 - **Stacking:** this branch was cut on top of PR #100 (the docs it edits); #100 was merged first, so the merge into `main` only conflicted in those docs and took this branch's wording.
+
+### Phase 6: Meta Test Events, browser side
+
+**Prompt (summary):** David: "Let's move to Meta Test Events". I gave the steps from the code (what the tracker sends to the Pixel) and Meta's docs; David ran them and sent a screenshot of Test Events and his results.
+
+**Result (David):** after "Přijmout vše": `PageView`, `ViewContent` and `Lead` (with an event ID) arrived from the browser, processed; after "Odmítnout vše" nothing arrived. A fourth event, "Subscribed Button Click" (automatic), also arrived: not sent by our code.
+
+**Produced:** README, `docs/PHASES.md`, `docs/PHASE-5-PLAN.md` and `docs/PHASE-6-PLAN.md` brought up to this. No code change.
+
+**Not verified:** the server-side call (no token, no Graph version, and no `test_event_code` in our payload), so the deduplication of the browser and server `Lead` and the `fbc` format are still unseen. The Graph version v26.0 (introduced 2026-07-29) is from Meta's changelog read through a fetch tool.
+
+**Mistakes and corrections**
+
+- **I told David the exact Events Manager button names from memory** ("Test browser events", "Open website", "Settings → Conversions API → Generate access token") and said so; his screenshot (Czech UI, a test code `TEST15906`) shows the flow worked, but I did not know the Czech labels.
+- **I did not expect the automatic "Subscribed Button Click" event.** Our tracker sends only `PageView`, `ViewContent` and `Lead`. I only found it in his screenshot. It comes from Meta's own settings for the dataset (my reading; the label in the screenshot is cut off), and whether it matters for the privacy text is not decided.
