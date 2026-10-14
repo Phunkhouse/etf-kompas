@@ -1272,3 +1272,16 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **My first noindex test failed on the 404 page:** Next adds its own robots tag there, so the page has two and the strict locator matched both. The test now looks at the first one.
 - **A reading error of mine on the first `curl`:** a `grep` raced the server and seemed to show a missing header on `/srovnani`; a second run showed it was there once.
 - **The headline ended a line with the one-letter word "u"**, against the typography rule; fixed with non-breaking spaces in the image.
+
+### Phase 6, PR 4: the strict data gate
+
+**Prompt (summary):** David: "#92 merged" (continue). The plan item he agreed to on 2026-10-14: run strict `data:validate` as a Vercel build step or a CI job on `main`.
+
+**Produced:** `src/config/deploy-gate.test.ts` first (3 of 5 cases failed before); `vercel.json` `buildCommand: "pnpm data:validate && pnpm build"` (kept the cron); a `data-gate` job in `.github/workflows/ci.yml` that runs only on push (so on `main`); the pull request job keeps the draft check. `CLAUDE.md` command comments and the README gap updated.
+
+**Checked:** `pnpm check` (913 tests), `pnpm format:check`. I ran the validator for each day to 200 days ahead: **the first day it fails is 2026-10-25** (EQQQ KIID `asOf` goes over 120 days), then 2026-10-29 (VOO) and 2026-11-15 (XTB fees). **Not verified:** the new CI job and the Vercel build command have not run yet (no Vercel project; the job runs on the first push to `main`).
+
+**Mistakes and corrections**
+
+- **I had the staleness dates in my notes as "24 Oct"** (from PHASES.md); the run says 25 Oct. I used the run.
+- **Consequence I should have said when the gate was agreed:** the gate blocks any build after the first stale record, not just a launch. The live site keeps running (Vercel builds only on a push), but the next push to `main` fails until the data is refreshed.

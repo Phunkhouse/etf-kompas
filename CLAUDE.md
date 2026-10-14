@@ -34,8 +34,8 @@ pnpm test           # Vitest: unit + component tests
 pnpm test:watch     # Vitest in watch mode
 pnpm contrast:check     # WCAG AA check of every colour pair in src/styles/contrast-pairs.ts (part of pnpm check)
 pnpm copy:check         # glossary and plain-language lint of src/content/copy.ts (SPEC §25, part of pnpm check)
-pnpm data:validate       # strict: fails on TODO_VERIFY, missing source, stale data (the deploy gate, Phase 6)
-pnpm data:validate:draft # same, but TODO_VERIFY is only a warning (CI today)
+pnpm data:validate       # strict: fails on TODO_VERIFY, missing source, stale data (the deploy gate: CI on main and the Vercel build)
+pnpm data:validate:draft # same, but TODO_VERIFY is only a warning (CI on pull requests)
 pnpm data:gaps           # what the rev. 4 screens still need from data/*.json, with counts (docs/DATA-NEEDS.md)
 pnpm test:e2e       # Playwright (mobile + desktop smoke). First run: pnpm exec playwright install chromium
 ```
