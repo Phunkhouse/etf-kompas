@@ -1,7 +1,7 @@
 # 0038. Exchange rates are fetched daily from the Czech National Bank
 
 Date: 2026-10-12
-Status: accepted
+Status: accepted; the stored fallback record was removed by 0066
 Phase: 3
 
 ## Context

@@ -1447,3 +1447,13 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 - **This is the claim I should have caught in Phase 3, when I wrote the card.** The sentence was general and carried no figure, so `copy:check` passed it; I had no rule that a tax sentence needs a source, only that a figure does. The rule now in practice: no tax sentence without a source behind it.
 - **My first edit of the test failed:** the helper that finds the card's sentence looked for a full stop, which `[ověřit zdroj]` has none; I changed the finder instead of the text.
+
+### Phase 6: the `rates.json` drift in the spec and the methodology
+
+**Prompt (summary):** David approved ("Yes for both decisions") syncing SPEC §4 and §5 and METHODOLOGY-V2 §2 with note 0066, which removed `data/rates.json`.
+
+**Produced:** SPEC §5 (the storage list, the 45-day sentence, the exchange-rate bullet), the module table, the folder tree, the record-schema sentence, and METHODOLOGY-V2 (the inputs table, "Fallback" became "No fallback record", the decided list); note 0038's status line points to 0066. The runtime behaviour was not changed (`src/server/cnb.ts` already ignores a rate older than 45 days).
+
+**Checked:** `grep` that no stale mention of `data/rates.json` remains outside the sentence that says it was removed; `pnpm format:check`.
+
+**Mistakes and corrections:** I removed `rates.json` in PR 1 (note 0066) and left the spec describing it for a whole day, even after I had listed the drift in the README PR; the spec is the source of truth, so a deviation that David approved should have been synced in the same PR.
