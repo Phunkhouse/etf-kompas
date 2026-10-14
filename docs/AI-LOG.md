@@ -1323,5 +1323,6 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 **Mistakes and corrections**
 
-- **My checklist asked David to look for the "Otevřít přehled" wording from SPEC §23 in an earlier draft; the page says "Otevřít srovnání".** I corrected the checklist against `src/content/copy.ts` before sending it.
-- **I wrote item 8 ("the results page opens") in a way that overlapped with item 7,** so David's answer covered one and left the other unclear. I recorded item 8 as "not reported" instead of assuming.
+- **No wrong claim reached David in the checklist that I know of.** The one wording difference I found (SPEC §23 says "Otevřít přehled", the page says "Otevřít srovnání") I checked against `src/content/copy.ts` before writing the checklist, so the checklist uses the page's wording.
+- **The checklist's item 7 and item 8 overlap** (the success state with its links, and the results page opening), so David's answer covered the first and left the second unclear. I recorded item 8 as "not reported" instead of assuming it passed.
+- **I wrote the first version of this log entry with a mistake that did not happen** (a correction of a draft that never existed). I caught it before the PR was opened and removed it; the log must record only what happened.
