@@ -42,10 +42,10 @@ It is a test project for Clientelo, built with Claude Code agents under the auth
 
 ## 3. The two ads and the UTM scheme
 
-Both ads run on Meta (feed 4:5 and Stories 9:16) with a Google/Sklik search twin; the creatives are drawn in [docs/design/wireframe-b.md](docs/design/wireframe-b.md) and are **not built or run**.
+Both ads run on Meta (feed 4:5 and Stories 9:16) with a Google/Sklik search twin; the creatives are drawn in the Wireframe Board and the Design Study ([docs/design/](docs/design/), text in [wireframe-b.md](docs/design/wireframe-b.md)) and are **not built or run**. Ads A and B were replaced on 2026-10-15 by two of ten new drafts; the old "? z 5" and twins ads are gone from the boards.
 
-- **Ad A, "which fund can you really buy" (clarity):** a typographic card with the question and a big "? z 5" (a placeholder until verified), "Zjistěte to za 20 sekund. Zdarma."
-- **Ad B, "same index, different fund and broker" (curiosity):** two European twins side by side with their fees ("CSPX 0,07 %", "VUAA 0,07 %") and the question "U koho je koupíte a za kolik?".
+- **Ad A, "the gap in korunas" (saving):** a typographic card, "Stejný fond. Rozdíl až 28 000 Kč", with "Za 10 let, podle toho, u kterého brokera ho koupíte." and "3 000 Kč měsíčně · 10 let · příklad, ne slib"; CTA "Spočítat moje poplatky. Zdarma." The amount is the gap between the dearest and the cheapest verified broker for the S&P 500 fund, rounded down (28 286 Kč with the data of 2026-10-14).
+- **Ad B, "the same gap over 20 years" (horizon):** a dark card, "Za 20 let se rozdíl mezi brokery vyšplhá na desítky tisíc", with two bars, the cheapest ("12 600 Kč") and the dearest ("91 200 Kč") of five verified brokers, none named (12 630 and 91 238 Kč with the data of 2026-10-14). The amounts must be recomputed on launch day.
 - **Landing pages:** the ads do not have different heroes. Both ad sets send traffic to `/?v=a` and `/?v=b`, split equally; the pages share one layout and differ only in the headline (neutral question against a loss-framed amount in Kč). Note [0041](docs/decisions/0041-ab-test-hero-headline.md).
 - **Compliance in the ads:** no promised return, no "get rich" wording, a risk line in the image and the text, and the platforms' current rules for financial products to be checked before any spend (not checked).
 - **UTM scheme:** `utm_source=meta|google|sklik`, `utm_medium=paid_social|cpc`, `utm_campaign=etf-kompas-2026-10`, `utm_content={a|b}-{4x5|9x16|rsa}`, `utm_term` for search. Every landing link also carries `?v=a|b`. UTM values, `fbclid`, the variant and `in_app_browser` are stored with the events (and the UTM values with the lead).
