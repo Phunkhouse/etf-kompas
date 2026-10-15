@@ -25,6 +25,7 @@ Open either in a browser. They need network access only for IBM Plex from Google
 | `bd.py`, `mkboard.py`, `build_study.py`, `doc.css`, `doc.js`          | Build the two HTML documents from the artboards                                                         |
 | `export_images.py`                                                    | PNG export of the artboards to `../images/`                                                             |
 | `apply_rev6.py`                                                       | Rev. 6: the design review and the data we have now (real rows, fees, calculator result, broker prices, date) |
+| `apply_rev7.py`                                                       | Rev. 7: the two ads (A and B, 4:5 and 9:16) replaced by the saving-in-Kč ad and the 20-year ad (David, 2026-10-15) |
 | `make_rev6.sh`                                                        | The whole chain from `artboards-v2/` to the two HTML files                                              |
 
 ## Rebuild

@@ -1521,3 +1521,15 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Checked:** every reference in the pack against the repo (done earlier); the stale date by counting 121 days from 2026-10-14; `pnpm data:gaps` still 138 of 138; `pnpm format:check`.
 
 **Mistakes and corrections:** my own points 10 to 12 (PR 111) had only two table cells, no "where" or "raised"; I found it while updating the table and fixed it. I first cited the lead-recipient decision as "SPEC §19" and corrected it to §17.1.
+
+### After Phase 6: ten new ad drafts, two of them into the boards
+
+**Prompt (summary):** David asked for ten more ad ideas (separate artifact), then chose 1 and 5 and asked to replace the originals in the Wireframe Board and the Design Study.
+
+**Produced:** a private design canvas with ten 4:5 drafts and a note under each (hypothesis, where the numbers come from). Then `docs/design/wireframes/apply_rev7.py`: ad A (4:5 and 9:16) is "Stejný fond. Rozdíl až 28 000 Kč", ad B (4:5 and 9:16) is the dark 20-year card; added to `make_rev6.sh`; the ad text of `build_study.py` updated; both HTML files rebuilt. The amounts come from the repo's own `comparison()` with the data of 2026-10-14 (28 286 Kč gap over 10 years; 12 630 and 91 238 Kč over 20 years), rounded in the safe direction.
+
+**Checked:** rendered the four artboards in the browser pane. The chain `make_rev6.sh` changes only the four artboards, the two HTML files and the scripts.
+
+**Not done:** the PNGs in `docs/design/images/ad-*.png`, the "Ads" section of `wireframe-b.md` and SPEC §6 still describe the old ads (the PNG export needs Python Playwright, which is not installed here; SPEC is David's call).
+
+**Mistakes and corrections:** my first dark-card logo used the paper colour, so `bd.py` (which swaps in the real logo file only where it finds the dark logo's colour `#F6F1E7`) left it as an invisible wordmark; found by rendering, fixed. I also first looked at a preview where my own iframes were squeezed by flex; that was my test page, not the ads.
