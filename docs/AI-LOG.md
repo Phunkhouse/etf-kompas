@@ -1547,3 +1547,11 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Checked:** looked at the exported `ad-b-4x5.png` and `hero-b-mobile.png`; `pnpm format:check`. Python Playwright and Pillow went into a venv outside the repo (no project dependency); the browser is the Chromium the repo's own Node Playwright already downloaded. The PNGs are pictures of the drawings and may differ in small ways from a rendering on David's machine (fonts).
 
 **Mistakes and corrections:** I had said the export "needs Python Playwright, which is not installed here, so I did not run it" the day before; it was a two-minute install into a venv, and David had to ask. I should have offered it then.
+
+### After Phase 6: GitHub Pages for the two design documents
+
+**Prompt (summary):** David chose GitHub Pages for the Wireframe Board and the Design Study.
+
+**Produced:** `.github/workflows/pages.yml` (on `main`, only when the two HTML files, the index page or the workflow change; copies them into `_site` next to `docs/design/pages/index.html`; `actions/upload-pages-artifact` and `actions/deploy-pages`, both pinned by commit like the other actions), the index page (noindex), and one README line.
+
+**Checked:** the action versions and commit SHAs were read from the GitHub API (latest releases, both are commits, not tag objects). **Not run:** the workflow has not run; it needs the Pages source set to "GitHub Actions" in the repository settings, which is David's to do. The link in the README answers 404 until the first deploy.
