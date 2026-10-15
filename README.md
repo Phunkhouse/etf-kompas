@@ -5,6 +5,7 @@ A Czech-language, mobile-first landing page that answers one question for a firs
 It is a test project for Clientelo, built with Claude Code agents under the author's review. **It is a demo, not a launched product:** the site is `noindex`, no paid traffic has run, and the legal text is placeholder text that no lawyer has seen (see [section 11](#11-what-is-missing-and-known-risks)).
 
 - **Live demo:** https://etf-kompas-kappa.vercel.app (noindex)
+- **Design documents (live):** https://phunkhouse.github.io/etf-kompas/ (the Design Study and the Wireframe Board, published from `docs/design/` by GitHub Pages)
 - **Source of truth:** [docs/SPEC.md](docs/SPEC.md). Phases and status: [docs/PHASES.md](docs/PHASES.md). Decisions: [docs/decisions/](docs/decisions/) (68 notes). AI work log: [docs/AI-LOG.md](docs/AI-LOG.md).
 - A Czech version of this README (`README.cs.md`) is **not written**; the spec puts it after the P0 and P1 work.
 

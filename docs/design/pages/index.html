@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>ETF Kompas design documents</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --paper: #f6f3ec;
+        --ink: #16150f;
+        --muted: #6b665a;
+        --line: #d4cebe;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #16150f;
+          --ink: #f6f3ec;
+          --muted: #b9b3a2;
+          --line: #3a372e;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font:
+          400 17px/1.5 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 64px 16px;
+      }
+      h1 {
+        font-size: 40px;
+        line-height: 1.05;
+        letter-spacing: -0.025em;
+        margin: 0 0 12px;
+      }
+      p {
+        margin: 0 0 16px;
+        color: var(--muted);
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 32px 0;
+        border-top: 1.5px solid var(--ink);
+      }
+      li {
+        border-bottom: 1px solid var(--line);
+      }
+      a {
+        display: block;
+        padding: 18px 0;
+        color: var(--ink);
+        text-decoration: none;
+      }
+      a b {
+        display: block;
+        font-size: 20px;
+      }
+      a span {
+        color: var(--muted);
+        font-size: 15px;
+      }
+      a:hover b,
+      a:focus-visible b {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>ETF Kompas design documents</h1>
+      <p>
+        The drawings behind the landing page, the calculator, the comparison
+        page and the PDF. This is the design, not the product; the numbers are
+        examples from the data of 14 October 2026.
+      </p>
+      <ul>
+        <li>
+          <a href="design-study.html"
+            ><b>Design Study</b
+            ><span
+              >Product rules, design system, every screen and state, motion,
+              open data. The source of truth for the design.</span
+            ></a
+          >
+        </li>
+        <li>
+          <a href="wireframe-board.html"
+            ><b>Wireframe Board</b
+            ><span
+              >Every artboard on one canvas: drag to pan, Ctrl and wheel to
+              zoom.</span
+            ></a
+          >
+        </li>
+      </ul>
+      <p>
+        Source and history:
+        <a
+          href="https://github.com/Phunkhouse/etf-kompas"
+          style="display: inline; padding: 0; text-decoration: underline"
+          >github.com/Phunkhouse/etf-kompas</a
+        >, folder <code>docs/design/</code>.
+      </p>
+    </main>
+  </body>
+</html>

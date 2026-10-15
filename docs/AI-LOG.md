@@ -1537,3 +1537,11 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Published artifacts (2026-10-15):** David saw the old ads in the published Wireframe Board and Design Study, so I republished both from the rebuilt files (the study also carries `src/build_study.py.txt`). Comparing the published copies with the repo showed two drifts: the published study said 14. 10. 2026 while `build_study.py` and the committed HTML said 13. 10. 2026 (the published copy had been edited without the script; I set the script to 14. 10. 2026), and the committed board and study lacked the "Zásady zpracování" link in the cookie bar that the scripts already produce (the rebuild brings it in). I did not look at the published pages after publishing; I checked the files I sent against the published copies by diff.
 
 **Mistake (2026-10-15): three commits pushed to a merged PR.** I pushed the date fix, the AI-LOG entry and the README and `wireframe-b.md` update to the branch of PR 113 and told David the PR was "still open" without checking. It had been merged at 388d244, so none of the three reached `main`; David noticed. I moved them to a new branch from `main`. Lesson: check the PR state (`gh pr view`) before pushing to a branch I opened earlier, and before writing "still open".
+
+### After Phase 6: GitHub Pages for the two design documents
+
+**Prompt (summary):** David chose GitHub Pages for the Wireframe Board and the Design Study.
+
+**Produced:** `.github/workflows/pages.yml` (on `main`, only when the two HTML files, the index page or the workflow change; copies them into `_site` next to `docs/design/pages/index.html`; `actions/upload-pages-artifact` and `actions/deploy-pages`, both pinned by commit like the other actions), the index page (noindex), and one README line.
+
+**Checked:** the action versions and commit SHAs were read from the GitHub API (latest releases, both are commits, not tag objects). **Not run:** the workflow has not run; it needs the Pages source set to "GitHub Actions" in the repository settings, which is David's to do. The link in the README answers 404 until the first deploy.
