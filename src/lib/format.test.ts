@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatKc, formatMonthYear, formatPercent } from './format'
+import { formatDate, formatKc, formatMonthYear, formatPercent } from './format'
 
 describe('formatKc', () => {
   it('groups thousands with non-breaking spaces and adds Kč', () => {
@@ -40,5 +40,16 @@ describe('formatMonthYear', () => {
 
   it('rejects text that is not an ISO date', () => {
     expect(() => formatMonthYear('30. 6. 2026')).toThrow()
+  })
+})
+
+describe('formatDate', () => {
+  it('formats the full date with non-breaking spaces and no leading zeros', () => {
+    expect(formatDate('2026-10-06')).toBe('6.\u00a010.\u00a02026')
+    expect(formatDate('2026-06-30')).toBe('30.\u00a06.\u00a02026')
+  })
+
+  it('rejects text that is not an ISO date', () => {
+    expect(() => formatDate('6. 10. 2026')).toThrow()
   })
 })

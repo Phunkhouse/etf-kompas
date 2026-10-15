@@ -1,8 +1,8 @@
 // What the landing page needs from the data files, in one place for both hero
-// variants: the oldest date, the hero table and its muted line. The calculator's
+// variants: the oldest verification date, the hero table and its muted line. The calculator's
 // data comes from calculatorData() with the exchange rates
 // (src/server/calculator-data.ts).
-import { oldestAsOf } from './data/freshness'
+import { oldestVerifiedOn } from './data/freshness'
 import { dataSchema } from './data/schema'
 import {
   heroNote,
@@ -14,7 +14,7 @@ import {
 } from './hero'
 
 export type LandingData = {
-  dataAsOf: string | null
+  dataVerifiedOn: string | null
   twins: HeroTwin[]
   note: HeroNote
   faqFacts: OriginalsFacts
@@ -28,7 +28,7 @@ const ORIGINALS = ['voo', 'qqq']
 export function landingData(raw: unknown): LandingData {
   const data = dataSchema.parse(raw)
   return {
-    dataAsOf: oldestAsOf(raw),
+    dataVerifiedOn: oldestVerifiedOn(raw),
     twins: heroTwins(data, HERO_FUNDS),
     note: heroNote(data, HERO_FUNDS[0], ORIGINALS),
     faqFacts: originalsFacts(data, HERO_FUNDS[0], ORIGINALS),

@@ -147,7 +147,7 @@ Compliance for both: no guaranteed return, no "get rich" language, risk statemen
 
 The layout is fixed by **wireframe B at revision 6** (`docs/design/`: the Wireframe Board and the Design Study, with the text spec `wireframe-b.md`). The order below is fixed; the exact composition follows the wireframe.
 
-1. **Top bar and header.** A dark top bar ("Čísla ze stránek fondů a brokerů · ověřeno k {date}", with the date generated from the data: the oldest `asOf` among the numbers shown) and a header with the wordmark, three anchors (Jak počítáme, Odkud máme čísla, Časté dotazy) and the small button; on a phone a hamburger menu instead.
+1. **Top bar and header.** A dark top bar ("Čísla ze stránek fondů a brokerů · ověřeno k {date}", with the date generated from the data: the oldest `verifiedOn` among the numbers shown) and a header with the wordmark, three anchors (Jak počítáme, Odkud máme čísla, Časté dotazy) and the small button; on a phone a hamburger menu instead.
 2. **Hero (above the fold, 375x667 must show the whole hero including the primary button):** headline matching the ad, one line under it (the phone layout may hide it, note 0031), the four-twin table (Co koupíte, Poplatek*, Typ; a row is titled by the index and describes the fund under it, note 0043; a footnote explains the asterisk), the primary button to the calculator (no second link under it), and the callout with the one-line explanation of "ETF" (the only use of the word in body copy). No logo carousel, no stock photo.
 3. **Calculator and live result** (dark band directly under the hero), the interactive proof, personalised in Kč, with the saving box when the hide rule allows it.
 4. **E-mail form** directly under the result (the ask, section 3.3).

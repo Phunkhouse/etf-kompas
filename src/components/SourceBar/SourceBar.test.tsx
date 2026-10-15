@@ -3,15 +3,15 @@ import { describe, expect, it } from 'vitest'
 import { SourceBar } from './SourceBar'
 
 describe('SourceBar', () => {
-  it('names the source and the month of the oldest number', () => {
-    render(<SourceBar dataAsOf="2026-06-30" />)
+  it('names the source and the full date of the oldest number', () => {
+    render(<SourceBar dataVerifiedOn="2026-10-06" />)
     expect(
       screen.getByText(/Čísla ze stránek fondů a brokerů/).textContent,
-    ).toContain('ověřeno k 6. 2026')
+    ).toContain('ověřeno k 6. 10. 2026')
   })
 
   it('leaves the date out when there is no data', () => {
-    render(<SourceBar dataAsOf={null} />)
+    render(<SourceBar dataVerifiedOn={null} />)
     const text = screen.getByText(
       /Čísla ze stránek fondů a brokerů/,
     ).textContent
@@ -19,7 +19,7 @@ describe('SourceBar', () => {
   })
 
   it('carries the short risk line', () => {
-    render(<SourceBar dataAsOf="2026-06-30" />)
+    render(<SourceBar dataVerifiedOn="2026-10-06" />)
     expect(screen.getByText('Investování nese riziko ztráty.')).toBeTruthy()
   })
 })

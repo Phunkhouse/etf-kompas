@@ -1,9 +1,20 @@
 import { TODO_VERIFY } from './schema'
 
 // The oldest `asOf` among the values that are filled in, or null when none is.
-// The page shows it as "ověřeno k {měsíc}", so it never looks fresher than
-// the oldest number on it (decision agreed with David, 2026-10-11).
 export function oldestAsOf(data: unknown): string | null {
+  return oldestDate(data, 'asOf')
+}
+
+// Use the earliest verification so the label never overstates how recently
+// all of the filled records were checked.
+export function oldestVerifiedOn(data: unknown): string | null {
+  return oldestDate(data, 'verifiedOn')
+}
+
+function oldestDate(
+  data: unknown,
+  field: 'asOf' | 'verifiedOn',
+): string | null {
   let oldest: string | null = null
 
   function walk(node: unknown) {
@@ -16,10 +27,10 @@ export function oldestAsOf(data: unknown): string | null {
     if (
       'value' in record &&
       record.value !== TODO_VERIFY &&
-      typeof record.asOf === 'string' &&
-      /^\d{4}-\d{2}-\d{2}$/.test(record.asOf)
+      typeof record[field] === 'string' &&
+      /^\d{4}-\d{2}-\d{2}$/.test(record[field])
     ) {
-      if (oldest === null || record.asOf < oldest) oldest = record.asOf
+      if (oldest === null || record[field] < oldest) oldest = record[field]
       return
     }
     Object.values(record).forEach(walk)

@@ -1575,3 +1575,15 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Checked:** lint, typecheck and all 952 unit/component tests passed in `pnpm check`. The contrast runner hit a sandbox socket restriction; `pnpm contrast:check` and `pnpm copy:check` then passed outside the sandbox. `pnpm format:check` passed. Verified that the shared rules and generated Next.js block are unchanged.
 
 **Mistakes and corrections:** the initial setup assessment treated the sandbox GitHub authentication result as an invalid token. Checking outside the sandbox confirmed working keyring authentication; no login change was needed.
+
+### After Phase 6: full date in the top source bar
+
+**Prompt (summary):** David asked for the top panel to show the full date, for example "ověřeno k 6. 10. 2026" rather than "ověřeno k 6. 2026".
+
+**Produced:** a full Czech date formatter used by SourceBar, with non-breaking spaces, and regression checks for the formatter, the component and the browser rendering. The source dates and oldest-date selection remain unchanged.
+
+**Checked:** `pnpm check` (954 tests), `pnpm format:check`, and the targeted mobile Playwright top-panel test passed. The oldest bundled source date is `2026-06-26`, so the current top bar now shows `26. 6. 2026`; the previous `6. 2026` meant June, not October 6.
+
+**Mistakes and corrections:** none found.
+
+**Follow-up:** David explicitly requested using `verifiedOn`. The landing page now selects the oldest verification date for its verification labels; the source-document dates remain available to comparison calculations and freshness validation. Updated SPEC §7 to match the approved change, renamed the landing date prop to `dataVerifiedOn`, and added tests distinguishing verification from source dates. Validation: `pnpm check` passed (956 tests); the full-date mobile browser check and formatting check passed. The first formatting check caught wrapping changes from the renamed prop in three test files; these were formatted before committing. The current oldest verification date is `2026-10-11`.

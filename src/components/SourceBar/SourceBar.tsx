@@ -1,18 +1,18 @@
 import { Container } from '@/components/Container'
 import { shellCopy } from '@/content/copy'
-import { formatMonthYear } from '@/lib/format'
+import { formatDate } from '@/lib/format'
 import { nbsp } from '@/lib/typography'
 import styles from './SourceBar.module.scss'
 
 type SourceBarProps = {
-  // Oldest asOf among the numbers on the page (ISO date), or null without data.
-  dataAsOf: string | null
+  // Oldest verifiedOn among the numbers on the page (ISO date), or null without data.
+  dataVerifiedOn: string | null
 }
 
 // Dark strip above the header: where the numbers come from, and how old they are.
-export function SourceBar({ dataAsOf }: SourceBarProps) {
-  const text = dataAsOf
-    ? shellCopy.sourceBar(formatMonthYear(dataAsOf))
+export function SourceBar({ dataVerifiedOn }: SourceBarProps) {
+  const text = dataVerifiedOn
+    ? shellCopy.sourceBar(formatDate(dataVerifiedOn))
     : shellCopy.sourceBarNoDate
   return (
     <div className={styles.bar}>

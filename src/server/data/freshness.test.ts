@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { oldestAsOf } from './freshness'
+import { oldestAsOf, oldestVerifiedOn } from './freshness'
 
 function record(value: unknown, asOf: string | null) {
   return {
@@ -62,5 +62,34 @@ describe('oldestAsOf', () => {
     const { loadData } = await import('./load')
     const { bundledData } = await import('./bundled')
     expect(oldestAsOf(bundledData)).toBe(oldestAsOf(await loadData()))
+  })
+})
+
+describe('oldestVerifiedOn', () => {
+  it('uses verification dates independently of source document dates', () => {
+    expect(
+      oldestVerifiedOn({
+        records: [
+          { ...record(1, '2026-06-26'), verifiedOn: '2026-10-12' },
+          { ...record(2, '2026-09-30'), verifiedOn: '2026-10-11' },
+        ],
+      }),
+    ).toBe('2026-10-11')
+  })
+
+  it('ignores unknown values and missing or malformed verification dates', () => {
+    expect(
+      oldestVerifiedOn({
+        records: [
+          { ...record('TODO_VERIFY', '2026-01-01'), verifiedOn: '2026-01-01' },
+          { ...record(1, '2026-01-01'), verifiedOn: null },
+          { ...record(2, '2026-01-01'), verifiedOn: '11. 10. 2026' },
+          record(false, '2026-01-01'),
+        ],
+      }),
+    ).toBe('2026-10-11')
+    expect(oldestVerifiedOn(null)).toBeNull()
+    expect(oldestVerifiedOn({})).toBeNull()
+    expect(oldestVerifiedOn({ value: 1, asOf: '2026-01-01' })).toBeNull()
   })
 })

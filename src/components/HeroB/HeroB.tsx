@@ -13,7 +13,7 @@ type HeroBProps = {
   twins: HeroTwin[]
   // left out when the data has no note
   note?: HeroNote
-  dataAsOf: string | null
+  dataVerifiedOn: string | null
   // The A/B headline (note 0041). b needs `savingKc`.
   variant?: 'a' | 'b'
   savingKc?: number | null
@@ -24,12 +24,12 @@ const text = heroCopy
 // The short line under the table: how many known brokers sell the first twin and when
 // that was verified. Chosen from the data, so it never says more than the data shows
 // (SPEC §18, note 0029).
-function shortLine(note: HeroNote, dataAsOf: string | null): string {
+function shortLine(note: HeroNote, dataVerifiedOn: string | null): string {
   const lines = text.note
   if (note.sellers.length === 0) return lines.noSellers(note.ticker)
   const known = lines.known(note.ticker, note.sellers.length)
-  return dataAsOf
-    ? `${known} · ${lines.verifiedOn(formatMonthYear(dataAsOf))}`
+  return dataVerifiedOn
+    ? `${known} · ${lines.verifiedOn(formatMonthYear(dataVerifiedOn))}`
     : known
 }
 
@@ -38,7 +38,7 @@ function shortLine(note: HeroNote, dataAsOf: string | null): string {
 export function HeroB({
   twins,
   note,
-  dataAsOf,
+  dataVerifiedOn,
   variant = 'a',
   savingKc = null,
 }: HeroBProps) {
@@ -73,7 +73,7 @@ export function HeroB({
             <p className={styles.lead}>{nbsp(text.lead)}</p>
           </div>
           <div className={styles.table}>
-            <HeroTable twins={twins} dataAsOf={dataAsOf} />
+            <HeroTable twins={twins} dataVerifiedOn={dataVerifiedOn} />
           </div>
           <div id="hero-cta" className={styles.cta}>
             <ButtonLink href="#spocitat" fullWidth>
@@ -83,7 +83,7 @@ export function HeroB({
           </div>
           {note ? (
             <p className={styles.footnote} data-testid="hero-note">
-              {nbsp(shortLine(note, dataAsOf))}
+              {nbsp(shortLine(note, dataVerifiedOn))}
               {note.sellers.length > 0 ? (
                 <span className={styles.wide}>
                   {' · '}

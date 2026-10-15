@@ -22,3 +22,10 @@ export function formatMonthYear(isoDate: string): string {
   if (!match) throw new Error(`Not an ISO date: ${isoDate}`)
   return `${Number(match[2])}.${NBSP}${match[1]}`
 }
+
+// "2026-10-06" -> "6. 10. 2026", keeping the date together on one line.
+export function formatDate(isoDate: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(isoDate)
+  if (!match) throw new Error(`Not an ISO date: ${isoDate}`)
+  return `${Number(match[3])}.${NBSP}${Number(match[2])}.${NBSP}${match[1]}`
+}
