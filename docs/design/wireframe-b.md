@@ -141,8 +141,8 @@ The Motion board is live HTML with a looping demo for every animated section and
 
 Ad creatives, not part of the app.
 
-- **Ad A** (4:5 and 9:16): the hero headline and the unknown "? z 5" with "brokerů nabízí evropský fond na S&P 500" (the number is a placeholder until verified). CTA "Zjistěte to za 20 sekund. Zdarma." Footer "Investování nese riziko ztráty. Příklad výpočtu, ne slib výnosu."
-- **Ad B** (4:5 and 9:16): two twins side by side, "iShares · CSPX 0,07 %" (Fond A) and "Vanguard · VUAA 0,07 %" (Fond B), "U koho je koupíte a za kolik?" and "Stejný index, jiný fond i broker. Spočítáme to v korunách."
+- **Ad A** (4:5 and 9:16, replaced in rev. 7, 2026-10-15): "Stejný fond. Rozdíl až 28 000 Kč", "Za 10 let, podle toho, u kterého brokera ho koupíte. Spočítáme to v korunách." and "3 000 Kč měsíčně · 10 let · příklad, ne slib". The amount is the gap between the dearest and the cheapest verified broker for the S&P 500 fund, rounded down (28 286 Kč with the data of 2026-10-14); recompute it on launch day. CTA "Spočítat moje poplatky. Zdarma." Footer "Investování nese riziko ztráty. Příklad výpočtu, ne slib výnosu."
+- **Ad B** (4:5 and 9:16, replaced in rev. 7): a dark card, "Za 20 let se rozdíl mezi brokery vyšplhá na desítky tisíc." with two bars, "Nejlevnější z 5 ověřených brokerů" ("12 600 Kč") and "Nejdražší z 5 ověřených brokerů" ("91 200 Kč"); no broker is named. 3 000 Kč a month, 20 years, example (12 630 and 91 238 Kč with the data of 2026-10-14). Same CTA and footer as ad A.
 - Both ad sets send traffic to both landing variants (see "A/B test" above). The calculator-first hero that followed ad A in rev. 4 was dropped in rev. 5.
 - Feed 4:5 is 540 x 675 and stories 9:16 is 405 x 720. The 9:16 layouts keep text out of the top 110 px and bottom 150 px for the Stories UI.
 
