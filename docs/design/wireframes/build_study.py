@@ -303,12 +303,12 @@ p.append(f'''<!doctype html><html lang="cs"><head><meta charset="utf-8">
 <style>{CSS}</style></head><body>
 <aside class="side" id="side"><a class="side-logo" href="#cover" aria-label="ETF Kompas">{logo(126, 32)}</a>
 <nav aria-label="Obsah">{''.join(f'<a href="#{i}" data-s="{i}"><i>{n}</i>{t}</a>' for i, n, t in NAV)}</nav>
-<p class="side-foot">Design · rev. 6<br>13. 10. 2026</p></aside>
+<p class="side-foot">Design · rev. 6<br>14. 10. 2026</p></aside>
 <main>''')
 p.append(f'''<section class="cover" id="cover"><div class="cover-top">{logo(188, 48, True)}<span class="tag on-dark">Design · current · rev. 5</span></div>
 <div class="cover-mid"><span class="tag on-dark">Source of truth</span><h1>ETF Kompas<br>Design study</h1>
 <p>The design as it stands: what the product is and the rules it follows, the design system, every screen and every state. The Wireframe Board shows the same screens on one canvas; this document says why they look like this and what they must do.</p></div>
-<dl class="cover-meta"><div><dt>Datum</dt><dd>13. 10. 2026</dd></div><div><dt>Autor</dt><dd>David Krapka</dd></div><div><dt>Stav</dt><dd>Hotový návrh · rev. 6</dd></div><div><dt>Úroveň</dt><dd>Wireframe · čísla jsou z ověřených dat k 13. 10. 2026, [ověřit] = neověřeno</dd></div></dl>
+<dl class="cover-meta"><div><dt>Datum</dt><dd>14. 10. 2026</dd></div><div><dt>Autor</dt><dd>David Krapka</dd></div><div><dt>Stav</dt><dd>Hotový návrh · rev. 6</dd></div><div><dt>Úroveň</dt><dd>Wireframe · čísla jsou z ověřených dat k 14. 10. 2026, [ověřit] = neověřeno</dd></div></dl>
 <div class="cover-compass" aria-hidden="true">{favicon(520)}</div></section>''')
 
 p.append('<section id="produkt" class="sec">' + section_head('01', 'Product and rules', 'What the site is for and the rules every screen follows. If a screen and a rule disagree, the rule wins.')
@@ -397,6 +397,6 @@ p.append('<section id="otevrene" class="sec">' + section_head('12', 'Open data a
 p.append('<section id="historie" class="sec">' + section_head('13', 'History', 'How the design got here. Only for context; the sections above are the current state.')
          + '<div class="hist">' + ''.join(f'<div><b>{a}</b><p>{b}</p></div>' for a, b in HISTORY) + '</div></section>')
 
-p.append(f'<footer class="docfoot">{logo(110, 28, True)}<span>ETF Kompas · Design study · rev. 6 · 13. 10. 2026 · David Krapka</span></footer></main><script>{JS}</script></body></html>')
+p.append(f'<footer class="docfoot">{logo(110, 28, True)}<span>ETF Kompas · Design study · rev. 6 · 14. 10. 2026 · David Krapka</span></footer></main><script>{JS}</script></body></html>')
 open(OUT, 'w').write(''.join(p))
 print('wrote', OUT, os.path.getsize(OUT))
