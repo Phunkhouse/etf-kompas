@@ -36,7 +36,7 @@ sh make_rev6.sh
 CHROMIUM=/path/to/chromium python3 export_images.py artboards-v4 ../images
 ```
 
-Needs Python 3 and Playwright with a Chromium (`export_images.py` takes the browser path from `CHROMIUM`, or uses Playwright's own). `artboards-v2/`, `artboards-v3/` and `artboards-v4/` are generated: edit the scripts, not the artboards, and rerun. The chain produces identical outputs when rerun.
+Needs Python 3 and Playwright with a Chromium (a venv outside the repo is enough: `python3 -m venv ~/.venvs/kompas && ~/.venvs/kompas/bin/pip install playwright pillow`; the Chromium of the repo's own `pnpm exec playwright install chromium` works, point `CHROMIUM` at its `chrome-headless-shell` in `~/Library/Caches/ms-playwright/`) (`export_images.py` takes the browser path from `CHROMIUM`, or uses Playwright's own). `artboards-v2/`, `artboards-v3/` and `artboards-v4/` are generated: edit the scripts, not the artboards, and rerun. The chain produces identical outputs when rerun.
 
 The PNG exports in `../images/` are rendered from `artboards-v4/` at 2x, content height, 256 colours. The motion image is a still of a looping artboard.
 

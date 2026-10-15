@@ -9,6 +9,12 @@ It is a test project for Clientelo, built with Claude Code agents under the auth
 - **Source of truth:** [docs/SPEC.md](docs/SPEC.md). Phases and status: [docs/PHASES.md](docs/PHASES.md). Decisions: [docs/decisions/](docs/decisions/) (68 notes). AI work log: [docs/AI-LOG.md](docs/AI-LOG.md).
 - A Czech version of this README (`README.cs.md`) is **not written**; the spec puts it after the P0 and P1 work.
 
+**What it looks like** (wireframes, rev. 7; the full set is in [docs/design/images/](docs/design/images/) and in the Wireframe Board and Design Study in [docs/design/wireframes/](docs/design/wireframes/)):
+
+<img src="docs/design/images/hero-b-desktop.png" alt="Landing page, desktop: headline with the amount, the four funds, the calculator" width="760">
+
+<img src="docs/design/images/hero-b-mobile.png" alt="Landing page, phone" width="170"> <img src="docs/design/images/ad-a-4x5.png" alt="Ad A: the gap in korunas" width="190"> <img src="docs/design/images/ad-b-4x5.png" alt="Ad B: the gap over 20 years" width="190"> <img src="docs/design/images/pdf-page-1.png" alt="Page 1 of the personal PDF" width="150">
+
 ## Contents
 
 1. [Target audience and the "NYSE vs UCITS" decision](#1-target-audience-and-the-nyse-vs-ucits-decision)
@@ -215,7 +221,7 @@ What is not done or not right yet, so nobody has to find it:
 - **Performance on the live site** (`https://etf-kompas-kappa.vercel.app`, Lighthouse 12.8.2, mobile, 2026-10-14): with applied throttling (the gate of SPEC §22, note 0042) `/` scores performance 100, LCP 0.9 to 1.0 s, CLS 0.008, TBT 30 to 40 ms (two runs). In Lighthouse's default simulated mode the same page scores 97 to 99 with LCP 2.3 to 2.4 s (three runs; `/?v=b` the same), which is a model, not a measured time, and the figure the 2.0 s target does not use. Accessibility is 100 and best practices 100 on `/` and `/?v=b`; SEO is 63 only because the site is `noindex` on purpose. The LCP element is the paragraph of the cookie bar (a first visit always shows it). Only `/` and `/?v=b` were measured live; the results, privacy and unsubscribe pages were not. Earlier: the other pages were measured only in the default, pessimistic mode (note 0042). The JS budget is 149.97 KB of 150 KB: about 30 bytes are left, so any further client code needs a decision.
 - **Security headers.** The live site sends HSTS (set by Vercel) and our own `X-Robots-Tag`; it sends no Content-Security-Policy, `X-Frame-Options`, `X-Content-Type-Options` or `Referrer-Policy`. Not reviewed (checked with `curl -I` on 2026-10-14).
 - **The hero lead is hidden on phones** to keep the button above the fold (note 0031), and the component is still named `HeroB` from the time when there were two heroes.
-- **The design PNGs** in `docs/design/images/` still show older data and short broker names; the sources and the text spec are updated. Exporting needs IBM Plex installed locally.
+- **The design PNGs** in `docs/design/images/` were exported again on 2026-10-15 from `artboards-v4/` (rev. 7). They are a picture of the drawings, not of the built site. Exporting needs Python Playwright and IBM Plex installed locally (`docs/design/wireframes/README.md`).
 
 ## 12. Run, test, deploy
 

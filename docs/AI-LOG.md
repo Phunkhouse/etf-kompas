@@ -1538,6 +1538,16 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 
 **Mistake (2026-10-15): three commits pushed to a merged PR.** I pushed the date fix, the AI-LOG entry and the README and `wireframe-b.md` update to the branch of PR 113 and told David the PR was "still open" without checking. It had been merged at 388d244, so none of the three reached `main`; David noticed. I moved them to a new branch from `main`. Lesson: check the PR state (`gh pr view`) before pushing to a branch I opened earlier, and before writing "still open".
 
+### After Phase 6: the design PNGs exported again and shown in the README
+
+**Prompt (summary):** David asked how to put the Wireframe Board and the Design Study into the README (PDFs or not) and then to go with GitHub Pages and install Playwright if needed.
+
+**Produced:** all 33 PNGs of `docs/design/images/` exported again from `artboards-v4/` (rev. 7 ads, rev. 6 data); a "What it looks like" block of four images in the README; the README gap about stale PNGs corrected; a line in `docs/design/wireframes/README.md` about the export set-up. Advice given: no PDFs (the board is an infinite canvas), PNGs in the README, and Pages for the two live documents (a separate PR).
+
+**Checked:** looked at the exported `ad-b-4x5.png` and `hero-b-mobile.png`; `pnpm format:check`. Python Playwright and Pillow went into a venv outside the repo (no project dependency); the browser is the Chromium the repo's own Node Playwright already downloaded. The PNGs are pictures of the drawings and may differ in small ways from a rendering on David's machine (fonts).
+
+**Mistakes and corrections:** I had said the export "needs Python Playwright, which is not installed here, so I did not run it" the day before; it was a two-minute install into a venv, and David had to ask. I should have offered it then.
+
 ### After Phase 6: GitHub Pages for the two design documents
 
 **Prompt (summary):** David chose GitHub Pages for the Wireframe Board and the Design Study.
