@@ -195,9 +195,7 @@ describe('HeroB', () => {
 
   it('has the lead, the table and a button that jumps to the calculator', () => {
     render(<HeroB twins={twins} note={note()} dataAsOf={null} />)
-    expect(
-      screen.getByText(/Stejné firmy ze S&P 500 a Nasdaq 100/),
-    ).toBeTruthy()
+    expect(screen.getByText(/Stejné firmy z S&P 500 a Nasdaq 100/)).toBeTruthy()
     expect(screen.getByRole('table')).toBeTruthy()
     expect(
       screen

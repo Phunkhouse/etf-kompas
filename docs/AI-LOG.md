@@ -1555,3 +1555,13 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Produced:** `.github/workflows/pages.yml` (on `main`, only when the two HTML files, the index page or the workflow change; copies them into `_site` next to `docs/design/pages/index.html`; `actions/upload-pages-artifact` and `actions/deploy-pages`, both pinned by commit like the other actions), the index page (noindex), and one README line.
 
 **Checked:** the action versions and commit SHAs were read from the GitHub API (latest releases, both are commits, not tag objects). **Not run:** the workflow has not run; it needs the Pages source set to "GitHub Actions" in the repository settings, which is David's to do. The link in the README answers 404 until the first deploy.
+
+### After Phase 6: "z S&P 500" and the B link in the README
+
+**Prompt (summary):** David corrected the lead "Stejné firmy ze S&P 500 …" to "z S&P 500" and asked for the B version link next to the live demo in the README.
+
+**Produced:** the grammar fix in `copy.ts` (the hero lead and the lead of the PDF's comparison page), in the HeroB test (changed first and seen failing), in the wireframe scripts and `wireframe-b.md`, and in the rebuilt artboards, board and study; the five PNGs that contain the sentence exported again (the other 28 came out byte for byte the same). README: the `/v/b` link beside the live demo.
+
+**Checked:** `grep` that no "firmy ze S" is left in the repo; `pnpm check`, `pnpm format:check`. `https://etf-kompas-kappa.vercel.app/v/b` answers 200 (`/v/a` does not exist, only `/v/b` and `/?v=…`).
+
+**Mistake:** none found, but the published claude.ai artifacts and the Pages site still carry the old sentence until this merges (Pages redeploys on merge; the artifacts need a republish).

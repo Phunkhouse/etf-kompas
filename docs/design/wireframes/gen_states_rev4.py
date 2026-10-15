@@ -79,7 +79,7 @@ def cell(i,j):
     return '<span class="pill ver">[ověřit]</span>'
 rows=''.join(f'<tr><td><b>{f}</b><br><span style="font-size:11px;color:#555">{t}</span></td><td class="num">{p}</td>'+''.join(f'<td>{cell(i,j)}</td>' for j in range(5))+'</tr>' for i,(f,t,p) in enumerate([('S&amp;P 500 · CSPX','Acc','0,07 %'),('S&amp;P 500 · VUAA','Acc','0,07 %'),('S&amp;P 500 · VUSA','Dist','0,07 %'),('Nasdaq 100 · CSNDX','Acc','0,33 %'),('Nasdaq 100 · EQQQ','Dist','0,30 %')]))
 p1=('<div style="display:flex;flex-direction:column;gap:6px"><span class="tag">Strana 1 · Srovnání</span><h1 style="font-size:30px;line-height:1.08;letter-spacing:-.02em">Americké indexy z Česka: u koho je koupíte a za kolik?</h1></div>'
- '<p style="font-size:14px;color:#333">Stejné firmy ze S&amp;P 500 a Nasdaq 100, jen v evropské verzi. Níže je poplatek fondu a to, u kterého brokera ho koupíte.</p>'
+ '<p style="font-size:14px;color:#333">Stejné firmy z S&amp;P 500 a Nasdaq 100, jen v evropské verzi. Níže je poplatek fondu a to, u kterého brokera ho koupíte.</p>'
  f'<table><thead><tr><th>Fond</th><th>Poplatek</th>{"".join(f"<th>{b}</th>" for b in brokers)}</tr></thead><tbody>{rows}</tbody></table>'
  '<p style="font-size:11px;color:#555">[ověřit] = zatím neověřeno, doplníme zdroj. „Ano“ jen s uvedeným zdrojem a datem.</p>'
  '<div style="border:1.5px solid #111;border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:6px"><span class="tag">Při vašem nastavení</span><p style="font-size:15px"><b>Ilustrativní hodnota po 10 letech: X XXX Kč, z toho poplatky X XXX Kč.</b></p><p style="font-size:11px;color:#555">6 % ročně, příklad, ne slib. Odhad, bez českých daní a inflace.</p></div>')

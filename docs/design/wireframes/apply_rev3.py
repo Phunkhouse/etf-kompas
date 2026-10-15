@@ -15,7 +15,7 @@ def sec(b, start_pat):
     return m.start(), e
 
 H1 = 'Americké indexy z Česka: u koho je koupíte a za kolik?'
-LEAD = 'Stejné firmy ze S&amp;P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.'
+LEAD = 'Stejné firmy z S&amp;P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.'
 V = '<span class="pill ver">[ověřit]</span>'
 ROWS = [('S&amp;P 500', 'iShares CSPX', 'Acc', '0,07 %', False), ('S&amp;P 500', 'Vanguard VUAA', 'Acc', '0,07 %', True),
         ('S&amp;P 500', 'Vanguard VUSA', 'Dist', '0,07 %', True), ('Nasdaq 100', 'iShares CSNDX', 'Acc', '0,33 %', True),
@@ -49,7 +49,7 @@ def hero_m():
                  f'<span class="num">{fee}{"<br>" + V if v else ""}</span><span class="pill">{ad}</span></div>')
     return f'''<section style="padding:20px 16px 24px;display:flex;flex-direction:column;gap:14px">
 <h1 style="font-size:30px;line-height:1.06;letter-spacing:-.025em;font-weight:700">{H1}</h1>
-<p style="font-size:16px;color:#3A372E">Stejné firmy ze S&amp;P 500 a Nasdaq 100, jen v evropské verzi.</p>
+<p style="font-size:16px;color:#3A372E">Stejné firmy z S&amp;P 500 a Nasdaq 100, jen v evropské verzi.</p>
 <div class="card hc" style="padding:4px 14px">
 <div class="row" style="padding:8px 0;border-bottom:1.5px solid #16150F"><span class="tag">Co koupíte</span><span class="tag">Poplatek</span><span class="tag">Typ</span></div>
 {rows}
