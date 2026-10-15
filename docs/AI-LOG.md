@@ -1511,3 +1511,13 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Decisions I took and told David:** I removed "Každý z nich má smlouvu o zpracování", because nothing in the repo shows the agreements were accepted. I wrote the legal basis without GDPR article numbers, because choosing the article is a legal conclusion. The retention text keeps its "[doplnit]" (the periods are still provisional).
 
 **CI failure and correction (PR 111):** the Playwright test `legal-pages.spec.ts` still expected seven `[data-placeholder]` gaps on `/zasady`; the page has two now. I had run only the unit and component tests (`pnpm check`) and searched `e2e/` for the word "doplnit", which that line does not contain (it counts `[data-placeholder]`). Fixed the count and the test name, and ran the spec locally (12 passed). Lesson: when a change alters what a page shows, run `pnpm test:e2e` for that page's spec before opening the PR, and search e2e for the selector, not only the text.
+
+### After Phase 6: the legal pack and the known gaps brought up to date
+
+**Prompt (summary):** David asked to update `docs/LEGAL-PACK.md` after PR 111 landed and to check the "All known gaps" list of the README against the recent changes.
+
+**Produced:** legal pack: points 1, 6 and 9 corrected (tools chosen; server-side Meta call off by note 0071; the privacy text now names the tools), points 10 to 12 given their "where" and "raised" cells, new points 13 to 15 (tax statements, the Fio statement in the FAQ, processing agreements), the reviewer's questions (a) to (f) with where each stands, and a rewritten "still to write". README: the tax paragraph and the tax gap, the Fio line of the data gap, the legal text sentence, the soft-evidence and "what is weak" lines, and a note that the tax records go stale on 2027-02-12.
+
+**Checked:** every reference in the pack against the repo (done earlier); the stale date by counting 121 days from 2026-10-14; `pnpm data:gaps` still 138 of 138; `pnpm format:check`.
+
+**Mistakes and corrections:** my own points 10 to 12 (PR 111) had only two table cells, no "where" or "raised"; I found it while updating the table and fixed it. I first cited the lead-recipient decision as "SPEC §19" and corrected it to §17.1.
