@@ -9,7 +9,7 @@ It is a test project for Clientelo, built with Claude Code agents under the auth
 - **Source of truth:** [docs/SPEC.md](docs/SPEC.md). Phases and status: [docs/PHASES.md](docs/PHASES.md). Decisions: [docs/decisions/](docs/decisions/) (68 notes). AI work log: [docs/AI-LOG.md](docs/AI-LOG.md).
 - A Czech version of this README (`README.cs.md`) is **not written**; the spec puts it after the P0 and P1 work.
 
-**What it looks like** (wireframes, rev. 7; the full set is in [docs/design/images/](docs/design/images/) and in the Wireframe Board and Design Study in [docs/design/wireframes/](docs/design/wireframes/)):
+**What it looks like** (wireframes, rev. 7; the full set is in [docs/design/images/](docs/design/images/), and the live [Design Study](https://phunkhouse.github.io/etf-kompas/design-study.html) and [Wireframe Board](https://phunkhouse.github.io/etf-kompas/wireframe-board.html) are on [GitHub Pages](https://phunkhouse.github.io/etf-kompas/); sources in [docs/design/wireframes/](docs/design/wireframes/)):
 
 <img src="docs/design/images/hero-b-desktop.png" alt="Landing page, desktop: headline with the amount, the four funds, the calculator" width="760">
 
