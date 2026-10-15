@@ -17,7 +17,7 @@ const SECTIONS = [
 ] as const
 
 describe('PrivacyPolicy: the page', () => {
-  it('has the label, the title as the only h1, and the date as a gap', () => {
+  it('has the label, the title as the only h1, and the date it applies from', () => {
     const { container } = render(<PrivacyPolicy />)
     expect(screen.getByText('Právní')).toBeTruthy()
     expect(
@@ -27,7 +27,7 @@ describe('PrivacyPolicy: the page', () => {
       }),
     ).toBeTruthy()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
-    expect(flat(container.textContent)).toContain('Platí od [doplnit]')
+    expect(flat(container.textContent)).toContain('Platí od 14. 10. 2026')
   })
 
   it('has seven sections, in this order, each with its id', () => {
@@ -79,7 +79,7 @@ describe("PrivacyPolicy: the wording is the drawing's own", () => {
   it('3: why and on what basis', () => {
     const { container } = render(<PrivacyPolicy />)
     expect(text(container, 'proc-a-zaklad')).toContain(
-      'Zaslání srovnání, o které jste požádali (e-mail, nastavení). Nepovinné tipy k investování jen s vaším souhlasem. Měření a reklama jen s vaším souhlasem. Právní základ u každého účelu: [doplnit].',
+      'Zaslání srovnání, o které jste požádali (e-mail, nastavení): na základě vaší žádosti. Nepovinné tipy k investování, měření a reklama: jen na základě vašeho souhlasu.',
     )
   })
 
@@ -90,11 +90,12 @@ describe("PrivacyPolicy: the wording is the drawing's own", () => {
     )
   })
 
-  it('5: who gets it, with each processor left as a gap', () => {
+  it('5: who gets it, with each processor named and no claim about contracts', () => {
     const { container } = render(<PrivacyPolicy />)
     expect(text(container, 'komu-predavame')).toContain(
-      'Zpracovatelům, které potřebujeme: služba pro rozesílání e-mailů [doplnit], hosting [doplnit], měření návštěvnosti [doplnit]. Každý z nich má smlouvu o zpracování.',
+      'Zpracovatelům, které potřebujeme: rozesílání e-mailů (Resend), hosting (Vercel), databáze (Supabase). Měření návštěvnosti (Google Analytics) a reklamní měření (Meta Pixel) zapneme jen s vaším souhlasem.',
     )
+    expect(text(container, 'komu-predavame')).not.toContain('smlouvu')
   })
 
   it('6: the rights, including the complaint to the data protection office', () => {
@@ -113,10 +114,10 @@ describe("PrivacyPolicy: the wording is the drawing's own", () => {
 })
 
 describe('PrivacyPolicy: nothing is invented', () => {
-  it('shows each gap as a marker: seven in all (date, e-mail, basis, months, three processors)', () => {
+  it('shows each gap as a marker: two in all (the e-mail address and the check of the periods)', () => {
     const { container } = render(<PrivacyPolicy />)
     const gaps = container.querySelectorAll('[data-placeholder]')
-    expect(gaps).toHaveLength(7)
+    expect(gaps).toHaveLength(2)
     expect([...gaps].every((g) => g.textContent === '[doplnit]')).toBe(true)
   })
 
@@ -124,6 +125,7 @@ describe('PrivacyPolicy: nothing is invented', () => {
   it('has no date and no figure of its own outside the retention section', () => {
     const { container } = render(<PrivacyPolicy />)
     container.querySelector('#jak-dlouho')?.remove()
+    container.querySelector('p[class*="valid"]')?.remove()
     const withoutGaps = flat(container.textContent).replace(/\[doplnit\]/g, '')
     expect(withoutGaps).not.toMatch(/\d/)
   })

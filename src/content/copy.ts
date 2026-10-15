@@ -364,6 +364,8 @@ export const legalCopy = {
     label: 'Právní',
     title: 'Zásady zpracování osobních údajů',
     validFrom: 'Platí od',
+    // The deploy date (2026-10-14).
+    validFromDate: '14. 10. 2026',
     contents: 'Obsah',
     sections: [
       {
@@ -380,7 +382,7 @@ export const legalCopy = {
       {
         id: 'proc-a-zaklad',
         title: 'Proč a na jakém základě',
-        text: 'Zaslání srovnání, o které jste požádali (e-mail, nastavení). Nepovinné tipy k investování jen s vaším souhlasem. Měření a reklama jen s vaším souhlasem. Právní základ u každého účelu: [doplnit].',
+        text: 'Zaslání srovnání, o které jste požádali (e-mail, nastavení): na základě vaší žádosti. Nepovinné tipy k investování, měření a reklama: jen na základě vašeho souhlasu.',
       },
       {
         id: 'jak-dlouho',
@@ -391,7 +393,7 @@ export const legalCopy = {
       {
         id: 'komu-predavame',
         title: 'Komu údaje předáváme',
-        text: 'Zpracovatelům, které potřebujeme: služba pro rozesílání e-mailů [doplnit], hosting [doplnit], měření návštěvnosti [doplnit]. Každý z nich má smlouvu o zpracování.',
+        text: 'Zpracovatelům, které potřebujeme: rozesílání e-mailů (Resend), hosting (Vercel), databáze (Supabase). Měření návštěvnosti (Google Analytics) a reklamní měření (Meta Pixel) zapneme jen s vaším souhlasem.',
       },
       {
         id: 'vase-prava',
