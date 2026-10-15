@@ -1509,3 +1509,5 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Checked:** `PrivacyPolicy.test.tsx` updated first (two gaps remain: the e-mail address and the check of the retention periods); `pnpm check`, `pnpm format:check`.
 
 **Decisions I took and told David:** I removed "Každý z nich má smlouvu o zpracování", because nothing in the repo shows the agreements were accepted. I wrote the legal basis without GDPR article numbers, because choosing the article is a legal conclusion. The retention text keeps its "[doplnit]" (the periods are still provisional).
+
+**CI failure and correction (PR 111):** the Playwright test `legal-pages.spec.ts` still expected seven `[data-placeholder]` gaps on `/zasady`; the page has two now. I had run only the unit and component tests (`pnpm check`) and searched `e2e/` for the word "doplnit", which that line does not contain (it counts `[data-placeholder]`). Fixed the count and the test name, and ran the spec locally (12 passed). Lesson: when a change alters what a page shows, run `pnpm test:e2e` for that page's spec before opening the PR, and search e2e for the selector, not only the text.

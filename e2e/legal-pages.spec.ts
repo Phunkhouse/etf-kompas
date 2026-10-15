@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-// The footer links, the privacy page (the wireframe's own text with [doplnit]
+// The footer links, the privacy page (the wireframe's text, filled in except the [doplnit]
 // gaps) and the 404 page.
 test.describe('the footer links', () => {
   test('are four, and go where they say', async ({ page }) => {
@@ -57,7 +57,7 @@ test.describe('the footer links', () => {
 })
 
 test.describe('the privacy page /zasady', () => {
-  test('has the seven sections and seven gaps, and is not indexed', async ({
+  test('has the seven sections and two gaps (e-mail, retention check), and is not indexed', async ({
     page,
   }) => {
     const response = await page.goto('/zasady')
@@ -71,7 +71,7 @@ test.describe('the privacy page /zasady', () => {
       'Vaše práva',
       'Cookies',
     ])
-    await expect(page.locator('[data-placeholder]')).toHaveCount(7)
+    await expect(page.locator('[data-placeholder]')).toHaveCount(2)
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       'content',
       /noindex/,
