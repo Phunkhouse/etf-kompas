@@ -1599,3 +1599,13 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **What this is not:** not the output of `/export`; thinking, system reminders, images and the long tail of big tool results are left out (the README of `ai-log/` says so). The last file is the session in which the folder was made, so it ends at the conversion.
 
 **Mistakes and corrections:** I first told David there were 14 sessions; there are 15 transcripts (9 in the project folder, 6 in the parent folder). I also first read the five Remote Control sessions' first messages as ordinary prompts; they are notes relayed by a coordinating Claude conversation, and the README of `ai-log/` says so.
+
+### After Phase 6: the README follows the AGENTS.md move and the copy review
+
+**Prompt (summary):** David said Codex's move of the instructions from `CLAUDE.md` to `AGENTS.md` is fine, that the Czech copy was reviewed and accepted by him (the README may say so), and to update the lines that still named `CLAUDE.md`.
+
+**Produced:** README: the instructions paragraph names `AGENTS.md` (with `CLAUDE.md` importing it); the Czech copy is "reviewed and accepted by the author", worded as an editorial review, not a legal one; the gap about a planned final check is removed. SPEC: the folder tree line names `AGENTS.md`. Left alone on purpose: AI-LOG entries, decision notes, phase plans and `PHASES.md`, which are a record of what was written when; SPEC §15 and §29, which describe the first version of the rules ("the file in the repo is the current one and wins").
+
+**Checked:** `grep` of every `CLAUDE.md` mention outside the history; `pnpm format:check`.
+
+**Mistakes and corrections:** none found. The review date of the copy is not stated because David gave none.

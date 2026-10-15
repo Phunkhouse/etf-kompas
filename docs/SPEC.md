@@ -303,7 +303,7 @@ docs/                SPEC.md, PHASES.md, starter-guide.md, METHODOLOGY.md (v1), 
                      AI-LOG.md, LEGAL-PACK.md
 docs/decisions/      README.md (format and rules), NNNN-short-title.md notes
 docs/design/         DESIGN-GUIDE.md, wireframe-b.md (text spec), README.md, images/ (PNG exports), wireframes/
-CLAUDE.md            agent rules (section 15)
+AGENTS.md            agent rules (section 15); CLAUDE.md imports it
 README.md
 ```
 
