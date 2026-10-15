@@ -257,8 +257,8 @@ N_AB = [
     ('Before launch', 'Check that the hero still fits 375 × 667 with the longer headline and the extra note (SPEC section 22). <code>track()</code> and the <code>variant</code> field on every event must exist, or the test cannot be read.'),
 ]
 N_ADS = [
-    ('Ad A', f'Headline „{HERO}“ and the unknown „? z 5“ with „brokerů nabízí evropský fond na S&amp;P 500“ (the number is a placeholder until verified). CTA „Zjistěte to za 20 sekund. Zdarma.“ Footer: „Investování nese riziko ztráty. Příklad výpočtu, ne slib výnosu.“'),
-    ('Ad B', 'Two twins side by side, „iShares · CSPX 0,07 %“ (Fond A) and „Vanguard · VUAA 0,07 %“ (Fond B), „U koho je koupíte a za kolik?“ and „Stejný index, jiný fond i broker. Spočítáme to v korunách.“'),
+    ('Ad A', 'Headline „Stejný fond. Rozdíl až 28 000 Kč“ with „Za 10 let, podle toho, u kterého brokera ho koupíte. Spočítáme to v korunách.“ and „3 000 Kč měsíčně · 10 let · příklad, ne slib“. The amount is the gap between the dearest and the cheapest verified broker for the S&amp;P 500 fund, rounded down (28 286 Kč with the data of 2026-10-14); recompute it on launch day. CTA „Spočítat moje poplatky. Zdarma.“ Footer: „Investování nese riziko ztráty. Příklad výpočtu, ne slib výnosu.“ Replaced the „? z 5“ ad in rev. 7 (David, 2026-10-15).'),
+    ('Ad B', 'Dark card, „Za 20 let se rozdíl mezi brokery vyšplhá na desítky tisíc.“ with two bars, the cheapest („12 600 Kč“) and the dearest („91 200 Kč“) of five verified brokers, none named; 3 000 Kč a month, 20 years, rounded (12 630 and 91 238 Kč with the data of 2026-10-14). Same CTA and footer as ad A. Replaced the twins ad in rev. 7 (David, 2026-10-15).'),
     ('Sizes', 'Feed 4:5 is 540 × 675, stories 9:16 is 405 × 720. Keep the risk line inside the safe area.'),
     ('Ad and landing variant', 'The ad angle (A or B) and the landing headline (a or b) are separate factors. Each ad set sends traffic to two URLs, <code>?v=a</code> and <code>?v=b</code>, split equally, with <code>utm_content</code> carrying both. The calculator-first hero that used to follow ad A was dropped in rev. 5.'),
 ]
@@ -338,7 +338,7 @@ p.append('<section id="system" class="sec">' + section_head('02', 'Design system
          ]) + '</section>')
 
 p.append('<section id="mapa" class="sec">' + section_head('03', 'Screens and flow', 'The main path is five steps. Everything else supports it.')
-         + '<ol class="flow"><li><b>Ad</b><span>Question headline, „? z 5“ or two twins</span></li><li><b>Landing</b><span>Hero table, calculator</span></li><li><b>Form</b><span>E-mail, tips optional</span></li><li><b>Success</b><span>Comparison ready, link sent</span></li><li><b>Comparison</b><span>Web page and PDF, valid 30 days</span></li></ol>'
+         + '<ol class="flow"><li><b>Ad</b><span>The gap in Kč: 10 years or 20 years</span></li><li><b>Landing</b><span>Hero table, calculator</span></li><li><b>Form</b><span>E-mail, tips optional</span></li><li><b>Success</b><span>Comparison ready, link sent</span></li><li><b>Comparison</b><span>Web page and PDF, valid 30 days</span></li></ol>'
          + '<h3>All screens</h3>' + table(['Screen', 'Sizes', 'What it is'], [(f'<b>{a}</b>', b, c) for a, b, c in SITEMAP], 'inv sitemap') + '</section>')
 
 p.append('<section id="landing" class="sec">' + section_head('04', 'Landing page', 'One page, top to bottom: the question, the table, the cost, the e-mail, then trust. Desktop 1280 and phone 390.')
@@ -384,7 +384,7 @@ N_MOTION = [
 p.append('<section id="motion" class="sec">' + section_head('10', 'Motion', 'Where the page moves, how long it takes and why. The artboard below is live: every demo loops on its own, and the button turns motion off to show the reduced-motion result.')
          + plate('MO1', 'wide') + '<h3>Rules</h3>' + notes(N_MOTION) + '</section>')
 
-p.append('<section id="reklamy" class="sec">' + section_head('11', 'Ads', 'Two concepts, both ending on the landing page. Launch waits for verified data; the message does not.')
+p.append('<section id="reklamy" class="sec">' + section_head('11', 'Ads', 'Two concepts, both ending on the landing page. The amounts come from the verified data and are rounded; recompute them on launch day.')
          + '<h3>Ad A</h3><div class="adrow">' + plate('G1-adA-4x5', 'ad') + plate('G2-adA-9x16', 'ad') + '</div>'
          + '<h3>Ad B</h3><div class="adrow">' + plate('G3-adB-4x5', 'ad') + plate('G4-adB-9x16', 'ad') + '</div>'
          + '<h3>Copy and rules</h3>' + notes(N_ADS, 1) + '</section>')
