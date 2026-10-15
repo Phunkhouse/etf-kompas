@@ -76,7 +76,9 @@ test.describe('hero b table', () => {
   }) => {
     await page.goto('/?v=b')
     await expect(
-      page.getByText(/Čísla ze stránek fondů a brokerů/),
+      page.getByText(
+        /Čísla ze stránek fondů a brokerů · ověřeno k \d+\.\s\d+\.\s\d{4}/,
+      ),
     ).toBeVisible()
     if (!isMobile) {
       await expect(

@@ -1,6 +1,6 @@
 import { Container } from '@/components/Container'
 import { shellCopy } from '@/content/copy'
-import { formatMonthYear } from '@/lib/format'
+import { formatDate } from '@/lib/format'
 import { nbsp } from '@/lib/typography'
 import styles from './SourceBar.module.scss'
 
@@ -12,7 +12,7 @@ type SourceBarProps = {
 // Dark strip above the header: where the numbers come from, and how old they are.
 export function SourceBar({ dataAsOf }: SourceBarProps) {
   const text = dataAsOf
-    ? shellCopy.sourceBar(formatMonthYear(dataAsOf))
+    ? shellCopy.sourceBar(formatDate(dataAsOf))
     : shellCopy.sourceBarNoDate
   return (
     <div className={styles.bar}>
