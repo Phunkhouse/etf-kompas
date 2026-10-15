@@ -1587,3 +1587,15 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Mistakes and corrections:** none found.
 
 **Follow-up:** David explicitly requested using `verifiedOn`. The landing page now selects the oldest verification date for its verification labels; the source-document dates remain available to comparison calculations and freshness validation. Updated SPEC §7 to match the approved change, renamed the landing date prop to `dataVerifiedOn`, and added tests distinguishing verification from source dates. Validation: `pnpm check` passed (956 tests); the full-date mobile browser check and formatting check passed. The first formatting check caught wrapping changes from the renamed prop in three test files; these were formatted before committing. The current oldest verification date is `2026-10-11`.
+
+### After Phase 6: the conversations in `ai-log/`
+
+**Prompt (summary):** the review request asks for an export of the Claude Code conversations in a folder `ai-log` (the `/export` command). David asked how to export the whole project, then chose my solution: convert the stored transcripts.
+
+**Produced:** `ai-log/` with 15 Markdown files (every Claude Code session of the project, 3.3 MB), a README with the index and the method, and `ai-log/convert_transcripts.py` (standard library only). `ai-log/` is in `.prettierignore` (generated files).
+
+**Checked:** the output was scanned for keys, tokens, JWTs, secret assignments, tokens in URLs and e-mail addresses. Pattern redaction replaced 54 e-mail addresses (David's, the allowlist of the reviewers) and found no secret. Matches that look like secrets and are not: commit SHAs of pinned actions, test fixtures such as `sb_secret_x`. Public identifiers remain: the GA4 measurement id and the Meta pixel ids (they are in the page source of the live site).
+
+**What this is not:** not the output of `/export`; thinking, system reminders, images and the long tail of big tool results are left out (the README of `ai-log/` says so). The last file is the session in which the folder was made, so it ends at the conversion.
+
+**Mistakes and corrections:** I first told David there were 14 sessions; there are 15 transcripts (9 in the project folder, 6 in the parent folder). I also first read the five Remote Control sessions' first messages as ordinary prompts; they are notes relayed by a coordinating Claude conversation, and the README of `ai-log/` says so.

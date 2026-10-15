@@ -8,3 +8,5 @@ public/brand
 /blob-report/
 /playwright/.cache/
 docs/design/wireframes/
+# generated conversions of the Claude Code transcripts (ai-log/convert_transcripts.py)
+ai-log/
