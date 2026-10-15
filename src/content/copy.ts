@@ -56,7 +56,7 @@ export const heroCopy = {
       after: '. Kde?',
     },
   },
-  lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.',
+  lead: 'Stejné firmy z S&P 500 a Nasdaq 100, jen v evropské verzi. Ukážeme, u koho je koupíte a za kolik.',
   cta: 'Spočítat, kolik mě to bude stát',
   // Under the button: no account, no price (decided 2026-10-13, before the 5-second test).
   ctaNote: 'Zdarma, bez registrace',
@@ -560,7 +560,7 @@ export const pdfCopy = {
   comparison: {
     label: 'Strana 1 · Srovnání',
     title: 'Americké indexy z Česka: u koho je koupíte a za kolik?',
-    lead: 'Stejné firmy ze S&P 500 a Nasdaq 100, jen v evropské verzi. Níže je poplatek fondu a to, u kterého brokera ho koupíte.',
+    lead: 'Stejné firmy z S&P 500 a Nasdaq 100, jen v evropské verzi. Níže je poplatek fondu a to, u kterého brokera ho koupíte.',
     columns: { fund: 'Fond', fee: 'Poplatek' },
     legend:
       '[ověřit] = zatím neověřeno, doplníme zdroj. „Ano“ jen s uvedeným zdrojem a datem.',
