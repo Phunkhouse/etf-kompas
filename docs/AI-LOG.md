@@ -1585,3 +1585,5 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Checked:** `pnpm check` (954 tests), `pnpm format:check`, and the targeted mobile Playwright top-panel test passed. The oldest bundled source date is `2026-06-26`, so the current top bar now shows `26. 6. 2026`; the previous `6. 2026` meant June, not October 6.
 
 **Mistakes and corrections:** none found.
+
+**Follow-up:** David explicitly requested using `verifiedOn`. The landing page now selects the oldest verification date for its verification labels; the source-document dates remain available to comparison calculations and freshness validation. Updated SPEC §7 to match the approved change, renamed the landing date prop to `dataVerifiedOn`, and added tests distinguishing verification from source dates. Validation: `pnpm check` passed (956 tests); the full-date mobile browser check and formatting check passed. The first formatting check caught wrapping changes from the renamed prop in three test files; these were formatted before committing. The current oldest verification date is `2026-10-11`.

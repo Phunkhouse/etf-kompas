@@ -16,7 +16,7 @@ const CALCULATOR_FUND = 'cspx'
 // differs. `requested` is the variant the URL asks for; variant b is shown only
 // when there is a saving to name (the hide rule), otherwise everyone gets a.
 export async function LandingPage({ requested }: { requested: HeroVariant }) {
-  const { dataAsOf, twins, note, faqFacts } = landingData(bundledData)
+  const { dataVerifiedOn, twins, note, faqFacts } = landingData(bundledData)
   const calculator = calculatorData(
     bundledData,
     await getRates(),
@@ -30,7 +30,7 @@ export async function LandingPage({ requested }: { requested: HeroVariant }) {
     <Landing
       variant={variant}
       savingKc={savingKc}
-      dataAsOf={dataAsOf}
+      dataVerifiedOn={dataVerifiedOn}
       twins={twins}
       note={note}
       faqFacts={faqFacts}

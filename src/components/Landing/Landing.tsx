@@ -18,7 +18,7 @@ type LandingProps = {
   // The A/B variant shown: one layout, only the h1 differs (note 0041). It is
   // written on <main> as data-variant, which the tracker reads.
   variant: Variant
-  dataAsOf: string | null
+  dataVerifiedOn: string | null
   // The hero table and its muted line.
   twins?: HeroTwin[]
   note?: HeroNote
@@ -34,7 +34,7 @@ type LandingProps = {
 // form, and the explainers. Both A/B variants share this layout.
 export function Landing({
   variant,
-  dataAsOf,
+  dataVerifiedOn,
   twins = [],
   note,
   faqFacts,
@@ -46,13 +46,13 @@ export function Landing({
     variant === 'b' && savingKc !== null && savingKc > 0 ? 'b' : 'a'
   return (
     <>
-      <SourceBar dataAsOf={dataAsOf} />
+      <SourceBar dataVerifiedOn={dataVerifiedOn} />
       <SiteHeader />
       <main data-variant={shown}>
         <HeroB
           twins={twins}
           note={note}
-          dataAsOf={dataAsOf}
+          dataVerifiedOn={dataVerifiedOn}
           variant={shown}
           savingKc={savingKc}
         />

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { landingData } from './landing-data'
+import { oldestVerifiedOn } from './data/freshness'
 
 describe('landingData (the real data files)', () => {
   it('gives the four hero twins in the order CSPX, VUAA, CNDX, EQQQ', async () => {
@@ -39,10 +40,10 @@ describe('landingData (the real data files)', () => {
     expect(faqFacts.europeanSold).toBe(true)
   })
 
-  it('gives the date of the oldest number', async () => {
+  it('gives the oldest verification date', async () => {
     const { loadData } = await import('./data/load')
     const result = landingData(await loadData())
-    expect(result.dataAsOf).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    expect(result.dataVerifiedOn).toBe(oldestVerifiedOn(await loadData()))
   })
 
   it('works on the bundled data the pages use, with the same result', async () => {

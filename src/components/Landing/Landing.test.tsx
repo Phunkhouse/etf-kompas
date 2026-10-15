@@ -23,14 +23,14 @@ afterEach(() => vi.unstubAllGlobals())
 
 describe('Landing', () => {
   it('has the page landmarks: banner, main and contentinfo', () => {
-    render(<Landing variant="a" dataAsOf="2026-06-30" />)
+    render(<Landing variant="a" dataVerifiedOn="2026-06-30" />)
     expect(screen.getByRole('banner')).toBeTruthy()
     expect(screen.getByRole('main')).toBeTruthy()
     expect(screen.getByRole('contentinfo')).toBeTruthy()
   })
 
   it('shows the rev. 4 headline as the only h1 in hero a', () => {
-    render(<Landing variant="a" dataAsOf={null} />)
+    render(<Landing variant="a" dataVerifiedOn={null} />)
     const headings = screen.getAllByRole('heading', { level: 1 })
     expect(headings).toHaveLength(1)
     expect(headings[0].textContent).toContain(
@@ -39,7 +39,7 @@ describe('Landing', () => {
   })
 
   it('shows the same headline in hero b: the heroes differ by layout, not wording', () => {
-    render(<Landing variant="b" dataAsOf={null} />)
+    render(<Landing variant="b" dataVerifiedOn={null} />)
     expect(screen.getByRole('heading', { level: 1 }).textContent).toContain(
       'Americké indexy z Česka: u koho je koupíte a za kolik?',
     )
@@ -69,7 +69,7 @@ describe.each(['a', 'b'] as const)(
       render(
         <Landing
           variant={variant}
-          dataAsOf="2026-06-30"
+          dataVerifiedOn="2026-06-30"
           twins={twins}
           note={note}
           calculator={data}
@@ -88,7 +88,7 @@ describe.each(['a', 'b'] as const)(
       render(
         <Landing
           variant={variant}
-          dataAsOf={null}
+          dataVerifiedOn={null}
           twins={twins}
           note={note}
           calculator={data}
@@ -109,12 +109,16 @@ describe.each(['a', 'b'] as const)(
     })
 
     it('says "Zdarma, bez registrace" once, under the hero button', () => {
-      render(<Landing variant={variant} dataAsOf={null} calculator={data} />)
+      render(
+        <Landing variant={variant} dataVerifiedOn={null} calculator={data} />,
+      )
       expect(screen.getAllByText('Zdarma, bez registrace')).toHaveLength(1)
     })
 
     it('has nothing left of the calculator-first hero', () => {
-      render(<Landing variant={variant} dataAsOf={null} calculator={data} />)
+      render(
+        <Landing variant={variant} dataVerifiedOn={null} calculator={data} />,
+      )
       expect(
         screen.queryByRole('link', { name: 'Ukázat, kolik mě to bude stát' }),
       ).toBeNull()
@@ -126,7 +130,9 @@ describe.each(['a', 'b'] as const)(
 
     it('marks the page with the variant it shows, for the tracking that comes later', () => {
       // variant b is shown only with an amount to name (note 0041)
-      render(<Landing variant={variant} dataAsOf={null} savingKc={28302} />)
+      render(
+        <Landing variant={variant} dataVerifiedOn={null} savingKc={28302} />,
+      )
       expect(screen.getByRole('main').getAttribute('data-variant')).toBe(
         variant,
       )
@@ -139,7 +145,9 @@ describe('Landing, the explainer sections', () => {
     'has "Za co platíte" and "Co dostanete e-mailem" in hero %s, after the calculator band',
     (variant) => {
       const data = calculatorData(bundledData, RATES, 'cspx')
-      render(<Landing variant={variant} dataAsOf={null} calculator={data} />)
+      render(
+        <Landing variant={variant} dataVerifiedOn={null} calculator={data} />,
+      )
       const band = screen.getByRole('region', {
         name: 'Kolik vás to bude stát?',
       })
@@ -157,7 +165,7 @@ describe('Landing, the explainer sections', () => {
   )
 
   it('has them without a calculator too, since they are static content', () => {
-    render(<Landing variant="a" dataAsOf={null} />)
+    render(<Landing variant="a" dataVerifiedOn={null} />)
     expect(
       screen.getByRole('region', { name: 'Za co platíte, aniž to vidíte' }),
     ).toBeTruthy()
@@ -173,7 +181,7 @@ describe('Landing, the trust block and the FAQ', () => {
   it.each(['a', 'b'] as const)(
     'has them in hero %s after the preview, in this order: trust block, then FAQ',
     (variant) => {
-      render(<Landing variant={variant} dataAsOf={null} />)
+      render(<Landing variant={variant} dataVerifiedOn={null} />)
       const order = [
         screen.getByRole('region', {
           name: 'Fondy, brokeři a co z toho koupíte z Česka',
@@ -195,7 +203,7 @@ describe('Landing, the trust block and the FAQ', () => {
     render(
       <Landing
         variant="a"
-        dataAsOf={null}
+        dataVerifiedOn={null}
         faqFacts={{
           tickers: ['VOO', 'QQQ'],
           verifiedNo: 3,
@@ -216,7 +224,7 @@ describe('Landing, variant b (note 0041)', () => {
     render(
       <Landing
         variant="b"
-        dataAsOf={null}
+        dataVerifiedOn={null}
         twins={twins}
         note={note}
         savingKc={28302}
@@ -232,7 +240,9 @@ describe('Landing, variant b (note 0041)', () => {
   })
 
   it('says a, in the headline and in data-variant, when b has no amount to name', () => {
-    render(<Landing variant="b" dataAsOf={null} twins={twins} note={note} />)
+    render(
+      <Landing variant="b" dataVerifiedOn={null} twins={twins} note={note} />,
+    )
     expect(screen.getByRole('heading', { level: 1 }).textContent).toContain(
       'Americké indexy z Česka',
     )
@@ -245,7 +255,7 @@ describe('Landing, variant b (note 0041)', () => {
       const { unmount } = render(
         <Landing
           variant={variant}
-          dataAsOf={null}
+          dataVerifiedOn={null}
           twins={twins}
           note={note}
           savingKc={28302}

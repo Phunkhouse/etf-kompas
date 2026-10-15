@@ -13,8 +13,8 @@ import styles from './HeroTable.module.scss'
 
 type HeroTableProps = {
   twins: HeroTwin[]
-  // Oldest asOf among the numbers on the page (ISO date), or null.
-  dataAsOf: string | null
+  // Oldest verifiedOn among the numbers on the page (ISO date), or null.
+  dataVerifiedOn: string | null
 }
 
 const text = heroCopy.table
@@ -36,7 +36,7 @@ function TypeCell({ type }: { type: HeroTwin['type'] }) {
 // The table of the table-first hero: four European twins with their annual fee
 // and type (Acc or Dist). The numbers come from the data, the wording from
 // copy.ts.
-export function HeroTable({ twins, dataAsOf }: HeroTableProps) {
+export function HeroTable({ twins, dataVerifiedOn }: HeroTableProps) {
   const tableRows: TableRowData[] = twins.map((twin) => {
     const label = text.rows[twin.fundId as RowCopyKey]
     return {
@@ -65,9 +65,9 @@ export function HeroTable({ twins, dataAsOf }: HeroTableProps) {
         compact
       />
       <p className={styles.footnote}>{nbsp(text.feeFootnote)}</p>
-      {dataAsOf ? (
+      {dataVerifiedOn ? (
         <p className={styles.source}>
-          {nbsp(text.source(formatMonthYear(dataAsOf)))}
+          {nbsp(text.source(formatMonthYear(dataVerifiedOn)))}
         </p>
       ) : null}
     </div>
