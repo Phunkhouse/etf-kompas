@@ -1499,3 +1499,13 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 - **I first answered that the FAQ was current** (it matched the data: 4 of 5 "no"). It was the data that was missing, not the text. David had Fio's answer on his disk and I had not asked where the evidence was.
 - **I wrote that SPEC needed a change for Fio;** it did not (it already allows only the soft claim). I corrected it in the next message.
 - **I looked for the new files in the repo first** instead of asking where they were.
+
+### After Phase 6: the privacy page filled in
+
+**Prompt (summary):** David asked what is needed to fill the privacy page; then: leave the controller and the contact e-mail as they are, "fill the rest", and use the deploy date for "Platí od".
+
+**Produced:** the date (14. 10. 2026, the deploy date of 2026-10-14), the bases in plain words (request for the comparison, consent for tips, measurement and advertising), and the processors (Resend, Vercel, Supabase; Google Analytics and the Meta Pixel only with consent). Three reviewer points added to `docs/LEGAL-PACK.md` (10 to 12).
+
+**Checked:** `PrivacyPolicy.test.tsx` updated first (two gaps remain: the e-mail address and the check of the retention periods); `pnpm check`, `pnpm format:check`.
+
+**Decisions I took and told David:** I removed "Každý z nich má smlouvu o zpracování", because nothing in the repo shows the agreements were accepted. I wrote the legal basis without GDPR article numbers, because choosing the article is a legal conclusion. The retention text keeps its "[doplnit]" (the periods are still provisional).

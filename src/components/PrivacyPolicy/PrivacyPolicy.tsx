@@ -44,10 +44,7 @@ export function PrivacyPolicy() {
           <Tag as="p">{text.label}</Tag>
           <h1 className={styles.title}>{nbsp(text.title)}</h1>
           <p className={styles.valid}>
-            {text.validFrom}{' '}
-            <span data-placeholder className={styles.gap}>
-              [doplnit]
-            </span>
+            {nbsp(`${text.validFrom} ${text.validFromDate}`)}
           </p>
           {text.sections.map((section) => (
             <section
