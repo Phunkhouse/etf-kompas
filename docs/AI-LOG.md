@@ -1565,3 +1565,13 @@ Notes 0047 (Fio data) and 0048 (Trading 212 and XTB data) are now `accepted`: Da
 **Checked:** `grep` that no "firmy ze S" is left in the repo; `pnpm check`, `pnpm format:check`. `https://etf-kompas-kappa.vercel.app/v/b` answers 200 (`/v/a` does not exist, only `/v/b` and `/?v=…`).
 
 **Mistake:** none found, but the published claude.ai artifacts and the Pages site still carry the old sentence until this merges (Pages redeploys on merge; the artifacts need a republish).
+
+### After Phase 6: shared instructions for Claude and Codex
+
+**Prompt (summary):** David approved moving the shared project rules into `AGENTS.md`, preserving the generated Next.js block, and keeping `CLAUDE.md` as a small wrapper with its existing `@AGENTS.md` import and any Claude-specific instructions.
+
+**Produced:** moved the project instructions from `CLAUDE.md` into `AGENTS.md` without changing the rules. Preserved the Next.js block and kept `CLAUDE.md` as the import plus a pointer to the shared instructions; there were no Claude-specific rules to retain separately.
+
+**Checked:** lint, typecheck and all 952 unit/component tests passed in `pnpm check`. The contrast runner hit a sandbox socket restriction; `pnpm contrast:check` and `pnpm copy:check` then passed outside the sandbox. `pnpm format:check` passed. Verified that the shared rules and generated Next.js block are unchanged.
+
+**Mistakes and corrections:** the initial setup assessment treated the sandbox GitHub authentication result as an invalid token. Checking outside the sandbox confirmed working keyring authentication; no login change was needed.
